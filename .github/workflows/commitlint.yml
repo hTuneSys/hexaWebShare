@@ -15,7 +15,7 @@ permissions:
 
 jobs:
   commitlint:
-    name: Commit Lint (hexaTuneWeb)
+    name: Commit Lint (hexaWebShare)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout (full history)

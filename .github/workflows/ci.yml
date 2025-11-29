@@ -17,7 +17,7 @@ defaults:
 
 jobs:
   quality-checks:
-    name: Quality Checks
+    name: Quality Checks (hexaWebShare)
     runs-on: ubuntu-latest
     
     steps:
