@@ -3,61 +3,56 @@ SPDX-FileCopyrightText: 2025 hexaTune LLC
 SPDX-License-Identifier: MIT
 -->
 
-# Svelte library
+# hexaWebShare Component Library
 
-Everything you need to build a Svelte library, powered by [`sv`](https://npmjs.com/package/sv).
+This directory contains the main component library for hexaWebShare.
 
-Read more about creating a library [in the docs](https://svelte.dev/docs/kit/packaging).
+## Quick Start
 
-## Creating a project
+```bash
+# Install dependencies
+pnpm install
 
-If you're seeing this, you've probably already done this step. Congrats!
+# Start Storybook for component development
+pnpm storybook
 
-```sh
-# create a new project in the current directory
-npx sv create
-
-# create a new project in my-app
-npx sv create my-app
+# Start SvelteKit dev server
+pnpm dev
 ```
 
-## Developing
+## Available Commands
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+| Command | Description |
+|---------|-------------|
+| `pnpm dev` | Start SvelteKit dev server |
+| `pnpm storybook` | Start Storybook dev server |
+| `pnpm build` | Build library package |
+| `pnpm build-storybook` | Build static Storybook |
+| `pnpm check` | TypeScript type checking |
+| `pnpm format` | Format code with Prettier |
+| `pnpm lint` | Check code formatting |
 
-```sh
-npm run dev
+## Documentation
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+For comprehensive documentation, see the [main README](../README.md) in the root directory.
+
+- [Getting Started](../docs/GETTING_STARTED.md)
+- [Contributing Guide](../docs/CONTRIBUTING.md)
+- [Architecture](../docs/ARCHITECTURE.md)
+- [Development Guide](../docs/DEVELOPMENT_GUIDE.md)
+
+## Component Structure
+
+```
+src/components/
+├── core/         # Core UI components
+├── admin/        # Admin panel components
+├── b2b/          # B2B workspace components
+├── ecommerce/    # E-commerce components
+├── marketing/    # Marketing components
+└── utility/      # Utility components
 ```
 
-Everything inside `src/lib` is part of your library, everything inside `src/routes` can be used as a showcase or preview app.
+## License
 
-## Building
-
-To build your library:
-
-```sh
-npm pack
-```
-
-To create a production version of your showcase app:
-
-```sh
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
-
-## Publishing
-
-Go into the `package.json` and give your package the desired name through the `"name"` option. Also consider adding a `"license"` field and point it to a `LICENSE` file which you can create from a template (one popular option is the [MIT license](https://opensource.org/license/mit/)).
-
-To publish your library to [npm](https://www.npmjs.com):
-
-```sh
-npm publish
-```
+MIT License - see [LICENSE](../LICENSE) file for details.

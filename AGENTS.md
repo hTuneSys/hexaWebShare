@@ -23,9 +23,11 @@ This document provides critical guidelines for AI coding assistants, LLMs, and a
 
 ## 🚨 CRITICAL RULES - MUST FOLLOW
 
-### 1. **ENGLISH ONLY - NO EXCEPTIONS**
+### 1. **ENGLISH ONLY FOR PROJECT FILES**
 
 **⚠️ ABSOLUTE REQUIREMENT:** All code, comments, documentation, commit messages, PR titles, branch names, and any text within project files **MUST BE IN ENGLISH ONLY**.
+
+**Note:** Communication between developers and AI agents can be in any language, but all content written to project files must be in English.
 
 ```typescript
 // ✅ CORRECT - English only
