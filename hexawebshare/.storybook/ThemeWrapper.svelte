@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2025 hexaTune LLC
+SPDX-License-Identifier: MIT
+-->
+
+
 <script lang="ts">
   export let theme: string = 'light';
   

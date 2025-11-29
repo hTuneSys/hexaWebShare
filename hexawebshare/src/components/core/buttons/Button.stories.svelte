@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2025 hexaTune LLC
+SPDX-License-Identifier: MIT
+-->
+
+
 <script module>
   import { defineMeta } from '@storybook/addon-svelte-csf';
   import Button from './Button.svelte';

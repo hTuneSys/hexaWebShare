@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2025 hexaTune LLC
+// SPDX-License-Identifier: MIT
+
 import type { StorybookConfig } from '@storybook/sveltekit';
 
 const config: StorybookConfig = {

@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2025 hexaTune LLC
+// SPDX-License-Identifier: MIT
+
 import adapter from '@sveltejs/adapter-auto';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 

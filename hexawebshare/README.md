@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: 2025 hexaTune LLC
+SPDX-License-Identifier: MIT
+-->
+
 # Svelte library
 
 Everything you need to build a Svelte library, powered by [`sv`](https://npmjs.com/package/sv).

@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2025 hexaTune LLC
+SPDX-License-Identifier: MIT
+-->
+
+
 <script lang="ts">
   interface Props {
     variant?: 'primary' | 'secondary' | 'accent' | 'neutral' | 'info' | 'success' | 'warning' | 'error' | 'ghost' | 'link';
@@ -25,10 +31,8 @@
     ...props 
   }: Props = $props();
   
-  // Tailwind JIT'in görebileceği şekilde STATIK class'lar kullan
   let buttonClasses = $derived([
     'btn',
-    // Variant class'ları - STATIK
     variant === 'primary' && 'btn-primary',
     variant === 'secondary' && 'btn-secondary',
     variant === 'accent' && 'btn-accent',
@@ -39,12 +43,10 @@
     variant === 'error' && 'btn-error',
     variant === 'ghost' && 'btn-ghost',
     variant === 'link' && 'btn-link',
-    // Size class'ları - STATIK
     size === 'xs' && 'btn-xs',
     size === 'sm' && 'btn-sm',
     size === 'md' && 'btn-md',
     size === 'lg' && 'btn-lg',
-    // Modifier class'ları
     outline && 'btn-outline',
     wide && 'btn-wide',
     block && 'btn-block',

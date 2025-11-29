@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2025 hexaTune LLC
+// SPDX-License-Identifier: MIT
+  
 import type { Preview } from '@storybook/sveltekit'
 import '../src/routes/layout.css';
 import ThemeWrapper from './ThemeWrapper.svelte';

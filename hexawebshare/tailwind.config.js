@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2025 hexaTune LLC
+// SPDX-License-Identifier: MIT
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ['./src/**/*.{html,js,svelte,ts}'],
