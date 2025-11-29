@@ -1,0 +1,26 @@
+# SPDX-FileCopyrightText: 2025 hexaTune LLC
+# SPDX-License-Identifier: MIT
+
+extends:
+  - "@commitlint/config-conventional"
+
+rules:
+  type-enum:
+    - 2
+    - always
+    - [
+        feat,
+        fix,
+        chore,
+        refactor,
+        test,
+        docs,
+        ci,
+        perf,
+        build,
+        release,
+        hotfix,
+        style,
+      ]
+  header-max-length: [0, "always"]
+  body-max-line-length: [0, "never"]

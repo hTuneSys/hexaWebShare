@@ -1,0 +1,32 @@
+# SPDX-FileCopyrightText: 2025 hexaTune LLC
+# SPDX-License-Identifier: MIT
+
+name: 💤 Mark stale issues and PRs
+
+on:
+  schedule:
+    - cron: "0 2 * * *" # every day at 02:00 UTC
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    name: Mark stale issues and PRs (hexaWebShare)
+    steps:
+      - uses: actions/stale@v9
+        with:
+          days-before-stale: 365
+          days-before-close: 60
+          stale-issue-message: >
+            This issue has been marked as stale due to inactivity.
+            Please update or comment to prevent automatic closure.
+          stale-pr-message: >
+            This pull request has been marked as stale due to inactivity.
+            Please update it to keep it open.
+          close-issue-message: >
+            This issue was closed automatically after prolonged inactivity.
+          close-pr-message: >
+            This pull request was closed automatically after prolonged inactivity.
