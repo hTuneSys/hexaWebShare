@@ -3,36 +3,47 @@ SPDX-FileCopyrightText: 2025 hexaTune LLC
 SPDX-License-Identifier: MIT
 -->
 
-
 <script module>
-  import { defineMeta } from '@storybook/addon-svelte-csf';
-  import Button from './Button.svelte';
-  import { fn } from 'storybook/test';
-  const { Story } = defineMeta({
-    title: 'Core/Button',
-    component: Button,
-    tags: ['autodocs'],
-    argTypes: {
-      variant: {
-        control: { type: 'select' },
-        options: ['primary', 'secondary', 'accent', 'neutral', 'info', 'success', 'warning', 'error', 'ghost', 'link'],
-      },
-      size: {
-        control: { type: 'select' },
-        options: ['xs', 'sm', 'md', 'lg'],
-      },
-      outline: { control: 'boolean' },
-      wide: { control: 'boolean' },
-      block: { control: 'boolean' },
-      glass: { control: 'boolean' },
-      disabled: { control: 'boolean' },
-      loading: { control: 'boolean' },
-    },
-    args: {
-      onclick: fn(),
-    }
-  });
+	import { defineMeta } from '@storybook/addon-svelte-csf';
+	import Button from './Button.svelte';
+	import { fn } from 'storybook/test';
+	const { Story } = defineMeta({
+		title: 'Core/Button',
+		component: Button,
+		tags: ['autodocs'],
+		argTypes: {
+			variant: {
+				control: { type: 'select' },
+				options: [
+					'primary',
+					'secondary',
+					'accent',
+					'neutral',
+					'info',
+					'success',
+					'warning',
+					'error',
+					'ghost',
+					'link'
+				]
+			},
+			size: {
+				control: { type: 'select' },
+				options: ['xs', 'sm', 'md', 'lg']
+			},
+			outline: { control: 'boolean' },
+			wide: { control: 'boolean' },
+			block: { control: 'boolean' },
+			glass: { control: 'boolean' },
+			disabled: { control: 'boolean' },
+			loading: { control: 'boolean' }
+		},
+		args: {
+			onclick: fn()
+		}
+	});
 </script>
+
 <!-- Variant Stories -->
 <Story name="Primary" args={{ variant: 'primary', label: 'Primary Button' }} />
 <Story name="Secondary" args={{ variant: 'secondary', label: 'Secondary' }} />

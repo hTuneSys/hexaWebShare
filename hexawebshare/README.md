@@ -22,15 +22,15 @@ pnpm dev
 
 ## Available Commands
 
-| Command | Description |
-|---------|-------------|
-| `pnpm dev` | Start SvelteKit dev server |
-| `pnpm storybook` | Start Storybook dev server |
-| `pnpm build` | Build library package |
-| `pnpm build-storybook` | Build static Storybook |
-| `pnpm check` | TypeScript type checking |
-| `pnpm format` | Format code with Prettier |
-| `pnpm lint` | Check code formatting |
+| Command                | Description                |
+| ---------------------- | -------------------------- |
+| `pnpm dev`             | Start SvelteKit dev server |
+| `pnpm storybook`       | Start Storybook dev server |
+| `pnpm build`           | Build library package      |
+| `pnpm build-storybook` | Build static Storybook     |
+| `pnpm check`           | TypeScript type checking   |
+| `pnpm format`          | Format code with Prettier  |
+| `pnpm lint`            | Check code formatting      |
 
 ## Documentation
 
