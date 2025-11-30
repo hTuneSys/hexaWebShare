@@ -1,0 +1,53 @@
+# SPDX-FileCopyrightText: 2025 hexaTune LLC
+# SPDX-License-Identifier: MIT
+
+# ────────────────────────────────────────────────────────────────────────────────
+# MODULE LABELS
+# ────────────────────────────────────────────────────────────────────────────────
+
+module:source:
+  - changed-files:
+      - any-glob-to-any-file: ["hexawebshare/**"]
+
+module:docs:
+  - changed-files:
+      - any-glob-to-any-file: ["docs/**", "examples/**", "**/README.md"]
+
+module:cli:
+  - changed-files:
+      - any-glob-to-any-file: ["scripts/**"]
+
+# ────────────────────────────────────────────────────────────────────────────────
+# TYPE LABELS
+# ────────────────────────────────────────────────────────────────────────────────
+
+type:doc:
+  - changed-files:
+      - any-glob-to-any-file:
+          ["docs/**", "LICENSE", "LICENSES/**", "CHANGELOG.md", "**/README.md"]
+
+type:ci:
+  - changed-files:
+      - any-glob-to-any-file: [".github/**", ".gitignore", "package.json"]
+
+type:test:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "integration-tests/**"
+          - "benchmarks/**"
+          - "**/tests/**"
+
+type:infra:
+  - changed-files:
+      - any-glob-to-any-file:
+          - ".releaserc.yml"
+          - "REUSE.toml"
+
+# ────────────────────────────────────────────────────────────────────────────────
+# DEFAULT LABEL
+# ────────────────────────────────────────────────────────────────────────────────
+
+default:unclassified:
+  - changed-files:
+      - any-glob-to-any-file: ["*"]
+

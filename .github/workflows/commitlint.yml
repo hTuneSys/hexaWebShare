@@ -1,0 +1,54 @@
+# SPDX-FileCopyrightText: 2025 hexaTune LLC
+# SPDX-License-Identifier: MIT
+
+name: 🧐 Commit Lint
+
+on:
+  pull_request:
+    branches:
+      - develop
+    types: [opened, synchronize, edited, reopened, ready_for_review]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  commitlint:
+    name: Commit Lint (hexaWebShare)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout (full history)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install commitlint deps
+        run: |
+          npm i -D @commitlint/cli @commitlint/config-conventional
+
+      - name: Show PR commit range (debug)
+        shell: bash
+        run: |
+          git fetch origin ${{ github.base_ref }}
+          BASE=$(git merge-base HEAD origin/${{ github.base_ref }})
+          echo "Base ref: ${{ github.base_ref }}"
+          echo "Merge-base: $BASE"
+          echo "Commits to lint:"
+          git log --oneline "$BASE..HEAD"
+
+      - name: Lint only commits introduced by this PR
+        shell: bash
+        run: |
+          git fetch origin ${{ github.base_ref }}
+          BASE=$(git merge-base HEAD origin/${{ github.base_ref }})
+          npx commitlint \
+            --from "$BASE" \
+            --to "HEAD" \
+            --config .github/.commitlintrc.yml \
+            --verbose

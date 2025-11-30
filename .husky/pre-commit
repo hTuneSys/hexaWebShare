@@ -1,0 +1,111 @@
+#!/bin/sh
+
+# SPDX-FileCopyrightText: 2025 hexaTune LLC
+# SPDX-License-Identifier: MIT
+
+# Pre-commit hook for REUSE compliance check
+# This hook ensures all files have proper SPDX license headers
+
+# Add common paths where reuse might be installed
+export PATH="$HOME/.local/bin:$PATH:/usr/local/bin"
+
+echo "🔍 Running REUSE compliance check..."
+
+# Check if reuse command exists
+if ! command -v reuse > /dev/null 2>&1; then
+    echo ""
+    echo "❌ ERROR: 'reuse' command not found!"
+    echo ""
+    echo "📦 REUSE is required for license compliance checking."
+    echo ""
+    echo "🔧 Installation Instructions:"
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo ""
+    echo "Option 1: Install with pipx (recommended)"
+    echo "  $ pipx install reuse"
+    echo ""
+    echo "Option 2: Install with pip (system-wide)"
+    echo "  $ pip install --user reuse"
+    echo ""
+    echo "Option 3: Install with pip (virtual environment)"
+    echo "  $ python -m venv venv"
+    echo "  $ source venv/bin/activate"
+    echo "  $ pip install reuse"
+    echo ""
+    echo "Option 4: Install pipx first, then install reuse"
+    echo "  $ python3 -m pip install --user pipx"
+    echo "  $ python3 -m pipx ensurepath"
+    echo "  $ pipx install reuse"
+    echo ""
+    echo "For more installation options, visit:"
+    echo "  https://reuse.software/tutorial/#step-0"
+    echo ""
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo ""
+    exit 1
+fi
+
+# Get REUSE version
+REUSE_VERSION=$(reuse --version 2>&1 | grep -oP '\d+\.\d+\.\d+' | head -1)
+
+if [ -z "$REUSE_VERSION" ]; then
+    echo ""
+    echo "⚠️  WARNING: Could not detect REUSE version"
+    echo "Proceeding with REUSE lint check anyway..."
+    echo ""
+else
+    # Extract major version
+    MAJOR_VERSION=$(echo "$REUSE_VERSION" | cut -d. -f1)
+    
+    echo "📌 Detected REUSE version: $REUSE_VERSION"
+    
+    # Check if version is less than 3
+    if [ "$MAJOR_VERSION" -lt 3 ]; then
+        echo ""
+        echo "⚠️  WARNING: REUSE version $REUSE_VERSION is older than 3.x"
+        echo ""
+        echo "🔄 Upgrade Instructions:"
+        echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+        echo ""
+        echo "If installed with pipx:"
+        echo "  $ pipx upgrade reuse"
+        echo ""
+        echo "If installed with pip:"
+        echo "  $ pip install --upgrade reuse"
+        echo ""
+        echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+        echo ""
+        echo "⏭️  Continuing with current version..."
+        echo ""
+    fi
+fi
+
+# Run REUSE lint
+echo "🔍 Running: reuse lint"
+echo ""
+
+if ! reuse lint; then
+    echo ""
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo "❌ REUSE compliance check FAILED!"
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo ""
+    echo "Please fix the REUSE compliance issues above before committing."
+    echo ""
+    echo "📚 Common fixes:"
+    echo "  • Add SPDX headers to files missing license information"
+    echo "  • Use REUSE.toml to annotate files that cannot have headers"
+    echo "  • Ensure all licenses are in LICENSES/ directory"
+    echo ""
+    echo "For more information:"
+    echo "  https://reuse.software/tutorial/"
+    echo ""
+    exit 1
+fi
+
+echo ""
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "✅ REUSE compliance check PASSED!"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo ""
+exit 0

@@ -1,0 +1,11 @@
+# SPDX-FileCopyrightText: 2025 hexaTune LLC
+# SPDX-License-Identifier: MIT
+
+addReviewers: true
+addAssignees: author
+
+reviewers:
+  - husamettinarabaci
+
+skipDraft: true
+numberOfReviewers: 1

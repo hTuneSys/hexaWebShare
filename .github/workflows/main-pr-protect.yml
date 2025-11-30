@@ -1,0 +1,24 @@
+# SPDX-FileCopyrightText: 2025 hexaTune LLC
+# SPDX-License-Identifier: MIT
+
+name: ❌ Block Non-Release PRs to Main
+
+on:
+  pull_request:
+    branches:
+      - main
+    types: [opened, synchronize]
+
+jobs:
+  enforce-release-only:
+    name: Block Non-Release PRs to Main (hexaWebShare)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fail if source branch is not release/*
+        run: |
+          echo "Source branch: ${{ github.head_ref }}"
+          if [[ ! "${{ github.head_ref }}" =~ ^release\/.*$ ]]; then
+            echo "❌ Only release/* branches may target main."
+            echo "❌ Only PRs from 'release/*' branches are allowed to merge into 'main'."
+            exit 1
+          fi

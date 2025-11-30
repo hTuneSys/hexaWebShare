@@ -1,0 +1,23 @@
+# SPDX-FileCopyrightText: 2025 hexaTune LLC
+# SPDX-License-Identifier: MIT
+
+name: 🧪 Enforce Branch Naming
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+jobs:
+  check-branch-name:
+    name: Check Branch Name (hexaWebShare)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate branch name
+        run: |
+          BRANCH_NAME="${{ github.head_ref }}"
+          echo "Checking branch name: $BRANCH_NAME"
+          if [[ ! "$BRANCH_NAME" =~ ^(feat|fix|chore|refactor|test|docs|ci|perf|build|release|hotfix|style|develop)/.+$ ]]; then
+            echo "❌ Invalid branch name. Allowed prefixes: feat/, fix/, chore/, refactor/, test/, docs/, ci/, perf/, build/, release/, hotfix/, style/"
+            echo "Branch names must match the format: <type>/<description>"
+            exit 1
+          fi

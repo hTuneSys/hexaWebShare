@@ -1,0 +1,18 @@
+# SPDX-FileCopyrightText: 2025 hexaTune LLC
+# SPDX-License-Identifier: MIT
+
+name: 🤝 Auto Assign Reviewer
+
+on:
+  pull_request:
+    types: [opened, ready_for_review]
+
+jobs:
+  add-reviewer:
+    name: Add Reviewer (hexaWebShare)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Auto assign
+        uses: kentaro-m/auto-assign-action@v1.2.3
+        with:
+          configuration-path: .github/auto_assign.yml
