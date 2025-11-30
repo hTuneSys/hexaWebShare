@@ -35,7 +35,7 @@ jobs:
       - name: Show PR commit range (debug)
         shell: bash
         run: |
-          git fetch origin ${{ github.base_ref }} --depth=0
+          git fetch origin ${{ github.base_ref }}
           BASE=$(git merge-base HEAD origin/${{ github.base_ref }})
           echo "Base ref: ${{ github.base_ref }}"
           echo "Merge-base: $BASE"
@@ -45,7 +45,7 @@ jobs:
       - name: Lint only commits introduced by this PR
         shell: bash
         run: |
-          git fetch origin ${{ github.base_ref }} --depth=0
+          git fetch origin ${{ github.base_ref }}
           BASE=$(git merge-base HEAD origin/${{ github.base_ref }})
           npx commitlint \
             --from "$BASE" \
