@@ -12,7 +12,7 @@ on:
 jobs:
   add-to-project:
     runs-on: ubuntu-latest
-
+    name: Add add project (hexaWebShare)
     steps:
       - uses: actions/add-to-project@v0.5.0
         with:

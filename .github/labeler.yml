@@ -5,6 +5,10 @@
 # MODULE LABELS
 # ────────────────────────────────────────────────────────────────────────────────
 
+module:source:
+  - changed-files:
+      - any-glob-to-any-file: ["hexawebshare/**"]
+
 module:docs:
   - changed-files:
       - any-glob-to-any-file: ["docs/**", "examples/**", "**/README.md"]

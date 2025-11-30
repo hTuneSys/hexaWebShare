@@ -1,0 +1,31 @@
+{
+  "name": "hexawebshare-monorepo",
+  "version": "0.0.1",
+  "private": true,
+  "description": "hexaWebShare - Comprehensive Svelte 5 Component Library",
+  "type": "module",
+  "scripts": {
+    "prepare": "husky",
+    "install:all": "pnpm install && cd hexawebshare && pnpm install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hTuneSys/hexaWebShare.git"
+  },
+  "keywords": [
+    "svelte",
+    "components",
+    "ui-library",
+    "typescript",
+    "daisyui",
+    "tailwindcss"
+  ],
+  "author": "hexaTune LLC",
+  "license": "MIT",
+  "devDependencies": {
+    "husky": "^9.1.7",
+        "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1"
+  },
+  "packageManager": "pnpm@9.0.0"
+}
