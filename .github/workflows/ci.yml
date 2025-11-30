@@ -2,7 +2,6 @@
 # SPDX-License-Identifier: MIT
 
 name: CI
-
 on:
   pull_request:
     branches:
@@ -10,11 +9,7 @@ on:
       - develop
     paths:
       - 'hexawebshare/**'
-
-defaults:
-  run:
-    working-directory: hexawebshare
-
+      - '.github/workflows/ci.yml'
 jobs:
   quality-checks:
     name: Quality Checks (hexaWebShare)
@@ -23,28 +18,25 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'pnpm'
           cache-dependency-path: hexawebshare/pnpm-lock.yaml
-
-      - name: Install dependencies
+      - name: Install root dependencies
         run: pnpm install --frozen-lockfile
-
       - name: Type check
+        working-directory: hexawebshare
         run: pnpm check
-
       - name: Format check
+        working-directory: hexawebshare
         run: pnpm lint
-
       - name: Build check
+        working-directory: hexawebshare
         run: pnpm build
-
       - name: Build Storybook
+        working-directory: hexawebshare
         run: pnpm build-storybook
