@@ -1,11 +1,10 @@
 # SPDX-FileCopyrightText: 2025 hexaTune LLC
 # SPDX-License-Identifier: MIT
 
-name: CI
+name: 🔍 Code Quality & Build Verification
 on:
   pull_request:
     branches:
-      - main
       - develop
     paths:
       - 'hexawebshare/**'

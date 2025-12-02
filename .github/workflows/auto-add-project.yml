@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: 2025 hexaTune LLC
 # SPDX-License-Identifier: MIT
 
-name: Auto add issues and PRs to hTuneSys Project 16
+name: 📌 Auto add issues and PRs to hTuneSys Project 16
 
 on:
   issues:
