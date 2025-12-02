@@ -11,9 +11,7 @@
 
 Mark the modules impacted by this PR:
 
-- [ ] Firmware
-- [ ] Hardware
-- [ ] Mechanic
+- [ ] Source Code
 - [ ] Documentation
 - [ ] CI / Infra
 
@@ -31,18 +29,18 @@ feat, fix, chore, refactor, test, docs, ci, perf, build, release, hotfix, style
 ✅ Examples:
 
 ```text
-feat: add lifecycle validator
-fix: resolve webhook retry bug
-chore: clean up unused dependencies
-refactor: simplify event dispatcher
-test: add integration test for HexaCast
-docs: update contributing guide
-ci: improve workflow caching
-perf: reduce latency in trigger matching
-build: update Cargo.lock and bump versions
-release: prepare v0.3.0 release
-hotfix: patch panic in runtime engine
-style: apply rustfmt to all modules
+feat: add onboarding screen
+fix: resolve overflow error on profile page
+chore: clean up unused widgets
+refactor: simplify authentication bloc
+test: add widget tests for login form
+docs: update setup guide for Flutter environment
+ci: add Flutter analyze to pipeline
+perf: optimize list rendering with const widgets
+build: bump Flutter SDK and dependencies
+release: prepare 1.2.0 mobile release
+hotfix: patch crash on app startup
+style: apply dart format to lib/
 ```
 
 ---
@@ -51,12 +49,14 @@ style: apply rustfmt to all modules
 
 Before submitting, make sure you've completed the following:
 
-- [ ] My branch name follows format: `<type>/<short-description>` (e.g., `feat/auth-handler`)
+- [ ] My branch name follows format: <type>/<short-description> (e.g., feat/login-screen)
 - [ ] My PR title starts with one of the approved types listed above
-- [ ] My code passes formatting (`cargo fmt`)
-- [ ] I ran Clippy linter (`cargo clippy`) and resolved warnings
-- [ ] I ran tests successfully (`cargo test`)
-- [ ] I linked related issues using keywords like `Closes #42`
+- [ ] My Dart code is formatted (dart format . or flutter format .)
+- [ ] I ran static analysis (flutter analyze) and resolved warnings
+- [ ] I ran tests successfully (flutter test)
+- [ ] I updated / checked pubspec.yaml and pubspec.lock for dependency changes
+- [ ] For UI changes, I added screenshots and/or updated golden tests (if applicable)
+- [ ] I linked related issues using keywords like Closes #42
 - [ ] I ensured this PR has no unrelated changes
 - [ ] This PR is ready for review and does not include unfinished work
 
