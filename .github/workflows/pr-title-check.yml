@@ -5,6 +5,8 @@ name: 🏷️ Check Semantic PR Title
 
 on:
   pull_request:
+    branches:
+      - develop
     types: [opened, edited, synchronize, reopened]
 
 jobs:
@@ -25,7 +27,7 @@ jobs:
             ci
             perf
             build
-            release
+            main
             hotfix
             style
         env:

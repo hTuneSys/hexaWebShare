@@ -5,6 +5,8 @@ name: 🧪 Enforce Branch Naming
 
 on:
   pull_request:
+    branches:
+      - develop 
     types: [opened, edited, synchronize, reopened]
 
 jobs:
@@ -16,8 +18,24 @@ jobs:
         run: |
           BRANCH_NAME="${{ github.head_ref }}"
           echo "Checking branch name: $BRANCH_NAME"
-          if [[ ! "$BRANCH_NAME" =~ ^(feat|fix|chore|refactor|test|docs|ci|perf|build|release|hotfix|style|develop)/.+$ ]]; then
-            echo "❌ Invalid branch name. Allowed prefixes: feat/, fix/, chore/, refactor/, test/, docs/, ci/, perf/, build/, release/, hotfix/, style/"
-            echo "Branch names must match the format: <type>/<description>"
+
+          if [[ ! "$BRANCH_NAME" =~ ^(main|feat/.+|fix/.+|chore/.+|refactor/.+|test/.+|docs/.+|ci/.+|perf/.+|build/.+|hotfix/.+|style/.+)$ ]]; then
+            echo "❌ INVALID BRANCH NAME"
+            echo ""
+            echo "Only the following branch types are allowed for feature or fix work:"
+            echo "  feat/, fix/, chore/, refactor/, test/, docs/, ci/, perf/, build/, hotfix/, style/"
+            echo ""
+            echo "Valid examples:"
+            echo "  develop"
+            echo "  main"
+            echo "  feat/add-auth-handler"
+            echo "  fix/login-crash"
+            echo "  chore/cleanup-configs"
+            echo ""
+            echo "❗ Branch names must match the format:"
+            echo "    <type>/<description>"
+            echo ""
             exit 1
           fi
+
+          echo "✔ Branch name valid!"
