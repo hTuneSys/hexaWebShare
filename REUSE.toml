@@ -26,3 +26,9 @@ path = ["hexawebshare/src/components/assets/**","hexawebshare/static/**"]
 precedence = "aggregate"
 SPDX-FileCopyrightText = "2025 hexaTune LLC"
 SPDX-License-Identifier = "MIT"
+
+[[annotations]]
+path = ["**/*.d.ts"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2025 hexaTune LLC"
+SPDX-License-Identifier = "MIT"

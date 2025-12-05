@@ -5,7 +5,7 @@ SPDX-License-Identifier: MIT
 
 <script lang="ts">
 	interface Props {
-		value: number; // Current progress value (0-100 or 0-max)
+		value?: number; // Current progress value (0-100 or 0-max), required unless indeterminate
 		max?: number; // Maximum value (default: 100)
 		variant?:
 			| 'primary'
@@ -34,7 +34,9 @@ SPDX-License-Identifier: MIT
 	}: Props = $props();
 
 	// Calculate percentage for display
-	let percentage = $derived(indeterminate ? 0 : Math.min(Math.max((value / max) * 100, 0), 100));
+	let percentage = $derived(
+		indeterminate ? 0 : value !== undefined ? Math.min(Math.max((value / max) * 100, 0), 100) : 0
+	);
 
 	// Progress bar classes
 	let progressClasses = $derived(
@@ -66,11 +68,11 @@ SPDX-License-Identifier: MIT
 <div class="w-full" {...props}>
 	<progress
 		class={progressClasses}
-		value={indeterminate ? undefined : value}
+		value={indeterminate ? undefined : (value ?? undefined)}
 		max={indeterminate ? undefined : max}
 		aria-valuemin={0}
 		aria-valuemax={max}
-		aria-valuenow={indeterminate ? undefined : value}
+		aria-valuenow={indeterminate ? undefined : (value ?? undefined)}
 	>
 		{#if indeterminate}
 			<!-- Indeterminate progress animation -->
