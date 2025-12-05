@@ -33,9 +33,14 @@ SPDX-License-Identifier: MIT
 		...props
 	}: Props = $props();
 
+	// Use 0 as default value when not indeterminate and value is undefined
+	let progressValue = $derived(indeterminate ? undefined : (value ?? 0));
+
 	// Calculate percentage for display
 	let percentage = $derived(
-		indeterminate ? 0 : value !== undefined ? Math.min(Math.max((value / max) * 100, 0), 100) : 0
+		indeterminate || progressValue === undefined
+			? 0
+			: Math.min(Math.max((progressValue / max) * 100, 0), 100)
 	);
 
 	// Progress bar classes
@@ -68,11 +73,11 @@ SPDX-License-Identifier: MIT
 <div class="w-full" {...props}>
 	<progress
 		class={progressClasses}
-		value={indeterminate ? undefined : (value ?? undefined)}
+		value={progressValue}
 		max={indeterminate ? undefined : max}
 		aria-valuemin={0}
 		aria-valuemax={max}
-		aria-valuenow={indeterminate ? undefined : (value ?? undefined)}
+		aria-valuenow={indeterminate ? undefined : progressValue}
 	>
 		{#if indeterminate}
 			<!-- Indeterminate progress animation -->
