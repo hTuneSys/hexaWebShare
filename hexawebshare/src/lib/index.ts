@@ -2,3 +2,4 @@
 // SPDX-License-Identifier: MIT
 
 // Reexport your entry components here
+export { default as ProgressBar } from '../components/core/feedback/ProgressBar.svelte';
