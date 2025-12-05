@@ -21,95 +21,95 @@ SPDX-License-Identifier: MIT
 </script>
 
 <!-- Default Horizontal Group -->
-<Story 
-	name="Horizontal" 
-	args={{ 
+<Story
+	name="Horizontal"
+	args={{
 		orientation: 'horizontal',
 		buttons: [
 			{ label: 'First', variant: 'primary' },
 			{ label: 'Second', variant: 'primary' },
 			{ label: 'Third', variant: 'primary' }
 		]
-	}} 
+	}}
 />
 
 <!-- Vertical Group -->
-<Story 
-	name="Vertical" 
-	args={{ 
+<Story
+	name="Vertical"
+	args={{
 		orientation: 'vertical',
 		buttons: [
 			{ label: 'First', variant: 'primary' },
 			{ label: 'Second', variant: 'primary' },
 			{ label: 'Third', variant: 'primary' }
 		]
-	}} 
+	}}
 />
 
 <!-- Small Size -->
-<Story 
-	name="Small Size" 
-	args={{ 
+<Story
+	name="Small Size"
+	args={{
 		buttons: [
 			{ label: 'Small', variant: 'primary', size: 'sm' },
 			{ label: 'Small', variant: 'primary', size: 'sm' },
 			{ label: 'Small', variant: 'primary', size: 'sm' }
 		]
-	}} 
+	}}
 />
 
 <!-- Medium Size -->
-<Story 
-	name="Medium Size" 
-	args={{ 
+<Story
+	name="Medium Size"
+	args={{
 		buttons: [
 			{ label: 'Medium', variant: 'primary', size: 'md' },
 			{ label: 'Medium', variant: 'primary', size: 'md' },
 			{ label: 'Medium', variant: 'primary', size: 'md' }
 		]
-	}} 
+	}}
 />
 
 <!-- Large Size -->
-<Story 
-	name="Large Size" 
-	args={{ 
+<Story
+	name="Large Size"
+	args={{
 		buttons: [
 			{ label: 'Large', variant: 'primary', size: 'lg' },
 			{ label: 'Large', variant: 'primary', size: 'lg' },
 			{ label: 'Large', variant: 'primary', size: 'lg' }
 		]
-	}} 
+	}}
 />
 
 <!-- With Icons -->
-<Story 
-	name="With Icons" 
-	args={{ 
+<Story
+	name="With Icons"
+	args={{
 		buttons: [
 			{ label: '✓ Save', variant: 'primary' },
 			{ label: '✏ Edit', variant: 'secondary' },
 			{ label: '🗑 Delete', variant: 'error' }
 		]
-	}} 
+	}}
 />
 
 <!-- Disabled States -->
-<Story 
-	name="Disabled States" 
-	args={{ 
+<Story
+	name="Disabled States"
+	args={{
 		buttons: [
 			{ label: 'Enabled', variant: 'primary' },
 			{ label: 'Disabled', variant: 'primary', disabled: true },
 			{ label: 'Enabled', variant: 'primary' }
 		]
-	}} 
+	}}
 />
 
 <!-- Mixed Button Variants -->
-<Story 
-	name="Mixed Variants" 
-	args={{ 
+<Story
+	name="Mixed Variants"
+	args={{
 		buttons: [
 			{ label: 'Primary', variant: 'primary' },
 			{ label: 'Secondary', variant: 'secondary' },
@@ -117,6 +117,5 @@ SPDX-License-Identifier: MIT
 			{ label: 'Info', variant: 'info' },
 			{ label: 'Success', variant: 'success' }
 		]
-	}} 
+	}}
 />
-
