@@ -5,3 +5,4 @@
 
 // Core - Feedback
 export { default as Spinner } from '../components/core/feedback/Spinner.svelte';
+export { default as Loader } from '../components/core/feedback/Loader.svelte';
