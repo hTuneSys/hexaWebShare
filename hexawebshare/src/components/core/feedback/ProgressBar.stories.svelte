@@ -14,11 +14,11 @@ SPDX-License-Identifier: MIT
 		argTypes: {
 			value: {
 				control: { type: 'range', min: 0, max: 100, step: 1 },
-				description: 'Current progress value'
+				description: 'Current progress value (0 to max)'
 			},
 			max: {
-				control: { type: 'number' },
-				description: 'Maximum value (default: 100)'
+				control: { type: 'number', min: 1 },
+				description: 'Maximum value for the progress bar'
 			},
 			variant: {
 				control: { type: 'select' },
@@ -31,55 +31,78 @@ SPDX-License-Identifier: MIT
 					'success',
 					'warning',
 					'error'
-				]
+				],
+				description: 'Color variant of the progress bar'
 			},
 			size: {
 				control: { type: 'select' },
-				options: ['xs', 'sm', 'md', 'lg']
+				options: ['sm', 'md', 'lg'],
+				description: 'Size of the progress bar'
 			},
 			showLabel: {
 				control: 'boolean',
 				description: 'Show percentage label'
 			},
-			label: {
+			ariaLabel: {
 				control: 'text',
-				description: 'Custom label text'
+				description: 'Accessible label for screen readers'
 			},
-			indeterminate: {
+			disabled: {
 				control: 'boolean',
-				description: 'Indeterminate progress animation'
+				description: 'Disable the progress bar'
 			}
+		},
+		args: {
+			value: 50,
+			max: 100,
+			variant: 'primary',
+			size: 'md',
+			showLabel: false,
+			ariaLabel: 'Progress',
+			disabled: false
 		}
 	});
 </script>
 
 <!-- Default Story -->
-<Story name="Default" args={{ value: 50 }} />
+<Story name="Default" args={{ value: 50, variant: 'primary', size: 'md' }} />
+
+<!-- Value Stories -->
+<Story name="Empty" args={{ value: 0 }} />
+<Story name="Quarter" args={{ value: 25 }} />
+<Story name="Half" args={{ value: 50 }} />
+<Story name="Three Quarters" args={{ value: 75 }} />
+<Story name="Complete" args={{ value: 100 }} />
 
 <!-- Variant Stories -->
-<Story name="Primary" args={{ value: 60, variant: 'primary' }} />
-<Story name="Secondary" args={{ value: 70, variant: 'secondary' }} />
-<Story name="Accent" args={{ value: 80, variant: 'accent' }} />
-<Story name="Info" args={{ value: 40, variant: 'info' }} />
-<Story name="Success" args={{ value: 90, variant: 'success' }} />
-<Story name="Warning" args={{ value: 65, variant: 'warning' }} />
-<Story name="Error" args={{ value: 30, variant: 'error' }} />
+<Story name="Primary" args={{ value: 50, variant: 'primary' }} />
+<Story name="Secondary" args={{ value: 50, variant: 'secondary' }} />
+<Story name="Accent" args={{ value: 50, variant: 'accent' }} />
+<Story name="Neutral" args={{ value: 50, variant: 'neutral' }} />
+<Story name="Info" args={{ value: 50, variant: 'info' }} />
+<Story name="Success" args={{ value: 50, variant: 'success' }} />
+<Story name="Warning" args={{ value: 50, variant: 'warning' }} />
+<Story name="Error" args={{ value: 50, variant: 'error' }} />
 
 <!-- Size Stories -->
-<Story name="Extra Small" args={{ value: 50, size: 'xs' }} />
 <Story name="Small" args={{ value: 50, size: 'sm' }} />
 <Story name="Medium" args={{ value: 50, size: 'md' }} />
 <Story name="Large" args={{ value: 50, size: 'lg' }} />
 
-<!-- With Label -->
-<Story name="With Percentage Label" args={{ value: 75, showLabel: true }} />
-<Story name="With Custom Label" args={{ value: 60, label: 'Uploading...' }} />
+<!-- With Label Stories -->
+<Story name="With Label" args={{ value: 50, showLabel: true }} />
+<Story name="With Label - Complete" args={{ value: 100, showLabel: true }} />
+<Story name="With Label - Success" args={{ value: 75, variant: 'success', showLabel: true }} />
 
-<!-- Progress States -->
-<Story name="Empty" args={{ value: 0 }} />
-<Story name="Half" args={{ value: 50 }} />
-<Story name="Full" args={{ value: 100 }} />
-<Story name="Indeterminate" args={{ indeterminate: true }} />
+<!-- State Stories -->
+<Story name="Disabled" args={{ value: 50, disabled: true }} />
+<Story name="Disabled With Label" args={{ value: 50, disabled: true, showLabel: true }} />
 
-<!-- Custom Max Value -->
-<Story name="Custom Max (0-200)" args={{ value: 150, max: 200, showLabel: true }} />
+<!-- Combined Examples -->
+<Story name="Large Success With Label" args={{ value: 80, variant: 'success', size: 'lg', showLabel: true }} />
+<Story name="Small Warning" args={{ value: 30, variant: 'warning', size: 'sm' }} />
+<Story name="Large Error Complete" args={{ value: 100, variant: 'error', size: 'lg' }} />
+<Story name="Medium Info With Label" args={{ value: 60, variant: 'info', size: 'md', showLabel: true }} />
+
+<!-- Interactive Example -->
+<Story name="Interactive" args={{ value: 50, showLabel: true }} />
