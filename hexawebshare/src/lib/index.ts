@@ -5,3 +5,6 @@
 
 // Core - Feedback
 export { default as Spinner } from '../components/core/feedback/Spinner.svelte';
+
+// Core - Forms
+export { default as Checkbox } from '../components/core/forms/Checkbox.svelte';
