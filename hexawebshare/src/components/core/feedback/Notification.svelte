@@ -38,7 +38,7 @@ SPDX-License-Identifier: MIT
 	const {
 		message,
 		title,
-		variant,
+		variant = 'info',
 		size = 'md',
 		dismissible = false,
 		onclose,
@@ -55,9 +55,9 @@ SPDX-License-Identifier: MIT
 			variant === 'success' && 'alert-success',
 			variant === 'warning' && 'alert-warning',
 			variant === 'error' && 'alert-error',
-			size === 'sm' && 'alert-sm',
-			size === 'md' && 'alert-md',
-			size === 'lg' && 'alert-lg'
+			size === 'sm' && 'text-sm py-2 px-3',
+			size === 'md' && 'text-base py-3 px-4',
+			size === 'lg' && 'text-lg py-4 px-5'
 		]
 			.filter(Boolean)
 			.join(' ')
