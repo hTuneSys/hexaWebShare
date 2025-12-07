@@ -99,10 +99,16 @@ SPDX-License-Identifier: MIT
 <Story name="Disabled With Label" args={{ value: 50, disabled: true, showLabel: true }} />
 
 <!-- Combined Examples -->
-<Story name="Large Success With Label" args={{ value: 80, variant: 'success', size: 'lg', showLabel: true }} />
+<Story
+	name="Large Success With Label"
+	args={{ value: 80, variant: 'success', size: 'lg', showLabel: true }}
+/>
 <Story name="Small Warning" args={{ value: 30, variant: 'warning', size: 'sm' }} />
 <Story name="Large Error Complete" args={{ value: 100, variant: 'error', size: 'lg' }} />
-<Story name="Medium Info With Label" args={{ value: 60, variant: 'info', size: 'md', showLabel: true }} />
+<Story
+	name="Medium Info With Label"
+	args={{ value: 60, variant: 'info', size: 'md', showLabel: true }}
+/>
 
 <!-- Interactive Example -->
 <Story name="Interactive" args={{ value: 50, showLabel: true }} />

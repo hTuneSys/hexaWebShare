@@ -95,11 +95,19 @@ SPDX-License-Identifier: MIT
 	);
 </script>
 
-<div class="w-full" role="progressbar" aria-label={ariaLabel} aria-valuenow={value} aria-valuemin={0} aria-valuemax={max} {...props}>
+<div
+	class="w-full"
+	role="progressbar"
+	aria-label={ariaLabel}
+	aria-valuenow={value}
+	aria-valuemin={0}
+	aria-valuemax={max}
+	{...props}
+>
 	<div class="flex items-center gap-2">
-		<progress class={progressClasses} value={value} max={max}></progress>
+		<progress class={progressClasses} {value} {max}></progress>
 		{#if showLabel}
-			<span class="text-sm font-medium min-w-[3rem] text-right">{Math.round(percentage)}%</span>
+			<span class="min-w-[3rem] text-right text-sm font-medium">{Math.round(percentage)}%</span>
 		{/if}
 	</div>
 </div>
