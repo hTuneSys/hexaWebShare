@@ -8,14 +8,7 @@ SPDX-License-Identifier: MIT
 		label?: string;
 		checked?: boolean;
 		indeterminate?: boolean;
-		variant?:
-			| 'primary'
-			| 'secondary'
-			| 'accent'
-			| 'success'
-			| 'warning'
-			| 'error'
-			| 'info';
+		variant?: 'primary' | 'secondary' | 'accent' | 'success' | 'warning' | 'error' | 'info';
 		size?: 'xs' | 'sm' | 'md' | 'lg';
 		disabled?: boolean;
 		required?: boolean;
@@ -82,9 +75,7 @@ SPDX-License-Identifier: MIT
 	);
 
 	let labelClasses = $derived(
-		['label', 'cursor-pointer', disabled && 'cursor-not-allowed', 'gap-2']
-			.filter(Boolean)
-			.join(' ')
+		['label', 'cursor-pointer', disabled && 'cursor-not-allowed', 'gap-2'].filter(Boolean).join(' ')
 	);
 
 	function handleChange(event: Event) {
