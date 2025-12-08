@@ -23,17 +23,23 @@ SPDX-License-Identifier: MIT
 		...restProps
 	}: Props = $props();
 
+	// Determine padding class - compact variant always uses p-2, ignoring padding prop
+	let paddingClass = $derived(
+		variant === 'compact'
+			? 'p-2'
+			: padding === 'none'
+				? 'p-0'
+				: padding === 'sm'
+					? 'p-4'
+					: padding === 'md'
+						? 'p-6'
+						: padding === 'lg'
+							? 'p-8'
+							: 'p-6' // default padding
+	);
+
 	let sectionClasses = $derived(
-		[
-			'card-body',
-			variant === 'bordered' && 'border-t',
-			variant === 'compact' && 'p-2',
-			padding === 'none' && 'p-0',
-			padding === 'sm' && 'p-4',
-			padding === 'md' && 'p-6',
-			padding === 'lg' && 'p-8',
-			className
-		]
+		['card-body', variant === 'bordered' && 'border-t', paddingClass, className]
 			.filter(Boolean)
 			.join(' ')
 	);
@@ -42,10 +48,15 @@ SPDX-License-Identifier: MIT
 <div class={sectionClasses} {...restProps}>
 	{#if divider && title}
 		<div class="divider divider-start my-2">
-			{#if title}
+			<div>
 				<h3 class="text-lg font-semibold">{title}</h3>
-			{/if}
+				{#if subtitle}
+					<p class="text-sm opacity-70 mt-1">{subtitle}</p>
+				{/if}
+			</div>
 		</div>
+	{:else if divider && !title}
+		<div class="divider my-2"></div>
 	{:else if title || subtitle}
 		<div class="mb-4">
 			{#if title}
@@ -55,10 +66,6 @@ SPDX-License-Identifier: MIT
 				<p class="text-sm opacity-70 mt-1">{subtitle}</p>
 			{/if}
 		</div>
-	{/if}
-
-	{#if divider && !title}
-		<div class="divider my-2"></div>
 	{/if}
 
 	<slot />
