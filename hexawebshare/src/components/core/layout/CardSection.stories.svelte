@@ -3,7 +3,7 @@ SPDX-FileCopyrightText: 2025 hexaTune LLC
 SPDX-License-Identifier: MIT
 -->
 
-<script context="module">
+<script module>
 	import { defineMeta } from '@storybook/addon-svelte-csf';
 	import CardSection from './CardSection.svelte';
 	const { Story } = defineMeta({
