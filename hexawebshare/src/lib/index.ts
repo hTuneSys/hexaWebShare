@@ -7,4 +7,3 @@ export { default as ButtonGroup } from '../components/core/buttons/ButtonGroup.s
 
 // Core - Feedback
 export { default as Spinner } from '../components/core/feedback/Spinner.svelte';
-export { default as ProgressBar } from '../components/core/feedback/ProgressBar.svelte';
