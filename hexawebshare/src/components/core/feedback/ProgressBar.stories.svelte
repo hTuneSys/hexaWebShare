@@ -110,5 +110,16 @@ SPDX-License-Identifier: MIT
 	args={{ value: 60, variant: 'info', size: 'md', showLabel: true }}
 />
 
+<!-- Max Value Stories -->
+<Story name="Custom Max (0-200)" args={{ value: 150, max: 200, showLabel: true }} />
+<Story name="Custom Max (0-50)" args={{ value: 25, max: 50, showLabel: true }} />
+
+<!-- AriaLabel Stories -->
+<Story name="Custom Aria Label" args={{ value: 50, ariaLabel: 'Upload progress' }} />
+<Story
+	name="Custom Aria Label With Label"
+	args={{ value: 75, ariaLabel: 'Download progress', showLabel: true }}
+/>
+
 <!-- Interactive Example -->
 <Story name="Interactive" args={{ value: 50, showLabel: true }} />
