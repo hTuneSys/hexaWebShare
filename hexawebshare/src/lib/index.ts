@@ -5,6 +5,3 @@
 
 // Core - Feedback
 export { default as Spinner } from '../components/core/feedback/Spinner.svelte';
-
-// Core - Layout
-export { default as CardSection } from '../components/core/layout/CardSection.svelte';
