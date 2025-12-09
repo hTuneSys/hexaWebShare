@@ -48,7 +48,8 @@ SPDX-License-Identifier: MIT
 		 */
 		labelFor?: string;
 		/**
-		 * Whether to show error state styling
+		 * Whether the field has an error state
+		 * Note: This prop indicates the error state. Consumers must apply the `input-error` class to their input elements.
 		 * @default false
 		 */
 		hasError?: boolean;
@@ -82,9 +83,6 @@ SPDX-License-Identifier: MIT
 	// Generate unique ID if not provided
 	let fieldId = $derived(id || `form-field-${Math.random().toString(36).substr(2, 9)}`);
 	let labelForId = $derived(labelFor || fieldId);
-
-	// Determine if error state should be active
-	let isErrorState = $derived(hasError || (error !== undefined && error !== ''));
 
 	// Wrapper classes
 	let wrapperClasses = $derived(
@@ -137,17 +135,15 @@ SPDX-License-Identifier: MIT
 		</label>
 	{/if}
 
-	<div class={isErrorState ? 'input-error' : ''}>
-		<div class="relative">
-			{#if children}
-				{@render children()}
-			{/if}
-			{#if loading}
-				<div class="absolute right-3 top-1/2 -translate-y-1/2" role="status" aria-label="Loading">
-					<span class="loading loading-spinner {loadingSizeClass} text-primary"></span>
-				</div>
-			{/if}
-		</div>
+	<div class="relative">
+		{#if children}
+			{@render children()}
+		{/if}
+		{#if loading}
+			<div class="absolute right-3 top-1/2 -translate-y-1/2" role="status" aria-label="Loading">
+				<span class="loading loading-spinner {loadingSizeClass} text-primary"></span>
+			</div>
+		{/if}
 	</div>
 
 	{#if error && error !== ''}
