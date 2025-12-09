@@ -49,7 +49,7 @@ SPDX-License-Identifier: MIT
 		labelFor?: string;
 		/**
 		 * Whether the field has an error state
-		 * Note: This prop indicates the error state. Consumers must apply the `input-error` class to their input elements.
+		 * When true, automatically applies the `input-error` class to input, select, or textarea elements
 		 * @default false
 		 */
 		hasError?: boolean;
@@ -84,8 +84,57 @@ SPDX-License-Identifier: MIT
 	let fieldId = $derived(id || `form-field-${Math.random().toString(36).substr(2, 9)}`);
 	let labelForId = $derived(labelFor || fieldId);
 
-	// Note: hasError prop is informational only. Consumers must apply the `input-error` class
-	// to their input elements directly for proper DaisyUI styling.
+	// Reference to the wrapper div containing the input
+	let inputWrapperRef: HTMLDivElement | undefined = $state();
+
+	// Automatically apply input-error class to form elements when hasError or error is present
+	$effect(() => {
+		// Track hasError and error props for reactivity
+		const showError = hasError || (error !== undefined && error !== '');
+		
+		if (!inputWrapperRef) return;
+
+		// Use MutationObserver to watch for children being added
+		const observer = new MutationObserver(() => {
+			const formElements = inputWrapperRef?.querySelectorAll('input, select, textarea');
+			
+			if (!formElements || formElements.length === 0) return;
+			
+			formElements.forEach((element) => {
+				if (showError) {
+					element.classList.add('input-error');
+				} else {
+					element.classList.remove('input-error');
+				}
+			});
+		});
+
+		// Start observing
+		observer.observe(inputWrapperRef, {
+			childList: true,
+			subtree: true
+		});
+
+		// Also check immediately
+		requestAnimationFrame(() => {
+			const formElements = inputWrapperRef?.querySelectorAll('input, select, textarea');
+			
+			if (formElements && formElements.length > 0) {
+				formElements.forEach((element) => {
+					if (showError) {
+						element.classList.add('input-error');
+					} else {
+						element.classList.remove('input-error');
+					}
+				});
+			}
+		});
+
+		// Cleanup
+		return () => {
+			observer.disconnect();
+		};
+	});
 
 	// Wrapper classes
 	let wrapperClasses = $derived(
@@ -138,7 +187,7 @@ SPDX-License-Identifier: MIT
 		</label>
 	{/if}
 
-	<div class="relative">
+	<div class="relative" bind:this={inputWrapperRef}>
 		{#if children}
 			{@render children()}
 		{/if}

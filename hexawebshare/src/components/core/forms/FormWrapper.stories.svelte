@@ -40,7 +40,7 @@ SPDX-License-Identifier: MIT
 			},
 			hasError: {
 				control: 'boolean',
-				description: 'Whether to show error state styling'
+				description: 'Automatically applies input-error class to form elements when true'
 			},
 			loading: {
 				control: 'boolean',
@@ -86,13 +86,13 @@ SPDX-License-Identifier: MIT
 </Story>
 
 <!-- With Error -->
-<Story name="With Error">
+<Story name="With Error" args={{ label: 'Email Address', error: 'Please enter a valid email address', hasError: true }}>
 	<div class="w-full max-w-xs">
 		<FormWrapper label="Email Address" error="Please enter a valid email address" hasError={true}>
 			<input
 				type="email"
 				placeholder="example@email.com"
-				class="input input-bordered input-error w-full"
+				class="input input-bordered w-full"
 			/>
 		</FormWrapper>
 	</div>
@@ -165,7 +165,7 @@ SPDX-License-Identifier: MIT
 			<input
 				type="email"
 				placeholder="example@email.com"
-				class="input input-bordered input-error w-full"
+				class="input input-bordered w-full"
 			/>
 		</FormWrapper>
 
@@ -206,7 +206,7 @@ SPDX-License-Identifier: MIT
 			<input
 				type="text"
 				placeholder="Required field"
-				class="input input-bordered input-error w-full"
+				class="input input-bordered w-full"
 			/>
 		</FormWrapper>
 	</div>
@@ -237,7 +237,7 @@ SPDX-License-Identifier: MIT
 			<input
 				type="email"
 				placeholder="example@email.com"
-				class="input input-bordered input-error w-full pr-10"
+				class="input input-bordered w-full pr-10"
 			/>
 		</FormWrapper>
 	</div>
@@ -264,7 +264,7 @@ SPDX-License-Identifier: MIT
 			<input
 				type="password"
 				placeholder="Enter password"
-				class="input input-bordered input-error w-full"
+				class="input input-bordered w-full"
 			/>
 		</FormWrapper>
 	</div>
