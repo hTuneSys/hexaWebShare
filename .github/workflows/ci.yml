@@ -30,7 +30,9 @@ jobs:
       
       - name: Install dependencies
         working-directory: hexawebshare
-        run: pnpm install --no-frozen-lockfile
+        run: |
+          rm -rf node_modules
+          pnpm install --frozen-lockfile
       
       - name: Type check
         working-directory: hexawebshare
