@@ -84,6 +84,9 @@ SPDX-License-Identifier: MIT
 	let fieldId = $derived(id || `form-field-${Math.random().toString(36).substr(2, 9)}`);
 	let labelForId = $derived(labelFor || fieldId);
 
+	// Note: hasError prop is informational only. Consumers must apply the `input-error` class
+	// to their input elements directly for proper DaisyUI styling.
+
 	// Wrapper classes
 	let wrapperClasses = $derived(
 		[
