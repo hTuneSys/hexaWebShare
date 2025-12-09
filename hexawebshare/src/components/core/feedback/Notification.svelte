@@ -15,6 +15,11 @@ SPDX-License-Identifier: MIT
 		 */
 		children?: Children;
 		/**
+		 * Controls visibility of the notification
+		 * @default true
+		 */
+		open?: boolean;
+		/**
 		 * Visual style of the notification
 		 * @default 'info'
 		 */
@@ -89,6 +94,7 @@ SPDX-License-Identifier: MIT
 
 	const {
 		children,
+		open,
 		variant = 'info',
 		title = '',
 		message = '',
@@ -106,8 +112,12 @@ SPDX-License-Identifier: MIT
 		...props
 	}: Props = $props();
 
+	const isControlled = open !== undefined;
+
 	const dispatch = createEventDispatcher<{ close: void; action: void }>();
-	let isVisible = $state(true);
+	let isVisible = $state(open ?? true);
+
+	const visible = $derived(isControlled ? (open ?? false) : isVisible);
 
 	const defaultSlot = $derived(typeof children === 'function' ? children : children?.default);
 
@@ -163,7 +173,9 @@ SPDX-License-Identifier: MIT
 	);
 
 	const handleClose = () => {
-		isVisible = false;
+		if (!isControlled) {
+			isVisible = false;
+		}
 		dispatch('close');
 	};
 
@@ -172,7 +184,7 @@ SPDX-License-Identifier: MIT
 	};
 </script>
 
-{#if isVisible}
+{#if visible}
 	<div
 		class={notificationClasses}
 		role={computedRole}

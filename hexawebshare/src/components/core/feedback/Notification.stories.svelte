@@ -27,6 +27,7 @@ SPDX-License-Identifier: MIT
 			},
 			title: { control: 'text', description: 'Title displayed in bold' },
 			message: { control: 'text', description: 'Supporting message' },
+			open: { control: 'boolean', description: 'Controls visibility' },
 			closable: { control: 'boolean', description: 'Show close button' },
 			actionLabel: { control: 'text', description: 'Text for the action button' },
 			withIcon: { control: 'boolean', description: 'Show leading indicator' },
@@ -43,6 +44,7 @@ SPDX-License-Identifier: MIT
 			variant: 'info',
 			title: 'System update available',
 			message: 'A new version is ready to install. Please review the changes.',
+			open: true,
 			closable: true,
 			actionLabel: 'Review',
 			withIcon: true,
@@ -87,6 +89,7 @@ SPDX-License-Identifier: MIT
 	name="Disabled"
 	args={{
 		disabled: true,
+		open: true,
 		actionLabel: 'Details',
 		title: 'Disabled notification',
 		message: 'Interactions are disabled.'
