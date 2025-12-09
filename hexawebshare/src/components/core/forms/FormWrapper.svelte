@@ -91,15 +91,15 @@ SPDX-License-Identifier: MIT
 	$effect(() => {
 		// Track hasError and error props for reactivity
 		const showError = hasError || (error !== undefined && error !== '');
-		
+
 		if (!inputWrapperRef) return;
 
 		// Use MutationObserver to watch for children being added
 		const observer = new MutationObserver(() => {
 			const formElements = inputWrapperRef?.querySelectorAll('input, select, textarea');
-			
+
 			if (!formElements || formElements.length === 0) return;
-			
+
 			formElements.forEach((element) => {
 				if (showError) {
 					element.classList.add('input-error');
@@ -118,7 +118,7 @@ SPDX-License-Identifier: MIT
 		// Also check immediately
 		requestAnimationFrame(() => {
 			const formElements = inputWrapperRef?.querySelectorAll('input, select, textarea');
-			
+
 			if (formElements && formElements.length > 0) {
 				formElements.forEach((element) => {
 					if (showError) {

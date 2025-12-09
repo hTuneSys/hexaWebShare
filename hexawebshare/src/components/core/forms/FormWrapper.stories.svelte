@@ -86,14 +86,13 @@ SPDX-License-Identifier: MIT
 </Story>
 
 <!-- With Error -->
-<Story name="With Error" args={{ label: 'Email Address', error: 'Please enter a valid email address', hasError: true }}>
+<Story
+	name="With Error"
+	args={{ label: 'Email Address', error: 'Please enter a valid email address', hasError: true }}
+>
 	<div class="w-full max-w-xs">
 		<FormWrapper label="Email Address" error="Please enter a valid email address" hasError={true}>
-			<input
-				type="email"
-				placeholder="example@email.com"
-				class="input input-bordered w-full"
-			/>
+			<input type="email" placeholder="example@email.com" class="input input-bordered w-full" />
 		</FormWrapper>
 	</div>
 </Story>
@@ -162,11 +161,7 @@ SPDX-License-Identifier: MIT
 			error="This email is already registered"
 			hasError={true}
 		>
-			<input
-				type="email"
-				placeholder="example@email.com"
-				class="input input-bordered w-full"
-			/>
+			<input type="email" placeholder="example@email.com" class="input input-bordered w-full" />
 		</FormWrapper>
 
 		<FormWrapper label="Phone Number" helpText="Optional">
@@ -203,11 +198,7 @@ SPDX-License-Identifier: MIT
 <Story name="Error State Only">
 	<div class="w-full max-w-xs">
 		<FormWrapper error="This field is required" hasError={true}>
-			<input
-				type="text"
-				placeholder="Required field"
-				class="input input-bordered w-full"
-			/>
+			<input type="text" placeholder="Required field" class="input input-bordered w-full" />
 		</FormWrapper>
 	</div>
 </Story>
@@ -261,11 +252,7 @@ SPDX-License-Identifier: MIT
 			error="Password must be at least 8 characters"
 			hasError={true}
 		>
-			<input
-				type="password"
-				placeholder="Enter password"
-				class="input input-bordered w-full"
-			/>
+			<input type="password" placeholder="Enter password" class="input input-bordered w-full" />
 		</FormWrapper>
 	</div>
 </Story>
