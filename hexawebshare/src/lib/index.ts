@@ -5,3 +5,6 @@
 
 // Core - Feedback
 export { default as Spinner } from '../components/core/feedback/Spinner.svelte';
+
+// Core - Media
+export { default as Icon } from '../components/core/media/Icon.svelte';
