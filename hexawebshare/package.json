@@ -69,6 +69,7 @@
 		"svelte"
 	],
 	"dependencies": {
-		"daisyui": "^4.12.24"
+		"daisyui": "^4.12.24",
+		"lucide-svelte": "^0.556.0"
 	}
 }
