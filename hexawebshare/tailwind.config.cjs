@@ -1,15 +1,11 @@
 // SPDX-FileCopyrightText: 2025 hexaTune LLC
 // SPDX-License-Identifier: MIT
 
-import forms from '@tailwindcss/forms';
-import typography from '@tailwindcss/typography';
-import daisyui from 'daisyui';
-
 /** @type {import('tailwindcss').Config} */
-export default {
+module.exports = {
 	content: ['./src/**/*.{html,js,svelte,ts}'],
 
-	plugins: [forms, typography, daisyui],
+	plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography'), require('daisyui')],
 
 	daisyui: {
 		themes: ['light', 'dark'],
