@@ -33,7 +33,8 @@ jobs:
         run: |
           rm -rf node_modules
           pnpm install --no-frozen-lockfile
-          pnpm rebuild esbuild
+          rm -rf node_modules/.pnpm/esbuild@*
+          pnpm install --no-frozen-lockfile
       
       - name: Type check
         working-directory: hexawebshare
