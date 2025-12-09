@@ -16,6 +16,15 @@ SPDX-License-Identifier: MIT
 		| 'bottom-center';
 	type LiveSetting = 'polite' | 'assertive';
 
+	/**
+	 * Toast notification component
+	 *
+	 * Note: This is a single-toast component. For multiple simultaneous toasts,
+	 * use a toast manager or queue system (not included).
+	 *
+	 * @example
+	 * <Toast message="Saved" variant="success" />
+	 */
 	interface Props {
 		/** Main message shown inside the toast */
 		message?: string;
@@ -43,6 +52,11 @@ SPDX-License-Identifier: MIT
 		onAction?: () => void;
 		/** Optional callback fired when the toast is dismissed */
 		onDismiss?: () => void;
+		/**
+		 * Automatically dismiss toast after action button is clicked
+		 * @default true
+		 */
+		dismissOnAction?: boolean;
 		/** ARIA live setting */
 		ariaLive?: LiveSetting;
 		/** Custom ARIA label */
@@ -67,6 +81,7 @@ SPDX-License-Identifier: MIT
 		actionLabel,
 		onAction,
 		onDismiss,
+		dismissOnAction = true,
 		ariaLive = variant === 'error' || variant === 'warning' ? 'assertive' : 'polite',
 		ariaLabel = 'Toast notification',
 		class: className = '',
@@ -100,6 +115,8 @@ SPDX-License-Identifier: MIT
 
 	let visible = $state(true);
 	let isHovering = $state(false);
+	let startTime = $state<number | null>(null);
+	let remainingTime = $state(duration);
 	let timeoutId: ReturnType<typeof setTimeout> | null = null;
 
 	let containerClasses = $derived(
@@ -128,18 +145,29 @@ SPDX-License-Identifier: MIT
 			clearTimeout(timeoutId);
 			timeoutId = null;
 		}
+
+		startTime = null;
 	}
 
 	function scheduleDismiss() {
-		if (duration === null || duration <= 0) {
+		if (remainingTime === null || remainingTime <= 0) {
 			clearTimer();
 			return;
 		}
 
 		clearTimer();
+		startTime = Date.now();
 		timeoutId = setTimeout(() => {
 			handleDismiss();
-		}, duration);
+		}, remainingTime);
+	}
+
+	function pauseTimer() {
+		if (timeoutId && startTime !== null) {
+			const elapsed = Date.now() - startTime;
+			remainingTime = Math.max(0, (remainingTime ?? duration ?? 0) - elapsed);
+			clearTimer();
+		}
 	}
 
 	$effect(() => {
@@ -154,8 +182,12 @@ SPDX-License-Identifier: MIT
 		}
 
 		if (pauseOnHover && isHovering) {
-			clearTimer();
+			pauseTimer();
 			return;
+		}
+
+		if (remainingTime === null) {
+			remainingTime = duration;
 		}
 
 		scheduleDismiss();
@@ -175,6 +207,10 @@ SPDX-License-Identifier: MIT
 
 		onAction?.();
 		dispatch('action');
+
+		if (dismissOnAction) {
+			handleDismiss();
+		}
 	}
 
 	function handleMouseEnter() {
@@ -230,12 +266,12 @@ SPDX-License-Identifier: MIT
 				{#if closable}
 					<button
 						type="button"
-						class="btn btn-ghost btn-sm"
+						class="btn btn-square btn-ghost btn-sm"
 						aria-label="Close notification"
 						onclick={handleDismiss}
 						{disabled}
 					>
-						x
+						<span aria-hidden="true">&times;</span>
 					</button>
 				{/if}
 			</div>
