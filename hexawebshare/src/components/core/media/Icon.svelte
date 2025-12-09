@@ -119,7 +119,7 @@ SPDX-License-Identifier: MIT
 			aria-label={ariaLabel}
 			aria-hidden={isDecorative}
 			role={isDecorative ? undefined : 'img'}
-			{...(shouldBeFocusable ? { tabindex: 0 } : {})}
+			{...shouldBeFocusable ? { tabindex: 0 } : {}}
 			{...props}
 		/>
 	{/if}
