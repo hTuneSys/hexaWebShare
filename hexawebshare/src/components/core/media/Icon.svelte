@@ -97,10 +97,10 @@ SPDX-License-Identifier: MIT
 
 	// Get icon component from lucide-svelte, fallback to first available icon if not found
 	type ComponentType = typeof import('svelte').SvelteComponent;
-	let IconComponent = $derived(
-		(icons[iconName as keyof typeof icons] as ComponentType) ||
-			(Object.values(icons)[0] as ComponentType)
-	);
+	let IconComponent = $derived(() => {
+		const icon = icons[iconName as keyof typeof icons] as ComponentType;
+		return icon || (Object.values(icons)[0] as ComponentType);
+	});
 </script>
 
 {#if loading}

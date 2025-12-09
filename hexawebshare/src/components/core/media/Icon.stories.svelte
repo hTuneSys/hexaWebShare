@@ -53,7 +53,7 @@ SPDX-License-Identifier: MIT
 			}
 		},
 		args: {
-			name: 'icon',
+			name: 'Home',
 			size: 'md',
 			variant: 'neutral'
 		}
@@ -61,40 +61,43 @@ SPDX-License-Identifier: MIT
 </script>
 
 <!-- Default Story -->
-<Story name="Default" args={{ name: 'icon', size: 'md', variant: 'neutral' }} />
+<Story name="Default" args={{ name: 'Home', size: 'md', variant: 'neutral' }} />
 
 <!-- Size Stories -->
-<Story name="Extra Small" args={{ name: 'icon', size: 'xs', variant: 'neutral' }} />
-<Story name="Small" args={{ name: 'icon', size: 'sm', variant: 'neutral' }} />
-<Story name="Medium" args={{ name: 'icon', size: 'md', variant: 'neutral' }} />
-<Story name="Large" args={{ name: 'icon', size: 'lg', variant: 'neutral' }} />
+<Story name="Extra Small" args={{ name: 'Home', size: 'xs', variant: 'neutral' }} />
+<Story name="Small" args={{ name: 'Home', size: 'sm', variant: 'neutral' }} />
+<Story name="Medium" args={{ name: 'Home', size: 'md', variant: 'neutral' }} />
+<Story name="Large" args={{ name: 'Home', size: 'lg', variant: 'neutral' }} />
 
 <!-- Variant Stories -->
-<Story name="Primary" args={{ name: 'icon', size: 'md', variant: 'primary' }} />
-<Story name="Secondary" args={{ name: 'icon', size: 'md', variant: 'secondary' }} />
-<Story name="Accent" args={{ name: 'icon', size: 'md', variant: 'accent' }} />
-<Story name="Neutral" args={{ name: 'icon', size: 'md', variant: 'neutral' }} />
-<Story name="Info" args={{ name: 'icon', size: 'md', variant: 'info' }} />
-<Story name="Success" args={{ name: 'icon', size: 'md', variant: 'success' }} />
-<Story name="Warning" args={{ name: 'icon', size: 'md', variant: 'warning' }} />
-<Story name="Error" args={{ name: 'icon', size: 'md', variant: 'error' }} />
+<Story name="Primary" args={{ name: 'Settings', size: 'md', variant: 'primary' }} />
+<Story name="Secondary" args={{ name: 'User', size: 'md', variant: 'secondary' }} />
+<Story name="Accent" args={{ name: 'Heart', size: 'md', variant: 'accent' }} />
+<Story name="Neutral" args={{ name: 'Info', size: 'md', variant: 'neutral' }} />
+<Story name="Info" args={{ name: 'Info', size: 'md', variant: 'info' }} />
+<Story name="Success" args={{ name: 'CheckCircle', size: 'md', variant: 'success' }} />
+<Story name="Warning" args={{ name: 'AlertTriangle', size: 'md', variant: 'warning' }} />
+<Story name="Error" args={{ name: 'XCircle', size: 'md', variant: 'error' }} />
 
 <!-- State Stories -->
-<Story name="Disabled" args={{ name: 'icon', size: 'md', variant: 'primary', disabled: true }} />
-<Story name="Loading" args={{ name: 'icon', size: 'md', variant: 'primary', loading: true }} />
+<Story
+	name="Disabled"
+	args={{ name: 'Settings', size: 'md', variant: 'primary', disabled: true }}
+/>
+<Story name="Loading" args={{ name: 'Settings', size: 'md', variant: 'primary', loading: true }} />
 
 <!-- Accessibility Stories -->
 <Story
 	name="With Aria Label"
-	args={{ name: 'icon', size: 'md', variant: 'primary', ariaLabel: 'Settings icon' }}
+	args={{ name: 'Settings', size: 'md', variant: 'primary', ariaLabel: 'Settings icon' }}
 />
 <Story
 	name="Decorative (Aria Hidden)"
-	args={{ name: 'icon', size: 'md', variant: 'neutral', ariaHidden: true }}
+	args={{ name: 'Home', size: 'md', variant: 'neutral', ariaHidden: true }}
 />
 
 <!-- Interactive Examples -->
 <Story
 	name="Playground"
-	args={{ name: 'icon', size: 'md', variant: 'primary', ariaLabel: 'Interactive icon' }}
+	args={{ name: 'Home', size: 'md', variant: 'primary', ariaLabel: 'Interactive icon' }}
 />
