@@ -4,6 +4,8 @@ SPDX-License-Identifier: MIT
 -->
 
 <script lang="ts">
+	import * as icons from 'lucide-svelte';
+
 	interface Props {
 		name: string;
 		size?: 'xs' | 'sm' | 'md' | 'lg';
@@ -59,7 +61,7 @@ SPDX-License-Identifier: MIT
 	);
 
 	// Accessibility: Determine if icon is decorative or semantic
-	let isDecorative = $derived(ariaHidden || (!ariaLabel && true));
+	let isDecorative = $derived(ariaHidden || !ariaLabel);
 	let shouldBeFocusable = $derived(!disabled && !isDecorative && ariaLabel !== undefined);
 
 	// Loading state classes
@@ -83,6 +85,22 @@ SPDX-License-Identifier: MIT
 			.filter(Boolean)
 			.join(' ')
 	);
+
+	// Dynamically select icon component based on name
+	// Convert kebab-case or camelCase to PascalCase for Lucide icon names
+	let iconName = $derived(
+		name
+			.split(/[-_]/)
+			.map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+			.join('')
+	);
+
+	// Get icon component from lucide-svelte, fallback to first available icon if not found
+	type ComponentType = typeof import('svelte').SvelteComponent;
+	let IconComponent = $derived(
+		(icons[iconName as keyof typeof icons] as ComponentType) ||
+			(Object.values(icons)[0] as ComponentType)
+	);
 </script>
 
 {#if loading}
@@ -90,33 +108,19 @@ SPDX-License-Identifier: MIT
 		class={loadingClasses}
 		aria-label={ariaLabel || 'Loading'}
 		aria-hidden={isDecorative}
-		aria-disabled={disabled}
 		role={isDecorative ? undefined : 'status'}
 		{...props}
 	></span>
 {:else}
-	<svg
-		class={iconClasses}
-		fill="currentColor"
-		viewBox="0 0 24 24"
-		aria-label={ariaLabel}
-		aria-hidden={isDecorative}
-		aria-disabled={disabled}
-		role={isDecorative ? undefined : 'img'}
-		focusable={shouldBeFocusable ? 'true' : 'false'}
-		{...props}
-	>
-		{#if ariaLabel && !isDecorative}
-			<title>{ariaLabel}</title>
-		{/if}
-		<!-- Icon content will be rendered here based on name prop -->
-		<path
-			d="M12 2L2 7L12 12L22 7L12 2Z"
-			stroke="currentColor"
-			stroke-width="2"
-			stroke-linecap="round"
-			stroke-linejoin="round"
-			fill="none"
+	{@const Component = IconComponent}
+	{#if Component}
+		<Component
+			class={iconClasses}
+			aria-label={ariaLabel}
+			aria-hidden={isDecorative}
+			role={isDecorative ? undefined : 'img'}
+			{...(shouldBeFocusable ? { tabindex: 0 } : {})}
+			{...props}
 		/>
-	</svg>
+	{/if}
 {/if}
