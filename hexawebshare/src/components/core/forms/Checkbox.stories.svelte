@@ -90,7 +90,7 @@ SPDX-License-Identifier: MIT
 <Story name="All Variants">
 	<div class="space-y-4">
 		<div>
-			<h3 class="text-lg font-bold mb-2">Color Variants</h3>
+			<h3 class="mb-2 text-lg font-bold">Color Variants</h3>
 			<div class="flex flex-wrap gap-4">
 				<Checkbox variant="primary" label="Primary" checked={true} />
 				<Checkbox variant="secondary" label="Secondary" checked={true} />
@@ -102,7 +102,7 @@ SPDX-License-Identifier: MIT
 			</div>
 		</div>
 		<div>
-			<h3 class="text-lg font-bold mb-2">Sizes</h3>
+			<h3 class="mb-2 text-lg font-bold">Sizes</h3>
 			<div class="flex flex-wrap items-center gap-4">
 				<Checkbox size="xs" label="Extra Small" checked={true} />
 				<Checkbox size="sm" label="Small" checked={true} />
@@ -111,7 +111,7 @@ SPDX-License-Identifier: MIT
 			</div>
 		</div>
 		<div>
-			<h3 class="text-lg font-bold mb-2">States</h3>
+			<h3 class="mb-2 text-lg font-bold">States</h3>
 			<div class="flex flex-wrap gap-4">
 				<Checkbox label="Unchecked" />
 				<Checkbox label="Checked" checked={true} />
