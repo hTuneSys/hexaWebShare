@@ -88,7 +88,7 @@ SPDX-License-Identifier: MIT
 
 	// Dynamically select icon component based on name
 	// Convert kebab-case or camelCase to PascalCase for Lucide icon names
-	let iconName = $derived(() => {
+	let iconName = $derived.by(() => {
 		// If already PascalCase (starts with uppercase), use as is
 		if (
 			name.charAt(0) === name.charAt(0).toUpperCase() &&
@@ -106,7 +106,7 @@ SPDX-License-Identifier: MIT
 	// Get icon component from lucide-svelte, fallback to first available icon if not found
 	type ComponentType = typeof import('svelte').SvelteComponent;
 	let IconComponent = $derived.by(() => {
-		const convertedName = iconName();
+		const convertedName = iconName;
 		let icon = icons[convertedName as keyof typeof icons] as ComponentType;
 
 		// If not found, try alternative names for common icons
@@ -134,16 +134,13 @@ SPDX-License-Identifier: MIT
 		role={isDecorative ? undefined : 'status'}
 		{...props}
 	></span>
-{:else}
-	{@const Component = IconComponent}
-	{#if Component}
-		<Component
-			class={iconClasses}
-			aria-label={ariaLabel}
-			aria-hidden={isDecorative}
-			role={isDecorative ? undefined : 'img'}
-			{...shouldBeFocusable ? { tabindex: 0 } : {}}
-			{...props}
-		/>
-	{/if}
+{:else if IconComponent}
+	<IconComponent
+		class={iconClasses}
+		aria-label={ariaLabel}
+		aria-hidden={isDecorative}
+		role={isDecorative ? undefined : 'img'}
+		{...shouldBeFocusable ? { tabindex: 0 } : {}}
+		{...props}
+	/>
 {/if}
