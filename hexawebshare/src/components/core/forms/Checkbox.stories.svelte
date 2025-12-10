@@ -7,7 +7,6 @@ SPDX-License-Identifier: MIT
 	import { defineMeta } from '@storybook/addon-svelte-csf';
 	import Checkbox from './Checkbox.svelte';
 	import { fn } from 'storybook/test';
-
 	const { Story } = defineMeta({
 		title: 'Core/Forms/Checkbox',
 		component: Checkbox,
@@ -15,37 +14,20 @@ SPDX-License-Identifier: MIT
 		argTypes: {
 			variant: {
 				control: { type: 'select' },
-				options: ['primary', 'secondary', 'accent', 'success', 'warning', 'info', 'error'],
-				description: 'The color variant of the checkbox'
+				options: ['primary', 'secondary', 'accent', 'success', 'warning', 'info', 'error']
 			},
 			size: {
 				control: { type: 'select' },
-				options: ['xs', 'sm', 'md', 'lg'],
-				description: 'The size of the checkbox'
+				options: ['xs', 'sm', 'md', 'lg']
 			},
-			checked: {
-				control: 'boolean',
-				description: 'Whether the checkbox is checked'
-			},
-			disabled: {
-				control: 'boolean',
-				description: 'Whether the checkbox is disabled'
-			},
-			indeterminate: {
-				control: 'boolean',
-				description: 'Whether the checkbox is in indeterminate state'
-			},
-			label: {
-				control: 'text',
-				description: 'Label text for the checkbox'
-			},
-			required: {
-				control: 'boolean',
-				description: 'Whether the checkbox is required'
-			}
+			checked: { control: 'boolean' },
+			disabled: { control: 'boolean' },
+			indeterminate: { control: 'boolean' },
+			label: { control: 'text' },
+			required: { control: 'boolean' }
 		},
 		args: {
-			onchange: fn()
+			onclick: fn()
 		}
 	});
 </script>
@@ -140,4 +122,3 @@ SPDX-License-Identifier: MIT
 		</div>
 	</div>
 </Story>
-
