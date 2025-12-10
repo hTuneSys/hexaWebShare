@@ -88,17 +88,40 @@ SPDX-License-Identifier: MIT
 
 	// Dynamically select icon component based on name
 	// Convert kebab-case or camelCase to PascalCase for Lucide icon names
-	let iconName = $derived(
-		name
+	let iconName = $derived(() => {
+		// If already PascalCase (starts with uppercase), use as is
+		if (
+			name.charAt(0) === name.charAt(0).toUpperCase() &&
+			name.charAt(0) !== name.charAt(0).toLowerCase()
+		) {
+			return name;
+		}
+		// Convert kebab-case or camelCase to PascalCase
+		return name
 			.split(/[-_]/)
-			.map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-			.join('')
-	);
+			.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+			.join('');
+	});
 
 	// Get icon component from lucide-svelte, fallback to first available icon if not found
 	type ComponentType = typeof import('svelte').SvelteComponent;
-	let IconComponent = $derived(() => {
-		const icon = icons[iconName as keyof typeof icons] as ComponentType;
+	let IconComponent = $derived.by(() => {
+		const convertedName = iconName();
+		let icon = icons[convertedName as keyof typeof icons] as ComponentType;
+
+		// If not found, try alternative names for common icons
+		if (!icon) {
+			// Try alternative names for Info icon
+			if (convertedName.includes('Info')) {
+				// Try 'Info' first (most common in Lucide)
+				icon =
+					(icons['Info' as keyof typeof icons] as ComponentType) ||
+					(icons['InfoCircle' as keyof typeof icons] as ComponentType) ||
+					(icons['CircleInfo' as keyof typeof icons] as ComponentType);
+			}
+		}
+
+		// Final fallback to first available icon
 		return icon || (Object.values(icons)[0] as ComponentType);
 	});
 </script>
