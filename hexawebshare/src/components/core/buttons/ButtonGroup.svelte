@@ -4,12 +4,15 @@ SPDX-License-Identifier: MIT
 -->
 
 <script lang="ts">
+	import type { Snippet } from 'svelte';
+
 	interface Props {
+		children: Snippet;
 		orientation?: 'horizontal' | 'vertical';
 		gap?: 'xs' | 'sm' | 'md' | 'lg';
 	}
 
-	const { orientation = 'horizontal', gap = 'sm', ...props }: Props = $props();
+	const { children, orientation = 'horizontal', gap = 'sm', ...props }: Props = $props();
 
 	let groupClasses = $derived(
 		[
@@ -26,5 +29,5 @@ SPDX-License-Identifier: MIT
 </script>
 
 <div class={groupClasses} {...props}>
-	<slot />
+	{@render children()}
 </div>

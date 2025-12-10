@@ -32,12 +32,14 @@ SPDX-License-Identifier: MIT
 </script>
 
 <ButtonGroup {orientation} {gap}>
-	{#each buttons as button}
-		<Button
-			label={button.label}
-			variant={button.variant || 'primary'}
-			size={button.size || 'md'}
-			disabled={button.disabled || false}
-		/>
-	{/each}
+	{#snippet children()}
+		{#each buttons as button}
+			<Button
+				label={button.label}
+				variant={button.variant || 'primary'}
+				size={button.size || 'md'}
+				disabled={button.disabled || false}
+			/>
+		{/each}
+	{/snippet}
 </ButtonGroup>
