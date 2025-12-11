@@ -4,13 +4,16 @@ SPDX-License-Identifier: MIT
 -->
 
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import type { Snippet } from 'svelte';
 
 	interface Props {
 		open: boolean;
-		title: string;
+		title?: string;
 		description?: string;
+		children?: Snippet;
 		size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+		closable?: boolean;
+		closeOnBackdropClick?: boolean;
 		onClose?: () => void;
 		ariaLabel?: string;
 		ariaLabelledBy?: string;
@@ -21,7 +24,10 @@ SPDX-License-Identifier: MIT
 		open,
 		title,
 		description,
+		children,
 		size = 'md',
+		closable = true,
+		closeOnBackdropClick = true,
 		onClose,
 		ariaLabel,
 		ariaLabelledBy,
@@ -29,11 +35,16 @@ SPDX-License-Identifier: MIT
 		...props
 	}: Props = $props();
 
+	// Generate unique IDs once (not reactive)
+	const titleId = `dialog-title-${crypto.randomUUID?.() ?? Math.random().toString(36).substr(2, 9)}`;
+	const descriptionId = `dialog-description-${crypto.randomUUID?.() ?? Math.random().toString(36).substr(2, 9)}`;
+
 	let modalClasses = $derived(['modal', open && 'modal-open', className].filter(Boolean).join(' '));
 
 	let modalBoxClasses = $derived(
 		[
 			'modal-box',
+			'relative',
 			size === 'xs' && 'max-w-xs',
 			size === 'sm' && 'max-w-sm',
 			size === 'md' && 'max-w-md',
@@ -44,9 +55,6 @@ SPDX-License-Identifier: MIT
 			.join(' ')
 	);
 
-	let titleId = $derived(`dialog-title-${Math.random().toString(36).substr(2, 9)}`);
-	let descriptionId = $derived(`dialog-description-${Math.random().toString(36).substr(2, 9)}`);
-
 	let modalElement = $state<HTMLDivElement | null>(null);
 	let previousActiveElement = $state<HTMLElement | null>(null);
 
@@ -56,6 +64,16 @@ SPDX-License-Identifier: MIT
 			onClose();
 		}
 	}
+
+	// ESC key listener - only active when modal is open
+	$effect(() => {
+		if (open) {
+			document.addEventListener('keydown', handleKeyDown);
+			return () => {
+				document.removeEventListener('keydown', handleKeyDown);
+			};
+		}
+	});
 
 	// Focus trap: Store previous active element and focus modal when opened
 	$effect(() => {
@@ -75,13 +93,6 @@ SPDX-License-Identifier: MIT
 			previousActiveElement.focus();
 		}
 	});
-
-	onMount(() => {
-		document.addEventListener('keydown', handleKeyDown);
-		return () => {
-			document.removeEventListener('keydown', handleKeyDown);
-		};
-	});
 </script>
 
 {#if open}
@@ -91,29 +102,43 @@ SPDX-License-Identifier: MIT
 		role="dialog"
 		aria-modal="true"
 		aria-label={ariaLabel}
-		aria-labelledby={ariaLabelledBy || titleId}
+		aria-labelledby={ariaLabelledBy || (title ? titleId : undefined)}
 		aria-describedby={description ? descriptionId : undefined}
 		{...props}
 	>
 		<div class={modalBoxClasses}>
-			<h3 id={titleId} class="text-lg font-bold">
-				{title}
-			</h3>
+			{#if closable}
+				<button
+					class="btn btn-circle btn-ghost btn-sm absolute right-2 top-2"
+					onclick={onClose}
+					aria-label="Close dialog"
+					type="button"
+				>
+					✕
+				</button>
+			{/if}
+
+			{#if title}
+				<h3 id={titleId} class="text-lg font-bold">
+					{title}
+				</h3>
+			{/if}
+
 			{#if description}
 				<p id={descriptionId} class="py-4">
 					{description}
 				</p>
 			{/if}
+
+			{#if children}
+				{@render children()}
+			{/if}
 		</div>
-		<form method="dialog">
-			<button
-				class="btn btn-circle btn-ghost btn-sm absolute right-2 top-2"
-				onclick={onClose}
-				aria-label="Close dialog"
-				type="button"
-			>
-				✕
-			</button>
-		</form>
+
+		{#if closeOnBackdropClick}
+			<form method="dialog" class="modal-backdrop">
+				<button type="button" onclick={onClose}>close</button>
+			</form>
+		{/if}
 	</div>
 {/if}

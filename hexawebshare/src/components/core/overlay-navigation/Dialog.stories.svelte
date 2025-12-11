@@ -29,6 +29,14 @@ SPDX-License-Identifier: MIT
 				options: ['xs', 'sm', 'md', 'lg', 'xl'],
 				description: 'Size of the dialog'
 			},
+			closable: {
+				control: 'boolean',
+				description: 'Show close button'
+			},
+			closeOnBackdropClick: {
+				control: 'boolean',
+				description: 'Close dialog when clicking backdrop'
+			},
 			ariaLabel: {
 				control: 'text',
 				description: 'Accessible label for screen readers'
@@ -122,6 +130,17 @@ SPDX-License-Identifier: MIT
 		size: 'md'
 	}}
 />
+
+<!-- With Children/Content -->
+<Story name="With Custom Content">
+	<Dialog open={true} title="Delete Confirmation" size="md">
+		<p>Are you sure you want to delete this item? This action cannot be undone.</p>
+		<div class="modal-action">
+			<button class="btn">Cancel</button>
+			<button class="btn btn-error">Delete</button>
+		</div>
+	</Dialog>
+</Story>
 
 <!-- Interactive Examples -->
 <Story
