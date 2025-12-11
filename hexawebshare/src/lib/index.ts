@@ -8,3 +8,6 @@ export { default as ButtonGroup } from '../components/core/buttons/ButtonGroup.s
 // Core - Feedback
 export { default as Spinner } from '../components/core/feedback/Spinner.svelte';
 export { default as Loader } from '../components/core/feedback/Loader.svelte';
+
+// Core - Overlay Navigation
+export { default as Dialog } from '../components/core/overlay-navigation/Dialog.svelte';
