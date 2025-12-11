@@ -123,4 +123,3 @@ SPDX-License-Identifier: MIT
 	name="Playground"
 	args={{ label: 'Chip', size: 'md', variant: 'primary', ariaLabel: 'Interactive chip' }}
 />
-
