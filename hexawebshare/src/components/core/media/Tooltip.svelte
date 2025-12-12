@@ -5,7 +5,6 @@ SPDX-License-Identifier: MIT
 
 <script lang="ts">
 	import type { Snippet } from 'svelte';
-	import { onMount } from 'svelte';
 
 	interface Props {
 		children: Snippet;
@@ -53,25 +52,26 @@ SPDX-License-Identifier: MIT
 	);
 
 	// Accessibility: Generate unique ID for tooltip
-	let tooltipId = $derived(`tooltip-${Math.random().toString(36).substr(2, 9)}`);
+	// Corrected: Use const and crypto.randomUUID for stable ID
+	const tooltipId = `tooltip-${typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2)}`;
 
 	// Keyboard navigation support
 	function handleKeydown(event: KeyboardEvent) {
 		if (disabled) return;
 
-		// Escape key closes tooltip (if we had programmatic control)
+		// Escape key closes tooltip (by blurring the trigger)
 		if (event.key === 'Escape') {
-			// Blur the trigger element to hide tooltip
 			if (triggerElement) {
 				triggerElement.blur();
 			}
 		}
 	}
 
-	// Find the first focusable child element
-	onMount(() => {
+	// Find the first focusable child element using $effect instead of onMount
+	$effect(() => {
 		if (tooltipElement) {
 			// Find the first interactive child element (button, input, link, etc.)
+			// We check this inside the effect to ensure DOM is ready
 			triggerElement =
 				tooltipElement.querySelector('button, a, input, select, textarea, [tabindex]') ||
 				(tooltipElement.firstElementChild as HTMLElement);
@@ -92,13 +92,13 @@ SPDX-License-Identifier: MIT
 			if (triggerElement) {
 				triggerElement.addEventListener('keydown', handleKeydown);
 			}
-		}
 
-		return () => {
-			if (triggerElement) {
-				triggerElement.removeEventListener('keydown', handleKeydown);
-			}
-		};
+			return () => {
+				if (triggerElement) {
+					triggerElement.removeEventListener('keydown', handleKeydown);
+				}
+			};
+		}
 	});
 </script>
 
@@ -107,8 +107,6 @@ SPDX-License-Identifier: MIT
 	class={tooltipClasses}
 	data-tip={disabled ? undefined : text}
 	aria-label={ariaLabel || (disabled ? undefined : text)}
-	aria-describedby={disabled ? undefined : tooltipId}
-	role="tooltip"
 	{...props}
 >
 	{@render children()}
