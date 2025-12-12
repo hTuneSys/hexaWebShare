@@ -42,6 +42,11 @@ SPDX-License-Identifier: MIT
 		 */
 		disabled?: boolean;
 		/**
+		 * Whether the badge is in loading state
+		 * @default false
+		 */
+		loading?: boolean;
+		/**
 		 * Accessible label for screen readers
 		 */
 		ariaLabel?: string;
@@ -62,6 +67,7 @@ SPDX-License-Identifier: MIT
 		size = 'md',
 		outline = false,
 		disabled = false,
+		loading = false,
 		ariaLabel,
 		ariaHidden = false,
 		class: className = '',
@@ -96,6 +102,17 @@ SPDX-License-Identifier: MIT
 	// Accessibility: Determine if badge is decorative or semantic
 	// Status badges are typically semantic, so default to false unless explicitly hidden
 	let isDecorative = $derived(ariaHidden || (!ariaLabel && false));
+
+	// Loading spinner size based on badge size
+	let spinnerSizeClass = $derived(
+		size === 'xs'
+			? 'loading-xs'
+			: size === 'sm'
+				? 'loading-sm'
+				: size === 'md'
+					? 'loading-md'
+					: 'loading-sm'
+	);
 </script>
 
 <span
@@ -103,8 +120,12 @@ SPDX-License-Identifier: MIT
 	aria-label={ariaLabel || (isDecorative ? undefined : label)}
 	aria-hidden={isDecorative}
 	aria-disabled={disabled}
+	aria-busy={loading}
 	role={isDecorative ? undefined : 'status'}
 	{...props}
 >
+	{#if loading}
+		<span class="loading loading-spinner {spinnerSizeClass} mr-1" aria-hidden="true"></span>
+	{/if}
 	{label}
 </span>

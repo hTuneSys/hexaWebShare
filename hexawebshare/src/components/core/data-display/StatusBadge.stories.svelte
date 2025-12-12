@@ -44,6 +44,10 @@ SPDX-License-Identifier: MIT
 				control: 'boolean',
 				description: 'Disable the status badge'
 			},
+			loading: {
+				control: 'boolean',
+				description: 'Show loading spinner in the status badge'
+			},
 			ariaLabel: {
 				control: 'text',
 				description: 'Accessible label for screen readers'
@@ -91,6 +95,14 @@ SPDX-License-Identifier: MIT
 <Story
 	name="Disabled"
 	args={{ label: 'Disabled Status', size: 'md', variant: 'primary', disabled: true }}
+/>
+<Story
+	name="Loading"
+	args={{ label: 'Loading Status', size: 'md', variant: 'info', loading: true }}
+/>
+<Story
+	name="Loading with Variant"
+	args={{ label: 'Processing', size: 'md', variant: 'primary', loading: true }}
 />
 
 <!-- Status Examples -->
