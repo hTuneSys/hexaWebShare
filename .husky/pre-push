@@ -1,0 +1,139 @@
+#!/bin/sh
+
+# SPDX-FileCopyrightText: 2025 hexaTune LLC
+# SPDX-License-Identifier: MIT
+
+# Pre-push hook for CI quality checks
+# This hook ensures all CI checks pass before pushing to remote
+
+echo ""
+echo "🔍 Running CI checks before push..."
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo ""
+
+# Check if we're in the correct directory
+if [ ! -d "hexawebshare" ]; then
+    echo "❌ ERROR: hexawebshare directory not found!"
+    echo "Please run this hook from the repository root."
+    echo ""
+    exit 1
+fi
+
+# Navigate to hexawebshare directory
+cd hexawebshare || exit 1
+
+# Check if pnpm is installed
+if ! command -v pnpm >/dev/null 2>&1; then
+    echo "❌ ERROR: pnpm not found!"
+    echo ""
+    echo "📦 pnpm is required for this project."
+    echo ""
+    echo "🔧 Installation Instructions:"
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo ""
+    echo "Install pnpm globally:"
+    echo "  $ npm install -g pnpm"
+    echo ""
+    echo "Or with Homebrew (macOS):"
+    echo "  $ brew install pnpm"
+    echo ""
+    echo "For more options, visit:"
+    echo "  https://pnpm.io/installation"
+    echo ""
+    exit 1
+fi
+
+# Check if node_modules exists
+if [ ! -d "node_modules" ]; then
+    echo "⚠️  WARNING: node_modules not found!"
+    echo "Installing dependencies first..."
+    echo ""
+    pnpm install
+    if [ $? -ne 0 ]; then
+        echo ""
+        echo "❌ Dependency installation failed!"
+        exit 1
+    fi
+    echo ""
+fi
+
+# 1. Type check
+echo "📘 [1/4] Running TypeScript type check..."
+pnpm check
+if [ $? -ne 0 ]; then
+    echo ""
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo "❌ Type check FAILED!"
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo ""
+    echo "💡 Fix TypeScript errors before pushing"
+    echo ""
+    echo "To see detailed errors, run:"
+    echo "  $ cd hexawebshare && pnpm check"
+    echo ""
+    exit 1
+fi
+echo "✅ Type check passed"
+echo ""
+
+# 2. Format check
+echo "📝 [2/4] Checking code formatting..."
+pnpm lint
+if [ $? -ne 0 ]; then
+    echo ""
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo "❌ Format check FAILED!"
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo ""
+    echo "💡 Run 'pnpm format' to auto-fix formatting issues"
+    echo ""
+    echo "To format your code, run:"
+    echo "  $ cd hexawebshare && pnpm format"
+    echo ""
+    exit 1
+fi
+echo "✅ Format check passed"
+echo ""
+
+# 3. Build check
+echo "🏗️  [3/4] Building library package..."
+pnpm build
+if [ $? -ne 0 ]; then
+    echo ""
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo "❌ Build FAILED!"
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo ""
+    echo "💡 Fix build errors before pushing"
+    echo ""
+    echo "To see detailed errors, run:"
+    echo "  $ cd hexawebshare && pnpm build"
+    echo ""
+    exit 1
+fi
+echo "✅ Build passed"
+echo ""
+
+# 4. Storybook build check
+echo "📚 [4/4] Building Storybook..."
+pnpm build-storybook
+if [ $? -ne 0 ]; then
+    echo ""
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo "❌ Storybook build FAILED!"
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo ""
+    echo "💡 Fix Storybook configuration/stories before pushing"
+    echo ""
+    echo "To see detailed errors, run:"
+    echo "  $ cd hexawebshare && pnpm build-storybook"
+    echo ""
+    exit 1
+fi
+echo "✅ Storybook build passed"
+echo ""
+
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "✨ All CI checks passed! Proceeding with push..."
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo ""

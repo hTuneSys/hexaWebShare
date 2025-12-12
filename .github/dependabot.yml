@@ -3,11 +3,12 @@
 
 version: 2
 updates:
-  - package-ecosystem: "cargo"
-    directory: "/firmware/"
+  - package-ecosystem: "npm"
+    directory: "/hexawebshare/"
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 5
+    versioning-strategy: "increase-if-necessary"
     labels:
       - "type:refactor"
       - "status:needs-review"
