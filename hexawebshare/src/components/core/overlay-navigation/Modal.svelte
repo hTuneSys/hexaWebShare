@@ -60,7 +60,15 @@ SPDX-License-Identifier: MIT
 	}
 </script>
 
-<dialog bind:this={dialogElement} class={dialogClasses} onclose={handleClose} oncancel={(e) => { e.preventDefault(); handleClose(); }}>
+<dialog
+	bind:this={dialogElement}
+	class={dialogClasses}
+	onclose={handleClose}
+	oncancel={(e) => {
+		e.preventDefault();
+		handleClose();
+	}}
+>
 	<div class={boxClasses}>
 		<!-- Step 7 & 8: Header & Title & Close Button -->
 		{#if title || onclose}
