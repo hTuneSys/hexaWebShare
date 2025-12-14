@@ -253,7 +253,7 @@ SPDX-License-Identifier: MIT
 			aria-invalid={Boolean(error && error !== '')}
 			aria-describedby={describedById}
 			aria-busy={loading}
-			value={value}
+			{value}
 			{disabled}
 			oninput={handleInput}
 			onchange={handleChange}
@@ -273,7 +273,7 @@ SPDX-License-Identifier: MIT
 		<div class="relative mt-1 h-8 text-xs text-base-content/70" aria-hidden="true">
 			{#each derivedMarks as mark (mark.value)}
 				<div
-					class="absolute flex flex-col items-center gap-1 -translate-x-1/2"
+					class="absolute flex -translate-x-1/2 flex-col items-center gap-1"
 					style="left: {((mark.value - min) / (max - min)) * 100}%"
 				>
 					<span class="h-2 w-px bg-base-content/40"></span>
