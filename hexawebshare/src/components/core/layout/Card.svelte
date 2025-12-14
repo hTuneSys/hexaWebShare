@@ -30,7 +30,15 @@ SPDX-License-Identifier: MIT
 		 * Color variant of the card
 		 * @default undefined (default card style)
 		 */
-		variant?: 'primary' | 'secondary' | 'accent' | 'neutral' | 'info' | 'success' | 'warning' | 'error';
+		variant?:
+			| 'primary'
+			| 'secondary'
+			| 'accent'
+			| 'neutral'
+			| 'info'
+			| 'success'
+			| 'warning'
+			| 'error';
 		/**
 		 * Add border to the card
 		 * @default false
@@ -163,12 +171,7 @@ SPDX-License-Identifier: MIT
 
 	// Card body classes
 	let bodyClasses = $derived(
-		[
-			'card-body',
-			centered && 'items-center text-center'
-		]
-			.filter(Boolean)
-			.join(' ')
+		['card-body', centered && 'items-center text-center'].filter(Boolean).join(' ')
 	);
 
 	// Handle card click

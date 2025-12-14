@@ -15,7 +15,16 @@ SPDX-License-Identifier: MIT
 		argTypes: {
 			variant: {
 				control: { type: 'select' },
-				options: ['primary', 'secondary', 'accent', 'neutral', 'info', 'success', 'warning', 'error']
+				options: [
+					'primary',
+					'secondary',
+					'accent',
+					'neutral',
+					'info',
+					'success',
+					'warning',
+					'error'
+				]
 			},
 			shadowSize: {
 				control: { type: 'select' },
@@ -182,7 +191,7 @@ SPDX-License-Identifier: MIT
 	</Card>
 </Story>
 
-<Story name="2XL Shadow">
+<Story name="Extra Extra Large Shadow">
 	<Card title="2XL Shadow" shadowSize="2xl">
 		<p>This card has a 2XL shadow.</p>
 	</Card>
@@ -195,7 +204,7 @@ SPDX-License-Identifier: MIT
 			<img
 				src="https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.webp"
 				alt="Movie"
-				class="w-64 h-full object-cover"
+				class="h-full w-64 object-cover"
 			/>
 		{/snippet}
 		{#snippet children()}
@@ -232,7 +241,7 @@ SPDX-License-Identifier: MIT
 
 <!-- State Stories -->
 <Story name="Loading State">
-	<Card title="Loading Card" loading={true} class="w-96 h-64">
+	<Card title="Loading Card" loading={true} class="h-64 w-96">
 		<p>This content won't be visible during loading.</p>
 	</Card>
 </Story>
@@ -263,7 +272,7 @@ SPDX-License-Identifier: MIT
 			<img
 				src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
 				alt="Product"
-				class="w-full h-64 object-cover"
+				class="h-64 w-full object-cover"
 			/>
 		{/snippet}
 		{#snippet children()}
@@ -289,7 +298,10 @@ SPDX-License-Identifier: MIT
 		{#snippet children()}
 			<div class="avatar mb-4">
 				<div class="w-24 rounded-full ring ring-primary ring-offset-2 ring-offset-base-100">
-					<img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" alt="User" />
+					<img
+						src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+						alt="User"
+					/>
 				</div>
 			</div>
 			<h2 class="card-title">Jane Doe</h2>
@@ -349,24 +361,27 @@ SPDX-License-Identifier: MIT
 			<img
 				src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
 				alt="Article"
-				class="w-full h-48 object-cover"
+				class="h-48 w-full object-cover"
 			/>
 		{/snippet}
 		{#snippet children()}
-			<div class="flex gap-2 mb-2">
+			<div class="mb-2 flex gap-2">
 				<div class="badge badge-primary">Technology</div>
 				<div class="badge badge-outline">Featured</div>
 			</div>
 			<h2 class="card-title">Understanding Modern Web Development</h2>
 			<p class="text-sm opacity-70">Published on December 14, 2025</p>
 			<p class="mt-2">
-				Explore the latest trends and best practices in modern web development,
-				including component libraries, TypeScript, and accessibility.
+				Explore the latest trends and best practices in modern web development, including component
+				libraries, TypeScript, and accessibility.
 			</p>
 			<div class="mt-3 flex items-center gap-2">
 				<div class="avatar">
 					<div class="w-8 rounded-full">
-						<img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" alt="Author" />
+						<img
+							src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+							alt="Author"
+						/>
 					</div>
 				</div>
 				<div class="text-sm">
@@ -414,8 +429,8 @@ SPDX-License-Identifier: MIT
 		role="article"
 	>
 		<p>
-			This card includes proper ARIA labels and roles for screen reader compatibility.
-			The card uses semantic HTML and follows WCAG guidelines.
+			This card includes proper ARIA labels and roles for screen reader compatibility. The card uses
+			semantic HTML and follows WCAG guidelines.
 		</p>
 		{#snippet actions()}
 			<button class="btn btn-primary btn-sm" aria-label="Perform primary action">
@@ -510,4 +525,3 @@ SPDX-License-Identifier: MIT
 		</div>
 	</div>
 </Story>
-
