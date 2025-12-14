@@ -4,6 +4,8 @@ SPDX-License-Identifier: MIT
 -->
 
 <script lang="ts">
+	import { createEventDispatcher } from 'svelte';
+
 	/**
 	 * Marker type used to render tick marks below the slider.
 	 */
@@ -91,6 +93,11 @@ SPDX-License-Identifier: MIT
 		 */
 		marks?: SliderMark[];
 		/**
+		 * Number of auto-generated marks (only used when marks prop is empty).
+		 * @default 5
+		 */
+		markCount?: number;
+		/**
 		 * Accessible label for screen readers.
 		 * @default 'Slider'
 		 */
@@ -109,8 +116,13 @@ SPDX-License-Identifier: MIT
 		class?: string;
 	}
 
+	const dispatch = createEventDispatcher<{
+		change: number;
+		input: number;
+	}>();
+
 	let {
-		value = 50,
+		value = $bindable(50),
 		min = 0,
 		max = 100,
 		step = 1,
@@ -124,6 +136,7 @@ SPDX-License-Identifier: MIT
 		loading = false,
 		disabled = false,
 		marks = [],
+		markCount = 5,
 		ariaLabel = 'Slider',
 		id,
 		name,
@@ -131,18 +144,16 @@ SPDX-License-Identifier: MIT
 		...props
 	}: Props = $props();
 
-	// Local state for the slider value to allow live feedback while still accepting controlled updates.
-	let sliderValue = $state(Math.min(Math.max(value, min), max));
-
-	// Keep internal value in sync if the parent updates the value prop.
+	// Clamp the value when it changes
 	$effect(() => {
-		const clampedValue = Math.min(Math.max(value, min), max);
-		if (clampedValue !== sliderValue) {
-			sliderValue = clampedValue;
+		const clamped = Math.min(Math.max(value, min), max);
+		if (clamped !== value) {
+			value = clamped;
 		}
 	});
 
-	let sliderId = $derived(id || `slider-${Math.random().toString(36).slice(2, 9)}`);
+	const sliderId =
+		id || `slider-${crypto.randomUUID?.() ?? Math.random().toString(36).slice(2, 9)}`;
 
 	let describedById = $derived(
 		error && error !== ''
@@ -175,22 +186,27 @@ SPDX-License-Identifier: MIT
 			.join(' ')
 	);
 
-	let valueLabel = $derived(`${sliderValue}`);
+	let valueLabel = $derived(`${value}`);
 
 	function handleInput(event: Event) {
 		const target = event.target as HTMLInputElement;
-		sliderValue = Number(target.value);
+		value = Number(target.value);
+		dispatch('input', value);
 	}
 
-	function generateDefaultMarks(minValue: number, maxValue: number): SliderMark[] {
+	function handleChange(event: Event) {
+		dispatch('change', value);
+	}
+
+	function generateDefaultMarks(minValue: number, maxValue: number, count: number): SliderMark[] {
 		if (!Number.isFinite(minValue) || !Number.isFinite(maxValue) || minValue === maxValue) {
 			return [];
 		}
 
-		const steps = 4;
+		const steps = count - 1;
 		const interval = (maxValue - minValue) / steps;
 
-		return Array.from({ length: steps + 1 }, (_, index) => {
+		return Array.from({ length: count }, (_, index) => {
 			const rawValue = minValue + interval * index;
 			const normalized = Number(parseFloat(rawValue.toFixed(2)));
 
@@ -201,7 +217,9 @@ SPDX-License-Identifier: MIT
 		});
 	}
 
-	let derivedMarks = $derived(marks && marks.length > 0 ? marks : generateDefaultMarks(min, max));
+	let derivedMarks = $derived(
+		marks && marks.length > 0 ? marks : generateDefaultMarks(min, max, markCount)
+	);
 </script>
 
 <div class="form-control w-full gap-2">
@@ -231,13 +249,14 @@ SPDX-License-Identifier: MIT
 			aria-label={ariaLabel}
 			aria-valuemin={min}
 			aria-valuemax={max}
-			aria-valuenow={sliderValue}
+			aria-valuenow={value}
 			aria-invalid={Boolean(error && error !== '')}
 			aria-describedby={describedById}
 			aria-busy={loading}
-			value={sliderValue}
+			value={value}
 			{disabled}
 			oninput={handleInput}
+			onchange={handleChange}
 			{...props}
 		/>
 		{#if showValue && !label}
@@ -251,9 +270,12 @@ SPDX-License-Identifier: MIT
 	</div>
 
 	{#if derivedMarks.length > 0}
-		<div class="mt-1 flex justify-between text-xs text-base-content/70" aria-hidden="true">
+		<div class="relative mt-1 h-8 text-xs text-base-content/70" aria-hidden="true">
 			{#each derivedMarks as mark (mark.value)}
-				<div class="flex flex-col items-center gap-1">
+				<div
+					class="absolute flex flex-col items-center gap-1 -translate-x-1/2"
+					style="left: {((mark.value - min) / (max - min)) * 100}%"
+				>
 					<span class="h-2 w-px bg-base-content/40"></span>
 					<span>{mark.label ?? mark.value}</span>
 				</div>
