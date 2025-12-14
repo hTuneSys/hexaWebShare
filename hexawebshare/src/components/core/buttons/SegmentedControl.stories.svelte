@@ -3,6 +3,7 @@ SPDX-FileCopyrightText: 2025 hexaTune LLC
 SPDX-License-Identifier: MIT
 -->
 
+<!-- Trigger CI lint -->
 <script module>
 	import { defineMeta } from '@storybook/addon-svelte-csf';
 	import SegmentedControl from './SegmentedControl.svelte';
