@@ -4,143 +4,84 @@ SPDX-License-Identifier: MIT
 -->
 
 <script lang="ts">
-	import * as icons from 'lucide-svelte';
-
+	import { icons } from 'lucide-svelte';
+	
 	interface Props {
+		/** Name of the icon from Lucide library (e.g. 'home', 'user', 'settings') */
 		name: string;
-		size?: 'xs' | 'sm' | 'md' | 'lg';
-		variant?:
-			| 'primary'
-			| 'secondary'
-			| 'accent'
-			| 'neutral'
-			| 'info'
-			| 'success'
-			| 'warning'
-			| 'error';
-		ariaLabel?: string;
-		ariaHidden?: boolean;
-		disabled?: boolean;
-		loading?: boolean;
+		/** Size of the icon */
+		size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+		/** Color variant */
+		variant?: 'primary' | 'secondary' | 'accent' | 'info' | 'success' | 'warning' | 'error' | 'ghost';
+		/** Additional CSS classes */
 		class?: string;
+		/** Accessible label for the icon */
+		ariaLabel?: string;
+		/** Whether to hide the icon from screen readers explicitly */
+		ariaHidden?: boolean;
+		/** Whether to spin the icon (e.g. for loading states) */
+		spin?: boolean;
+		
+		[key: string]: any;
 	}
 
 	const {
 		name,
 		size = 'md',
-		variant = 'neutral',
+		variant = 'ghost',
+		class: className = '',
 		ariaLabel,
 		ariaHidden = false,
-		disabled = false,
-		loading = false,
-		class: className = '',
+		spin = false,
 		...props
 	}: Props = $props();
 
+	// Resolve icon component dynamically
+	let IconComponent = $derived((icons as any)[name] || (icons as any)['HelpCircle'] || null);
+
 	let iconClasses = $derived(
 		[
-			'inline-block',
-			'flex-shrink-0',
-			size === 'xs' && 'w-4 h-4',
-			size === 'sm' && 'w-5 h-5',
+			'inline-block align-middle transition-colors duration-200',
+			// Sizes
+			size === 'xs' && 'w-3 h-3',
+			size === 'sm' && 'w-4 h-4',
 			size === 'md' && 'w-6 h-6',
 			size === 'lg' && 'w-8 h-8',
+			size === 'xl' && 'w-12 h-12',
+			// Variants (color)
 			variant === 'primary' && 'text-primary',
 			variant === 'secondary' && 'text-secondary',
 			variant === 'accent' && 'text-accent',
-			variant === 'neutral' && 'text-neutral',
 			variant === 'info' && 'text-info',
 			variant === 'success' && 'text-success',
 			variant === 'warning' && 'text-warning',
 			variant === 'error' && 'text-error',
-			disabled && 'opacity-50 cursor-not-allowed pointer-events-none',
+			variant === 'ghost' && 'text-current',
+			// Spin animation
+			spin && 'animate-spin',
 			className
 		]
 			.filter(Boolean)
 			.join(' ')
 	);
 
-	// Accessibility: Determine if icon is decorative or semantic
+	// Accessibility logic fix
 	let isDecorative = $derived(ariaHidden || !ariaLabel);
-	let shouldBeFocusable = $derived(!disabled && !isDecorative && ariaLabel !== undefined);
+	
+	// Focusable logic fix
+	let shouldBeFocusable = $derived(!isDecorative);
 
-	// Loading state classes
-	let loadingClasses = $derived(
-		[
-			'loading',
-			'loading-spinner',
-			size === 'xs' && 'loading-xs',
-			size === 'sm' && 'loading-sm',
-			size === 'md' && 'loading-md',
-			size === 'lg' && 'loading-lg',
-			variant === 'primary' && 'text-primary',
-			variant === 'secondary' && 'text-secondary',
-			variant === 'accent' && 'text-accent',
-			variant === 'neutral' && 'text-neutral',
-			variant === 'info' && 'text-info',
-			variant === 'success' && 'text-success',
-			variant === 'warning' && 'text-warning',
-			variant === 'error' && 'text-error'
-		]
-			.filter(Boolean)
-			.join(' ')
-	);
-
-	// Dynamically select icon component based on name
-	// Convert kebab-case or camelCase to PascalCase for Lucide icon names
-	let iconName = $derived.by(() => {
-		// If already PascalCase (starts with uppercase), use as is
-		if (
-			name.charAt(0) === name.charAt(0).toUpperCase() &&
-			name.charAt(0) !== name.charAt(0).toLowerCase()
-		) {
-			return name;
-		}
-		// Convert kebab-case or camelCase to PascalCase
-		return name
-			.split(/[-_]/)
-			.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-			.join('');
-	});
-
-	// Get icon component from lucide-svelte, fallback to first available icon if not found
-	type ComponentType = typeof import('svelte').SvelteComponent;
-	let IconComponent = $derived.by(() => {
-		const convertedName = iconName;
-		let icon = icons[convertedName as keyof typeof icons] as ComponentType;
-
-		// If not found, try alternative names for common icons
-		if (!icon) {
-			// Try alternative names for Info icon
-			if (convertedName.includes('Info')) {
-				// Try 'Info' first (most common in Lucide)
-				icon =
-					(icons['Info' as keyof typeof icons] as ComponentType) ||
-					(icons['InfoCircle' as keyof typeof icons] as ComponentType) ||
-					(icons['CircleInfo' as keyof typeof icons] as ComponentType);
-			}
-		}
-
-		// Final fallback to first available icon
-		return icon || (Object.values(icons)[0] as ComponentType);
-	});
 </script>
 
-{#if loading}
-	<span
-		class={loadingClasses}
-		aria-label={ariaLabel || 'Loading'}
-		aria-hidden={isDecorative}
-		role={isDecorative ? undefined : 'status'}
-		{...props}
-	></span>
-{:else if IconComponent}
-	<IconComponent
+{#if IconComponent}
+	<IconComponent 
 		class={iconClasses}
+		role={isDecorative ? 'presentation' : 'img'}
 		aria-label={ariaLabel}
 		aria-hidden={isDecorative}
-		role={isDecorative ? undefined : 'img'}
-		{...shouldBeFocusable ? { tabindex: 0 } : {}}
+		focusable={shouldBeFocusable}
 		{...props}
 	/>
+{:else}
+	<span class="text-error" title="Icon configuration error">?</span>
 {/if}

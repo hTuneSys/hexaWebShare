@@ -12,92 +12,67 @@ SPDX-License-Identifier: MIT
 		component: Icon,
 		tags: ['autodocs'],
 		argTypes: {
-			name: {
-				control: 'text',
-				description: 'Icon name/identifier'
-			},
+			name: { control: 'text' },
 			size: {
 				control: { type: 'select' },
-				options: ['xs', 'sm', 'md', 'lg'],
-				description: 'Size of the icon'
+				options: ['xs', 'sm', 'md', 'lg', 'xl']
 			},
 			variant: {
 				control: { type: 'select' },
-				options: [
-					'primary',
-					'secondary',
-					'accent',
-					'neutral',
-					'info',
-					'success',
-					'warning',
-					'error'
-				],
-				description: 'Color variant of the icon'
+				options: ['primary', 'secondary', 'accent', 'info', 'success', 'warning', 'error', 'ghost']
 			},
-			ariaLabel: {
-				control: 'text',
-				description: 'Accessible label for screen readers'
-			},
-			ariaHidden: {
-				control: 'boolean',
-				description: 'Hide icon from screen readers (decorative icons)'
-			},
-			disabled: {
-				control: 'boolean',
-				description: 'Disable the icon'
-			},
-			loading: {
-				control: 'boolean',
-				description: 'Show loading spinner instead of icon'
-			}
+			spin: { control: 'boolean' }
 		},
 		args: {
 			name: 'Home',
 			size: 'md',
-			variant: 'neutral'
+			variant: 'ghost'
 		}
 	});
 </script>
 
-<!-- Default Story -->
-<Story name="Default" args={{ name: 'Home', size: 'md', variant: 'neutral' }} />
+<Story name="Default" />
 
-<!-- Size Stories -->
-<Story name="Extra Small" args={{ name: 'Home', size: 'xs', variant: 'neutral' }} />
-<Story name="Small" args={{ name: 'Home', size: 'sm', variant: 'neutral' }} />
-<Story name="Medium" args={{ name: 'Home', size: 'md', variant: 'neutral' }} />
-<Story name="Large" args={{ name: 'Home', size: 'lg', variant: 'neutral' }} />
+<Story name="Common Icons">
+	<div class="flex gap-4">
+		<Icon name="Home" />
+		<Icon name="User" />
+		<Icon name="Settings" />
+		<Icon name="Bell" />
+		<Icon name="Search" />
+	</div>
+</Story>
 
-<!-- Variant Stories -->
-<Story name="Primary" args={{ name: 'Settings', size: 'md', variant: 'primary' }} />
-<Story name="Secondary" args={{ name: 'User', size: 'md', variant: 'secondary' }} />
-<Story name="Accent" args={{ name: 'Heart', size: 'md', variant: 'accent' }} />
-<Story name="Neutral" args={{ name: 'Info', size: 'md', variant: 'neutral' }} />
-<Story name="Info" args={{ name: 'Info', size: 'md', variant: 'info' }} />
-<Story name="Success" args={{ name: 'CheckCircle', size: 'md', variant: 'success' }} />
-<Story name="Warning" args={{ name: 'AlertTriangle', size: 'md', variant: 'warning' }} />
-<Story name="Error" args={{ name: 'XCircle', size: 'md', variant: 'error' }} />
+<Story name="Sizes">
+	<div class="flex items-center gap-4">
+		<Icon name="Heart" size="xs" />
+		<Icon name="Heart" size="sm" />
+		<Icon name="Heart" size="md" />
+		<Icon name="Heart" size="lg" />
+		<Icon name="Heart" size="xl" />
+	</div>
+</Story>
 
-<!-- State Stories -->
-<Story
-	name="Disabled"
-	args={{ name: 'Settings', size: 'md', variant: 'primary', disabled: true }}
-/>
-<Story name="Loading" args={{ name: 'Settings', size: 'md', variant: 'primary', loading: true }} />
+<Story name="Variants">
+	<div class="flex items-center gap-4 bg-base-200 p-4 rounded">
+		<Icon name="Ghost" variant="primary" />
+		<Icon name="Ghost" variant="secondary" />
+		<Icon name="Ghost" variant="accent" />
+		<Icon name="Ghost" variant="info" />
+		<Icon name="Ghost" variant="success" />
+		<Icon name="Ghost" variant="warning" />
+		<Icon name="Ghost" variant="error" />
+	</div>
+</Story>
 
-<!-- Accessibility Stories -->
-<Story
-	name="With Aria Label"
-	args={{ name: 'Settings', size: 'md', variant: 'primary', ariaLabel: 'Settings icon' }}
-/>
-<Story
-	name="Decorative (Aria Hidden)"
-	args={{ name: 'Home', size: 'md', variant: 'neutral', ariaHidden: true }}
-/>
+<Story name="Spin Animation">
+	<div class="flex items-center gap-4">
+		<Icon name="Loader2" spin />
+		<Icon name="RefreshCcw" spin />
+		<Icon name="Settings" spin />
+	</div>
+</Story>
 
-<!-- Interactive Examples -->
-<Story
-	name="Playground"
-	args={{ name: 'Home', size: 'md', variant: 'primary', ariaLabel: 'Interactive icon' }}
-/>
+<Story name="Invalid Icon">
+	<Icon name="ThisIconDoesNotExist" />
+</Story>
