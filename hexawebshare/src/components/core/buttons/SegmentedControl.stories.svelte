@@ -24,8 +24,8 @@ SPDX-License-Identifier: MIT
 	});
 </script>
 
-<Story 
-	name="Default" 
+<Story
+	name="Default"
 	args={{
 		options: [
 			{ label: 'Daily', value: 'daily' },
@@ -36,52 +36,49 @@ SPDX-License-Identifier: MIT
 	}}
 />
 
-<Story 
-	name="Size Variants" 
->
-	<div class="flex flex-col gap-4 items-start">
-		<SegmentedControl 
+<Story name="Size Variants">
+	<div class="flex flex-col items-start gap-4">
+		<SegmentedControl
 			options={[
 				{ label: 'Map', value: 'map' },
 				{ label: 'Transit', value: 'transit' },
 				{ label: 'Satellite', value: 'satellite' }
 			]}
 			value="map"
-			size="xs" 
+			size="xs"
 		/>
-		<SegmentedControl 
+		<SegmentedControl
 			options={[
 				{ label: 'Map', value: 'map' },
 				{ label: 'Transit', value: 'transit' },
 				{ label: 'Satellite', value: 'satellite' }
 			]}
 			value="map"
-			size="sm" 
+			size="sm"
 		/>
-		<SegmentedControl 
+		<SegmentedControl
 			options={[
 				{ label: 'Map', value: 'map' },
 				{ label: 'Transit', value: 'transit' },
 				{ label: 'Satellite', value: 'satellite' }
 			]}
 			value="map"
-			size="md" 
+			size="md"
 		/>
-		<SegmentedControl 
+		<SegmentedControl
 			options={[
 				{ label: 'Map', value: 'map' },
 				{ label: 'Transit', value: 'transit' },
 				{ label: 'Satellite', value: 'satellite' }
 			]}
 			value="map"
-			size="lg" 
+			size="lg"
 		/>
 	</div>
 </Story>
 
-
-<Story 
-	name="Disabled State" 
+<Story
+	name="Disabled State"
 	args={{
 		options: [
 			{ label: 'Option 1', value: 1 },
@@ -93,8 +90,8 @@ SPDX-License-Identifier: MIT
 	}}
 />
 
-<Story 
-	name="Disabled Option" 
+<Story
+	name="Disabled Option"
 	args={{
 		options: [
 			{ label: 'Enabled', value: 'enabled' },
@@ -105,8 +102,8 @@ SPDX-License-Identifier: MIT
 	}}
 />
 
-<Story 
-	name="Interactive Playground" 
+<Story
+	name="Interactive Playground"
 	args={{
 		options: [
 			{ label: 'First', value: 'first' },
