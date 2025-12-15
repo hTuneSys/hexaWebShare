@@ -9,5 +9,7 @@ export { default as ButtonGroup } from '../components/core/buttons/ButtonGroup.s
 export { default as Spinner } from '../components/core/feedback/Spinner.svelte';
 export { default as Loader } from '../components/core/feedback/Loader.svelte';
 
+// Core - Forms
+export { default as Slider } from '../components/core/forms/Slider.svelte';
 // Core - Overlay Navigation
 export { default as Dialog } from '../components/core/overlay-navigation/Dialog.svelte';
