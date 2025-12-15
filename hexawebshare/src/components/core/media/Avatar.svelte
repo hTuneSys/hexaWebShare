@@ -5,19 +5,50 @@ SPDX-License-Identifier: MIT
 
 <script lang="ts">
 	interface Props {
-		/** Image source URL */
+		/**
+		 * Image source URL
+		 * @default undefined
+		 */
 		src?: string;
-		/** Alt text for accessibility */
+		/**
+		 * Alt text for accessibility
+		 * @default 'Avatar'
+		 */
 		alt?: string;
-		/** Size of the avatar */
+		/**
+		 * Size of the avatar
+		 * @default 'md'
+		 */
 		size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-		/** Shape of the avatar mask */
+		/**
+		 * Shape of the avatar mask
+		 * @default 'circle'
+		 */
 		shape?: 'circle' | 'squircle' | 'hexagon' | 'triangle';
-		/** Status indicator */
+		/**
+		 * Status indicator
+		 * @default null
+		 */
 		status?: 'online' | 'offline' | null;
-		/** Placeholder text (initials) if no image is provided */
+		/**
+		 * Placeholder text (initials) if no image is provided
+		 * @default undefined
+		 */
 		placeholder?: string;
-		/** Additional CSS classes */
+		/**
+		 * ARIA label for screen readers
+		 * @default undefined (uses alt text)
+		 */
+		ariaLabel?: string;
+		/**
+		 * Whether avatar is decorative only
+		 * @default false
+		 */
+		ariaHidden?: boolean;
+		/**
+		 * Additional CSS classes
+		 * @default ''
+		 */
 		class?: string;
 	}
 
@@ -28,9 +59,15 @@ SPDX-License-Identifier: MIT
 		shape = 'circle',
 		status = null,
 		placeholder,
+		ariaLabel,
+		ariaHidden = false,
 		class: className = '',
 		...props
 	}: Props = $props();
+
+	// Accessibility logic
+	let isDecorative = $derived(ariaHidden);
+	let effectiveAriaLabel = $derived(ariaLabel || alt);
 
 	// Static DaisyUI classes via derived state
 	let containerClasses = $derived(
@@ -47,20 +84,22 @@ SPDX-License-Identifier: MIT
 
 	let maskClasses = $derived(
 		[
-			'w-24', // Default base width class, overridden by size logic if needed or handled via specific width classes
+			// Size classes (removed redundant base w-24)
 			size === 'xs' && 'w-8',
 			size === 'sm' && 'w-12',
 			size === 'md' && 'w-24',
 			size === 'lg' && 'w-32',
 			size === 'xl' && 'w-48',
-			// Mask shapes
-			!placeholder && 'mask',
-			!placeholder && shape === 'circle' && 'mask-circle',
-			!placeholder && shape === 'squircle' && 'mask-squircle',
-			!placeholder && shape === 'hexagon' && 'mask-hexagon',
-			!placeholder && shape === 'triangle' && 'mask-triangle',
-			// Placeholder specific styling
-			placeholder && 'bg-neutral text-neutral-content rounded-full'
+
+			// Mask shapes - apply to both images AND placeholders
+			'mask',
+			shape === 'circle' && 'mask-circle',
+			shape === 'squircle' && 'mask-squircle',
+			shape === 'hexagon' && 'mask-hexagon',
+			shape === 'triangle' && 'mask-triangle',
+
+			// Placeholder colors
+			placeholder && 'bg-neutral text-neutral-content flex items-center justify-center'
 		]
 			.filter(Boolean)
 			.join(' ')
@@ -80,15 +119,25 @@ SPDX-License-Identifier: MIT
 	);
 </script>
 
-<div class={containerClasses} {...props}>
+<div
+	class={containerClasses}
+	role={isDecorative ? 'presentation' : 'img'}
+	aria-label={!isDecorative ? effectiveAriaLabel : undefined}
+	aria-hidden={isDecorative}
+	{...props}
+>
 	<div class={maskClasses}>
 		{#if src}
 			<img {src} {alt} />
 		{:else if placeholder}
 			<span class={placeholderContentClasses}>{placeholder}</span>
 		{:else}
-			<!-- Default fallback if neither src nor placeholder is provided -->
-			<img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" {alt} />
+			<!-- Fallback: Show first letter of alt text -->
+			<span
+				class="flex h-full w-full items-center justify-center bg-base-300 text-base-content {placeholderContentClasses}"
+			>
+				{alt.charAt(0).toUpperCase() || '?'}
+			</span>
 		{/if}
 	</div>
 </div>
