@@ -281,12 +281,16 @@ SPDX-License-Identifier: MIT
 			maxSize={5242880}
 			helpText="Upload your resume (PDF, DOC, or DOCX, max 5MB)"
 			required={true}
+			variant="primary"
+			size="md"
 		/>
 		<FileUpload
 			label="Cover Letter"
 			accept=".pdf,.doc,.docx"
 			maxSize={5242880}
 			helpText="Upload your cover letter (PDF, DOC, or DOCX, max 5MB)"
+			variant="secondary"
+			size="md"
 		/>
 	</div>
 </Story>
@@ -319,60 +323,177 @@ SPDX-License-Identifier: MIT
 
 <!-- All Variants Showcase -->
 <Story name="All Variants">
-	<div class="w-full max-w-2xl space-y-4">
+	<div class="w-full max-w-2xl space-y-6">
 		<div>
-			<h3 class="mb-2 text-lg font-bold">Color Variants</h3>
-			<div class="space-y-2">
-				<FileUpload variant="primary" label="Primary" helpText="Primary variant" />
-				<FileUpload variant="secondary" label="Secondary" helpText="Secondary variant" />
-				<FileUpload variant="accent" label="Accent" helpText="Accent variant" />
-				<FileUpload variant="info" label="Info" helpText="Info variant" />
-				<FileUpload variant="success" label="Success" helpText="Success variant" />
-				<FileUpload variant="warning" label="Warning" helpText="Warning variant" />
-				<FileUpload variant="error" label="Error" helpText="Error variant" />
-			</div>
-		</div>
-		<div>
-			<h3 class="mb-2 text-lg font-bold">Sizes</h3>
-			<div class="space-y-2">
-				<FileUpload size="xs" label="Extra Small" helpText="XS size" />
-				<FileUpload size="sm" label="Small" helpText="SM size" />
-				<FileUpload size="md" label="Medium" helpText="MD size (Default)" />
-				<FileUpload size="lg" label="Large" helpText="LG size" />
-			</div>
-		</div>
-		<div>
-			<h3 class="mb-2 text-lg font-bold">States</h3>
-			<div class="space-y-2">
-				<FileUpload label="Default" helpText="Default state" />
-				<FileUpload label="Disabled" disabled={true} />
-				<FileUpload label="Loading" loading={true} />
-				<FileUpload label="Error" error="This field has an error" />
-				<FileUpload label="Required" required={true} helpText="Required field" />
-			</div>
-		</div>
-		<div>
-			<h3 class="mb-2 text-lg font-bold">Features</h3>
-			<div class="space-y-2">
-				<FileUpload label="Single File" helpText="Single file upload" />
-				<FileUpload label="Multiple Files" multiple={true} helpText="Multiple files upload" />
-				<FileUpload label="With Preview" showPreview={true} helpText="Preview enabled" />
-				<FileUpload label="Without Preview" showPreview={false} helpText="Preview disabled" />
-				<FileUpload label="With Drag Drop" dragDrop={true} helpText="Drag and drop enabled" />
-				<FileUpload label="Without Drag Drop" dragDrop={false} helpText="Drag and drop disabled" />
-			</div>
-		</div>
-		<div>
-			<h3 class="mb-2 text-lg font-bold">File Restrictions</h3>
-			<div class="space-y-2">
-				<FileUpload label="Images Only" accept="image/*" helpText="Only image files" />
-				<FileUpload label="PDF Only" accept=".pdf" helpText="PDF files only" />
-				<FileUpload label="With Max Size" maxSize={5242880} helpText="Maximum 5MB" />
+			<h3 class="mb-3 text-lg font-bold">Color Variants</h3>
+			<div class="space-y-3">
 				<FileUpload
-					label="With Max Files"
+					variant="primary"
+					label="Primary Upload"
+					helpText="Primary variant with custom styling"
+				/>
+				<FileUpload
+					variant="secondary"
+					label="Secondary Upload"
+					helpText="Secondary variant with custom styling"
+				/>
+				<FileUpload
+					variant="accent"
+					label="Accent Upload"
+					helpText="Accent variant with custom styling"
+				/>
+				<FileUpload
+					variant="info"
+					label="Info Upload"
+					helpText="Info variant with custom styling"
+				/>
+				<FileUpload
+					variant="success"
+					label="Success Upload"
+					helpText="Success variant with custom styling"
+				/>
+				<FileUpload
+					variant="warning"
+					label="Warning Upload"
+					helpText="Warning variant with custom styling"
+				/>
+				<FileUpload
+					variant="error"
+					label="Error Upload"
+					helpText="Error variant with custom styling"
+				/>
+			</div>
+		</div>
+		<div>
+			<h3 class="mb-3 text-lg font-bold">Sizes</h3>
+			<div class="space-y-3">
+				<FileUpload
+					size="xs"
+					label="Extra Small Upload"
+					helpText="XS size - compact form field"
+					variant="primary"
+				/>
+				<FileUpload
+					size="sm"
+					label="Small Upload"
+					helpText="SM size - smaller form field"
+					variant="primary"
+				/>
+				<FileUpload
+					size="md"
+					label="Medium Upload"
+					helpText="MD size (Default) - standard form field"
+					variant="primary"
+				/>
+				<FileUpload
+					size="lg"
+					label="Large Upload"
+					helpText="LG size - larger form field"
+					variant="primary"
+				/>
+			</div>
+		</div>
+		<div>
+			<h3 class="mb-3 text-lg font-bold">States</h3>
+			<div class="space-y-3">
+				<FileUpload
+					label="Default State"
+					helpText="Default state - ready for file selection"
+					variant="primary"
+				/>
+				<FileUpload
+					label="Disabled State"
+					disabled={true}
+					helpText="Disabled - cannot interact"
+					variant="primary"
+				/>
+				<FileUpload
+					label="Loading State"
+					loading={true}
+					helpText="Loading - file is being processed"
+					variant="primary"
+				/>
+				<FileUpload
+					label="Error State"
+					error="This field has an error message"
+					helpText="Error state with validation message"
+					variant="error"
+				/>
+				<FileUpload
+					label="Required Field"
+					required={true}
+					helpText="Required field - must be filled"
+					variant="primary"
+				/>
+			</div>
+		</div>
+		<div>
+			<h3 class="mb-3 text-lg font-bold">Features</h3>
+			<div class="space-y-3">
+				<FileUpload
+					label="Single File Upload"
+					helpText="Single file selection mode"
+					variant="primary"
+				/>
+				<FileUpload
+					label="Multiple Files Upload"
+					multiple={true}
+					helpText="Multiple files selection enabled"
+					variant="primary"
+				/>
+				<FileUpload
+					label="With Preview Enabled"
+					showPreview={true}
+					helpText="File preview is shown after selection"
+					variant="primary"
+				/>
+				<FileUpload
+					label="Without Preview"
+					showPreview={false}
+					helpText="File preview is disabled"
+					variant="primary"
+				/>
+				<FileUpload
+					label="With Drag & Drop"
+					dragDrop={true}
+					helpText="Drag and drop functionality enabled"
+					variant="primary"
+				/>
+				<FileUpload
+					label="Without Drag & Drop"
+					dragDrop={false}
+					helpText="Drag and drop functionality disabled"
+					variant="primary"
+				/>
+			</div>
+		</div>
+		<div>
+			<h3 class="mb-3 text-lg font-bold">File Restrictions</h3>
+			<div class="space-y-3">
+				<FileUpload
+					label="Images Only"
+					accept="image/*"
+					helpText="Only image files are accepted"
+					variant="primary"
+				/>
+				<FileUpload
+					label="PDF Files Only"
+					accept=".pdf"
+					helpText="Only PDF files are accepted"
+					variant="primary"
+				/>
+				<FileUpload
+					label="With Max Size Limit"
+					maxSize={5242880}
+					helpText="Maximum file size: 5MB"
+					variant="primary"
+				/>
+				<FileUpload
+					label="With Max Files Limit"
 					multiple={true}
 					maxFiles={3}
-					helpText="Maximum 3 files"
+					helpText="Maximum 3 files allowed"
+					variant="primary"
 				/>
 			</div>
 		</div>
