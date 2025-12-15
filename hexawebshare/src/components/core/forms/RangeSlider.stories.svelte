@@ -203,7 +203,13 @@ SPDX-License-Identifier: MIT
 <!-- Marks -->
 <Story
 	name="With Marks"
-	args={{ marks: marksExample, minValue: 25, maxValue: 75, label: 'With markers', showValues: true }}
+	args={{
+		marks: marksExample,
+		minValue: 25,
+		maxValue: 75,
+		label: 'With markers',
+		showValues: true
+	}}
 />
 
 <!-- Interaction -->
@@ -268,4 +274,3 @@ SPDX-License-Identifier: MIT
 		showValues: true
 	}}
 />
-

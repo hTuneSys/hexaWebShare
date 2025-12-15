@@ -235,7 +235,11 @@ SPDX-License-Identifier: MIT
 		dispatch('change', { minValue, maxValue });
 	}
 
-	function generateDefaultMarks(minValue: number, maxValue: number, count: number): RangeSliderMark[] {
+	function generateDefaultMarks(
+		minValue: number,
+		maxValue: number,
+		count: number
+	): RangeSliderMark[] {
 		if (!Number.isFinite(minValue) || !Number.isFinite(maxValue) || minValue === maxValue) {
 			return [];
 		}
@@ -281,7 +285,7 @@ SPDX-License-Identifier: MIT
 	{/if}
 
 	<div class="relative flex items-center gap-3">
-		<div class="relative flex-1 range-slider-container">
+		<div class="range-slider-container relative flex-1">
 			<!-- Min value input -->
 			<input
 				id={minInputId}
