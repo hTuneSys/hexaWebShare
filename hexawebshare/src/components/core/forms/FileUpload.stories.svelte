@@ -204,8 +204,7 @@ SPDX-License-Identifier: MIT
 	args={{
 		label: 'Disabled Error',
 		disabled: true,
-		error: 'This field is disabled',
-		value: 'Disabled value'
+		error: 'This field is disabled and cannot be used'
 	}}
 />
 
@@ -263,17 +262,16 @@ SPDX-License-Identifier: MIT
 />
 
 <!-- Real-world Examples -->
-<Story name="Profile Picture Upload">
-	<div class="w-full max-w-xs">
-		<FileUpload
-			label="Profile Picture"
-			accept="image/*"
-			maxSize={2097152}
-			helpText="Upload your profile picture (max 2MB)"
-			required={true}
-		/>
-	</div>
-</Story>
+<Story
+	name="Profile Picture Upload"
+	args={{
+		label: 'Profile Picture',
+		accept: 'image/*',
+		maxSize: 2097152,
+		helpText: 'Upload your profile picture (max 2MB). Supported formats: JPG, PNG, GIF',
+		required: true
+	}}
+/>
 
 <Story name="Document Upload Form">
 	<div class="w-full max-w-md space-y-4">
@@ -293,32 +291,31 @@ SPDX-License-Identifier: MIT
 	</div>
 </Story>
 
-<Story name="Multiple Images Upload">
-	<div class="w-full max-w-md">
-		<FileUpload
-			label="Product Images"
-			accept="image/*"
-			multiple={true}
-			maxFiles={5}
-			maxSize={5242880}
-			helpText="Upload up to 5 product images (max 5MB each)"
-			required={true}
-		/>
-	</div>
-</Story>
+<Story
+	name="Multiple Images Upload"
+	args={{
+		label: 'Product Images',
+		accept: 'image/*',
+		multiple: true,
+		maxFiles: 5,
+		maxSize: 5242880,
+		helpText: 'Upload up to 5 product images (max 5MB each). Drag and drop or click to browse',
+		required: true
+	}}
+/>
 
-<Story name="Gallery Upload">
-	<div class="w-full max-w-2xl">
-		<FileUpload
-			label="Photo Gallery"
-			accept="image/*"
-			multiple={true}
-			maxFiles={10}
-			maxSize={10485760}
-			helpText="Upload up to 10 photos for your gallery (max 10MB each)"
-		/>
-	</div>
-</Story>
+<Story
+	name="Gallery Upload"
+	args={{
+		label: 'Photo Gallery',
+		accept: 'image/*',
+		multiple: true,
+		maxFiles: 10,
+		maxSize: 10485760,
+		helpText:
+			'Upload up to 10 photos for your gallery (max 10MB each). You can select multiple files at once'
+	}}
+/>
 
 <!-- All Variants Showcase -->
 <Story name="All Variants">
