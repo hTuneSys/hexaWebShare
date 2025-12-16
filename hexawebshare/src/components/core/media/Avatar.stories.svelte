@@ -30,38 +30,36 @@ SPDX-License-Identifier: MIT
 		}
 	});
 
-	// prettier-ignore
-	const defaultSrc =
-		'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp';
+	const src = 'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp';
 </script>
 
 <Story name="Default">
-	<Avatar src={defaultSrc} />
+	<Avatar {src} />
 </Story>
 
 <Story name="Sizes">
 	<div class="flex items-center gap-4">
-		<Avatar size="xs" src={defaultSrc} />
-		<Avatar size="sm" src={defaultSrc} />
-		<Avatar size="md" src={defaultSrc} />
-		<Avatar size="lg" src={defaultSrc} />
-		<Avatar size="xl" src={defaultSrc} />
+		<Avatar size="xs" {src} />
+		<Avatar size="sm" {src} />
+		<Avatar size="md" {src} />
+		<Avatar size="lg" {src} />
+		<Avatar size="xl" {src} />
 	</div>
 </Story>
 
 <Story name="Shapes">
 	<div class="flex items-center gap-4">
-		<Avatar shape="circle" src={defaultSrc} />
-		<Avatar shape="squircle" src={defaultSrc} />
-		<Avatar shape="hexagon" src={defaultSrc} />
-		<Avatar shape="triangle" src={defaultSrc} />
+		<Avatar shape="circle" {src} />
+		<Avatar shape="squircle" {src} />
+		<Avatar shape="hexagon" {src} />
+		<Avatar shape="triangle" {src} />
 	</div>
 </Story>
 
 <Story name="Status Indicators">
 	<div class="flex items-center gap-4">
-		<Avatar status="online" src={defaultSrc} />
-		<Avatar status="offline" src={defaultSrc} />
+		<Avatar status="online" {src} />
+		<Avatar status="offline" {src} />
 	</div>
 </Story>
 
