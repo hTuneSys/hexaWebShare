@@ -10,3 +10,4 @@ bun.lockb
 
 # Miscellaneous
 /static/
+src/components/core/media/Avatar.stories.svelte
