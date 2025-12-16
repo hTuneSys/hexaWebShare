@@ -9,7 +9,7 @@ SPDX-License-Identifier: MIT
 
 	const { Story } = defineMeta({
 		title: 'Core/Media/Avatar',
-	/* component: Avatar, */ /* Removed to prevent implicit wrapping of children */
+		/* component: Avatar, */ /* Removed to prevent implicit wrapping of children */
 		tags: ['autodocs'],
 		argTypes: {
 			src: { control: 'text' },
