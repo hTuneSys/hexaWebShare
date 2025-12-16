@@ -9,7 +9,7 @@ SPDX-License-Identifier: MIT
 
 	const { Story } = defineMeta({
 		title: 'Core/Media/Avatar',
-		component: Avatar,
+	/* component: Avatar, */ /* Removed to prevent implicit wrapping of children */
 		tags: ['autodocs'],
 		argTypes: {
 			src: { control: 'text' },
@@ -26,49 +26,60 @@ SPDX-License-Identifier: MIT
 				control: { type: 'radio' },
 				options: ['online', 'offline', null]
 			},
-			placeholder: { control: 'text' }
-		},
-		args: {
-			src: 'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp',
-			alt: 'Avatar'
+			placeholder: { control: 'text' },
+			loading: { control: 'boolean' }
 		}
 	});
+
+	const defaultSrc = 'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp';
 </script>
 
-<Story name="Default" />
+<Story name="Default">
+	<Avatar src={defaultSrc} />
+</Story>
 
 <Story name="Sizes">
 	<div class="flex items-center gap-4">
-		<Avatar size="xs" />
-		<Avatar size="sm" />
-		<Avatar size="md" />
-		<Avatar size="lg" />
-		<Avatar size="xl" />
+		<Avatar size="xs" src={defaultSrc} />
+		<Avatar size="sm" src={defaultSrc} />
+		<Avatar size="md" src={defaultSrc} />
+		<Avatar size="lg" src={defaultSrc} />
+		<Avatar size="xl" src={defaultSrc} />
 	</div>
 </Story>
 
 <Story name="Shapes">
 	<div class="flex items-center gap-4">
-		<Avatar shape="circle" />
-		<Avatar shape="squircle" />
-		<Avatar shape="hexagon" />
-		<Avatar shape="triangle" />
+		<Avatar shape="circle" src={defaultSrc} />
+		<Avatar shape="squircle" src={defaultSrc} />
+		<Avatar shape="hexagon" src={defaultSrc} />
+		<Avatar shape="triangle" src={defaultSrc} />
 	</div>
 </Story>
 
 <Story name="Status Indicators">
 	<div class="flex items-center gap-4">
-		<Avatar status="online" />
-		<Avatar status="offline" />
+		<Avatar status="online" src={defaultSrc} />
+		<Avatar status="offline" src={defaultSrc} />
 	</div>
 </Story>
 
-<Story name="Placeholder" args={{ src: undefined, placeholder: 'H' }}>
+<Story name="Placeholder">
 	<div class="flex items-center gap-4">
 		<Avatar src={undefined} placeholder="XS" size="xs" />
 		<Avatar src={undefined} placeholder="SM" size="sm" />
 		<Avatar src={undefined} placeholder="MD" size="md" />
 		<Avatar src={undefined} placeholder="LG" size="lg" />
 		<Avatar src={undefined} placeholder="XL" size="xl" />
+	</div>
+</Story>
+
+<Story name="Loading">
+	<div class="flex items-center gap-4">
+		<Avatar loading={true} size="xs" />
+		<Avatar loading={true} size="sm" />
+		<Avatar loading={true} size="md" />
+		<Avatar loading={true} size="lg" />
+		<Avatar loading={true} size="xl" />
 	</div>
 </Story>
