@@ -30,7 +30,9 @@ SPDX-License-Identifier: MIT
 		}
 	});
 
-	const defaultSrc = 'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp';
+	// prettier-ignore
+	const defaultSrc =
+		'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp';
 </script>
 
 <Story name="Default">
