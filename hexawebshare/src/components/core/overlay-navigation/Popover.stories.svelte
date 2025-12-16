@@ -26,7 +26,16 @@ SPDX-License-Identifier: MIT
 			},
 			tone: {
 				control: { type: 'select' },
-				options: ['neutral', 'primary', 'secondary', 'accent', 'info', 'success', 'warning', 'error'],
+				options: [
+					'neutral',
+					'primary',
+					'secondary',
+					'accent',
+					'info',
+					'success',
+					'warning',
+					'error'
+				],
 				description: 'Color tone for the popover content'
 			},
 			size: {
@@ -135,7 +144,7 @@ SPDX-License-Identifier: MIT
 			<Button label="Aligned start" />
 		{/snippet}
 		{#snippet children()}
-			<div class="text-sm space-y-1">
+			<div class="space-y-1 text-sm">
 				<p class="font-semibold">Aligned start</p>
 				<p>Useful for left-anchored tooltips or menus.</p>
 			</div>
@@ -314,4 +323,3 @@ SPDX-License-Identifier: MIT
 		{/snippet}
 	</Popover>
 </Story>
-
