@@ -10,4 +10,3 @@ bun.lockb
 
 # Miscellaneous
 /static/
-**/*.stories.svelte
