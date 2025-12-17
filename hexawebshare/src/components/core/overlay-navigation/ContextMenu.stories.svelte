@@ -194,7 +194,6 @@ SPDX-License-Identifier: MIT
 			{ label: 'Cut', onClick: () => console.log('Cut') }
 		],
 		onClose: () => console.log('Menu closed - Use Controls to toggle open state'),
-		ariaLabel:
-			'File operations context menu - Use arrow keys to navigate, Enter to select, Escape to close'
+		ariaLabel: 'File operations context menu - Use arrow keys to navigate, Enter to select, Escape to close'
 	}}
 />
