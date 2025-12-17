@@ -9,6 +9,7 @@ SPDX-License-Identifier: MIT
 
 	const { Story } = defineMeta({
 		title: 'Core/Media/Avatar',
+		component: Avatar,
 		tags: ['autodocs'],
 		argTypes: {
 			src: { control: 'text' },
@@ -29,56 +30,142 @@ SPDX-License-Identifier: MIT
 			loading: { control: 'boolean' }
 		}
 	});
-
-	const src = 'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp';
 </script>
 
-<Story name="Default">
-	<Avatar {src} />
-</Story>
+<Story
+	name="Default"
+	args={{
+		src: 'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp',
+		alt: 'Avatar',
+		size: 'md',
+		shape: 'circle',
+		status: null
+	}}
+/>
 
-<Story name="Sizes">
-	<div class="flex items-center gap-4">
-		<Avatar size="xs" {src} />
-		<Avatar size="sm" {src} />
-		<Avatar size="md" {src} />
-		<Avatar size="lg" {src} />
-		<Avatar size="xl" {src} />
-	</div>
-</Story>
+<Story
+	name="Sizes"
+	args={{
+		src: 'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp',
+		alt: 'Large Avatar',
+		size: 'xl',
+		shape: 'circle',
+		status: null
+	}}
+/>
 
-<Story name="Shapes">
-	<div class="flex items-center gap-4">
-		<Avatar shape="circle" {src} />
-		<Avatar shape="squircle" {src} />
-		<Avatar shape="hexagon" {src} />
-		<Avatar shape="triangle" {src} />
-	</div>
-</Story>
+<Story
+	name="Shapes"
+	args={{
+		src: 'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp',
+		alt: 'Squircle Avatar',
+		size: 'md',
+		shape: 'squircle',
+		status: null
+	}}
+/>
 
-<Story name="Status Indicators">
-	<div class="flex items-center gap-4">
-		<Avatar status="online" {src} />
-		<Avatar status="offline" {src} />
-	</div>
-</Story>
+<Story
+	name="Status Indicators"
+	args={{
+		src: 'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp',
+		alt: 'Online Avatar',
+		size: 'md',
+		shape: 'circle',
+		status: 'online'
+	}}
+/>
 
-<Story name="Placeholder">
-	<div class="flex items-center gap-4">
-		<Avatar src={undefined} placeholder="XS" size="xs" />
-		<Avatar src={undefined} placeholder="SM" size="sm" />
-		<Avatar src={undefined} placeholder="MD" size="md" />
-		<Avatar src={undefined} placeholder="LG" size="lg" />
-		<Avatar src={undefined} placeholder="XL" size="xl" />
-	</div>
-</Story>
+<Story
+	name="Placeholder"
+	args={{
+		alt: 'Placeholder Avatar',
+		size: 'md',
+		shape: 'circle',
+		placeholder: 'AB'
+	}}
+/>
 
-<Story name="Loading">
-	<div class="flex items-center gap-4">
-		<Avatar loading={true} size="xs" />
-		<Avatar loading={true} size="sm" />
-		<Avatar loading={true} size="md" />
-		<Avatar loading={true} size="lg" />
-		<Avatar loading={true} size="xl" />
-	</div>
-</Story>
+<Story
+	name="Loading"
+	args={{
+		size: 'md',
+		shape: 'circle',
+		loading: true
+	}}
+/>
+
+<Story
+	name="Hexagon Shape"
+	args={{
+		src: 'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp',
+		alt: 'Hexagon Avatar',
+		size: 'md',
+		shape: 'hexagon',
+		status: null
+	}}
+/>
+
+<Story
+	name="Triangle Shape"
+	args={{
+		src: 'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp',
+		alt: 'Triangle Avatar',
+		size: 'md',
+		shape: 'triangle'
+	}}
+/>
+
+<Story
+	name="Offline Status"
+	args={{
+		src: 'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp',
+		alt: 'Offline Avatar',
+		size: 'md',
+		shape: 'circle',
+		status: 'offline'
+	}}
+/>
+
+<Story
+	name="Small Size"
+	args={{
+		src: 'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp',
+		alt: 'Small Avatar',
+		size: 'xs',
+		shape: 'circle',
+		status: null
+	}}
+/>
+
+<Story
+	name="Custom Placeholder"
+	args={{
+		alt: 'Custom Placeholder',
+		size: 'lg',
+		shape: 'circle',
+		placeholder: 'JD'
+	}}
+/>
+
+<Story
+	name="Large with Status"
+	args={{
+		src: 'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp',
+		alt: 'Large Online Avatar',
+		size: 'lg',
+		shape: 'circle',
+		status: 'online'
+	}}
+/>
+
+<Story
+	name="Squircle Online"
+	args={{
+		src: 'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp',
+		alt: 'Squircle Online Avatar',
+		size: 'md',
+		shape: 'squircle',
+		status: 'online'
+	}}
+/>
