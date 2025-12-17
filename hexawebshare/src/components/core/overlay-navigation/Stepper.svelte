@@ -35,7 +35,15 @@ SPDX-License-Identifier: MIT
 		 * Color variant for completed steps
 		 * @default 'primary'
 		 */
-		variant?: 'primary' | 'secondary' | 'accent' | 'neutral' | 'info' | 'success' | 'warning' | 'error';
+		variant?:
+			| 'primary'
+			| 'secondary'
+			| 'accent'
+			| 'neutral'
+			| 'info'
+			| 'success'
+			| 'warning'
+			| 'error';
 		/**
 		 * Allow clicking on steps to navigate
 		 * @default false
@@ -165,10 +173,7 @@ SPDX-License-Identifier: MIT
 	{...props}
 >
 	{#each steps as step, index (step.id)}
-		<li
-			class={getStepClasses(index, step)}
-			{...getStepAriaAttributes(index, step)}
-		>
+		<li class={getStepClasses(index, step)} {...getStepAriaAttributes(index, step)}>
 			{#if clickable && !step.disabled && !disabled}
 				<button
 					type="button"
@@ -236,95 +241,85 @@ SPDX-License-Identifier: MIT
 		justify-content: center;
 	}
 
+	.step.step-disabled {
+		cursor: not-allowed;
+		pointer-events: none;
+		opacity: 1;
+	}
 
-.step.step-disabled {
-	cursor: not-allowed;
-	pointer-events: none;
-	opacity: 1;
-}
+	.step.step-disabled::before {
+		opacity: 1 !important;
+		background-color: hsl(var(--bc) / 0.3) !important;
+	}
 
+	.step.step-disabled::after {
+		background-color: hsl(var(--bc) / 0.15) !important;
+		border: 2px solid hsl(var(--bc) / 0.4) !important;
+		color: hsl(var(--bc) / 0.8) !important;
+		font-weight: 600 !important;
 
-.step.step-disabled::before {
-	opacity: 1 !important;
-	background-color: hsl(var(--bc) / 0.3) !important;
-}
+		opacity: 1 !important;
 
+		display: flex !important;
+		align-items: center !important;
+		justify-content: center !important;
+	}
 
-.step.step-disabled::after {
-	background-color: hsl(var(--bc) / 0.15) !important;
-	border: 2px solid hsl(var(--bc) / 0.4) !important;
-	color: hsl(var(--bc) / 0.8) !important;
-	font-weight: 600 !important;
+	.step.step-disabled .step-wrapper,
+	.step.step-disabled span,
+	.step.step-disabled .step-text {
+		opacity: 1 !important;
+		color: hsl(var(--bc) / 0.8) !important;
+	}
 
-	opacity: 1 !important;
+	.step.step-disabled {
+		cursor: not-allowed;
+		pointer-events: none;
+		opacity: 1;
+	}
 
-	display: flex !important;
-	align-items: center !important;
-	justify-content: center !important;
-}
+	.step.step-disabled::before {
+		background-color: hsl(var(--bc) / 0.25) !important;
+		opacity: 1 !important;
+	}
 
+	.step.step-disabled::after {
+		background-color: hsl(var(--bc) / 0.15) !important;
+		border: 2px solid hsl(var(--bc) / 0.4) !important;
+		color: hsl(var(--bc) / 0.7) !important;
+		font-weight: 600;
 
-.step.step-disabled .step-wrapper,
-.step.step-disabled span,
-.step.step-disabled .step-text {
-	opacity: 1 !important;
-	color: hsl(var(--bc) / 0.8) !important;
-}
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
 
-.step.step-disabled {
-	cursor: not-allowed;
-	pointer-events: none;
-	opacity: 1;
-}
+	.step.step-disabled .step-text,
+	.step.step-disabled span {
+		opacity: 0.7;
+	}
 
+	.step.step-disabled {
+		pointer-events: none;
+		cursor: not-allowed;
+	}
 
-.step.step-disabled::before {
-	background-color: hsl(var(--bc) / 0.25) !important;
-	opacity: 1 !important;
-}
+	.step.step-disabled::after {
+		background-color: hsl(var(--bc) / 0.15) !important;
+		color: hsl(var(--bc) / 0.6) !important;
+		border-color: hsl(var(--bc) / 0.3) !important;
+	}
 
+	.step.step-disabled::before {
+		background-color: hsl(var(--bc) / 0.25) !important;
+		opacity: 1 !important;
+	}
 
-.step.step-disabled::after {
-	background-color: hsl(var(--bc) / 0.15) !important;
-	border: 2px solid hsl(var(--bc) / 0.4) !important;
-	color: hsl(var(--bc) / 0.7) !important;
-	font-weight: 600;
-
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-
-
-.step.step-disabled .step-text,
-.step.step-disabled span {
-	opacity: 0.7;
-}
-
-.step.step-disabled {
-	pointer-events: none;
-	cursor: not-allowed;
-}
-
-
-.step.step-disabled::after {
-	background-color: hsl(var(--bc) / 0.15) !important;
-	color: hsl(var(--bc) / 0.6) !important;
-	border-color: hsl(var(--bc) / 0.3) !important;
-}
-
-
-.step.step-disabled::before {
-	background-color: hsl(var(--bc) / 0.25) !important;
-	opacity: 1 !important;
-}
-
-
-.step.step-disabled .step-title,
-.step.step-disabled .step-description,
-.step.step-disabled span {
-	opacity: 0.6;
-}
+	.step.step-disabled .step-title,
+	.step.step-disabled .step-description,
+	.step.step-disabled span {
+		opacity: 0.6;
+	}
 
 	.step-disabled .step-label {
 		color: hsl(var(--bc) / 0.85);
