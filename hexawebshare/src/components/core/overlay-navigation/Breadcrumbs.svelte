@@ -112,7 +112,8 @@ SPDX-License-Identifier: MIT
 	}: Props = $props();
 
 	// Generate unique ID for accessibility
-	const breadcrumbsId = crypto.randomUUID?.() ?? `breadcrumbs-${Math.random().toString(36).slice(2, 9)}`;
+	const breadcrumbsId =
+		crypto.randomUUID?.() ?? `breadcrumbs-${Math.random().toString(36).slice(2, 9)}`;
 
 	// Computed container classes
 	let containerClasses = $derived(
@@ -133,7 +134,7 @@ SPDX-License-Identifier: MIT
 	const getItemClasses = (item: BreadcrumbItem, index: number, isLast: boolean): string => {
 		const isDisabled = item.disabled || disabled;
 		const isCurrent = item.current !== undefined ? item.current : isLast;
-		
+
 		return [
 			'breadcrumb-item',
 			!isDisabled && variant === 'primary' && 'text-primary',
@@ -171,7 +172,7 @@ SPDX-License-Identifier: MIT
 	const getItemAriaAttributes = (item: BreadcrumbItem, index: number, isLast: boolean) => {
 		const isDisabled = item.disabled || disabled;
 		const isCurrent = item.current !== undefined ? item.current : isLast;
-		
+
 		return {
 			'aria-current': (isCurrent ? 'page' : undefined) as 'page' | undefined,
 			'aria-disabled': isDisabled || false,
