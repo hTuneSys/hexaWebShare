@@ -75,7 +75,7 @@ SPDX-License-Identifier: MIT
 	}: Props = $props();
 
 	let toggleElement = $state<HTMLInputElement | null>(null);
-	
+
 	// Internal state for checked value
 	let checked = $state(checkedProp);
 
@@ -130,7 +130,7 @@ SPDX-License-Identifier: MIT
 			bind:this={toggleElement}
 			type="checkbox"
 			class={toggleClasses}
-			checked={checked}
+			{checked}
 			{disabled}
 			{name}
 			{value}
@@ -147,7 +147,7 @@ SPDX-License-Identifier: MIT
 		bind:this={toggleElement}
 		type="checkbox"
 		class={toggleClasses}
-		checked={checked}
+		{checked}
 		{disabled}
 		{name}
 		{value}
