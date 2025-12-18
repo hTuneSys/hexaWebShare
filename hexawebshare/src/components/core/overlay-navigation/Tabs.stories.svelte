@@ -27,7 +27,16 @@ SPDX-License-Identifier: MIT
 			},
 			color: {
 				control: { type: 'select' },
-				options: ['primary', 'secondary', 'accent', 'neutral', 'info', 'success', 'warning', 'error'],
+				options: [
+					'primary',
+					'secondary',
+					'accent',
+					'neutral',
+					'info',
+					'success',
+					'warning',
+					'error'
+				],
 				description: 'Color variant (only applies to box variant)'
 			},
 			size: {
@@ -73,8 +82,8 @@ SPDX-License-Identifier: MIT
 		]}
 	>
 		{#snippet children()}
-			<div class="p-4 bg-base-200 rounded-box">
-				<h3 class="font-bold mb-2">Active Tab Content</h3>
+			<div class="rounded-box bg-base-200 p-4">
+				<h3 class="mb-2 font-bold">Active Tab Content</h3>
 				<p class="text-sm">Click on different tabs to see their content change.</p>
 			</div>
 		{/snippet}
@@ -92,9 +101,11 @@ SPDX-License-Identifier: MIT
 		variant="box"
 	>
 		{#snippet children()}
-			<div class="p-4 bg-base-200 rounded-box">
-				<h3 class="font-bold mb-2">Box Variant</h3>
-				<p class="text-sm">This variant uses rounded box style tabs with clear visual separation.</p>
+			<div class="rounded-box bg-base-200 p-4">
+				<h3 class="mb-2 font-bold">Box Variant</h3>
+				<p class="text-sm">
+					This variant uses rounded box style tabs with clear visual separation.
+				</p>
 			</div>
 		{/snippet}
 	</Tabs>
@@ -112,8 +123,8 @@ SPDX-License-Identifier: MIT
 		color="primary"
 	>
 		{#snippet children()}
-			<div class="p-4 bg-base-200 rounded-box">
-				<h3 class="font-bold mb-2">Box Variant - Primary Color</h3>
+			<div class="rounded-box bg-base-200 p-4">
+				<h3 class="mb-2 font-bold">Box Variant - Primary Color</h3>
 				<p class="text-sm">Box tabs with primary color background.</p>
 			</div>
 		{/snippet}
@@ -131,8 +142,8 @@ SPDX-License-Identifier: MIT
 		color="secondary"
 	>
 		{#snippet children()}
-			<div class="p-4 bg-base-200 rounded-box">
-				<h3 class="font-bold mb-2">Box Variant - Secondary Color</h3>
+			<div class="rounded-box bg-base-200 p-4">
+				<h3 class="mb-2 font-bold">Box Variant - Secondary Color</h3>
 				<p class="text-sm">Box tabs with secondary color background.</p>
 			</div>
 		{/snippet}
@@ -150,8 +161,8 @@ SPDX-License-Identifier: MIT
 		color="accent"
 	>
 		{#snippet children()}
-			<div class="p-4 bg-base-200 rounded-box">
-				<h3 class="font-bold mb-2">Box Variant - Accent Color</h3>
+			<div class="rounded-box bg-base-200 p-4">
+				<h3 class="mb-2 font-bold">Box Variant - Accent Color</h3>
 				<p class="text-sm">Box tabs with accent color background.</p>
 			</div>
 		{/snippet}
@@ -169,8 +180,8 @@ SPDX-License-Identifier: MIT
 		color="info"
 	>
 		{#snippet children()}
-			<div class="p-4 bg-base-200 rounded-box">
-				<h3 class="font-bold mb-2">Box Variant - Info Color</h3>
+			<div class="rounded-box bg-base-200 p-4">
+				<h3 class="mb-2 font-bold">Box Variant - Info Color</h3>
 				<p class="text-sm">Box tabs with info color background.</p>
 			</div>
 		{/snippet}
@@ -188,8 +199,8 @@ SPDX-License-Identifier: MIT
 		color="success"
 	>
 		{#snippet children()}
-			<div class="p-4 bg-base-200 rounded-box">
-				<h3 class="font-bold mb-2">Box Variant - Success Color</h3>
+			<div class="rounded-box bg-base-200 p-4">
+				<h3 class="mb-2 font-bold">Box Variant - Success Color</h3>
 				<p class="text-sm">Box tabs with success color background.</p>
 			</div>
 		{/snippet}
@@ -207,8 +218,8 @@ SPDX-License-Identifier: MIT
 		color="warning"
 	>
 		{#snippet children()}
-			<div class="p-4 bg-base-200 rounded-box">
-				<h3 class="font-bold mb-2">Box Variant - Warning Color</h3>
+			<div class="rounded-box bg-base-200 p-4">
+				<h3 class="mb-2 font-bold">Box Variant - Warning Color</h3>
 				<p class="text-sm">Box tabs with warning color background.</p>
 			</div>
 		{/snippet}
@@ -226,8 +237,8 @@ SPDX-License-Identifier: MIT
 		color="error"
 	>
 		{#snippet children()}
-			<div class="p-4 bg-base-200 rounded-box">
-				<h3 class="font-bold mb-2">Box Variant - Error Color</h3>
+			<div class="rounded-box bg-base-200 p-4">
+				<h3 class="mb-2 font-bold">Box Variant - Error Color</h3>
 				<p class="text-sm">Box tabs with error color background.</p>
 			</div>
 		{/snippet}
@@ -245,8 +256,8 @@ SPDX-License-Identifier: MIT
 		color="neutral"
 	>
 		{#snippet children()}
-			<div class="p-4 bg-base-200 rounded-box">
-				<h3 class="font-bold mb-2">Box Variant - Neutral Color</h3>
+			<div class="rounded-box bg-base-200 p-4">
+				<h3 class="mb-2 font-bold">Box Variant - Neutral Color</h3>
 				<p class="text-sm">Box tabs with neutral color background.</p>
 			</div>
 		{/snippet}
@@ -263,8 +274,8 @@ SPDX-License-Identifier: MIT
 		variant="border"
 	>
 		{#snippet children()}
-			<div class="p-4 bg-base-200 rounded-box">
-				<h3 class="font-bold mb-2">Border Variant</h3>
+			<div class="rounded-box bg-base-200 p-4">
+				<h3 class="mb-2 font-bold">Border Variant</h3>
 				<p class="text-sm">This variant shows a clean border under the active tab.</p>
 			</div>
 		{/snippet}
@@ -281,8 +292,8 @@ SPDX-License-Identifier: MIT
 		variant="lift"
 	>
 		{#snippet children()}
-			<div class="p-4 bg-base-200 rounded-box">
-				<h3 class="font-bold mb-2">Lift Variant</h3>
+			<div class="rounded-box bg-base-200 p-4">
+				<h3 class="mb-2 font-bold">Lift Variant</h3>
 				<p class="text-sm">This variant gives tabs a lifted/elevated appearance with depth.</p>
 			</div>
 		{/snippet}
@@ -300,7 +311,7 @@ SPDX-License-Identifier: MIT
 		size="xs"
 	>
 		{#snippet children()}
-			<div class="p-4 bg-base-200 rounded-box">
+			<div class="rounded-box bg-base-200 p-4">
 				<p class="text-xs">Extra small size tabs - compact and minimal</p>
 			</div>
 		{/snippet}
@@ -317,7 +328,7 @@ SPDX-License-Identifier: MIT
 		size="sm"
 	>
 		{#snippet children()}
-			<div class="p-4 bg-base-200 rounded-box">
+			<div class="rounded-box bg-base-200 p-4">
 				<p class="text-sm">Small size tabs - slightly larger than extra small</p>
 			</div>
 		{/snippet}
@@ -334,7 +345,7 @@ SPDX-License-Identifier: MIT
 		size="md"
 	>
 		{#snippet children()}
-			<div class="p-4 bg-base-200 rounded-box">
+			<div class="rounded-box bg-base-200 p-4">
 				<p class="text-base">Medium size tabs - default size, balanced and readable</p>
 			</div>
 		{/snippet}
@@ -351,7 +362,7 @@ SPDX-License-Identifier: MIT
 		size="lg"
 	>
 		{#snippet children()}
-			<div class="p-4 bg-base-200 rounded-box">
+			<div class="rounded-box bg-base-200 p-4">
 				<p class="text-lg">Large size tabs - more prominent and easier to click</p>
 			</div>
 		{/snippet}
@@ -368,7 +379,7 @@ SPDX-License-Identifier: MIT
 		size="xl"
 	>
 		{#snippet children()}
-			<div class="p-4 bg-base-200 rounded-box">
+			<div class="rounded-box bg-base-200 p-4">
 				<p class="text-xl">Extra large size tabs - maximum size for emphasis</p>
 			</div>
 		{/snippet}
@@ -379,8 +390,8 @@ SPDX-License-Identifier: MIT
 <Story name="With Content">
 	<Tabs tabs={basicTabs}>
 		{#snippet children()}
-			<div class="p-4 bg-base-200 rounded-box">
-				<p class="font-semibold mb-2">Active Tab Content</p>
+			<div class="rounded-box bg-base-200 p-4">
+				<p class="mb-2 font-semibold">Active Tab Content</p>
 				<p class="text-sm">This content is displayed for the currently active tab.</p>
 			</div>
 		{/snippet}
@@ -447,7 +458,7 @@ SPDX-License-Identifier: MIT
 	>
 		{#snippet children()}
 			<div>
-				<h3 class="font-bold mb-2">Active Tab Content</h3>
+				<h3 class="mb-2 font-bold">Active Tab Content</h3>
 				<p class="text-sm">This is the content for the selected tab using radio inputs.</p>
 			</div>
 		{/snippet}
@@ -467,7 +478,7 @@ SPDX-License-Identifier: MIT
 	>
 		{#snippet children()}
 			<div>
-				<h3 class="font-bold mb-2">Active Tab Content</h3>
+				<h3 class="mb-2 font-bold">Active Tab Content</h3>
 				<p class="text-sm">This content changes based on the selected radio tab.</p>
 			</div>
 		{/snippet}
@@ -477,7 +488,8 @@ SPDX-License-Identifier: MIT
 <Story name="Radio Tabs Lift with Icons and Content">
 	<div class="space-y-4">
 		<p class="text-sm text-base-content/60">
-			Note: Icons in radio tabs require snippet definitions. This example shows radio tabs with content.
+			Note: Icons in radio tabs require snippet definitions. This example shows radio tabs with
+			content.
 		</p>
 		<Tabs
 			tabs={[
@@ -491,7 +503,7 @@ SPDX-License-Identifier: MIT
 		>
 			{#snippet children()}
 				<div>
-					<h3 class="font-bold mb-2">Active Tab Content</h3>
+					<h3 class="mb-2 font-bold">Active Tab Content</h3>
 					<p class="text-sm">Radio tabs with emoji icons and content panel.</p>
 				</div>
 			{/snippet}
@@ -513,7 +525,7 @@ SPDX-License-Identifier: MIT
 	>
 		{#snippet children()}
 			<div>
-				<h3 class="font-bold mb-2">Content Above Tabs</h3>
+				<h3 class="mb-2 font-bold">Content Above Tabs</h3>
 				<p class="text-sm">This content appears above the tabs when placement is set to bottom.</p>
 			</div>
 		{/snippet}
@@ -532,8 +544,8 @@ SPDX-License-Identifier: MIT
 		size="sm"
 	>
 		{#snippet children()}
-			<div class="p-4 bg-base-200 rounded-box">
-				<h3 class="font-bold mb-2">Border Variant - Small</h3>
+			<div class="rounded-box bg-base-200 p-4">
+				<h3 class="mb-2 font-bold">Border Variant - Small</h3>
 				<p class="text-sm">Border variant with small size.</p>
 			</div>
 		{/snippet}
@@ -551,8 +563,8 @@ SPDX-License-Identifier: MIT
 		size="lg"
 	>
 		{#snippet children()}
-			<div class="p-4 bg-base-200 rounded-box">
-				<h3 class="font-bold mb-2">Border Variant - Large</h3>
+			<div class="rounded-box bg-base-200 p-4">
+				<h3 class="mb-2 font-bold">Border Variant - Large</h3>
 				<p class="text-sm">Border variant with large size.</p>
 			</div>
 		{/snippet}
@@ -570,8 +582,8 @@ SPDX-License-Identifier: MIT
 		size="sm"
 	>
 		{#snippet children()}
-			<div class="p-4 bg-base-200 rounded-box">
-				<h3 class="font-bold mb-2">Lift Variant - Small</h3>
+			<div class="rounded-box bg-base-200 p-4">
+				<h3 class="mb-2 font-bold">Lift Variant - Small</h3>
 				<p class="text-sm">Lift variant with small size.</p>
 			</div>
 		{/snippet}
@@ -589,8 +601,8 @@ SPDX-License-Identifier: MIT
 		size="lg"
 	>
 		{#snippet children()}
-			<div class="p-4 bg-base-200 rounded-box">
-				<h3 class="font-bold mb-2">Lift Variant - Large</h3>
+			<div class="rounded-box bg-base-200 p-4">
+				<h3 class="mb-2 font-bold">Lift Variant - Large</h3>
 				<p class="text-sm">Lift variant with large size.</p>
 			</div>
 		{/snippet}
@@ -609,8 +621,8 @@ SPDX-License-Identifier: MIT
 		size="sm"
 	>
 		{#snippet children()}
-			<div class="p-4 bg-base-200 rounded-box">
-				<h3 class="font-bold mb-2">Box Variant Primary - Small</h3>
+			<div class="rounded-box bg-base-200 p-4">
+				<h3 class="mb-2 font-bold">Box Variant Primary - Small</h3>
 				<p class="text-sm">Box variant with primary color and small size.</p>
 			</div>
 		{/snippet}
@@ -629,8 +641,8 @@ SPDX-License-Identifier: MIT
 		size="lg"
 	>
 		{#snippet children()}
-			<div class="p-4 bg-base-200 rounded-box">
-				<h3 class="font-bold mb-2">Box Variant Primary - Large</h3>
+			<div class="rounded-box bg-base-200 p-4">
+				<h3 class="mb-2 font-bold">Box Variant Primary - Large</h3>
 				<p class="text-sm">Box variant with primary color and large size.</p>
 			</div>
 		{/snippet}
@@ -651,7 +663,7 @@ SPDX-License-Identifier: MIT
 	>
 		{#snippet children()}
 			<div>
-				<h3 class="font-bold mb-2">Radio Tabs Border</h3>
+				<h3 class="mb-2 font-bold">Radio Tabs Border</h3>
 				<p class="text-sm">Radio input tabs with border variant.</p>
 			</div>
 		{/snippet}
@@ -673,7 +685,7 @@ SPDX-License-Identifier: MIT
 	>
 		{#snippet children()}
 			<div>
-				<h3 class="font-bold mb-2">Radio Tabs Box - Small</h3>
+				<h3 class="mb-2 font-bold">Radio Tabs Box - Small</h3>
 				<p class="text-sm">Radio tabs with box variant and small size.</p>
 			</div>
 		{/snippet}
@@ -694,7 +706,7 @@ SPDX-License-Identifier: MIT
 	>
 		{#snippet children()}
 			<div>
-				<h3 class="font-bold mb-2">Radio Tabs Box - Large</h3>
+				<h3 class="mb-2 font-bold">Radio Tabs Box - Large</h3>
 				<p class="text-sm">Radio tabs with box variant and large size.</p>
 			</div>
 		{/snippet}
@@ -716,7 +728,7 @@ SPDX-License-Identifier: MIT
 	>
 		{#snippet children()}
 			<div>
-				<h3 class="font-bold mb-2">Radio Tabs Box Primary</h3>
+				<h3 class="mb-2 font-bold">Radio Tabs Box Primary</h3>
 				<p class="text-sm">Radio tabs with box variant and primary color.</p>
 			</div>
 		{/snippet}
@@ -737,7 +749,7 @@ SPDX-License-Identifier: MIT
 	>
 		{#snippet children()}
 			<div>
-				<h3 class="font-bold mb-2">Radio Tabs Box Accent</h3>
+				<h3 class="mb-2 font-bold">Radio Tabs Box Accent</h3>
 				<p class="text-sm">Radio tabs with box variant and accent color.</p>
 			</div>
 		{/snippet}
@@ -758,7 +770,7 @@ SPDX-License-Identifier: MIT
 	>
 		{#snippet children()}
 			<div>
-				<h3 class="font-bold mb-2">Radio Tabs Box Success</h3>
+				<h3 class="mb-2 font-bold">Radio Tabs Box Success</h3>
 				<p class="text-sm">Radio tabs with box variant and success color.</p>
 			</div>
 		{/snippet}
@@ -777,8 +789,8 @@ SPDX-License-Identifier: MIT
 		placement="bottom"
 	>
 		{#snippet children()}
-			<div class="p-4 bg-base-200 rounded-box">
-				<h3 class="font-bold mb-2">Box Variant Bottom</h3>
+			<div class="rounded-box bg-base-200 p-4">
+				<h3 class="mb-2 font-bold">Box Variant Bottom</h3>
 				<p class="text-sm">Box variant with tabs at the bottom.</p>
 			</div>
 		{/snippet}
@@ -796,8 +808,8 @@ SPDX-License-Identifier: MIT
 		placement="bottom"
 	>
 		{#snippet children()}
-			<div class="p-4 bg-base-200 rounded-box">
-				<h3 class="font-bold mb-2">Border Variant Bottom</h3>
+			<div class="rounded-box bg-base-200 p-4">
+				<h3 class="mb-2 font-bold">Border Variant Bottom</h3>
 				<p class="text-sm">Border variant with tabs at the bottom.</p>
 			</div>
 		{/snippet}
@@ -815,8 +827,8 @@ SPDX-License-Identifier: MIT
 		placement="bottom"
 	>
 		{#snippet children()}
-			<div class="p-4 bg-base-200 rounded-box">
-				<h3 class="font-bold mb-2">Lift Variant Bottom</h3>
+			<div class="rounded-box bg-base-200 p-4">
+				<h3 class="mb-2 font-bold">Lift Variant Bottom</h3>
 				<p class="text-sm">Lift variant with tabs at the bottom.</p>
 			</div>
 		{/snippet}
@@ -918,4 +930,3 @@ SPDX-License-Identifier: MIT
 <Story name="Playground">
 	<Tabs tabs={basicTabs} variant="border" size="md" placement="top" />
 </Story>
-

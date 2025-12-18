@@ -58,7 +58,15 @@ SPDX-License-Identifier: MIT
 		 * Color variant (only applies to box variant)
 		 * @default undefined
 		 */
-		color?: 'primary' | 'secondary' | 'accent' | 'neutral' | 'info' | 'success' | 'warning' | 'error';
+		color?:
+			| 'primary'
+			| 'secondary'
+			| 'accent'
+			| 'neutral'
+			| 'info'
+			| 'success'
+			| 'warning'
+			| 'error';
 		/**
 		 * Tab size
 		 * @default 'md'
@@ -233,11 +241,7 @@ SPDX-License-Identifier: MIT
 
 {#if useRadio}
 	<!-- Radio input based tabs (DaisyUI pattern) -->
-	<div
-		bind:this={tablistElement}
-		class={tabsClasses}
-		{...props}
-	>
+	<div bind:this={tablistElement} class={tabsClasses} {...props}>
 		{#each tabs as tab, index}
 			{@const isActive = tab.value === activeValue}
 			{@const tabId = `${tablistId}-tab-${tab.value}`}
@@ -255,7 +259,9 @@ SPDX-License-Identifier: MIT
 				/>
 				<label
 					for={tabId}
-					class="tab {isActive ? 'tab-active' : ''} {tab.disabled || disabled ? 'tab-disabled' : ''} cursor-pointer"
+					class="tab {isActive ? 'tab-active' : ''} {tab.disabled || disabled
+						? 'tab-disabled'
+						: ''} cursor-pointer"
 				>
 					<span class="mr-2">
 						{@render tab.icon()}
@@ -267,7 +273,9 @@ SPDX-License-Identifier: MIT
 				<input
 					type="radio"
 					name={radioGroupName}
-					class="tab {isActive ? 'tab-active' : ''} {tab.disabled || disabled ? 'tab-disabled' : ''}"
+					class="tab {isActive ? 'tab-active' : ''} {tab.disabled || disabled
+						? 'tab-disabled'
+						: ''}"
 					aria-label={tab.label}
 					checked={isActive}
 					disabled={disabled || tab.disabled}
@@ -276,7 +284,7 @@ SPDX-License-Identifier: MIT
 			{/if}
 			{#if tab.content || children}
 				<div
-					class="tab-content bg-base-100 border-base-300 p-6"
+					class="tab-content border-base-300 bg-base-100 p-6"
 					id={panelId}
 					style={isActive ? '' : 'display: none;'}
 				>
@@ -310,11 +318,7 @@ SPDX-License-Identifier: MIT
 				aria-controls={panelId}
 				aria-selected={isActive}
 				aria-disabled={disabled || tab.disabled}
-				tabindex={disabled || tab.disabled
-					? -1
-					: isActive
-						? 0
-						: -1}
+				tabindex={disabled || tab.disabled ? -1 : isActive ? 0 : -1}
 				class="tab {isActive ? 'tab-active' : ''} {tab.disabled || disabled ? 'tab-disabled' : ''}"
 				disabled={disabled || tab.disabled}
 				onclick={() => setActiveValue(tab.value)}
@@ -334,12 +338,7 @@ SPDX-License-Identifier: MIT
 	{#if activeTab}
 		{@const panelId = `${tablistId}-panel-${activeTab.value}`}
 		{@const tabId = `${tablistId}-tab-${activeTab.value}`}
-		<div
-			role="tabpanel"
-			id={panelId}
-			aria-labelledby={tabId}
-			class="mt-4"
-		>
+		<div role="tabpanel" id={panelId} aria-labelledby={tabId} class="mt-4">
 			{#if activeTab.content}
 				{@render activeTab.content()}
 			{:else if children}
