@@ -3,7 +3,7 @@ SPDX-FileCopyrightText: 2025 hexaTune LLC
 SPDX-License-Identifier: MIT
 -->
 
-<script lang="ts">
+<script module lang="ts">
 	/**
 	 * Breadcrumb item data structure
 	 */
@@ -39,7 +39,9 @@ SPDX-License-Identifier: MIT
 		 */
 		onclick?: (item: BreadcrumbItem, index: number) => void;
 	}
+</script>
 
+<script lang="ts">
 	/**
 	 * Props interface for the Breadcrumbs component
 	 */
