@@ -239,7 +239,7 @@ SPDX-License-Identifier: MIT
 			<div class="flex w-full items-start gap-3">
 				{#if showIcon}
 					<span
-						class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-base-200 text-sm font-semibold text-base-content"
+						class="bg-base-200 text-base-content inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-semibold"
 						aria-hidden="true"
 					>
 						{indicatorText[variant]}
@@ -252,7 +252,7 @@ SPDX-License-Identifier: MIT
 
 				<div class="flex-1 space-y-1">
 					{#if title}
-						<p class="font-semibold leading-tight">{title}</p>
+						<p class="leading-tight font-semibold">{title}</p>
 					{/if}
 					<p class="text-sm leading-snug">{message}</p>
 				</div>

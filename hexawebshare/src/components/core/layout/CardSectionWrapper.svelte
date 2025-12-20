@@ -41,8 +41,8 @@ SPDX-License-Identifier: MIT
 	}: Props = $props();
 </script>
 
-<div class="min-h-[200px] bg-base-300 p-6">
-	<div class="card mx-auto max-w-2xl bg-base-100 shadow-xl">
+<div class="bg-base-300 min-h-[200px] p-6">
+	<div class="card bg-base-100 mx-auto max-w-2xl shadow-xl">
 		<div class="card-body p-0">
 			{#if showIcon && showHeaderActions}
 				<CardSection
@@ -59,7 +59,7 @@ SPDX-License-Identifier: MIT
 					class={className}
 				>
 					{#snippet icon()}
-						<svg class="h-6 w-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<svg class="text-primary h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 							<path
 								stroke-linecap="round"
 								stroke-linejoin="round"
@@ -88,7 +88,7 @@ SPDX-License-Identifier: MIT
 					class={className}
 				>
 					{#snippet icon()}
-						<svg class="h-6 w-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<svg class="text-primary h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 							<path
 								stroke-linecap="round"
 								stroke-linejoin="round"

@@ -379,7 +379,7 @@ SPDX-License-Identifier: MIT
 		role="grid"
 	>
 		{#if caption}
-			<caption class={captionHidden ? 'sr-only' : 'caption-top py-2 text-base-content/70'}>
+			<caption class={captionHidden ? 'sr-only' : 'text-base-content/70 caption-top py-2'}>
 				{caption}
 			</caption>
 		{/if}
@@ -395,7 +395,7 @@ SPDX-License-Identifier: MIT
 								getAlignmentClass(column.align),
 								column.hideOnMobile && 'hidden sm:table-cell',
 								column.sortable && 'cursor-pointer select-none',
-								bordered && 'border border-base-300'
+								bordered && 'border-base-300 border'
 							]
 								.filter(Boolean)
 								.join(' ')}
@@ -438,7 +438,7 @@ SPDX-License-Identifier: MIT
 					{@render empty()}
 				{:else}
 					<tr>
-						<td colspan={columns.length} class="py-8 text-center text-base-content/70">
+						<td colspan={columns.length} class="text-base-content/70 py-8 text-center">
 							{emptyMessage}
 						</td>
 					</tr>
@@ -461,7 +461,7 @@ SPDX-License-Identifier: MIT
 									class={[
 										getAlignmentClass(column.align),
 										column.hideOnMobile && 'hidden sm:table-cell',
-										bordered && 'border border-base-300'
+										bordered && 'border-base-300 border'
 									]
 										.filter(Boolean)
 										.join(' ')}

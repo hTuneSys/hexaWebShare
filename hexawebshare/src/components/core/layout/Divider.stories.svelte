@@ -171,11 +171,11 @@ SPDX-License-Identifier: MIT
 <!-- Usage Examples -->
 <Story name="Content Separation">
 	<div class="flex w-full flex-col gap-4">
-		<div class="rounded-lg bg-base-200 p-4">
+		<div class="bg-base-200 rounded-lg p-4">
 			<p>Section 1: Lorem ipsum dolor sit amet</p>
 		</div>
 		<Divider />
-		<div class="rounded-lg bg-base-200 p-4">
+		<div class="bg-base-200 rounded-lg p-4">
 			<p>Section 2: Consectetur adipiscing elit</p>
 		</div>
 	</div>
@@ -190,7 +190,7 @@ SPDX-License-Identifier: MIT
 </Story>
 
 <Story name="Vertical in Flex">
-	<div class="flex h-16 items-center gap-4 rounded-lg bg-base-200 p-4">
+	<div class="bg-base-200 flex h-16 items-center gap-4 rounded-lg p-4">
 		<span class="font-medium">Home</span>
 		<Divider orientation="vertical" />
 		<span class="font-medium">Products</span>

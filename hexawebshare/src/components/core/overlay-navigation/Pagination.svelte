@@ -264,7 +264,7 @@ SPDX-License-Identifier: MIT
 <nav aria-label={ariaLabel} class="flex flex-col gap-4" {...props}>
 	<div class="flex flex-wrap items-center justify-center gap-4">
 		{#if showTotal && totalItems !== undefined}
-			<div class="text-sm text-base-content/70">
+			<div class="text-base-content/70 text-sm">
 				Showing {startItem} to {endItem} of {totalItems} results
 			</div>
 		{/if}
@@ -384,7 +384,7 @@ SPDX-License-Identifier: MIT
 
 		{#if showPageSize}
 			<div class="flex items-center gap-2">
-				<label for="page-size-select" class="text-sm text-base-content/70"> Items per page: </label>
+				<label for="page-size-select" class="text-base-content/70 text-sm"> Items per page: </label>
 				<select
 					id="page-size-select"
 					class="select select-bordered select-sm"

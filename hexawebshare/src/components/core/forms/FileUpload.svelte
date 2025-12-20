@@ -373,7 +373,7 @@ SPDX-License-Identifier: MIT
 			<span class="label-text">
 				{label}
 				{#if required}
-					<span class="ml-1 text-error" aria-label="required">*</span>
+					<span class="text-error ml-1" aria-label="required">*</span>
 				{/if}
 			</span>
 		</label>
@@ -419,13 +419,13 @@ SPDX-License-Identifier: MIT
 			<div class="flex flex-col items-center justify-center gap-2">
 				<span class="loading loading-spinner {loadingSizeClass} text-primary" aria-hidden="true"
 				></span>
-				<span class="text-sm text-base-content/70">Uploading...</span>
+				<span class="text-base-content/70 text-sm">Uploading...</span>
 			</div>
 		{:else}
 			<div class="flex flex-col items-center justify-center gap-2">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
-					class="h-12 w-12 text-base-content/50"
+					class="text-base-content/50 h-12 w-12"
 					fill="none"
 					viewBox="0 0 24 24"
 					stroke="currentColor"
@@ -438,7 +438,7 @@ SPDX-License-Identifier: MIT
 						d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
 					/>
 				</svg>
-				<div class="text-sm font-medium text-base-content">
+				<div class="text-base-content text-sm font-medium">
 					{#if dragDrop}
 						Drag and drop files here, or
 					{/if}
@@ -454,13 +454,13 @@ SPDX-License-Identifier: MIT
 					</button>
 				</div>
 				{#if helpText && (!error || error === '')}
-					<p class="text-xs text-base-content/70">{helpText}</p>
+					<p class="text-base-content/70 text-xs">{helpText}</p>
 				{/if}
 				{#if accept}
-					<p class="text-xs text-base-content/50">Accepted: {accept}</p>
+					<p class="text-base-content/50 text-xs">Accepted: {accept}</p>
 				{/if}
 				{#if maxSize}
-					<p class="text-xs text-base-content/50">Max size: {formatFileSize(maxSize)}</p>
+					<p class="text-base-content/50 text-xs">Max size: {formatFileSize(maxSize)}</p>
 				{/if}
 			</div>
 		{/if}
@@ -469,7 +469,7 @@ SPDX-License-Identifier: MIT
 	{#if showPreview && selectedFiles.length > 0}
 		<div class="mt-4 space-y-2">
 			<div class="flex items-center justify-between">
-				<span class="text-sm font-medium text-base-content">
+				<span class="text-base-content text-sm font-medium">
 					{selectedFiles.length} file{selectedFiles.length > 1 ? 's' : ''} selected
 				</span>
 				{#if multiple && selectedFiles.length > 1}
@@ -481,11 +481,11 @@ SPDX-License-Identifier: MIT
 			<div class="space-y-2">
 				{#each selectedFiles as file, index}
 					<div
-						class="flex items-center justify-between rounded-lg border border-base-300 bg-base-100 p-3"
+						class="border-base-300 bg-base-100 flex items-center justify-between rounded-lg border p-3"
 					>
 						<div class="min-w-0 flex-1">
-							<p class="truncate text-sm font-medium text-base-content">{file.name}</p>
-							<p class="text-xs text-base-content/70">{formatFileSize(file.size)}</p>
+							<p class="text-base-content truncate text-sm font-medium">{file.name}</p>
+							<p class="text-base-content/70 text-xs">{formatFileSize(file.size)}</p>
 						</div>
 						<button
 							type="button"

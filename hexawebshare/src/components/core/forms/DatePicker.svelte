@@ -177,7 +177,7 @@ SPDX-License-Identifier: MIT
 			<span class="label-text">
 				{label}
 				{#if required}
-					<span class="ml-1 text-error" aria-label="required">*</span>
+					<span class="text-error ml-1" aria-label="required">*</span>
 				{/if}
 			</span>
 		</label>

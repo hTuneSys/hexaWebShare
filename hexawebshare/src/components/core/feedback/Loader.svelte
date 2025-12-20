@@ -131,9 +131,9 @@ SPDX-License-Identifier: MIT
 	<span class={indicatorClasses} aria-hidden="true"></span>
 
 	<div class="space-y-1">
-		<p class="font-semibold leading-tight">{labelText}</p>
+		<p class="leading-tight font-semibold">{labelText}</p>
 		{#if description}
-			<p class="text-sm text-base-content/80">{description}</p>
+			<p class="text-base-content/80 text-sm">{description}</p>
 		{/if}
 	</div>
 </div>

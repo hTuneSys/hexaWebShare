@@ -95,7 +95,7 @@ SPDX-License-Identifier: MIT
 		{#snippet children()}
 			<div class="space-y-1">
 				<p class="font-semibold">Popover title</p>
-				<p class="text-sm text-base-content/80">Helpful supporting text for the trigger.</p>
+				<p class="text-base-content/80 text-sm">Helpful supporting text for the trigger.</p>
 			</div>
 		{/snippet}
 	</Popover>
@@ -284,7 +284,7 @@ SPDX-License-Identifier: MIT
 			{#snippet children()}
 				<div class="space-y-1">
 					<p class="font-semibold">Controlled popover</p>
-					<p class="text-sm text-base-content/80">State is managed externally.</p>
+					<p class="text-base-content/80 text-sm">State is managed externally.</p>
 				</div>
 			{/snippet}
 		</Popover>
@@ -316,7 +316,7 @@ SPDX-License-Identifier: MIT
 		{#snippet children()}
 			<div class="space-y-1">
 				<p class="font-semibold">Playground</p>
-				<p class="text-sm text-base-content/80">
+				<p class="text-base-content/80 text-sm">
 					Use the controls to adjust placement, tone, and behavior.
 				</p>
 			</div>

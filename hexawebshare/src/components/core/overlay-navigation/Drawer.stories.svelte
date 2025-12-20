@@ -100,7 +100,7 @@ SPDX-License-Identifier: MIT
 				</div>
 			{/snippet}
 			{#snippet content()}
-				<div class="flex min-h-screen flex-col items-center justify-center bg-base-100 p-8">
+				<div class="bg-base-100 flex min-h-screen flex-col items-center justify-center p-8">
 					<p class="mb-4 text-lg">Main content area</p>
 					<button class="btn btn-primary" onclick={() => (drawerOpen = true)}> Open Drawer </button>
 				</div>
@@ -124,7 +124,7 @@ SPDX-License-Identifier: MIT
 					</div>
 				{/snippet}
 				{#snippet content()}
-					<div class="flex min-h-screen flex-col items-center justify-center bg-base-100 p-8">
+					<div class="bg-base-100 flex min-h-screen flex-col items-center justify-center p-8">
 						<p class="mb-6 text-lg">Choose a drawer position:</p>
 						<div class="grid grid-cols-2 gap-4 md:grid-cols-4">
 							<button class="btn btn-primary" onclick={() => (leftDrawerOpen = true)}>
@@ -206,7 +206,7 @@ SPDX-License-Identifier: MIT
 				</div>
 			{/snippet}
 			{#snippet content()}
-				<div class="flex min-h-screen flex-col items-center justify-center bg-base-100 p-8">
+				<div class="bg-base-100 flex min-h-screen flex-col items-center justify-center p-8">
 					<div class="max-w-md space-y-4 text-center">
 						<p class="text-lg font-bold">Main content is still interactive</p>
 						<button class="btn btn-primary" onclick={() => (noOverlayDrawerOpen = true)}>
@@ -423,7 +423,7 @@ SPDX-License-Identifier: MIT
 				</div>
 			{/snippet}
 			{#snippet content()}
-				<div class="flex min-h-screen flex-col items-center justify-center bg-base-100 p-8">
+				<div class="bg-base-100 flex min-h-screen flex-col items-center justify-center p-8">
 					<p class="mb-4 text-lg">Main application content</p>
 					<button class="btn btn-primary" onclick={() => (settingsDrawerOpen = true)}>
 						Open Settings
@@ -448,12 +448,12 @@ SPDX-License-Identifier: MIT
 								<div class="flex gap-4">
 									<div class="avatar">
 										<div class="w-16 rounded">
-											<div class="flex h-16 items-center justify-center bg-base-300">📦</div>
+											<div class="bg-base-300 flex h-16 items-center justify-center">📦</div>
 										</div>
 									</div>
 									<div class="flex-1">
 										<h4 class="font-semibold">Product Name</h4>
-										<p class="text-sm text-base-content/60">$29.99</p>
+										<p class="text-base-content/60 text-sm">$29.99</p>
 										<div class="mt-2 flex items-center gap-2">
 											<button class="btn btn-circle btn-xs">-</button>
 											<span>1</span>
@@ -471,12 +471,12 @@ SPDX-License-Identifier: MIT
 								<div class="flex gap-4">
 									<div class="avatar">
 										<div class="w-16 rounded">
-											<div class="flex h-16 items-center justify-center bg-base-300">🎁</div>
+											<div class="bg-base-300 flex h-16 items-center justify-center">🎁</div>
 										</div>
 									</div>
 									<div class="flex-1">
 										<h4 class="font-semibold">Another Product</h4>
-										<p class="text-sm text-base-content/60">$49.99</p>
+										<p class="text-base-content/60 text-sm">$49.99</p>
 										<div class="mt-2 flex items-center gap-2">
 											<button class="btn btn-circle btn-xs">-</button>
 											<span>2</span>
@@ -517,7 +517,7 @@ SPDX-License-Identifier: MIT
 				</div>
 			{/snippet}
 			{#snippet content()}
-				<div class="flex min-h-screen flex-col items-center justify-center bg-base-100 p-8">
+				<div class="bg-base-100 flex min-h-screen flex-col items-center justify-center p-8">
 					<p class="mb-4 text-lg">Product catalog</p>
 					<button class="btn btn-primary" onclick={() => (cartDrawerOpen = true)}>
 						<svg
@@ -613,7 +613,7 @@ SPDX-License-Identifier: MIT
 				</div>
 			{/snippet}
 			{#snippet content()}
-				<div class="flex min-h-screen flex-col items-center justify-center bg-base-100 p-8">
+				<div class="bg-base-100 flex min-h-screen flex-col items-center justify-center p-8">
 					<p class="mb-4 text-lg">Product results</p>
 					<button class="btn btn-primary" onclick={() => (filterDrawerOpen = true)}>
 						<svg
@@ -713,7 +713,7 @@ SPDX-License-Identifier: MIT
 							xmlns="http://www.w3.org/2000/svg"
 							fill="none"
 							viewBox="0 0 24 24"
-							class="h-6 w-6 shrink-0 stroke-info"
+							class="stroke-info h-6 w-6 shrink-0"
 						>
 							<path
 								stroke-linecap="round"
@@ -755,7 +755,7 @@ SPDX-License-Identifier: MIT
 				<button class="btn btn-ghost btn-block">Mark all as read</button>
 			{/snippet}
 			{#snippet content()}
-				<div class="flex min-h-screen flex-col items-center justify-center bg-base-100 p-8">
+				<div class="bg-base-100 flex min-h-screen flex-col items-center justify-center p-8">
 					<p class="mb-4 text-lg">Main content</p>
 					<button class="btn btn-primary" onclick={() => (notificationDrawerOpen = true)}>
 						<svg
@@ -800,7 +800,7 @@ SPDX-License-Identifier: MIT
 				</div>
 			{/snippet}
 			{#snippet content()}
-				<div class="flex min-h-screen items-center justify-center bg-base-100 p-8">
+				<div class="bg-base-100 flex min-h-screen items-center justify-center p-8">
 					<p class="text-lg">Custom styled drawer example (always open)</p>
 				</div>
 			{/snippet}
@@ -811,7 +811,7 @@ SPDX-License-Identifier: MIT
 <!-- Accessibility Features -->
 <Story name="Accessibility">
 	{#snippet children()}
-		<div class="min-h-screen space-y-6 bg-base-100 p-8">
+		<div class="bg-base-100 min-h-screen space-y-6 p-8">
 			<div class="alert alert-success">
 				<span>✅ All drawers include proper accessibility features</span>
 			</div>
@@ -819,28 +819,28 @@ SPDX-License-Identifier: MIT
 			<div class="space-y-4">
 				<div class="card bg-base-200 p-4">
 					<h4 class="mb-2 font-semibold">Keyboard Navigation</h4>
-					<p class="mb-4 text-sm text-base-content/60">
+					<p class="text-base-content/60 mb-4 text-sm">
 						Press Escape to close the drawer (when closeOnEscape is enabled)
 					</p>
 				</div>
 
 				<div class="card bg-base-200 p-4">
 					<h4 class="mb-2 font-semibold">ARIA Labels</h4>
-					<p class="mb-4 text-sm text-base-content/60">
+					<p class="text-base-content/60 mb-4 text-sm">
 						All interactive elements have proper ARIA labels for screen readers
 					</p>
 				</div>
 
 				<div class="card bg-base-200 p-4">
 					<h4 class="mb-2 font-semibold">Focus Management</h4>
-					<p class="mb-4 text-sm text-base-content/60">
+					<p class="text-base-content/60 mb-4 text-sm">
 						Focus is properly managed when drawer opens and closes
 					</p>
 				</div>
 
 				<div class="card bg-base-200 p-4">
 					<h4 class="mb-2 font-semibold">Modal Behavior</h4>
-					<p class="mb-4 text-sm text-base-content/60">
+					<p class="text-base-content/60 mb-4 text-sm">
 						Drawer acts as a modal with role="dialog" and aria-modal="true"
 					</p>
 				</div>

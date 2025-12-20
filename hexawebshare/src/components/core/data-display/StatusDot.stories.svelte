@@ -225,32 +225,32 @@ SPDX-License-Identifier: MIT
 <!-- Real-world Examples: Server Status -->
 <Story name="Server Status Dashboard">
 	<div class="space-y-3">
-		<div class="flex items-center justify-between rounded-lg border border-base-300 p-3">
+		<div class="border-base-300 flex items-center justify-between rounded-lg border p-3">
 			<span class="font-medium">API Server</span>
 			<div class="flex items-center gap-2">
 				<StatusDot variant="success" pulse ariaLabel="API Server: Running" />
-				<span class="text-sm text-success">Running</span>
+				<span class="text-success text-sm">Running</span>
 			</div>
 		</div>
-		<div class="flex items-center justify-between rounded-lg border border-base-300 p-3">
+		<div class="border-base-300 flex items-center justify-between rounded-lg border p-3">
 			<span class="font-medium">Database</span>
 			<div class="flex items-center gap-2">
 				<StatusDot variant="success" ariaLabel="Database: Connected" />
-				<span class="text-sm text-success">Connected</span>
+				<span class="text-success text-sm">Connected</span>
 			</div>
 		</div>
-		<div class="flex items-center justify-between rounded-lg border border-base-300 p-3">
+		<div class="border-base-300 flex items-center justify-between rounded-lg border p-3">
 			<span class="font-medium">Cache Server</span>
 			<div class="flex items-center gap-2">
 				<StatusDot variant="warning" ariaLabel="Cache Server: High latency" />
-				<span class="text-sm text-warning">High Latency</span>
+				<span class="text-warning text-sm">High Latency</span>
 			</div>
 		</div>
-		<div class="flex items-center justify-between rounded-lg border border-base-300 p-3">
+		<div class="border-base-300 flex items-center justify-between rounded-lg border p-3">
 			<span class="font-medium">Mail Service</span>
 			<div class="flex items-center gap-2">
 				<StatusDot variant="error" pulse ariaLabel="Mail Service: Down" />
-				<span class="text-sm text-error">Down</span>
+				<span class="text-error text-sm">Down</span>
 			</div>
 		</div>
 	</div>
@@ -314,7 +314,7 @@ SPDX-License-Identifier: MIT
 					/>
 				</svg>
 			</button>
-			<span class="absolute -right-1 -top-1">
+			<span class="absolute -top-1 -right-1">
 				<StatusDot variant="error" size="sm" pulse ariaLabel="New notifications" />
 			</span>
 		</div>
@@ -335,7 +335,7 @@ SPDX-License-Identifier: MIT
 					/>
 				</svg>
 			</button>
-			<span class="absolute -right-1 -top-1">
+			<span class="absolute -top-1 -right-1">
 				<StatusDot variant="info" size="sm" ariaLabel="Unread messages" />
 			</span>
 		</div>
@@ -347,31 +347,31 @@ SPDX-License-Identifier: MIT
 	<div class="flex items-center gap-6">
 		<div class="relative">
 			<div class="avatar placeholder">
-				<div class="w-12 rounded-full bg-neutral text-neutral-content">
+				<div class="bg-neutral text-neutral-content w-12 rounded-full">
 					<span>JD</span>
 				</div>
 			</div>
-			<span class="absolute bottom-0 right-0">
+			<span class="absolute right-0 bottom-0">
 				<StatusDot variant="success" size="sm" ring pulse ariaLabel="Online" />
 			</span>
 		</div>
 		<div class="relative">
 			<div class="avatar placeholder">
-				<div class="w-12 rounded-full bg-neutral text-neutral-content">
+				<div class="bg-neutral text-neutral-content w-12 rounded-full">
 					<span>AB</span>
 				</div>
 			</div>
-			<span class="absolute bottom-0 right-0">
+			<span class="absolute right-0 bottom-0">
 				<StatusDot variant="warning" size="sm" ring ariaLabel="Away" />
 			</span>
 		</div>
 		<div class="relative">
 			<div class="avatar placeholder">
-				<div class="w-12 rounded-full bg-neutral text-neutral-content">
+				<div class="bg-neutral text-neutral-content w-12 rounded-full">
 					<span>CD</span>
 				</div>
 			</div>
-			<span class="absolute bottom-0 right-0">
+			<span class="absolute right-0 bottom-0">
 				<StatusDot variant="neutral" size="sm" ring ariaLabel="Offline" />
 			</span>
 		</div>
