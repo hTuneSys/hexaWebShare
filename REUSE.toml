@@ -10,6 +10,7 @@ path = [
   "**/package-lock.json",
   "**/pnpm-lock.yaml",
   "**/.prettierrc",
+  "**/tsconfig.json",
 ]
 precedence = "aggregate"
 SPDX-FileCopyrightText = "2025 hexaTune LLC"

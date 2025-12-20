@@ -5,7 +5,8 @@
 module.exports = {
 	content: ['./src/**/*.{html,js,svelte,ts}'],
 
-	plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography'), require('daisyui')],
+	// Plugins are now declared in CSS using @plugin directives
+	// Keeping config file for content paths and DaisyUI theme configuration
 
 	daisyui: {
 		themes: ['light', 'dark'],
