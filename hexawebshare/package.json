@@ -69,6 +69,6 @@
 		"svelte"
 	],
 	"dependencies": {
-		"daisyui": "^4.12.24"
+		"daisyui": "^5.5.14"
 	}
 }
