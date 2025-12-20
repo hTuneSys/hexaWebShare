@@ -162,8 +162,7 @@ SPDX-License-Identifier: MIT
 			size === 'sm' && 'input-sm',
 			size === 'md' && 'input-md',
 			size === 'lg' && 'input-lg',
-			error !== undefined && error !== '' && 'input-error',
-			className
+			error !== undefined && error !== '' && 'input-error'
 		]
 			.filter(Boolean)
 			.join(' ')
@@ -267,7 +266,7 @@ SPDX-License-Identifier: MIT
 	}
 </script>
 
-<div class="form-control w-full">
+<div class="form-control w-full {className}">
 	{#if label}
 		<label for={labelForId} class={labelClasses}>
 			<span class="label-text">{label}</span>
@@ -360,3 +359,20 @@ SPDX-License-Identifier: MIT
 		</div>
 	{/if}
 </div>
+
+<style>
+	/* Hide native browser search clear button for consistent UX */
+	input[type='search']::-webkit-search-decoration,
+	input[type='search']::-webkit-search-cancel-button,
+	input[type='search']::-webkit-search-results-button,
+	input[type='search']::-webkit-search-results-decoration {
+		-webkit-appearance: none;
+		appearance: none;
+		display: none;
+	}
+
+	/* Firefox */
+	input[type='search']::-moz-search-clear-button {
+		display: none;
+	}
+</style>
