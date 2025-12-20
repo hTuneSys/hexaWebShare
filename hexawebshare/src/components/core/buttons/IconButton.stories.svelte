@@ -37,7 +37,19 @@ SPDX-License-Identifier: MIT
 			outline: { control: 'boolean' },
 			glass: { control: 'boolean' },
 			disabled: { control: 'boolean' },
-			loading: { control: 'boolean' }
+			loading: { control: 'boolean' },
+			defaultIconPoints: {
+				control: 'text',
+				description: 'Default icon polygon points (used when no children provided)'
+			},
+			defaultIconWidth: {
+				control: { type: 'text' },
+				description: 'Default icon width'
+			},
+			defaultIconHeight: {
+				control: { type: 'text' },
+				description: 'Default icon height'
+			}
 		},
 		args: {
 			onclick: fn(),
@@ -72,148 +84,111 @@ SPDX-License-Identifier: MIT
 <Story name="Disabled" args={{ disabled: true, ariaLabel: 'Disabled button' }} />
 <Story name="Loading" args={{ loading: true, ariaLabel: 'Loading button' }} />
 
-<!-- Icon Examples - These need custom icons, so we use let:args with explicit IconButton -->
-<!-- @ts-ignore - Storybook args type inference issue with let:args -->
-<Story name="Heart Icon" let:args>
-	<IconButton {...args} ariaLabel="Heart button">
-		<svg
-			xmlns="http://www.w3.org/2000/svg"
-			width="20"
-			height="20"
-			viewBox="0 0 24 24"
-			fill="none"
-			stroke="currentColor"
-			stroke-width="2"
-			stroke-linecap="round"
-			stroke-linejoin="round"
-		>
-			<path
-				d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
-			/>
-		</svg>
-	</IconButton>
-</Story>
+<!-- Icon Examples - Using defaultIconPoints instead of SVG children -->
+<Story
+	name="Heart Icon"
+	args={{
+		defaultIconPoints:
+			'12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z',
+		defaultIconWidth: '20',
+		defaultIconHeight: '20',
+		variant: 'primary',
+		ariaLabel: 'Heart button'
+	}}
+/>
+<Story
+	name="Trash Icon"
+	args={{
+		defaultIconPoints: '3 6 5 6 21 6 19 20 5 20 3 6',
+		defaultIconWidth: '20',
+		defaultIconHeight: '20',
+		variant: 'error',
+		ariaLabel: 'Delete button'
+	}}
+/>
+<Story
+	name="Settings Icon"
+	args={{
+		defaultIconPoints: '12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z',
+		defaultIconWidth: '20',
+		defaultIconHeight: '20',
+		variant: 'ghost',
+		ariaLabel: 'Settings button'
+	}}
+/>
+<Story
+	name="Search Icon"
+	args={{
+		defaultIconPoints: '11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16z',
+		defaultIconWidth: '20',
+		defaultIconHeight: '20',
+		variant: 'ghost',
+		ariaLabel: 'Search button'
+	}}
+/>
+<Story
+	name="Plus Icon"
+	args={{
+		defaultIconPoints: '12 5 12 19 5 12 19 12',
+		defaultIconWidth: '20',
+		defaultIconHeight: '20',
+		variant: 'primary',
+		ariaLabel: 'Add button'
+	}}
+/>
+<Story
+	name="Check Icon"
+	args={{
+		defaultIconPoints: '20 6 9 17 4 12',
+		defaultIconWidth: '20',
+		defaultIconHeight: '20',
+		variant: 'success',
+		ariaLabel: 'Confirm button'
+	}}
+/>
+<Story
+	name="Close Icon"
+	args={{
+		defaultIconPoints: '18 6 6 18 6 6 18 18',
+		defaultIconWidth: '18',
+		defaultIconHeight: '18',
+		variant: 'ghost',
+		size: 'sm',
+		ariaLabel: 'Close button'
+	}}
+/>
 
-<!-- @ts-ignore - Storybook args type inference issue with let:args -->
-<Story name="Trash Icon" let:args>
-	<IconButton {...args} variant="error" ariaLabel="Delete button">
-		<svg
-			xmlns="http://www.w3.org/2000/svg"
-			width="20"
-			height="20"
-			viewBox="0 0 24 24"
-			fill="none"
-			stroke="currentColor"
-			stroke-width="2"
-			stroke-linecap="round"
-			stroke-linejoin="round"
-		>
-			<polyline points="3 6 5 6 21 6" />
-			<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-		</svg>
-	</IconButton>
-</Story>
-
-<!-- @ts-ignore - Storybook args type inference issue with let:args -->
-<Story name="Settings Icon" let:args>
-	<IconButton {...args} variant="ghost" ariaLabel="Settings button">
-		<svg
-			xmlns="http://www.w3.org/2000/svg"
-			width="20"
-			height="20"
-			viewBox="0 0 24 24"
-			fill="none"
-			stroke="currentColor"
-			stroke-width="2"
-			stroke-linecap="round"
-			stroke-linejoin="round"
-		>
-			<circle cx="12" cy="12" r="3" />
-			<path
-				d="M12 1v6m0 6v6M5.64 5.64l4.24 4.24m4.24 4.24l4.24 4.24M1 12h6m6 0h6M5.64 18.36l4.24-4.24m4.24-4.24l4.24-4.24"
-			/>
-		</svg>
-	</IconButton>
-</Story>
-
-<!-- @ts-ignore - Storybook args type inference issue with let:args -->
-<Story name="Search Icon" let:args>
-	<IconButton {...args} variant="ghost" ariaLabel="Search button">
-		<svg
-			xmlns="http://www.w3.org/2000/svg"
-			width="20"
-			height="20"
-			viewBox="0 0 24 24"
-			fill="none"
-			stroke="currentColor"
-			stroke-width="2"
-			stroke-linecap="round"
-			stroke-linejoin="round"
-		>
-			<circle cx="11" cy="11" r="8" />
-			<path d="m21 21-4.35-4.35" />
-		</svg>
-	</IconButton>
-</Story>
-
-<!-- @ts-ignore - Storybook args type inference issue with let:args -->
-<Story name="Plus Icon" let:args>
-	<IconButton {...args} variant="primary" ariaLabel="Add button">
-		<svg
-			xmlns="http://www.w3.org/2000/svg"
-			width="20"
-			height="20"
-			viewBox="0 0 24 24"
-			fill="none"
-			stroke="currentColor"
-			stroke-width="2"
-			stroke-linecap="round"
-			stroke-linejoin="round"
-		>
-			<line x1="12" y1="5" x2="12" y2="19" />
-			<line x1="5" y1="12" x2="19" y2="12" />
-		</svg>
-	</IconButton>
-</Story>
-
-<!-- @ts-ignore - Storybook args type inference issue with let:args -->
-<Story name="Check Icon" let:args>
-	<IconButton {...args} variant="success" ariaLabel="Confirm button">
-		<svg
-			xmlns="http://www.w3.org/2000/svg"
-			width="20"
-			height="20"
-			viewBox="0 0 24 24"
-			fill="none"
-			stroke="currentColor"
-			stroke-width="2"
-			stroke-linecap="round"
-			stroke-linejoin="round"
-		>
-			<polyline points="20 6 9 17 4 12" />
-		</svg>
-	</IconButton>
-</Story>
-
-<!-- @ts-ignore - Storybook args type inference issue with let:args -->
-<Story name="Close Icon" let:args>
-	<IconButton {...args} variant="ghost" size="sm" ariaLabel="Close button">
-		<svg
-			xmlns="http://www.w3.org/2000/svg"
-			width="18"
-			height="18"
-			viewBox="0 0 24 24"
-			fill="none"
-			stroke="currentColor"
-			stroke-width="2"
-			stroke-linecap="round"
-			stroke-linejoin="round"
-		>
-			<line x1="18" y1="6" x2="6" y2="18" />
-			<line x1="6" y1="6" x2="18" y2="18" />
-		</svg>
-	</IconButton>
-</Story>
+<!-- Default Icon Customization -->
+<Story
+	name="Custom Default Icon"
+	args={{
+		defaultIconPoints: '5 12 2 12 8 4 16 4 22 12 19 12 19 20 5 20',
+		defaultIconWidth: '24',
+		defaultIconHeight: '24',
+		ariaLabel: 'Custom default icon button'
+	}}
+/>
+<Story
+	name="Small Default Icon"
+	args={{
+		defaultIconPoints: '5 12 2 12 8 4 16 4 22 12 19 12 19 20 5 20',
+		defaultIconWidth: '16',
+		defaultIconHeight: '16',
+		size: 'xs',
+		ariaLabel: 'Small default icon button'
+	}}
+/>
+<Story
+	name="Large Default Icon"
+	args={{
+		defaultIconPoints:
+			'12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2',
+		defaultIconWidth: '28',
+		defaultIconHeight: '28',
+		size: 'lg',
+		ariaLabel: 'Large default icon button'
+	}}
+/>
 
 <!-- Interactive Playground -->
 <Story
