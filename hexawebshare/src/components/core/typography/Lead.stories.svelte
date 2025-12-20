@@ -109,213 +109,39 @@ SPDX-License-Identifier: MIT
 	}}
 />
 
-<!-- Size Variants -->
+<!-- Variant Examples -->
 <Story
-	name="Extra Small"
-	args={{
-		text: 'This is an extra small lead paragraph.',
-		size: 'xs'
-	}}
-/>
-<Story
-	name="Small"
-	args={{
-		text: 'This is a small lead paragraph.',
-		size: 'sm'
-	}}
-/>
-<Story
-	name="Base"
-	args={{
-		text: 'This is a base size lead paragraph.',
-		size: 'base'
-	}}
-/>
-<Story
-	name="Large"
-	args={{
-		text: 'This is a large lead paragraph that stands out more.',
-		size: 'lg'
-	}}
-/>
-<Story
-	name="Extra Large"
-	args={{
-		text: 'This is an extra large lead paragraph for maximum emphasis.',
-		size: 'xl'
-	}}
-/>
-<Story
-	name="Size 2XL"
-	args={{
-		text: 'This is a 2XL lead paragraph for hero sections.',
-		size: '2xl'
-	}}
-/>
-
-<!-- Color Variants -->
-<Story
-	name="Default Variant"
-	args={{
-		text: 'This is a default lead paragraph with base content color.',
-		variant: 'default'
-	}}
-/>
-<Story
-	name="Muted Variant"
-	args={{
-		text: 'This is a muted lead paragraph with reduced opacity.',
-		variant: 'muted'
-	}}
-/>
-<Story
-	name="Primary Variant"
+	name="Primary"
 	args={{
 		text: 'This is a primary lead paragraph with primary theme color.',
 		variant: 'primary'
 	}}
 />
 <Story
-	name="Secondary Variant"
+	name="Muted"
 	args={{
-		text: 'This is a secondary lead paragraph with secondary theme color.',
-		variant: 'secondary'
-	}}
-/>
-<Story
-	name="Accent Variant"
-	args={{
-		text: 'This is an accent lead paragraph with accent theme color.',
-		variant: 'accent'
-	}}
-/>
-<Story
-	name="Info Variant"
-	args={{
-		text: 'This is an info lead paragraph with info theme color.',
-		variant: 'info'
-	}}
-/>
-<Story
-	name="Success Variant"
-	args={{
-		text: 'This is a success lead paragraph with success theme color.',
-		variant: 'success'
-	}}
-/>
-<Story
-	name="Warning Variant"
-	args={{
-		text: 'This is a warning lead paragraph with warning theme color.',
-		variant: 'warning'
-	}}
-/>
-<Story
-	name="Error Variant"
-	args={{
-		text: 'This is an error lead paragraph with error theme color.',
-		variant: 'error'
+		text: 'This is a muted lead paragraph with reduced opacity for secondary content.',
+		variant: 'muted'
 	}}
 />
 
-<!-- Font Weights -->
+<!-- States -->
 <Story
-	name="Light Weight"
+	name="Loading"
 	args={{
-		text: 'This is a light weight lead paragraph.',
-		weight: 'light'
+		text: 'This is a loading lead paragraph.',
+		loading: true
 	}}
 />
 <Story
-	name="Normal Weight"
+	name="Disabled"
 	args={{
-		text: 'This is a normal weight lead paragraph.',
-		weight: 'normal'
-	}}
-/>
-<Story
-	name="Medium Weight"
-	args={{
-		text: 'This is a medium weight lead paragraph.',
-		weight: 'medium'
-	}}
-/>
-<Story
-	name="Semibold Weight"
-	args={{
-		text: 'This is a semibold weight lead paragraph.',
-		weight: 'semibold'
-	}}
-/>
-<Story
-	name="Bold Weight"
-	args={{
-		text: 'This is a bold weight lead paragraph.',
-		weight: 'bold'
+		text: 'This is a disabled lead paragraph.',
+		disabled: true
 	}}
 />
 
-<!-- Text Alignment -->
-<Story
-	name="Left Aligned"
-	args={{
-		text: 'This is a left aligned lead paragraph.',
-		align: 'left'
-	}}
-/>
-<Story
-	name="Center Aligned"
-	args={{
-		text: 'This is a center aligned lead paragraph.',
-		align: 'center'
-	}}
-/>
-<Story
-	name="Right Aligned"
-	args={{
-		text: 'This is a right aligned lead paragraph.',
-		align: 'right'
-	}}
-/>
-<Story
-	name="Justified"
-	args={{
-		text: 'This is a justified lead paragraph with multiple words that should be evenly distributed across the line width.',
-		align: 'justify'
-	}}
-/>
-
-<!-- Line Height / Leading -->
-<Story
-	name="Tight Leading"
-	args={{
-		text: 'This is a lead paragraph with tight leading. The lines are closer together.',
-		leading: 'tight'
-	}}
-/>
-<Story
-	name="Normal Leading"
-	args={{
-		text: 'This is a lead paragraph with normal leading. The lines have standard spacing.',
-		leading: 'normal'
-	}}
-/>
-<Story
-	name="Relaxed Leading"
-	args={{
-		text: 'This is a lead paragraph with relaxed leading. The lines have more comfortable spacing for better readability.',
-		leading: 'relaxed'
-	}}
-/>
-<Story
-	name="Loose Leading"
-	args={{
-		text: 'This is a lead paragraph with loose leading. The lines have generous spacing for maximum readability.',
-		leading: 'loose'
-	}}
-/>
-
-<!-- Truncation -->
+<!-- Truncation Examples -->
 <Story
 	name="Truncated"
 	args={{
@@ -324,100 +150,14 @@ SPDX-License-Identifier: MIT
 	}}
 />
 <Story
-	name="Line Clamp 2"
-	args={{
-		text: 'This is a multi-line lead paragraph that should be clamped to two lines maximum with an ellipsis shown at the end of the second line when the text is too long to fit within the specified line count.',
-		lineClamp: 2
-	}}
-/>
-<Story
-	name="Line Clamp 3"
+	name="Line Clamp"
 	args={{
 		text: 'This is a multi-line lead paragraph that should be clamped to three lines maximum with an ellipsis shown at the end of the third line when the text is too long to fit within the specified line count. This allows for more content to be displayed while still maintaining a clean appearance.',
 		lineClamp: 3
 	}}
 />
 
-<!-- Text Styles -->
-<Story
-	name="Italic"
-	args={{
-		text: 'This is an italic lead paragraph.',
-		italic: true
-	}}
-/>
-<Story
-	name="Underline"
-	args={{
-		text: 'This is an underlined lead paragraph.',
-		underline: true
-	}}
-/>
-<Story
-	name="Strikethrough"
-	args={{
-		text: 'This is a strikethrough lead paragraph.',
-		strikethrough: true
-	}}
-/>
-
-<!-- States -->
-<Story
-	name="Loading State"
-	args={{
-		text: 'This is a loading lead paragraph.',
-		loading: true
-	}}
-/>
-<Story
-	name="Disabled State"
-	args={{
-		text: 'This is a disabled lead paragraph.',
-		disabled: true
-	}}
-/>
-
-<!-- Combinations -->
-<Story
-	name="Large Primary Bold Centered"
-	args={{
-		text: 'This is a large, primary colored, bold, centered lead paragraph for hero sections.',
-		size: 'xl',
-		variant: 'primary',
-		weight: 'bold',
-		align: 'center'
-	}}
-/>
-<Story
-	name="Medium Accent Semibold"
-	args={{
-		text: 'This is a medium size, accent colored, semibold lead paragraph.',
-		size: 'lg',
-		variant: 'accent',
-		weight: 'semibold'
-	}}
-/>
-<Story
-	name="Small Success Light"
-	args={{
-		text: 'This is a small, success colored, light weight lead paragraph.',
-		size: 'sm',
-		variant: 'success',
-		weight: 'light'
-	}}
-/>
-
-<!-- Real-world Examples -->
-<Story
-	name="Article Introduction"
-	args={{
-		text: 'Welcome to our comprehensive guide on modern web development. This article will explore the latest trends, best practices, and innovative techniques that are shaping the future of digital experiences.',
-		size: 'lg',
-		variant: 'default',
-		align: 'left',
-		leading: 'relaxed'
-	}}
-/>
+<!-- Real-world Example -->
 <Story
 	name="Hero Section"
 	args={{
@@ -427,59 +167,6 @@ SPDX-License-Identifier: MIT
 		weight: 'medium',
 		align: 'center',
 		leading: 'relaxed'
-	}}
-/>
-<Story
-	name="Product Highlight"
-	args={{
-		text: 'Discover the power of our revolutionary platform designed to streamline your workflow and boost productivity like never before.',
-		size: 'lg',
-		variant: 'accent',
-		align: 'center'
-	}}
-/>
-<Story
-	name="Announcement Banner"
-	args={{
-		text: 'Important: We are launching new features next week. Stay tuned for exciting updates that will enhance your experience.',
-		size: 'base',
-		variant: 'info',
-		weight: 'semibold',
-		align: 'center'
-	}}
-/>
-<Story
-	name="Error Message"
-	args={{
-		text: 'Something went wrong. Please check your input and try again. If the problem persists, contact our support team.',
-		size: 'base',
-		variant: 'error',
-		align: 'left'
-	}}
-/>
-<Story
-	name="Success Message"
-	args={{
-		text: 'Congratulations! Your changes have been saved successfully. You can now continue with your workflow.',
-		size: 'base',
-		variant: 'success',
-		align: 'left'
-	}}
-/>
-
-<!-- Accessibility -->
-<Story
-	name="With ARIA Label"
-	args={{
-		text: 'Lead paragraph text',
-		ariaLabel: 'Custom accessible label for screen readers'
-	}}
-/>
-<Story
-	name="Hidden from Screen Readers"
-	args={{
-		text: 'This decorative lead paragraph is hidden from screen readers.',
-		ariaHidden: true
 	}}
 />
 
