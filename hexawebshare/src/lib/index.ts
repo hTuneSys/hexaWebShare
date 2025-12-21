@@ -2,4 +2,3 @@
 // SPDX-License-Identifier: MIT
 
 // Reexport your entry components here
-export { default as IconButton } from '../components/core/buttons/IconButton.svelte';
