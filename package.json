@@ -24,7 +24,7 @@
   "license": "MIT",
   "devDependencies": {
     "husky": "^9.1.7",
-        "@commitlint/cli": "^19.8.1",
+    "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1"
   },
   "packageManager": "pnpm@9.0.0"
