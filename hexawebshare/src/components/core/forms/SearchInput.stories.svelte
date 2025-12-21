@@ -250,7 +250,7 @@ SPDX-License-Identifier: MIT
 </Story>
 
 <Story name="Compact Header Search">
-	<div class="rounded-lg bg-base-200 p-4">
+	<div class="bg-base-200 rounded-lg p-4">
 		<div class="flex items-center gap-4">
 			<span class="text-lg font-bold">Logo</span>
 			<div class="max-w-xs flex-1">

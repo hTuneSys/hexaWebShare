@@ -136,7 +136,7 @@ SPDX-License-Identifier: MIT
 <Story name="Controlled">
 	<div class="space-y-4">
 		<Tabs tabs={basicTabs} value={controlledValue} onChange={(v) => (controlledValue = v)} />
-		<p class="text-sm text-base-content/70">Active tab: <strong>{controlledValue}</strong></p>
+		<p class="text-base-content/70 text-sm">Active tab: <strong>{controlledValue}</strong></p>
 		<div class="flex gap-2">
 			<button class="btn btn-primary btn-sm" onclick={() => (controlledValue = 'tab1')}
 				>Go to Tab 1</button
@@ -174,15 +174,15 @@ SPDX-License-Identifier: MIT
 			<h3 class="mb-4 text-xl font-bold">Style Variants</h3>
 			<div class="space-y-6">
 				<div>
-					<p class="mb-2 text-sm font-medium text-base-content/60">Bordered (default)</p>
+					<p class="text-base-content/60 mb-2 text-sm font-medium">Bordered (default)</p>
 					<Tabs tabs={basicTabs} variant="bordered" />
 				</div>
 				<div>
-					<p class="mb-2 text-sm font-medium text-base-content/60">Lifted</p>
+					<p class="text-base-content/60 mb-2 text-sm font-medium">Lifted</p>
 					<Tabs tabs={basicTabs} variant="lifted" />
 				</div>
 				<div>
-					<p class="mb-2 text-sm font-medium text-base-content/60">Boxed</p>
+					<p class="text-base-content/60 mb-2 text-sm font-medium">Boxed</p>
 					<Tabs tabs={basicTabs} variant="boxed" />
 				</div>
 			</div>
@@ -194,31 +194,31 @@ SPDX-License-Identifier: MIT
 			<h3 class="mb-4 text-xl font-bold">Color Variants</h3>
 			<div class="space-y-4">
 				<div>
-					<p class="mb-2 text-sm font-medium text-base-content/60">Primary</p>
+					<p class="text-base-content/60 mb-2 text-sm font-medium">Primary</p>
 					<Tabs tabs={basicTabs} color="primary" />
 				</div>
 				<div>
-					<p class="mb-2 text-sm font-medium text-base-content/60">Secondary</p>
+					<p class="text-base-content/60 mb-2 text-sm font-medium">Secondary</p>
 					<Tabs tabs={basicTabs} color="secondary" />
 				</div>
 				<div>
-					<p class="mb-2 text-sm font-medium text-base-content/60">Accent</p>
+					<p class="text-base-content/60 mb-2 text-sm font-medium">Accent</p>
 					<Tabs tabs={basicTabs} color="accent" />
 				</div>
 				<div>
-					<p class="mb-2 text-sm font-medium text-base-content/60">Success</p>
+					<p class="text-base-content/60 mb-2 text-sm font-medium">Success</p>
 					<Tabs tabs={basicTabs} color="success" />
 				</div>
 				<div>
-					<p class="mb-2 text-sm font-medium text-base-content/60">Warning</p>
+					<p class="text-base-content/60 mb-2 text-sm font-medium">Warning</p>
 					<Tabs tabs={basicTabs} color="warning" />
 				</div>
 				<div>
-					<p class="mb-2 text-sm font-medium text-base-content/60">Info</p>
+					<p class="text-base-content/60 mb-2 text-sm font-medium">Info</p>
 					<Tabs tabs={basicTabs} color="info" />
 				</div>
 				<div>
-					<p class="mb-2 text-sm font-medium text-base-content/60">Error</p>
+					<p class="text-base-content/60 mb-2 text-sm font-medium">Error</p>
 					<Tabs tabs={basicTabs} color="error" />
 				</div>
 			</div>
@@ -230,19 +230,19 @@ SPDX-License-Identifier: MIT
 			<h3 class="mb-4 text-xl font-bold">Sizes</h3>
 			<div class="space-y-4">
 				<div>
-					<p class="mb-2 text-sm font-medium text-base-content/60">Extra Small (xs)</p>
+					<p class="text-base-content/60 mb-2 text-sm font-medium">Extra Small (xs)</p>
 					<Tabs tabs={basicTabs} size="xs" />
 				</div>
 				<div>
-					<p class="mb-2 text-sm font-medium text-base-content/60">Small (sm)</p>
+					<p class="text-base-content/60 mb-2 text-sm font-medium">Small (sm)</p>
 					<Tabs tabs={basicTabs} size="sm" />
 				</div>
 				<div>
-					<p class="mb-2 text-sm font-medium text-base-content/60">Medium (md)</p>
+					<p class="text-base-content/60 mb-2 text-sm font-medium">Medium (md)</p>
 					<Tabs tabs={basicTabs} size="md" />
 				</div>
 				<div>
-					<p class="mb-2 text-sm font-medium text-base-content/60">Large (lg)</p>
+					<p class="text-base-content/60 mb-2 text-sm font-medium">Large (lg)</p>
 					<Tabs tabs={basicTabs} size="lg" />
 				</div>
 			</div>
@@ -254,15 +254,15 @@ SPDX-License-Identifier: MIT
 			<h3 class="mb-4 text-xl font-bold">States</h3>
 			<div class="space-y-4">
 				<div>
-					<p class="mb-2 text-sm font-medium text-base-content/60">Normal</p>
+					<p class="text-base-content/60 mb-2 text-sm font-medium">Normal</p>
 					<Tabs tabs={basicTabs} />
 				</div>
 				<div>
-					<p class="mb-2 text-sm font-medium text-base-content/60">With Disabled Tab</p>
+					<p class="text-base-content/60 mb-2 text-sm font-medium">With Disabled Tab</p>
 					<Tabs tabs={tabsWithDisabled} />
 				</div>
 				<div>
-					<p class="mb-2 text-sm font-medium text-base-content/60">All Disabled</p>
+					<p class="text-base-content/60 mb-2 text-sm font-medium">All Disabled</p>
 					<Tabs tabs={basicTabs} disabled={true} />
 				</div>
 			</div>

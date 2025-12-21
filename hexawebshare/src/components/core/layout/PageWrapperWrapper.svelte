@@ -61,7 +61,7 @@ SPDX-License-Identifier: MIT
 			<div class="flex items-center justify-between">
 				<div>
 					<h1 class="text-3xl font-bold">Page Title</h1>
-					<p class="mt-2 text-base-content/70">This is a page header with title and description.</p>
+					<p class="text-base-content/70 mt-2">This is a page header with title and description.</p>
 				</div>
 				<div class="flex gap-2">
 					<button class="btn btn-primary btn-sm">Action</button>
@@ -97,7 +97,7 @@ SPDX-License-Identifier: MIT
 
 	{#snippet footer()}
 		{#if showFooter}
-			<div class="flex items-center justify-between text-sm text-base-content/60">
+			<div class="text-base-content/60 flex items-center justify-between text-sm">
 				<p>© 2025 hexaTune LLC. All rights reserved.</p>
 				<div class="flex gap-4">
 					<a href="#" class="link-hover link">Privacy</a>

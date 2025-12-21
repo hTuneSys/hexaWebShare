@@ -285,7 +285,7 @@ SPDX-License-Identifier: MIT
 	<div class="relative">
 		<!-- Search Icon -->
 		<div
-			class="pointer-events-none absolute top-1/2 -translate-y-1/2 text-base-content/50 {iconLeftClass}"
+			class="text-base-content/50 pointer-events-none absolute top-1/2 -translate-y-1/2 {iconLeftClass}"
 			aria-hidden="true"
 		>
 			<svg

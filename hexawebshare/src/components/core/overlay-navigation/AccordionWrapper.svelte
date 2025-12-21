@@ -42,7 +42,7 @@ SPDX-License-Identifier: MIT
 	<AccordionItem title="Product Information" index={1}>
 		<div class="space-y-4">
 			<p>Product details and specifications can be organized in accordion items.</p>
-			<div class="rounded bg-base-200 p-4">
+			<div class="bg-base-200 rounded p-4">
 				<p class="text-sm">Additional information can be displayed in styled containers.</p>
 			</div>
 		</div>

@@ -101,7 +101,7 @@ SPDX-License-Identifier: MIT
 			<div class="flex items-center justify-between">
 				<div>
 					<h1 class="text-3xl font-bold">Page Title</h1>
-					<p class="mt-2 text-base-content/70">This page has a header section.</p>
+					<p class="text-base-content/70 mt-2">This page has a header section.</p>
 				</div>
 				<button class="btn btn-primary btn-sm">Action</button>
 			</div>
@@ -126,7 +126,7 @@ SPDX-License-Identifier: MIT
 		{/snippet}
 
 		{#snippet footer()}
-			<div class="text-center text-sm text-base-content/60">
+			<div class="text-base-content/60 text-center text-sm">
 				<p>© 2025 hexaTune LLC. All rights reserved.</p>
 			</div>
 		{/snippet}
@@ -140,7 +140,7 @@ SPDX-License-Identifier: MIT
 			<div class="flex items-center justify-between">
 				<div>
 					<h1 class="text-3xl font-bold">Complete Page</h1>
-					<p class="mt-2 text-base-content/70">This page includes header, content, and footer.</p>
+					<p class="text-base-content/70 mt-2">This page includes header, content, and footer.</p>
 				</div>
 				<div class="flex gap-2">
 					<button class="btn btn-primary btn-sm">Save</button>
@@ -161,7 +161,7 @@ SPDX-License-Identifier: MIT
 		{/snippet}
 
 		{#snippet footer()}
-			<div class="flex items-center justify-between text-sm text-base-content/60">
+			<div class="text-base-content/60 flex items-center justify-between text-sm">
 				<p>© 2025 hexaTune LLC</p>
 				<div class="flex gap-4">
 					<a href="#" class="link-hover link">Privacy</a>
