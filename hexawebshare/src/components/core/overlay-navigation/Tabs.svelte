@@ -24,11 +24,11 @@ SPDX-License-Identifier: MIT
 		 */
 		disabled?: boolean;
 		/**
-		 * Optional icon or badge content for the tab
+		 * Optional icon snippet for the tab
 		 */
 		icon?: Snippet;
 		/**
-		 * Tab panel content (optional, can also use children prop)
+		 * Tab panel content snippet
 		 */
 		content?: Snippet;
 	}
@@ -50,40 +50,29 @@ SPDX-License-Identifier: MIT
 		 */
 		defaultValue?: string | number;
 		/**
-		 * Visual style variant
-		 * @default 'border'
+		 * Visual style variant (DaisyUI v4 naming)
+		 * - 'bordered': Tabs with bottom border indicator
+		 * - 'lifted': 3D lifted tab style
+		 * - 'boxed': Contained box style
+		 * @default 'bordered'
 		 */
-		variant?: 'box' | 'border' | 'lift';
+		variant?: 'boxed' | 'bordered' | 'lifted';
 		/**
-		 * Color variant (only applies to box variant)
-		 * @default undefined
+		 * Color variant (applies to tabs)
 		 */
-		color?:
-			| 'primary'
-			| 'secondary'
-			| 'accent'
-			| 'neutral'
-			| 'info'
-			| 'success'
-			| 'warning'
-			| 'error';
+		color?: 'primary' | 'secondary' | 'accent' | 'success' | 'warning' | 'info' | 'error';
 		/**
 		 * Tab size
 		 * @default 'md'
 		 */
-		size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-		/**
-		 * Tab placement
-		 * @default 'top'
-		 */
-		placement?: 'top' | 'bottom';
+		size?: 'xs' | 'sm' | 'md' | 'lg';
 		/**
 		 * Whether tabs are disabled
 		 * @default false
 		 */
 		disabled?: boolean;
 		/**
-		 * Use radio inputs instead of buttons (DaisyUI pattern)
+		 * Use radio inputs with tab-content (for CSS-only tab switching)
 		 * @default false
 		 */
 		useRadio?: boolean;
@@ -100,11 +89,11 @@ SPDX-License-Identifier: MIT
 		 */
 		ariaLabel?: string;
 		/**
-		 * Additional CSS classes
+		 * Additional CSS classes for the tabs container
 		 */
 		class?: string;
 		/**
-		 * Children content (alternative to tab.content)
+		 * Children content (alternative to tab.content for simple use cases)
 		 */
 		children?: Snippet;
 	}
@@ -113,10 +102,9 @@ SPDX-License-Identifier: MIT
 		tabs = [],
 		value,
 		defaultValue,
-		variant = 'border',
+		variant = 'bordered',
 		color,
 		size = 'md',
-		placement = 'top',
 		disabled = false,
 		useRadio = false,
 		name,
@@ -130,11 +118,31 @@ SPDX-License-Identifier: MIT
 	// Determine if component is controlled
 	const isControlled = value !== undefined;
 
+	// Get first enabled tab value
+	function getFirstEnabledTabValue(): string | number | undefined {
+		return tabs.find((tab) => !tab.disabled)?.value ?? tabs[0]?.value;
+	}
+
 	// Internal state for uncontrolled mode
-	let internalValue = $state<string | number | undefined>(defaultValue);
+	let internalValue = $state<string | number | undefined>(
+		defaultValue ?? getFirstEnabledTabValue()
+	);
 
 	// Active tab value
-	let activeValue = $derived(value ?? internalValue ?? tabs[0]?.value);
+	let activeValue = $derived(isControlled ? value : internalValue);
+
+	// Ensure activeValue is valid on initialization
+	$effect(() => {
+		if (!isControlled && activeValue !== undefined) {
+			const tab = tabs.find((t) => t.value === activeValue);
+			if (!tab || tab.disabled) {
+				const firstEnabled = getFirstEnabledTabValue();
+				if (firstEnabled !== undefined) {
+					internalValue = firstEnabled;
+				}
+			}
+		}
+	});
 
 	// Set active tab
 	function setActiveValue(newValue: string | number) {
@@ -149,9 +157,9 @@ SPDX-License-Identifier: MIT
 		onChange?.(newValue);
 	}
 
-	// Generate unique IDs for accessibility
+	// Generate unique IDs for accessibility and radio groups
 	const tablistId = `tabs-${crypto.randomUUID?.() ?? Math.random().toString(36).slice(2)}`;
-	const radioGroupName = name || `tabs-${tablistId}`;
+	const radioGroupName = name || tablistId;
 
 	// Keyboard navigation handler
 	function handleKeyDown(event: KeyboardEvent, currentIndex: number) {
@@ -202,103 +210,103 @@ SPDX-License-Identifier: MIT
 	function focusTab(tabValue: string | number) {
 		if (!tablistElement) return;
 		const tabId = `${tablistId}-tab-${tabValue}`;
-		const button = tablistElement.querySelector<HTMLButtonElement>(`#${tabId}`);
+		const button = tablistElement.querySelector<HTMLButtonElement | HTMLInputElement>(
+			`#${CSS.escape(tabId)}`
+		);
 		button?.focus();
 	}
 
-	// Tab container classes
+	// Tab container classes (DaisyUI v4 naming)
 	let tabsClasses = $derived(
 		[
 			'tabs',
-			variant === 'box' && 'tabs-box',
-			variant === 'border' && 'tabs-border',
-			variant === 'lift' && 'tabs-lifted',
-			// Color variants (only for box variant)
-			variant === 'box' && color === 'primary' && 'bg-primary text-primary-content',
-			variant === 'box' && color === 'secondary' && 'bg-secondary text-secondary-content',
-			variant === 'box' && color === 'accent' && 'bg-accent text-accent-content',
-			variant === 'box' && color === 'neutral' && 'bg-neutral text-neutral-content',
-			variant === 'box' && color === 'info' && 'bg-info text-info-content',
-			variant === 'box' && color === 'success' && 'bg-success text-success-content',
-			variant === 'box' && color === 'warning' && 'bg-warning text-warning-content',
-			variant === 'box' && color === 'error' && 'bg-error text-error-content',
+			variant === 'boxed' && 'tabs-boxed',
+			variant === 'bordered' && 'tabs-bordered',
+			variant === 'lifted' && 'tabs-lifted',
 			size === 'xs' && 'tabs-xs',
 			size === 'sm' && 'tabs-sm',
 			size === 'md' && 'tabs-md',
 			size === 'lg' && 'tabs-lg',
-			size === 'xl' && 'tabs-xl',
-			placement === 'bottom' && 'tabs-bottom',
-			disabled && 'opacity-60 pointer-events-none',
+			disabled && 'opacity-50 pointer-events-none',
 			className
 		]
 			.filter(Boolean)
 			.join(' ')
 	);
 
+	// Get tab classes
+	function getTabClasses(tab: TabItem, isActive: boolean): string {
+		return [
+			'tab',
+			isActive && 'tab-active',
+			(tab.disabled || disabled) && 'tab-disabled',
+			color === 'primary' && 'tab-primary',
+			color === 'secondary' && 'tab-secondary',
+			color === 'accent' && 'tab-accent',
+			color === 'success' && 'tab-success',
+			color === 'warning' && 'tab-warning',
+			color === 'info' && 'tab-info',
+			color === 'error' && 'tab-error'
+		]
+			.filter(Boolean)
+			.join(' ');
+	}
+
 	// Get active tab content
 	let activeTab = $derived(tabs.find((tab) => tab.value === activeValue));
+
+	// Check if any tab has content
+	let hasContent = $derived(tabs.some((tab) => tab.content) || children);
 </script>
 
 {#if useRadio}
-	<!-- Radio input based tabs (DaisyUI pattern) -->
-	<div bind:this={tablistElement} class={tabsClasses} {...props}>
+	<!-- Radio input based tabs (DaisyUI v4 pattern with tab-content) -->
+	<div
+		bind:this={tablistElement}
+		class={tabsClasses}
+		role="tablist"
+		aria-label={ariaLabel}
+		{...props}
+	>
 		{#each tabs as tab, index}
 			{@const isActive = tab.value === activeValue}
 			{@const tabId = `${tablistId}-tab-${tab.value}`}
-			{@const panelId = `${tablistId}-panel-${tab.value}`}
-			{#if tab.icon}
-				<!-- Radio input with label for icon support -->
-				<input
-					type="radio"
-					name={radioGroupName}
-					id={tabId}
-					class="hidden"
-					checked={isActive}
-					disabled={disabled || tab.disabled}
-					onchange={() => setActiveValue(tab.value)}
-				/>
-				<label
-					for={tabId}
-					class="tab {isActive ? 'tab-active' : ''} {tab.disabled || disabled
-						? 'tab-disabled'
-						: ''} cursor-pointer"
-				>
-					<span class="mr-2">
-						{@render tab.icon()}
-					</span>
-					{tab.label}
-				</label>
-			{:else}
-				<!-- Radio input without label (DaisyUI simple pattern) -->
-				<input
-					type="radio"
-					name={radioGroupName}
-					class="tab {isActive ? 'tab-active' : ''} {tab.disabled || disabled
-						? 'tab-disabled'
-						: ''}"
-					aria-label={tab.label}
-					checked={isActive}
-					disabled={disabled || tab.disabled}
-					onchange={() => setActiveValue(tab.value)}
-				/>
-			{/if}
-			{#if tab.content || children}
-				<div
-					class="tab-content border-base-300 bg-base-100 p-6"
-					id={panelId}
-					style={isActive ? '' : 'display: none;'}
-				>
-					{#if tab.content}
-						{@render tab.content()}
-					{:else if children}
-						{@render children()}
-					{/if}
+			{@const isDisabled = disabled || tab.disabled}
+
+			<input
+				type="radio"
+				id={tabId}
+				name={radioGroupName}
+				class={getTabClasses(tab, isActive)}
+				role="tab"
+				aria-label={tab.label}
+				checked={isActive}
+				disabled={isDisabled}
+				onchange={() => setActiveValue(tab.value)}
+				onkeydown={(e) => handleKeyDown(e, index)}
+			/>
+
+			{#if tab.content && variant === 'lifted'}
+				<!-- Tab content for lifted variant (goes after each tab) -->
+				<div class="tab-content rounded-box border-base-300 bg-base-100 p-6" role="tabpanel">
+					{@render tab.content()}
 				</div>
 			{/if}
 		{/each}
 	</div>
+
+	{#if hasContent && variant !== 'lifted'}
+		<!-- Tab panels for non-lifted variants -->
+		<div class="mt-4">
+			{#if activeTab?.content}
+				{@render activeTab.content()}
+			{:else if children}
+				{@render children()}
+			{/if}
+		</div>
+	{/if}
 {:else}
-	<!-- Button based tabs (default) -->
+	<!-- Button based tabs (default, more accessible) -->
 	<div
 		bind:this={tablistElement}
 		class={tabsClasses}
@@ -311,16 +319,18 @@ SPDX-License-Identifier: MIT
 			{@const isActive = tab.value === activeValue}
 			{@const tabId = `${tablistId}-tab-${tab.value}`}
 			{@const panelId = `${tablistId}-panel-${tab.value}`}
+			{@const isDisabled = disabled || tab.disabled}
+
 			<button
 				type="button"
 				role="tab"
 				id={tabId}
-				aria-controls={panelId}
+				aria-controls={hasContent ? panelId : undefined}
 				aria-selected={isActive}
-				aria-disabled={disabled || tab.disabled}
-				tabindex={disabled || tab.disabled ? -1 : isActive ? 0 : -1}
-				class="tab {isActive ? 'tab-active' : ''} {tab.disabled || disabled ? 'tab-disabled' : ''}"
-				disabled={disabled || tab.disabled}
+				aria-disabled={isDisabled}
+				tabindex={isDisabled ? -1 : isActive ? 0 : -1}
+				class={getTabClasses(tab, isActive)}
+				disabled={isDisabled}
 				onclick={() => setActiveValue(tab.value)}
 				onkeydown={(e) => handleKeyDown(e, index)}
 			>
@@ -335,7 +345,7 @@ SPDX-License-Identifier: MIT
 	</div>
 
 	<!-- Tab panels -->
-	{#if activeTab}
+	{#if hasContent && activeTab}
 		{@const panelId = `${tablistId}-panel-${activeTab.value}`}
 		{@const tabId = `${tablistId}-tab-${activeTab.value}`}
 		<div role="tabpanel" id={panelId} aria-labelledby={tabId} class="mt-4">

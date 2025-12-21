@@ -6,13 +6,27 @@ SPDX-License-Identifier: MIT
 <script module>
 	import { defineMeta } from '@storybook/addon-svelte-csf';
 	import Tabs from './Tabs.svelte';
-	import type { TabItem } from './Tabs.svelte';
+	import { fn } from 'storybook/test';
 
-	// Sample tab data - defined in module script for use in args
-	const basicTabs: TabItem[] = [
+	// Sample tab data
+	const basicTabs = [
 		{ value: 'tab1', label: 'Tab 1' },
 		{ value: 'tab2', label: 'Tab 2' },
 		{ value: 'tab3', label: 'Tab 3' }
+	];
+
+	const manyTabs = [
+		{ value: 'tab1', label: 'Overview' },
+		{ value: 'tab2', label: 'Details' },
+		{ value: 'tab3', label: 'Settings' },
+		{ value: 'tab4', label: 'History' },
+		{ value: 'tab5', label: 'Analytics' }
+	];
+
+	const tabsWithDisabled = [
+		{ value: 'tab1', label: 'Enabled Tab' },
+		{ value: 'tab2', label: 'Disabled Tab', disabled: true },
+		{ value: 'tab3', label: 'Another Enabled' }
 	];
 
 	const { Story } = defineMeta({
@@ -22,36 +36,26 @@ SPDX-License-Identifier: MIT
 		argTypes: {
 			variant: {
 				control: { type: 'select' },
-				options: ['box', 'border', 'lift'],
-				description: 'Visual style variant of the tabs'
+				options: ['boxed', 'bordered', 'lifted'],
+				description: 'Visual style variant of the tabs (DaisyUI v4 naming)'
 			},
 			color: {
 				control: { type: 'select' },
-				options: [
-					'primary',
-					'secondary',
-					'accent',
-					'neutral',
-					'info',
-					'success',
-					'warning',
-					'error'
-				],
-				description: 'Color variant (only applies to box variant)'
+				options: ['primary', 'secondary', 'accent', 'success', 'warning', 'info', 'error'],
+				description: 'Color variant (applies to tabs)'
 			},
 			size: {
 				control: { type: 'select' },
-				options: ['xs', 'sm', 'md', 'lg', 'xl'],
+				options: ['xs', 'sm', 'md', 'lg'],
 				description: 'Size of the tabs'
-			},
-			placement: {
-				control: { type: 'select' },
-				options: ['top', 'bottom'],
-				description: 'Placement of tabs relative to content'
 			},
 			disabled: {
 				control: 'boolean',
 				description: 'Disable all tabs'
+			},
+			useRadio: {
+				control: 'boolean',
+				description: 'Use radio inputs instead of buttons'
 			},
 			ariaLabel: {
 				control: 'text',
@@ -60,10 +64,10 @@ SPDX-License-Identifier: MIT
 		},
 		args: {
 			tabs: basicTabs,
-			variant: 'border',
+			variant: 'bordered',
 			size: 'md',
-			placement: 'top',
-			disabled: false
+			disabled: false,
+			onChange: fn()
 		}
 	});
 </script>
@@ -72,861 +76,199 @@ SPDX-License-Identifier: MIT
 	let controlledValue = $state<string | number>('tab1');
 </script>
 
-<!-- Default Story -->
-<Story name="Default">
-	<Tabs
-		tabs={[
-			{ value: 'tab1', label: 'Home' },
-			{ value: 'tab2', label: 'About' },
-			{ value: 'tab3', label: 'Contact' }
-		]}
-	>
-		{#snippet children()}
-			<div class="rounded-box bg-base-200 p-4">
-				<h3 class="mb-2 font-bold">Active Tab Content</h3>
-				<p class="text-sm">Click on different tabs to see their content change.</p>
-			</div>
-		{/snippet}
-	</Tabs>
+<!-- Default Stories -->
+<Story name="Default" args={{ tabs: basicTabs }} />
+
+<Story name="Bordered" args={{ tabs: basicTabs, variant: 'bordered' }} />
+
+<Story name="Lifted" args={{ tabs: basicTabs, variant: 'lifted' }} />
+
+<Story name="Boxed" args={{ tabs: basicTabs, variant: 'boxed' }} />
+
+<!-- Color Variant Stories -->
+<Story name="Primary" args={{ tabs: basicTabs, color: 'primary' }} />
+
+<Story name="Secondary" args={{ tabs: basicTabs, color: 'secondary' }} />
+
+<Story name="Accent" args={{ tabs: basicTabs, color: 'accent' }} />
+
+<Story name="Success" args={{ tabs: basicTabs, color: 'success' }} />
+
+<Story name="Warning" args={{ tabs: basicTabs, color: 'warning' }} />
+
+<Story name="Info" args={{ tabs: basicTabs, color: 'info' }} />
+
+<Story name="Error" args={{ tabs: basicTabs, color: 'error' }} />
+
+<!-- Size Stories -->
+<Story name="Extra Small" args={{ tabs: basicTabs, size: 'xs' }} />
+
+<Story name="Small" args={{ tabs: basicTabs, size: 'sm' }} />
+
+<Story name="Medium" args={{ tabs: basicTabs, size: 'md' }} />
+
+<Story name="Large" args={{ tabs: basicTabs, size: 'lg' }} />
+
+<!-- State Stories -->
+<Story name="Disabled Tab" args={{ tabs: tabsWithDisabled }} />
+
+<Story name="All Disabled" args={{ tabs: basicTabs, disabled: true }} />
+
+<Story name="Many Tabs" args={{ tabs: manyTabs }} />
+
+<!-- Radio Input Based Tabs -->
+<Story
+	name="Radio Bordered"
+	args={{ tabs: basicTabs, useRadio: true, variant: 'bordered', name: 'radio-tabs-bordered' }}
+/>
+
+<Story
+	name="Radio Lifted"
+	args={{ tabs: basicTabs, useRadio: true, variant: 'lifted', name: 'radio-tabs-lifted' }}
+/>
+
+<Story
+	name="Radio Boxed"
+	args={{ tabs: basicTabs, useRadio: true, variant: 'boxed', name: 'radio-tabs-boxed' }}
+/>
+
+<!-- Controlled -->
+<Story name="Controlled">
+	<div class="space-y-4">
+		<Tabs tabs={basicTabs} value={controlledValue} onChange={(v) => (controlledValue = v)} />
+		<p class="text-sm text-base-content/70">Active tab: <strong>{controlledValue}</strong></p>
+		<div class="flex gap-2">
+			<button class="btn btn-primary btn-sm" onclick={() => (controlledValue = 'tab1')}
+				>Go to Tab 1</button
+			>
+			<button class="btn btn-secondary btn-sm" onclick={() => (controlledValue = 'tab2')}
+				>Go to Tab 2</button
+			>
+			<button class="btn btn-accent btn-sm" onclick={() => (controlledValue = 'tab3')}
+				>Go to Tab 3</button
+			>
+		</div>
+	</div>
 </Story>
 
-<!-- Variants -->
-<Story name="Box Variant">
-	<Tabs
-		tabs={[
-			{ value: 'tab1', label: 'Home' },
-			{ value: 'tab2', label: 'About' },
-			{ value: 'tab3', label: 'Contact' }
-		]}
-		variant="box"
-	>
+<!-- With Content -->
+<Story name="With Content">
+	<Tabs tabs={basicTabs}>
 		{#snippet children()}
-			<div class="rounded-box bg-base-200 p-4">
-				<h3 class="mb-2 font-bold">Box Variant</h3>
-				<p class="text-sm">
-					This variant uses rounded box style tabs with clear visual separation.
+			<div class="rounded-box bg-base-200 p-6">
+				<h3 class="mb-2 text-lg font-bold">Tab Content</h3>
+				<p class="text-base-content/70">
+					This is shared content that appears for all tabs. Use the <code class="kbd kbd-sm"
+						>content</code
+					> property on individual tabs for unique content.
 				</p>
 			</div>
 		{/snippet}
 	</Tabs>
 </Story>
 
-<!-- Box Variant with Colors -->
-<Story name="Box Variant - Primary">
-	<Tabs
-		tabs={[
-			{ value: 'tab1', label: 'Home' },
-			{ value: 'tab2', label: 'About' },
-			{ value: 'tab3', label: 'Contact' }
-		]}
-		variant="box"
-		color="primary"
-	>
-		{#snippet children()}
-			<div class="rounded-box bg-base-200 p-4">
-				<h3 class="mb-2 font-bold">Box Variant - Primary Color</h3>
-				<p class="text-sm">Box tabs with primary color background.</p>
-			</div>
-		{/snippet}
-	</Tabs>
-</Story>
-
-<Story name="Box Variant - Secondary">
-	<Tabs
-		tabs={[
-			{ value: 'tab1', label: 'Home' },
-			{ value: 'tab2', label: 'About' },
-			{ value: 'tab3', label: 'Contact' }
-		]}
-		variant="box"
-		color="secondary"
-	>
-		{#snippet children()}
-			<div class="rounded-box bg-base-200 p-4">
-				<h3 class="mb-2 font-bold">Box Variant - Secondary Color</h3>
-				<p class="text-sm">Box tabs with secondary color background.</p>
-			</div>
-		{/snippet}
-	</Tabs>
-</Story>
-
-<Story name="Box Variant - Accent">
-	<Tabs
-		tabs={[
-			{ value: 'tab1', label: 'Home' },
-			{ value: 'tab2', label: 'About' },
-			{ value: 'tab3', label: 'Contact' }
-		]}
-		variant="box"
-		color="accent"
-	>
-		{#snippet children()}
-			<div class="rounded-box bg-base-200 p-4">
-				<h3 class="mb-2 font-bold">Box Variant - Accent Color</h3>
-				<p class="text-sm">Box tabs with accent color background.</p>
-			</div>
-		{/snippet}
-	</Tabs>
-</Story>
-
-<Story name="Box Variant - Info">
-	<Tabs
-		tabs={[
-			{ value: 'tab1', label: 'Home' },
-			{ value: 'tab2', label: 'About' },
-			{ value: 'tab3', label: 'Contact' }
-		]}
-		variant="box"
-		color="info"
-	>
-		{#snippet children()}
-			<div class="rounded-box bg-base-200 p-4">
-				<h3 class="mb-2 font-bold">Box Variant - Info Color</h3>
-				<p class="text-sm">Box tabs with info color background.</p>
-			</div>
-		{/snippet}
-	</Tabs>
-</Story>
-
-<Story name="Box Variant - Success">
-	<Tabs
-		tabs={[
-			{ value: 'tab1', label: 'Home' },
-			{ value: 'tab2', label: 'About' },
-			{ value: 'tab3', label: 'Contact' }
-		]}
-		variant="box"
-		color="success"
-	>
-		{#snippet children()}
-			<div class="rounded-box bg-base-200 p-4">
-				<h3 class="mb-2 font-bold">Box Variant - Success Color</h3>
-				<p class="text-sm">Box tabs with success color background.</p>
-			</div>
-		{/snippet}
-	</Tabs>
-</Story>
-
-<Story name="Box Variant - Warning">
-	<Tabs
-		tabs={[
-			{ value: 'tab1', label: 'Home' },
-			{ value: 'tab2', label: 'About' },
-			{ value: 'tab3', label: 'Contact' }
-		]}
-		variant="box"
-		color="warning"
-	>
-		{#snippet children()}
-			<div class="rounded-box bg-base-200 p-4">
-				<h3 class="mb-2 font-bold">Box Variant - Warning Color</h3>
-				<p class="text-sm">Box tabs with warning color background.</p>
-			</div>
-		{/snippet}
-	</Tabs>
-</Story>
-
-<Story name="Box Variant - Error">
-	<Tabs
-		tabs={[
-			{ value: 'tab1', label: 'Home' },
-			{ value: 'tab2', label: 'About' },
-			{ value: 'tab3', label: 'Contact' }
-		]}
-		variant="box"
-		color="error"
-	>
-		{#snippet children()}
-			<div class="rounded-box bg-base-200 p-4">
-				<h3 class="mb-2 font-bold">Box Variant - Error Color</h3>
-				<p class="text-sm">Box tabs with error color background.</p>
-			</div>
-		{/snippet}
-	</Tabs>
-</Story>
-
-<Story name="Box Variant - Neutral">
-	<Tabs
-		tabs={[
-			{ value: 'tab1', label: 'Home' },
-			{ value: 'tab2', label: 'About' },
-			{ value: 'tab3', label: 'Contact' }
-		]}
-		variant="box"
-		color="neutral"
-	>
-		{#snippet children()}
-			<div class="rounded-box bg-base-200 p-4">
-				<h3 class="mb-2 font-bold">Box Variant - Neutral Color</h3>
-				<p class="text-sm">Box tabs with neutral color background.</p>
-			</div>
-		{/snippet}
-	</Tabs>
-</Story>
-
-<Story name="Border Variant">
-	<Tabs
-		tabs={[
-			{ value: 'tab1', label: 'Home' },
-			{ value: 'tab2', label: 'About' },
-			{ value: 'tab3', label: 'Contact' }
-		]}
-		variant="border"
-	>
-		{#snippet children()}
-			<div class="rounded-box bg-base-200 p-4">
-				<h3 class="mb-2 font-bold">Border Variant</h3>
-				<p class="text-sm">This variant shows a clean border under the active tab.</p>
-			</div>
-		{/snippet}
-	</Tabs>
-</Story>
-
-<Story name="Lift Variant">
-	<Tabs
-		tabs={[
-			{ value: 'tab1', label: 'Home' },
-			{ value: 'tab2', label: 'About' },
-			{ value: 'tab3', label: 'Contact' }
-		]}
-		variant="lift"
-	>
-		{#snippet children()}
-			<div class="rounded-box bg-base-200 p-4">
-				<h3 class="mb-2 font-bold">Lift Variant</h3>
-				<p class="text-sm">This variant gives tabs a lifted/elevated appearance with depth.</p>
-			</div>
-		{/snippet}
-	</Tabs>
-</Story>
-
-<!-- Sizes -->
-<Story name="Extra Small">
-	<Tabs
-		tabs={[
-			{ value: 'tab1', label: 'Tab 1' },
-			{ value: 'tab2', label: 'Tab 2' },
-			{ value: 'tab3', label: 'Tab 3' }
-		]}
-		size="xs"
-	>
-		{#snippet children()}
-			<div class="rounded-box bg-base-200 p-4">
-				<p class="text-xs">Extra small size tabs - compact and minimal</p>
-			</div>
-		{/snippet}
-	</Tabs>
-</Story>
-
-<Story name="Small">
-	<Tabs
-		tabs={[
-			{ value: 'tab1', label: 'Tab 1' },
-			{ value: 'tab2', label: 'Tab 2' },
-			{ value: 'tab3', label: 'Tab 3' }
-		]}
-		size="sm"
-	>
-		{#snippet children()}
-			<div class="rounded-box bg-base-200 p-4">
-				<p class="text-sm">Small size tabs - slightly larger than extra small</p>
-			</div>
-		{/snippet}
-	</Tabs>
-</Story>
-
-<Story name="Medium">
-	<Tabs
-		tabs={[
-			{ value: 'tab1', label: 'Tab 1' },
-			{ value: 'tab2', label: 'Tab 2' },
-			{ value: 'tab3', label: 'Tab 3' }
-		]}
-		size="md"
-	>
-		{#snippet children()}
-			<div class="rounded-box bg-base-200 p-4">
-				<p class="text-base">Medium size tabs - default size, balanced and readable</p>
-			</div>
-		{/snippet}
-	</Tabs>
-</Story>
-
-<Story name="Large">
-	<Tabs
-		tabs={[
-			{ value: 'tab1', label: 'Tab 1' },
-			{ value: 'tab2', label: 'Tab 2' },
-			{ value: 'tab3', label: 'Tab 3' }
-		]}
-		size="lg"
-	>
-		{#snippet children()}
-			<div class="rounded-box bg-base-200 p-4">
-				<p class="text-lg">Large size tabs - more prominent and easier to click</p>
-			</div>
-		{/snippet}
-	</Tabs>
-</Story>
-
-<Story name="Extra Large">
-	<Tabs
-		tabs={[
-			{ value: 'tab1', label: 'Tab 1' },
-			{ value: 'tab2', label: 'Tab 2' },
-			{ value: 'tab3', label: 'Tab 3' }
-		]}
-		size="xl"
-	>
-		{#snippet children()}
-			<div class="rounded-box bg-base-200 p-4">
-				<p class="text-xl">Extra large size tabs - maximum size for emphasis</p>
-			</div>
-		{/snippet}
-	</Tabs>
-</Story>
-
-<!-- With Content Using Children -->
-<Story name="With Content">
-	<Tabs tabs={basicTabs}>
-		{#snippet children()}
-			<div class="rounded-box bg-base-200 p-4">
-				<p class="mb-2 font-semibold">Active Tab Content</p>
-				<p class="text-sm">This content is displayed for the currently active tab.</p>
-			</div>
-		{/snippet}
-	</Tabs>
-</Story>
-
-<!-- Disabled States -->
-<Story name="Disabled Tab">
-	<Tabs
-		tabs={[
-			{ value: 'tab1', label: 'Enabled Tab' },
-			{ value: 'tab2', label: 'Disabled Tab', disabled: true },
-			{ value: 'tab3', label: 'Another Enabled Tab' }
-		]}
-	/>
-</Story>
-
-<Story name="All Disabled">
-	<Tabs tabs={basicTabs} disabled={true} />
-</Story>
-
-<!-- Placement -->
-<Story name="Bottom Placement">
-	<Tabs tabs={basicTabs} placement="bottom" />
-</Story>
-
-<!-- Controlled -->
-<Story name="Controlled">
-	<div class="space-y-4">
-		<Tabs tabs={basicTabs} value={controlledValue} onChange={(v) => (controlledValue = v)} />
-		<p class="text-sm">Active tab: {controlledValue}</p>
-	</div>
-</Story>
-
-<!-- Multiple Tabs -->
-<Story name="Many Tabs">
-	<Tabs
-		tabs={[
-			{ value: 'tab1', label: 'Overview' },
-			{ value: 'tab2', label: 'Details' },
-			{ value: 'tab3', label: 'Settings' },
-			{ value: 'tab4', label: 'History' },
-			{ value: 'tab5', label: 'Analytics' }
-		]}
-	/>
-</Story>
-
-<!-- Accessibility -->
-<Story name="With Aria Label">
-	<Tabs tabs={basicTabs} ariaLabel="Navigation tabs" />
-</Story>
-
-<!-- Radio Input Based Tabs -->
-<Story name="Radio Tabs Box">
-	<Tabs
-		tabs={[
-			{ value: 'tab1', label: 'Tab 1' },
-			{ value: 'tab2', label: 'Tab 2' },
-			{ value: 'tab3', label: 'Tab 3' }
-		]}
-		variant="box"
-		useRadio={true}
-		name="radio-tabs-box"
-	>
-		{#snippet children()}
-			<div>
-				<h3 class="mb-2 font-bold">Active Tab Content</h3>
-				<p class="text-sm">This is the content for the selected tab using radio inputs.</p>
-			</div>
-		{/snippet}
-	</Tabs>
-</Story>
-
-<Story name="Radio Tabs Lift with Content">
-	<Tabs
-		tabs={[
-			{ value: 'tab1', label: 'Home' },
-			{ value: 'tab2', label: 'About' },
-			{ value: 'tab3', label: 'Contact' }
-		]}
-		variant="lift"
-		useRadio={true}
-		name="radio-tabs-lift"
-	>
-		{#snippet children()}
-			<div>
-				<h3 class="mb-2 font-bold">Active Tab Content</h3>
-				<p class="text-sm">This content changes based on the selected radio tab.</p>
-			</div>
-		{/snippet}
-	</Tabs>
-</Story>
-
-<Story name="Radio Tabs Lift with Icons and Content">
-	<div class="space-y-4">
-		<p class="text-sm text-base-content/60">
-			Note: Icons in radio tabs require snippet definitions. This example shows radio tabs with
-			content.
-		</p>
-		<Tabs
-			tabs={[
-				{ value: 'tab1', label: '🏠 Home' },
-				{ value: 'tab2', label: '⚙️ Settings' },
-				{ value: 'tab3', label: '👤 Profile' }
-			]}
-			variant="lift"
-			useRadio={true}
-			name="radio-tabs-lift-icons"
-		>
-			{#snippet children()}
-				<div>
-					<h3 class="mb-2 font-bold">Active Tab Content</h3>
-					<p class="text-sm">Radio tabs with emoji icons and content panel.</p>
-				</div>
-			{/snippet}
-		</Tabs>
-	</div>
-</Story>
-
-<Story name="Radio Tabs Lift with Content on Bottom">
-	<Tabs
-		tabs={[
-			{ value: 'tab1', label: 'Home' },
-			{ value: 'tab2', label: 'About' },
-			{ value: 'tab3', label: 'Contact' }
-		]}
-		variant="lift"
-		placement="bottom"
-		useRadio={true}
-		name="radio-tabs-lift-bottom"
-	>
-		{#snippet children()}
-			<div>
-				<h3 class="mb-2 font-bold">Content Above Tabs</h3>
-				<p class="text-sm">This content appears above the tabs when placement is set to bottom.</p>
-			</div>
-		{/snippet}
-	</Tabs>
-</Story>
-
-<!-- Variant Combinations -->
-<Story name="Border Variant - Small">
-	<Tabs
-		tabs={[
-			{ value: 'tab1', label: 'Home' },
-			{ value: 'tab2', label: 'About' },
-			{ value: 'tab3', label: 'Contact' }
-		]}
-		variant="border"
-		size="sm"
-	>
-		{#snippet children()}
-			<div class="rounded-box bg-base-200 p-4">
-				<h3 class="mb-2 font-bold">Border Variant - Small</h3>
-				<p class="text-sm">Border variant with small size.</p>
-			</div>
-		{/snippet}
-	</Tabs>
-</Story>
-
-<Story name="Border Variant - Large">
-	<Tabs
-		tabs={[
-			{ value: 'tab1', label: 'Home' },
-			{ value: 'tab2', label: 'About' },
-			{ value: 'tab3', label: 'Contact' }
-		]}
-		variant="border"
-		size="lg"
-	>
-		{#snippet children()}
-			<div class="rounded-box bg-base-200 p-4">
-				<h3 class="mb-2 font-bold">Border Variant - Large</h3>
-				<p class="text-sm">Border variant with large size.</p>
-			</div>
-		{/snippet}
-	</Tabs>
-</Story>
-
-<Story name="Lift Variant - Small">
-	<Tabs
-		tabs={[
-			{ value: 'tab1', label: 'Home' },
-			{ value: 'tab2', label: 'About' },
-			{ value: 'tab3', label: 'Contact' }
-		]}
-		variant="lift"
-		size="sm"
-	>
-		{#snippet children()}
-			<div class="rounded-box bg-base-200 p-4">
-				<h3 class="mb-2 font-bold">Lift Variant - Small</h3>
-				<p class="text-sm">Lift variant with small size.</p>
-			</div>
-		{/snippet}
-	</Tabs>
-</Story>
-
-<Story name="Lift Variant - Large">
-	<Tabs
-		tabs={[
-			{ value: 'tab1', label: 'Home' },
-			{ value: 'tab2', label: 'About' },
-			{ value: 'tab3', label: 'Contact' }
-		]}
-		variant="lift"
-		size="lg"
-	>
-		{#snippet children()}
-			<div class="rounded-box bg-base-200 p-4">
-				<h3 class="mb-2 font-bold">Lift Variant - Large</h3>
-				<p class="text-sm">Lift variant with large size.</p>
-			</div>
-		{/snippet}
-	</Tabs>
-</Story>
-
-<Story name="Box Variant Primary - Small">
-	<Tabs
-		tabs={[
-			{ value: 'tab1', label: 'Home' },
-			{ value: 'tab2', label: 'About' },
-			{ value: 'tab3', label: 'Contact' }
-		]}
-		variant="box"
-		color="primary"
-		size="sm"
-	>
-		{#snippet children()}
-			<div class="rounded-box bg-base-200 p-4">
-				<h3 class="mb-2 font-bold">Box Variant Primary - Small</h3>
-				<p class="text-sm">Box variant with primary color and small size.</p>
-			</div>
-		{/snippet}
-	</Tabs>
-</Story>
-
-<Story name="Box Variant Primary - Large">
-	<Tabs
-		tabs={[
-			{ value: 'tab1', label: 'Home' },
-			{ value: 'tab2', label: 'About' },
-			{ value: 'tab3', label: 'Contact' }
-		]}
-		variant="box"
-		color="primary"
-		size="lg"
-	>
-		{#snippet children()}
-			<div class="rounded-box bg-base-200 p-4">
-				<h3 class="mb-2 font-bold">Box Variant Primary - Large</h3>
-				<p class="text-sm">Box variant with primary color and large size.</p>
-			</div>
-		{/snippet}
-	</Tabs>
-</Story>
-
-<!-- Radio Tabs with Border Variant -->
-<Story name="Radio Tabs Border">
-	<Tabs
-		tabs={[
-			{ value: 'tab1', label: 'Home' },
-			{ value: 'tab2', label: 'About' },
-			{ value: 'tab3', label: 'Contact' }
-		]}
-		variant="border"
-		useRadio={true}
-		name="radio-tabs-border"
-	>
-		{#snippet children()}
-			<div>
-				<h3 class="mb-2 font-bold">Radio Tabs Border</h3>
-				<p class="text-sm">Radio input tabs with border variant.</p>
-			</div>
-		{/snippet}
-	</Tabs>
-</Story>
-
-<!-- Radio Tabs with Sizes -->
-<Story name="Radio Tabs Box - Small">
-	<Tabs
-		tabs={[
-			{ value: 'tab1', label: 'Tab 1' },
-			{ value: 'tab2', label: 'Tab 2' },
-			{ value: 'tab3', label: 'Tab 3' }
-		]}
-		variant="box"
-		size="sm"
-		useRadio={true}
-		name="radio-tabs-box-sm"
-	>
-		{#snippet children()}
-			<div>
-				<h3 class="mb-2 font-bold">Radio Tabs Box - Small</h3>
-				<p class="text-sm">Radio tabs with box variant and small size.</p>
-			</div>
-		{/snippet}
-	</Tabs>
-</Story>
-
-<Story name="Radio Tabs Box - Large">
-	<Tabs
-		tabs={[
-			{ value: 'tab1', label: 'Tab 1' },
-			{ value: 'tab2', label: 'Tab 2' },
-			{ value: 'tab3', label: 'Tab 3' }
-		]}
-		variant="box"
-		size="lg"
-		useRadio={true}
-		name="radio-tabs-box-lg"
-	>
-		{#snippet children()}
-			<div>
-				<h3 class="mb-2 font-bold">Radio Tabs Box - Large</h3>
-				<p class="text-sm">Radio tabs with box variant and large size.</p>
-			</div>
-		{/snippet}
-	</Tabs>
-</Story>
-
-<!-- Radio Tabs with Colors -->
-<Story name="Radio Tabs Box Primary">
-	<Tabs
-		tabs={[
-			{ value: 'tab1', label: 'Home' },
-			{ value: 'tab2', label: 'About' },
-			{ value: 'tab3', label: 'Contact' }
-		]}
-		variant="box"
-		color="primary"
-		useRadio={true}
-		name="radio-tabs-box-primary"
-	>
-		{#snippet children()}
-			<div>
-				<h3 class="mb-2 font-bold">Radio Tabs Box Primary</h3>
-				<p class="text-sm">Radio tabs with box variant and primary color.</p>
-			</div>
-		{/snippet}
-	</Tabs>
-</Story>
-
-<Story name="Radio Tabs Box Accent">
-	<Tabs
-		tabs={[
-			{ value: 'tab1', label: 'Home' },
-			{ value: 'tab2', label: 'About' },
-			{ value: 'tab3', label: 'Contact' }
-		]}
-		variant="box"
-		color="accent"
-		useRadio={true}
-		name="radio-tabs-box-accent"
-	>
-		{#snippet children()}
-			<div>
-				<h3 class="mb-2 font-bold">Radio Tabs Box Accent</h3>
-				<p class="text-sm">Radio tabs with box variant and accent color.</p>
-			</div>
-		{/snippet}
-	</Tabs>
-</Story>
-
-<Story name="Radio Tabs Box Success">
-	<Tabs
-		tabs={[
-			{ value: 'tab1', label: 'Home' },
-			{ value: 'tab2', label: 'About' },
-			{ value: 'tab3', label: 'Contact' }
-		]}
-		variant="box"
-		color="success"
-		useRadio={true}
-		name="radio-tabs-box-success"
-	>
-		{#snippet children()}
-			<div>
-				<h3 class="mb-2 font-bold">Radio Tabs Box Success</h3>
-				<p class="text-sm">Radio tabs with box variant and success color.</p>
-			</div>
-		{/snippet}
-	</Tabs>
-</Story>
-
-<!-- Bottom Placement Combinations -->
-<Story name="Box Variant Bottom Placement">
-	<Tabs
-		tabs={[
-			{ value: 'tab1', label: 'Home' },
-			{ value: 'tab2', label: 'About' },
-			{ value: 'tab3', label: 'Contact' }
-		]}
-		variant="box"
-		placement="bottom"
-	>
-		{#snippet children()}
-			<div class="rounded-box bg-base-200 p-4">
-				<h3 class="mb-2 font-bold">Box Variant Bottom</h3>
-				<p class="text-sm">Box variant with tabs at the bottom.</p>
-			</div>
-		{/snippet}
-	</Tabs>
-</Story>
-
-<Story name="Border Variant Bottom Placement">
-	<Tabs
-		tabs={[
-			{ value: 'tab1', label: 'Home' },
-			{ value: 'tab2', label: 'About' },
-			{ value: 'tab3', label: 'Contact' }
-		]}
-		variant="border"
-		placement="bottom"
-	>
-		{#snippet children()}
-			<div class="rounded-box bg-base-200 p-4">
-				<h3 class="mb-2 font-bold">Border Variant Bottom</h3>
-				<p class="text-sm">Border variant with tabs at the bottom.</p>
-			</div>
-		{/snippet}
-	</Tabs>
-</Story>
-
-<Story name="Lift Variant Bottom Placement">
-	<Tabs
-		tabs={[
-			{ value: 'tab1', label: 'Home' },
-			{ value: 'tab2', label: 'About' },
-			{ value: 'tab3', label: 'Contact' }
-		]}
-		variant="lift"
-		placement="bottom"
-	>
-		{#snippet children()}
-			<div class="rounded-box bg-base-200 p-4">
-				<h3 class="mb-2 font-bold">Lift Variant Bottom</h3>
-				<p class="text-sm">Lift variant with tabs at the bottom.</p>
-			</div>
-		{/snippet}
-	</Tabs>
-</Story>
-
-<!-- Disabled States with Variants -->
-<Story name="Box Variant Disabled">
-	<Tabs
-		tabs={[
-			{ value: 'tab1', label: 'Home' },
-			{ value: 'tab2', label: 'About' },
-			{ value: 'tab3', label: 'Contact' }
-		]}
-		variant="box"
-		disabled={true}
-	/>
-</Story>
-
-<Story name="Border Variant Disabled">
-	<Tabs
-		tabs={[
-			{ value: 'tab1', label: 'Home' },
-			{ value: 'tab2', label: 'About' },
-			{ value: 'tab3', label: 'Contact' }
-		]}
-		variant="border"
-		disabled={true}
-	/>
-</Story>
-
-<Story name="Lift Variant Disabled">
-	<Tabs
-		tabs={[
-			{ value: 'tab1', label: 'Home' },
-			{ value: 'tab2', label: 'About' },
-			{ value: 'tab3', label: 'Contact' }
-		]}
-		variant="lift"
-		disabled={true}
-	/>
-</Story>
-
 <!-- All Variants Showcase -->
-<Story name="All Variants Showcase">
+<Story name="All Variants">
 	<div class="space-y-8">
 		<div>
-			<h3 class="mb-4 text-xl font-bold">Box Variants</h3>
-			<div class="space-y-4">
-				<Tabs
-					tabs={[
-						{ value: 'tab1', label: 'Default' },
-						{ value: 'tab2', label: 'Box' }
-					]}
-					variant="box"
-				/>
-				<Tabs
-					tabs={[
-						{ value: 'tab1', label: 'Primary' },
-						{ value: 'tab2', label: 'Box' }
-					]}
-					variant="box"
-					color="primary"
-				/>
-				<Tabs
-					tabs={[
-						{ value: 'tab1', label: 'Accent' },
-						{ value: 'tab2', label: 'Box' }
-					]}
-					variant="box"
-					color="accent"
-				/>
+			<h3 class="mb-4 text-xl font-bold">Style Variants</h3>
+			<div class="space-y-6">
+				<div>
+					<p class="mb-2 text-sm font-medium text-base-content/60">Bordered (default)</p>
+					<Tabs tabs={basicTabs} variant="bordered" />
+				</div>
+				<div>
+					<p class="mb-2 text-sm font-medium text-base-content/60">Lifted</p>
+					<Tabs tabs={basicTabs} variant="lifted" />
+				</div>
+				<div>
+					<p class="mb-2 text-sm font-medium text-base-content/60">Boxed</p>
+					<Tabs tabs={basicTabs} variant="boxed" />
+				</div>
 			</div>
 		</div>
+
+		<div class="divider"></div>
+
 		<div>
-			<h3 class="mb-4 text-xl font-bold">Border Variants</h3>
-			<Tabs
-				tabs={[
-					{ value: 'tab1', label: 'Border' },
-					{ value: 'tab2', label: 'Variant' }
-				]}
-				variant="border"
-			/>
+			<h3 class="mb-4 text-xl font-bold">Color Variants</h3>
+			<div class="space-y-4">
+				<div>
+					<p class="mb-2 text-sm font-medium text-base-content/60">Primary</p>
+					<Tabs tabs={basicTabs} color="primary" />
+				</div>
+				<div>
+					<p class="mb-2 text-sm font-medium text-base-content/60">Secondary</p>
+					<Tabs tabs={basicTabs} color="secondary" />
+				</div>
+				<div>
+					<p class="mb-2 text-sm font-medium text-base-content/60">Accent</p>
+					<Tabs tabs={basicTabs} color="accent" />
+				</div>
+				<div>
+					<p class="mb-2 text-sm font-medium text-base-content/60">Success</p>
+					<Tabs tabs={basicTabs} color="success" />
+				</div>
+				<div>
+					<p class="mb-2 text-sm font-medium text-base-content/60">Warning</p>
+					<Tabs tabs={basicTabs} color="warning" />
+				</div>
+				<div>
+					<p class="mb-2 text-sm font-medium text-base-content/60">Info</p>
+					<Tabs tabs={basicTabs} color="info" />
+				</div>
+				<div>
+					<p class="mb-2 text-sm font-medium text-base-content/60">Error</p>
+					<Tabs tabs={basicTabs} color="error" />
+				</div>
+			</div>
 		</div>
+
+		<div class="divider"></div>
+
 		<div>
-			<h3 class="mb-4 text-xl font-bold">Lift Variants</h3>
-			<Tabs
-				tabs={[
-					{ value: 'tab1', label: 'Lift' },
-					{ value: 'tab2', label: 'Variant' }
-				]}
-				variant="lift"
-			/>
+			<h3 class="mb-4 text-xl font-bold">Sizes</h3>
+			<div class="space-y-4">
+				<div>
+					<p class="mb-2 text-sm font-medium text-base-content/60">Extra Small (xs)</p>
+					<Tabs tabs={basicTabs} size="xs" />
+				</div>
+				<div>
+					<p class="mb-2 text-sm font-medium text-base-content/60">Small (sm)</p>
+					<Tabs tabs={basicTabs} size="sm" />
+				</div>
+				<div>
+					<p class="mb-2 text-sm font-medium text-base-content/60">Medium (md)</p>
+					<Tabs tabs={basicTabs} size="md" />
+				</div>
+				<div>
+					<p class="mb-2 text-sm font-medium text-base-content/60">Large (lg)</p>
+					<Tabs tabs={basicTabs} size="lg" />
+				</div>
+			</div>
+		</div>
+
+		<div class="divider"></div>
+
+		<div>
+			<h3 class="mb-4 text-xl font-bold">States</h3>
+			<div class="space-y-4">
+				<div>
+					<p class="mb-2 text-sm font-medium text-base-content/60">Normal</p>
+					<Tabs tabs={basicTabs} />
+				</div>
+				<div>
+					<p class="mb-2 text-sm font-medium text-base-content/60">With Disabled Tab</p>
+					<Tabs tabs={tabsWithDisabled} />
+				</div>
+				<div>
+					<p class="mb-2 text-sm font-medium text-base-content/60">All Disabled</p>
+					<Tabs tabs={basicTabs} disabled={true} />
+				</div>
+			</div>
 		</div>
 	</div>
 </Story>
 
 <!-- Playground -->
-<Story name="Playground">
-	<Tabs tabs={basicTabs} variant="border" size="md" placement="top" />
-</Story>
+<Story name="Playground" args={{ tabs: basicTabs, variant: 'bordered', size: 'md' }} />
