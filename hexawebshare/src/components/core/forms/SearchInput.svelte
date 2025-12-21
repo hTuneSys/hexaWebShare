@@ -4,6 +4,8 @@ SPDX-License-Identifier: MIT
 -->
 
 <script lang="ts">
+	import { onDestroy } from 'svelte';
+
 	/**
 	 * Props interface for the SearchInput component
 	 */
@@ -137,11 +139,18 @@ SPDX-License-Identifier: MIT
 	}: Props = $props();
 
 	// Generate unique ID if not provided
-	let fieldId = $derived(id || `search-input-${Math.random().toString(36).substr(2, 9)}`);
+	let fieldId = $derived(id || `search-input-${Math.random().toString(36).substring(2, 11)}`);
 	let labelForId = $derived(label ? fieldId : undefined);
 
 	// Debounce timer reference
 	let debounceTimer: ReturnType<typeof setTimeout> | null = null;
+
+	// Cleanup debounce timer on component destroy to prevent memory leaks
+	onDestroy(() => {
+		if (debounceTimer) {
+			clearTimeout(debounceTimer);
+		}
+	});
 
 	// Input classes using static DaisyUI classes
 	let inputClasses = $derived(
