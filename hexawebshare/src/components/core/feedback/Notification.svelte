@@ -198,11 +198,11 @@ SPDX-License-Identifier: MIT
 
 		<div class="flex min-w-0 flex-1 flex-col gap-1">
 			{#if title}
-				<div class="text-base leading-tight font-semibold">{title}</div>
+				<div class="text-base font-semibold leading-tight">{title}</div>
 			{/if}
 
 			{#if message}
-				<p class="text-sm leading-snug break-words opacity-80">{message}</p>
+				<p class="break-words text-sm leading-snug opacity-80">{message}</p>
 			{/if}
 
 			{@render defaultSlot?.()}

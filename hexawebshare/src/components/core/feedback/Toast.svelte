@@ -252,7 +252,7 @@ SPDX-License-Identifier: MIT
 
 				<div class="flex-1 space-y-1">
 					{#if title}
-						<p class="leading-tight font-semibold">{title}</p>
+						<p class="font-semibold leading-tight">{title}</p>
 					{/if}
 					<p class="text-sm leading-snug">{message}</p>
 				</div>
