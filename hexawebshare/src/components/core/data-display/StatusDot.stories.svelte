@@ -314,7 +314,7 @@ SPDX-License-Identifier: MIT
 					/>
 				</svg>
 			</button>
-			<span class="absolute -right-1 -top-1">
+			<span class="absolute -top-1 -right-1">
 				<StatusDot variant="error" size="sm" pulse ariaLabel="New notifications" />
 			</span>
 		</div>
@@ -335,7 +335,7 @@ SPDX-License-Identifier: MIT
 					/>
 				</svg>
 			</button>
-			<span class="absolute -right-1 -top-1">
+			<span class="absolute -top-1 -right-1">
 				<StatusDot variant="info" size="sm" ariaLabel="Unread messages" />
 			</span>
 		</div>
@@ -351,7 +351,7 @@ SPDX-License-Identifier: MIT
 					<span>JD</span>
 				</div>
 			</div>
-			<span class="absolute bottom-0 right-0">
+			<span class="absolute right-0 bottom-0">
 				<StatusDot variant="success" size="sm" ring pulse ariaLabel="Online" />
 			</span>
 		</div>
@@ -361,7 +361,7 @@ SPDX-License-Identifier: MIT
 					<span>AB</span>
 				</div>
 			</div>
-			<span class="absolute bottom-0 right-0">
+			<span class="absolute right-0 bottom-0">
 				<StatusDot variant="warning" size="sm" ring ariaLabel="Away" />
 			</span>
 		</div>
@@ -371,7 +371,7 @@ SPDX-License-Identifier: MIT
 					<span>CD</span>
 				</div>
 			</div>
-			<span class="absolute bottom-0 right-0">
+			<span class="absolute right-0 bottom-0">
 				<StatusDot variant="neutral" size="sm" ring ariaLabel="Offline" />
 			</span>
 		</div>

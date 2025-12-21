@@ -246,13 +246,13 @@ SPDX-License-Identifier: MIT
 
 		<div class="flex min-w-0 flex-1 flex-col gap-1">
 			{#if title}
-				<div id={titleId} class="text-base font-semibold leading-tight">
+				<div id={titleId} class="text-base leading-tight font-semibold">
 					{title}
 				</div>
 			{/if}
 
 			{#if description}
-				<p id={descriptionId} class="break-words text-sm leading-snug opacity-80">
+				<p id={descriptionId} class="text-sm leading-snug break-words opacity-80">
 					{description}
 				</p>
 			{/if}

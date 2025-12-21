@@ -223,7 +223,7 @@ SPDX-License-Identifier: MIT
 			{/each}
 		</select>
 		{#if loading}
-			<div class="absolute right-3 top-1/2 -translate-y-1/2" role="status" aria-label="Loading">
+			<div class="absolute top-1/2 right-3 -translate-y-1/2" role="status" aria-label="Loading">
 				<span class="loading loading-spinner {loadingSizeClass} text-primary" aria-hidden="true"
 				></span>
 			</div>

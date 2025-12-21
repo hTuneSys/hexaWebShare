@@ -264,7 +264,7 @@ SPDX-License-Identifier: MIT
 		{/if}
 		{#if loading}
 			<span
-				class="loading loading-spinner loading-sm text-primary absolute right-0 top-1/2 -translate-y-1/2"
+				class="loading loading-spinner loading-sm text-primary absolute top-1/2 right-0 -translate-y-1/2"
 			></span>
 		{/if}
 	</div>
