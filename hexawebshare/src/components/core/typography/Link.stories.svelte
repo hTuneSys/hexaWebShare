@@ -102,7 +102,7 @@ SPDX-License-Identifier: MIT
 <Story name="Default">
 	{#snippet children()}
 		<div class="bg-base-100 p-8">
-			<p class="mb-4 text-base-content">
+			<p class="text-base-content mb-4">
 				This is a paragraph with a <Link href="https://example.com" label="default link" /> embedded
 				in the text.
 			</p>
@@ -113,37 +113,37 @@ SPDX-License-Identifier: MIT
 <!-- Color Variants Showcase -->
 <Story name="Color Variants">
 	{#snippet children()}
-		<div class="space-y-4 bg-base-100 p-8">
+		<div class="bg-base-100 space-y-4 p-8">
 			<div class="grid grid-cols-2 gap-4">
-				<div class="rounded bg-base-200 p-4">
+				<div class="bg-base-200 rounded p-4">
 					<h4 class="mb-2 text-sm font-semibold">Primary</h4>
 					<Link href="https://example.com" label="Primary Link" variant="primary" />
 				</div>
-				<div class="rounded bg-base-200 p-4">
+				<div class="bg-base-200 rounded p-4">
 					<h4 class="mb-2 text-sm font-semibold">Secondary</h4>
 					<Link href="https://example.com" label="Secondary Link" variant="secondary" />
 				</div>
-				<div class="rounded bg-base-200 p-4">
+				<div class="bg-base-200 rounded p-4">
 					<h4 class="mb-2 text-sm font-semibold">Accent</h4>
 					<Link href="https://example.com" label="Accent Link" variant="accent" />
 				</div>
-				<div class="rounded bg-base-200 p-4">
+				<div class="bg-base-200 rounded p-4">
 					<h4 class="mb-2 text-sm font-semibold">Neutral</h4>
 					<Link href="https://example.com" label="Neutral Link" variant="neutral" />
 				</div>
-				<div class="rounded bg-base-200 p-4">
+				<div class="bg-base-200 rounded p-4">
 					<h4 class="mb-2 text-sm font-semibold">Info</h4>
 					<Link href="https://example.com" label="Info Link" variant="info" />
 				</div>
-				<div class="rounded bg-base-200 p-4">
+				<div class="bg-base-200 rounded p-4">
 					<h4 class="mb-2 text-sm font-semibold">Success</h4>
 					<Link href="https://example.com" label="Success Link" variant="success" />
 				</div>
-				<div class="rounded bg-base-200 p-4">
+				<div class="bg-base-200 rounded p-4">
 					<h4 class="mb-2 text-sm font-semibold">Warning</h4>
 					<Link href="https://example.com" label="Warning Link" variant="warning" />
 				</div>
-				<div class="rounded bg-base-200 p-4">
+				<div class="bg-base-200 rounded p-4">
 					<h4 class="mb-2 text-sm font-semibold">Error</h4>
 					<Link href="https://example.com" label="Error Link" variant="error" />
 				</div>
@@ -155,26 +155,26 @@ SPDX-License-Identifier: MIT
 <!-- Size Variants Showcase -->
 <Story name="Size Variants">
 	{#snippet children()}
-		<div class="space-y-4 bg-base-100 p-8">
+		<div class="bg-base-100 space-y-4 p-8">
 			<div class="flex flex-wrap items-end gap-6">
 				<div class="text-center">
-					<div class="mb-1 text-xs text-base-content/60">Extra Small</div>
+					<div class="text-base-content/60 mb-1 text-xs">Extra Small</div>
 					<Link href="https://example.com" label="XS Link" size="xs" variant="primary" />
 				</div>
 				<div class="text-center">
-					<div class="mb-1 text-xs text-base-content/60">Small</div>
+					<div class="text-base-content/60 mb-1 text-xs">Small</div>
 					<Link href="https://example.com" label="Small Link" size="sm" variant="primary" />
 				</div>
 				<div class="text-center">
-					<div class="mb-1 text-xs text-base-content/60">Medium</div>
+					<div class="text-base-content/60 mb-1 text-xs">Medium</div>
 					<Link href="https://example.com" label="Medium Link" size="md" variant="primary" />
 				</div>
 				<div class="text-center">
-					<div class="mb-1 text-xs text-base-content/60">Large</div>
+					<div class="text-base-content/60 mb-1 text-xs">Large</div>
 					<Link href="https://example.com" label="Large Link" size="lg" variant="primary" />
 				</div>
 				<div class="text-center">
-					<div class="mb-1 text-xs text-base-content/60">Extra Large</div>
+					<div class="text-base-content/60 mb-1 text-xs">Extra Large</div>
 					<Link href="https://example.com" label="XL Link" size="xl" variant="primary" />
 				</div>
 			</div>
@@ -187,7 +187,7 @@ SPDX-License-Identifier: MIT
 	{#snippet children()}
 		<div class="bg-base-100 p-8">
 			<div class="grid grid-cols-3 gap-6">
-				<div class="rounded bg-base-200 p-4 text-center">
+				<div class="bg-base-200 rounded p-4 text-center">
 					<h4 class="mb-3 text-sm font-semibold">Hover Underline</h4>
 					<Link
 						href="https://example.com"
@@ -195,9 +195,9 @@ SPDX-License-Identifier: MIT
 						underline="hover"
 						variant="primary"
 					/>
-					<p class="mt-2 text-xs text-base-content/60">Underlines on hover</p>
+					<p class="text-base-content/60 mt-2 text-xs">Underlines on hover</p>
 				</div>
-				<div class="rounded bg-base-200 p-4 text-center">
+				<div class="bg-base-200 rounded p-4 text-center">
 					<h4 class="mb-3 text-sm font-semibold">Always Underlined</h4>
 					<Link
 						href="https://example.com"
@@ -205,9 +205,9 @@ SPDX-License-Identifier: MIT
 						underline="always"
 						variant="primary"
 					/>
-					<p class="mt-2 text-xs text-base-content/60">Always shows underline</p>
+					<p class="text-base-content/60 mt-2 text-xs">Always shows underline</p>
 				</div>
-				<div class="rounded bg-base-200 p-4 text-center">
+				<div class="bg-base-200 rounded p-4 text-center">
 					<h4 class="mb-3 text-sm font-semibold">Never Underlined</h4>
 					<Link
 						href="https://example.com"
@@ -215,7 +215,7 @@ SPDX-License-Identifier: MIT
 						underline="never"
 						variant="primary"
 					/>
-					<p class="mt-2 text-xs text-base-content/60">No underline ever</p>
+					<p class="text-base-content/60 mt-2 text-xs">No underline ever</p>
 				</div>
 			</div>
 		</div>
@@ -225,9 +225,9 @@ SPDX-License-Identifier: MIT
 <!-- Font Weight Variations -->
 <Story name="Font Weights">
 	{#snippet children()}
-		<div class="space-y-3 bg-base-100 p-8">
+		<div class="bg-base-100 space-y-3 p-8">
 			<div class="flex items-center gap-4">
-				<span class="w-20 text-sm text-base-content/60">Normal:</span>
+				<span class="text-base-content/60 w-20 text-sm">Normal:</span>
 				<Link
 					href="https://example.com"
 					label="Normal weight text in a link"
@@ -236,7 +236,7 @@ SPDX-License-Identifier: MIT
 				/>
 			</div>
 			<div class="flex items-center gap-4">
-				<span class="w-20 text-sm text-base-content/60">Medium:</span>
+				<span class="text-base-content/60 w-20 text-sm">Medium:</span>
 				<Link
 					href="https://example.com"
 					label="Medium weight text in a link"
@@ -245,7 +245,7 @@ SPDX-License-Identifier: MIT
 				/>
 			</div>
 			<div class="flex items-center gap-4">
-				<span class="w-20 text-sm text-base-content/60">Semibold:</span>
+				<span class="text-base-content/60 w-20 text-sm">Semibold:</span>
 				<Link
 					href="https://example.com"
 					label="Semibold weight text in a link"
@@ -254,7 +254,7 @@ SPDX-License-Identifier: MIT
 				/>
 			</div>
 			<div class="flex items-center gap-4">
-				<span class="w-20 text-sm text-base-content/60">Bold:</span>
+				<span class="text-base-content/60 w-20 text-sm">Bold:</span>
 				<Link
 					href="https://example.com"
 					label="Bold weight text in a link"
@@ -269,7 +269,7 @@ SPDX-License-Identifier: MIT
 <!-- Special States -->
 <Story name="Special States">
 	{#snippet children()}
-		<div class="space-y-6 bg-base-100 p-8">
+		<div class="bg-base-100 space-y-6 p-8">
 			<div class="card bg-base-200 p-4">
 				<h4 class="mb-3 font-semibold">External Link</h4>
 				<Link
@@ -280,7 +280,7 @@ SPDX-License-Identifier: MIT
 					variant="primary"
 					size="lg"
 				/>
-				<p class="mt-2 text-sm text-base-content/60">Shows external icon and opens in new tab</p>
+				<p class="text-base-content/60 mt-2 text-sm">Shows external icon and opens in new tab</p>
 			</div>
 
 			<div class="card bg-base-200 p-4">
@@ -292,7 +292,7 @@ SPDX-License-Identifier: MIT
 					variant="primary"
 					size="lg"
 				/>
-				<p class="mt-2 text-sm text-base-content/60">Non-clickable and visually muted</p>
+				<p class="text-base-content/60 mt-2 text-sm">Non-clickable and visually muted</p>
 			</div>
 
 			<div class="card bg-base-200 p-4">
@@ -304,7 +304,7 @@ SPDX-License-Identifier: MIT
 					variant="success"
 					size="lg"
 				/>
-				<p class="mt-2 text-sm text-base-content/60">Triggers file download on click</p>
+				<p class="text-base-content/60 mt-2 text-sm">Triggers file download on click</p>
 			</div>
 
 			<div class="card bg-base-200 p-4">
@@ -316,7 +316,7 @@ SPDX-License-Identifier: MIT
 					variant="info"
 					size="lg"
 				/>
-				<p class="mt-2 text-sm text-base-content/60">Shows tooltip on hover</p>
+				<p class="text-base-content/60 mt-2 text-sm">Shows tooltip on hover</p>
 			</div>
 		</div>
 	{/snippet}
@@ -453,10 +453,10 @@ SPDX-License-Identifier: MIT
 <!-- Call to Action Links -->
 <Story name="Call to Action">
 	{#snippet children()}
-		<div class="rounded-box bg-gradient-to-br from-primary/10 to-secondary/10 p-8">
+		<div class="rounded-box from-primary/10 to-secondary/10 bg-gradient-to-br p-8">
 			<div class="space-y-6 text-center">
 				<h2 class="text-3xl font-bold">Ready to Get Started?</h2>
-				<p class="text-lg text-base-content/80">Choose the plan that works best for you</p>
+				<p class="text-base-content/80 text-lg">Choose the plan that works best for you</p>
 
 				<div class="flex flex-wrap justify-center gap-4">
 					<Link
@@ -483,7 +483,7 @@ SPDX-License-Identifier: MIT
 					/>
 				</div>
 
-				<p class="text-sm text-base-content/60">
+				<p class="text-base-content/60 text-sm">
 					No credit card required •
 					<Link href="/terms" label="Terms apply" size="sm" variant="neutral" />
 				</p>
@@ -495,7 +495,7 @@ SPDX-License-Identifier: MIT
 <!-- Article with Inline Links -->
 <Story name="Article Content">
 	{#snippet children()}
-		<article class="prose max-w-none bg-base-100 p-8">
+		<article class="prose bg-base-100 max-w-none p-8">
 			<h2>Getting Started with hexaWebShare</h2>
 			<p>
 				Welcome to <Link
@@ -541,7 +541,7 @@ SPDX-License-Identifier: MIT
 <Story name="Contact Links">
 	{#snippet children()}
 		<div class="bg-base-100 p-8">
-			<div class="card max-w-md bg-base-200 p-6">
+			<div class="card bg-base-200 max-w-md p-6">
 				<h3 class="mb-4 text-xl font-bold">Contact Information</h3>
 				<div class="space-y-3">
 					<div class="flex items-center gap-3">
@@ -583,7 +583,7 @@ SPDX-License-Identifier: MIT
 <!-- Mixed Styles Showcase -->
 <Story name="Style Combinations">
 	{#snippet children()}
-		<div class="space-y-4 bg-base-100 p-8">
+		<div class="bg-base-100 space-y-4 p-8">
 			<div class="alert alert-info">
 				<span>💡 Links can combine multiple style properties for unique appearances</span>
 			</div>
@@ -634,7 +634,7 @@ SPDX-License-Identifier: MIT
 <!-- Accessibility Example -->
 <Story name="Accessibility Features">
 	{#snippet children()}
-		<div class="space-y-6 bg-base-100 p-8">
+		<div class="bg-base-100 space-y-6 p-8">
 			<div class="alert alert-success">
 				<span>✅ All links include proper accessibility features</span>
 			</div>
@@ -648,7 +648,7 @@ SPDX-License-Identifier: MIT
 						ariaLabel="View all our products and services"
 						variant="primary"
 					/>
-					<p class="mt-2 text-sm text-base-content/60">
+					<p class="text-base-content/60 mt-2 text-sm">
 						Screen readers will announce the full description
 					</p>
 				</div>
@@ -660,13 +660,13 @@ SPDX-License-Identifier: MIT
 						label="Dashboard (Tab to focus, Enter to activate)"
 						variant="accent"
 					/>
-					<p class="mt-2 text-sm text-base-content/60">Fully keyboard accessible</p>
+					<p class="text-base-content/60 mt-2 text-sm">Fully keyboard accessible</p>
 				</div>
 
 				<div class="card bg-base-200 p-4">
 					<h4 class="mb-2 font-semibold">Focus Indicators</h4>
 					<Link href="/settings" label="Settings (Tab here to see focus ring)" variant="info" />
-					<p class="mt-2 text-sm text-base-content/60">Clear focus indicators for keyboard users</p>
+					<p class="text-base-content/60 mt-2 text-sm">Clear focus indicators for keyboard users</p>
 				</div>
 			</div>
 		</div>

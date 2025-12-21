@@ -264,19 +264,19 @@ SPDX-License-Identifier: MIT
 		{/if}
 		{#if loading}
 			<span
-				class="loading loading-spinner loading-sm absolute right-0 top-1/2 -translate-y-1/2 text-primary"
+				class="loading loading-spinner loading-sm text-primary absolute top-1/2 right-0 -translate-y-1/2"
 			></span>
 		{/if}
 	</div>
 
 	{#if derivedMarks.length > 0}
-		<div class="relative mt-1 h-8 text-xs text-base-content/70" aria-hidden="true">
+		<div class="text-base-content/70 relative mt-1 h-8 text-xs" aria-hidden="true">
 			{#each derivedMarks as mark (mark.value)}
 				<div
 					class="absolute flex -translate-x-1/2 flex-col items-center gap-1"
 					style="left: {((mark.value - min) / (max - min)) * 100}%"
 				>
-					<span class="h-2 w-px bg-base-content/40"></span>
+					<span class="bg-base-content/40 h-2 w-px"></span>
 					<span>{mark.label ?? mark.value}</span>
 				</div>
 			{/each}

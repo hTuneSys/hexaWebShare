@@ -255,7 +255,7 @@ SPDX-License-Identifier: MIT
 		<div class="flex flex-col items-center justify-center gap-4">
 			<span class="loading loading-spinner {spinnerSizeClass} text-primary" aria-hidden="true"
 			></span>
-			<p class="text-sm text-base-content/70">Loading...</p>
+			<p class="text-base-content/70 text-sm">Loading...</p>
 		</div>
 	{:else}
 		<!-- Icon -->

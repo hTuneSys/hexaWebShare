@@ -255,19 +255,19 @@ SPDX-License-Identifier: MIT
 <Story name="Line Clamp Showcase">
 	<div class="max-w-md space-y-6">
 		<div>
-			<span class="text-sm font-semibold text-base-content/70">1 Line:</span>
+			<span class="text-base-content/70 text-sm font-semibold">1 Line:</span>
 			<Paragraph text={longText} lineClamp={1} />
 		</div>
 		<div>
-			<span class="text-sm font-semibold text-base-content/70">2 Lines:</span>
+			<span class="text-base-content/70 text-sm font-semibold">2 Lines:</span>
 			<Paragraph text={longText} lineClamp={2} />
 		</div>
 		<div>
-			<span class="text-sm font-semibold text-base-content/70">3 Lines:</span>
+			<span class="text-base-content/70 text-sm font-semibold">3 Lines:</span>
 			<Paragraph text={longText} lineClamp={3} />
 		</div>
 		<div>
-			<span class="text-sm font-semibold text-base-content/70">4 Lines:</span>
+			<span class="text-base-content/70 text-sm font-semibold">4 Lines:</span>
 			<Paragraph text={longText} lineClamp={4} />
 		</div>
 	</div>
@@ -296,7 +296,7 @@ SPDX-License-Identifier: MIT
 </Story>
 
 <Story name="Error Message">
-	<div class="max-w-md rounded-lg bg-error/10 p-4">
+	<div class="bg-error/10 max-w-md rounded-lg p-4">
 		<Paragraph
 			text="Something went wrong. Please try again later or contact support if the problem persists."
 			variant="error"
@@ -306,7 +306,7 @@ SPDX-License-Identifier: MIT
 </Story>
 
 <Story name="Success Message">
-	<div class="max-w-md rounded-lg bg-success/10 p-4">
+	<div class="bg-success/10 max-w-md rounded-lg p-4">
 		<Paragraph
 			text="Your changes have been saved successfully!"
 			variant="success"

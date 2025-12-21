@@ -147,7 +147,7 @@ SPDX-License-Identifier: MIT
 >
 	<div class={maskClasses}>
 		{#if loading || (src && imageLoading)}
-			<div class="skeleton h-full w-full bg-base-300"></div>
+			<div class="skeleton bg-base-300 h-full w-full"></div>
 		{/if}
 
 		{#if src}
@@ -164,7 +164,7 @@ SPDX-License-Identifier: MIT
 			{:else}
 				<!-- Fallback: Show first letter of alt text -->
 				<span
-					class="flex h-full w-full items-center justify-center bg-base-300 text-base-content {placeholderContentClasses}"
+					class="bg-base-300 text-base-content flex h-full w-full items-center justify-center {placeholderContentClasses}"
 				>
 					{alt.charAt(0).toUpperCase() || '?'}
 				</span>

@@ -99,7 +99,7 @@ SPDX-License-Identifier: MIT
 </Story>
 
 <Story name="Card Placeholder">
-	<div class="flex flex-col gap-3 rounded-xl border border-base-200 p-4">
+	<div class="border-base-200 flex flex-col gap-3 rounded-xl border p-4">
 		<div class="flex items-center gap-3">
 			<SkeletonLoader shape="circle" size="sm" variant="neutral" />
 			<div class="flex-1">

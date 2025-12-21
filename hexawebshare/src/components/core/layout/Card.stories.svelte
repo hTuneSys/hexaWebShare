@@ -297,7 +297,7 @@ SPDX-License-Identifier: MIT
 	<Card centered={true} class="w-96" shadow={true} shadowSize="lg">
 		{#snippet children()}
 			<div class="avatar mb-4">
-				<div class="w-24 rounded-full ring ring-primary ring-offset-2 ring-offset-base-100">
+				<div class="ring-primary ring-offset-base-100 w-24 rounded-full ring ring-offset-2">
 					<img
 						src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
 						alt="User"

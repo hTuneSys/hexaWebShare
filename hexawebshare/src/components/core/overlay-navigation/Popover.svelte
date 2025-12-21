@@ -320,7 +320,7 @@ SPDX-License-Identifier: MIT
 			{:else}
 				<div class="space-y-1">
 					<p class="font-semibold">Popover title</p>
-					<p class="text-sm text-base-content/80">Add your popover content here.</p>
+					<p class="text-base-content/80 text-sm">Add your popover content here.</p>
 				</div>
 			{/if}
 		</div>

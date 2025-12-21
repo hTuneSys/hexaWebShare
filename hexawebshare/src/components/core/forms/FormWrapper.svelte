@@ -181,7 +181,7 @@ SPDX-License-Identifier: MIT
 			<span class="label-text">
 				{label}
 				{#if required}
-					<span class="ml-1 text-error" aria-label="required">*</span>
+					<span class="text-error ml-1" aria-label="required">*</span>
 				{/if}
 			</span>
 		</label>
@@ -192,7 +192,7 @@ SPDX-License-Identifier: MIT
 			{@render children()}
 		{/if}
 		{#if loading}
-			<div class="absolute right-3 top-1/2 -translate-y-1/2" role="status" aria-label="Loading">
+			<div class="absolute top-1/2 right-3 -translate-y-1/2" role="status" aria-label="Loading">
 				<span class="loading loading-spinner {loadingSizeClass} text-primary"></span>
 			</div>
 		{/if}

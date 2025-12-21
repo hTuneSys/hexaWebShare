@@ -189,12 +189,12 @@ SPDX-License-Identifier: MIT
 
 					<div class="flex-1">
 						{#if title}
-							<span class="card-section-title block text-base font-semibold text-base-content">
+							<span class="card-section-title text-base-content block text-base font-semibold">
 								{title}
 							</span>
 						{/if}
 						{#if description}
-							<span class="card-section-description mt-1 block text-sm text-base-content/70">
+							<span class="card-section-description text-base-content/70 mt-1 block text-sm">
 								{description}
 							</span>
 						{/if}
@@ -229,12 +229,12 @@ SPDX-License-Identifier: MIT
 
 					<div class="flex-1">
 						{#if title}
-							<h3 class="card-section-title text-base font-semibold text-base-content">
+							<h3 class="card-section-title text-base-content text-base font-semibold">
 								{title}
 							</h3>
 						{/if}
 						{#if description}
-							<p class="card-section-description mt-1 text-sm text-base-content/70">
+							<p class="card-section-description text-base-content/70 mt-1 text-sm">
 								{description}
 							</p>
 						{/if}

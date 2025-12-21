@@ -220,7 +220,7 @@ SPDX-License-Identifier: MIT
 
 <!-- All Sizes Showcase -->
 <Story name="All Sizes">
-	<div class="w-full max-w-md rounded-lg bg-base-100 shadow">
+	<div class="bg-base-100 w-full max-w-md rounded-lg shadow">
 		<ListItem label="Small Item" description="Compact size" size="sm" bordered={true} />
 		<ListItem label="Medium Item" description="Default size" size="md" bordered={true} />
 		<ListItem label="Large Item" description="Prominent size" size="lg" />
@@ -229,7 +229,7 @@ SPDX-License-Identifier: MIT
 
 <!-- All Active Variants Showcase -->
 <Story name="All Active Variants">
-	<div class="w-full max-w-md rounded-lg bg-base-100 shadow">
+	<div class="bg-base-100 w-full max-w-md rounded-lg shadow">
 		<ListItem label="Primary" variant="primary" active={true} bordered={true} />
 		<ListItem label="Secondary" variant="secondary" active={true} bordered={true} />
 		<ListItem label="Accent" variant="accent" active={true} bordered={true} />
@@ -243,7 +243,7 @@ SPDX-License-Identifier: MIT
 
 <!-- With Leading Icon -->
 <Story name="With Leading Icon">
-	<div class="w-full max-w-md rounded-lg bg-base-100 shadow">
+	<div class="bg-base-100 w-full max-w-md rounded-lg shadow">
 		<ListItem label="Home" description="Go to dashboard" bordered={true}>
 			{#snippet leading()}
 				<svg
@@ -309,7 +309,7 @@ SPDX-License-Identifier: MIT
 
 <!-- With Trailing Content -->
 <Story name="With Trailing Badge">
-	<div class="w-full max-w-md rounded-lg bg-base-100 shadow">
+	<div class="bg-base-100 w-full max-w-md rounded-lg shadow">
 		<ListItem label="Notifications" description="View all notifications" bordered={true}>
 			{#snippet leading()}
 				<svg
@@ -378,11 +378,11 @@ SPDX-License-Identifier: MIT
 
 <!-- With Trailing Action -->
 <Story name="With Trailing Action">
-	<div class="w-full max-w-md rounded-lg bg-base-100 shadow">
+	<div class="bg-base-100 w-full max-w-md rounded-lg shadow">
 		<ListItem label="John Doe" description="john.doe@example.com" bordered={true}>
 			{#snippet leading()}
 				<div class="avatar placeholder">
-					<div class="w-10 rounded-full bg-neutral text-neutral-content">
+					<div class="bg-neutral text-neutral-content w-10 rounded-full">
 						<span class="text-sm">JD</span>
 					</div>
 				</div>
@@ -409,7 +409,7 @@ SPDX-License-Identifier: MIT
 		<ListItem label="Jane Smith" description="jane.smith@example.com" bordered={true}>
 			{#snippet leading()}
 				<div class="avatar placeholder">
-					<div class="w-10 rounded-full bg-primary text-primary-content">
+					<div class="bg-primary text-primary-content w-10 rounded-full">
 						<span class="text-sm">JS</span>
 					</div>
 				</div>
@@ -438,8 +438,8 @@ SPDX-License-Identifier: MIT
 
 <!-- Interactive Selection Example -->
 <Story name="Interactive Selection">
-	<div class="w-full max-w-md rounded-lg bg-base-100 shadow">
-		<p class="px-4 py-2 text-sm text-base-content/70">Click to select an item:</p>
+	<div class="bg-base-100 w-full max-w-md rounded-lg shadow">
+		<p class="text-base-content/70 px-4 py-2 text-sm">Click to select an item:</p>
 		<ListItem
 			label="Option 1"
 			description="First option"
@@ -468,7 +468,7 @@ SPDX-License-Identifier: MIT
 
 <!-- Loading States -->
 <Story name="Loading States">
-	<div class="w-full max-w-md rounded-lg bg-base-100 shadow">
+	<div class="bg-base-100 w-full max-w-md rounded-lg shadow">
 		<ListItem label="Loading..." loading={true} bordered={true} />
 		<ListItem
 			label="Loading with description"
@@ -482,7 +482,7 @@ SPDX-License-Identifier: MIT
 
 <!-- Disabled States -->
 <Story name="Disabled States">
-	<div class="w-full max-w-md rounded-lg bg-base-100 shadow">
+	<div class="bg-base-100 w-full max-w-md rounded-lg shadow">
 		<ListItem label="Enabled Item" description="Click me" bordered={true} />
 		<ListItem label="Disabled Item" description="Cannot interact" disabled={true} bordered={true} />
 		<ListItem label="Disabled with Icon" description="Also disabled" disabled={true}>
@@ -508,7 +508,7 @@ SPDX-License-Identifier: MIT
 
 <!-- Navigation Menu Example -->
 <Story name="Navigation Menu">
-	<div class="w-full max-w-md rounded-lg bg-base-100 shadow">
+	<div class="bg-base-100 w-full max-w-md rounded-lg shadow">
 		<ListItem label="Dashboard" href="#dashboard" variant="primary" active={true} bordered={true}>
 			{#snippet leading()}
 				<svg
@@ -592,12 +592,12 @@ SPDX-License-Identifier: MIT
 
 <!-- File List Example -->
 <Story name="File List Example">
-	<div class="w-full max-w-md rounded-lg bg-base-100 shadow">
+	<div class="bg-base-100 w-full max-w-md rounded-lg shadow">
 		<ListItem label="document.pdf" description="2.4 MB • Modified today" bordered={true}>
 			{#snippet leading()}
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
-					class="h-8 w-8 text-error"
+					class="text-error h-8 w-8"
 					fill="none"
 					viewBox="0 0 24 24"
 					stroke="currentColor"
@@ -618,7 +618,7 @@ SPDX-License-Identifier: MIT
 			{#snippet leading()}
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
-					class="h-8 w-8 text-success"
+					class="text-success h-8 w-8"
 					fill="none"
 					viewBox="0 0 24 24"
 					stroke="currentColor"
@@ -639,7 +639,7 @@ SPDX-License-Identifier: MIT
 			{#snippet leading()}
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
-					class="h-8 w-8 text-info"
+					class="text-info h-8 w-8"
 					fill="none"
 					viewBox="0 0 24 24"
 					stroke="currentColor"

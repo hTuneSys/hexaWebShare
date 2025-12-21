@@ -42,17 +42,17 @@ SPDX-License-Identifier: MIT
 	}: Props = $props();
 </script>
 
-<div class="min-h-screen bg-base-300 py-8">
+<div class="bg-base-300 min-h-screen py-8">
 	<Container {maxWidth} {padding} {centered} {fluid} {responsive} {className}>
-		<div class="rounded-lg bg-base-100 p-6 shadow">
+		<div class="bg-base-100 rounded-lg p-6 shadow">
 			<h3 class="mb-2 text-xl font-bold">Container Content</h3>
-			<p class="mb-4 text-base-content/70">{content}</p>
+			<p class="text-base-content/70 mb-4">{content}</p>
 
 			{#if nested}
 				<Container maxWidth="md" padding="md" centered={true}>
-					<div class="rounded bg-base-200 p-4">
+					<div class="bg-base-200 rounded p-4">
 						<h4 class="mb-2 text-lg font-semibold">Nested Container</h4>
-						<p class="text-sm text-base-content/60">
+						<p class="text-base-content/60 text-sm">
 							This is a nested container inside the outer container.
 						</p>
 					</div>

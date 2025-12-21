@@ -37,17 +37,17 @@ SPDX-License-Identifier: MIT
 <!-- Snippet for reusable box content -->
 {#snippet boxes()}
 	<div
-		class="flex h-16 w-16 items-center justify-center rounded bg-primary font-bold text-primary-content"
+		class="bg-primary text-primary-content flex h-16 w-16 items-center justify-center rounded font-bold"
 	>
 		1
 	</div>
 	<div
-		class="flex h-16 w-16 items-center justify-center rounded bg-secondary font-bold text-secondary-content"
+		class="bg-secondary text-secondary-content flex h-16 w-16 items-center justify-center rounded font-bold"
 	>
 		2
 	</div>
 	<div
-		class="flex h-16 w-16 items-center justify-center rounded bg-accent font-bold text-accent-content"
+		class="bg-accent text-accent-content flex h-16 w-16 items-center justify-center rounded font-bold"
 	>
 		3
 	</div>
@@ -86,26 +86,26 @@ SPDX-License-Identifier: MIT
 	<div class="flex flex-col gap-4">
 		<div>
 			<p class="mb-2 text-sm font-bold">Align Start</p>
-			<Row align="start" class="h-32 bg-base-200 p-2">
-				<div class="flex h-12 w-16 items-center justify-center rounded bg-primary">1</div>
-				<div class="flex h-16 w-16 items-center justify-center rounded bg-secondary">2</div>
-				<div class="flex h-20 w-16 items-center justify-center rounded bg-accent">3</div>
+			<Row align="start" class="bg-base-200 h-32 p-2">
+				<div class="bg-primary flex h-12 w-16 items-center justify-center rounded">1</div>
+				<div class="bg-secondary flex h-16 w-16 items-center justify-center rounded">2</div>
+				<div class="bg-accent flex h-20 w-16 items-center justify-center rounded">3</div>
 			</Row>
 		</div>
 		<div>
 			<p class="mb-2 text-sm font-bold">Align Center</p>
-			<Row align="center" class="h-32 bg-base-200 p-2">
-				<div class="flex h-12 w-16 items-center justify-center rounded bg-primary">1</div>
-				<div class="flex h-16 w-16 items-center justify-center rounded bg-secondary">2</div>
-				<div class="flex h-20 w-16 items-center justify-center rounded bg-accent">3</div>
+			<Row align="center" class="bg-base-200 h-32 p-2">
+				<div class="bg-primary flex h-12 w-16 items-center justify-center rounded">1</div>
+				<div class="bg-secondary flex h-16 w-16 items-center justify-center rounded">2</div>
+				<div class="bg-accent flex h-20 w-16 items-center justify-center rounded">3</div>
 			</Row>
 		</div>
 		<div>
 			<p class="mb-2 text-sm font-bold">Align End</p>
-			<Row align="end" class="h-32 bg-base-200 p-2">
-				<div class="flex h-12 w-16 items-center justify-center rounded bg-primary">1</div>
-				<div class="flex h-16 w-16 items-center justify-center rounded bg-secondary">2</div>
-				<div class="flex h-20 w-16 items-center justify-center rounded bg-accent">3</div>
+			<Row align="end" class="bg-base-200 h-32 p-2">
+				<div class="bg-primary flex h-12 w-16 items-center justify-center rounded">1</div>
+				<div class="bg-secondary flex h-16 w-16 items-center justify-center rounded">2</div>
+				<div class="bg-accent flex h-20 w-16 items-center justify-center rounded">3</div>
 			</Row>
 		</div>
 	</div>
@@ -115,25 +115,25 @@ SPDX-License-Identifier: MIT
 	<div class="flex flex-col gap-4">
 		<div>
 			<p class="mb-2 text-sm font-bold">Justify Start</p>
-			<Row justify="start" class="w-full bg-base-200 p-2">
+			<Row justify="start" class="bg-base-200 w-full p-2">
 				{@render boxes()}
 			</Row>
 		</div>
 		<div>
 			<p class="mb-2 text-sm font-bold">Justify Center</p>
-			<Row justify="center" class="w-full bg-base-200 p-2">
+			<Row justify="center" class="bg-base-200 w-full p-2">
 				{@render boxes()}
 			</Row>
 		</div>
 		<div>
 			<p class="mb-2 text-sm font-bold">Justify Between</p>
-			<Row justify="between" class="w-full bg-base-200 p-2">
+			<Row justify="between" class="bg-base-200 w-full p-2">
 				{@render boxes()}
 			</Row>
 		</div>
 		<div>
 			<p class="mb-2 text-sm font-bold">Justify Around</p>
-			<Row justify="around" class="w-full bg-base-200 p-2">
+			<Row justify="around" class="bg-base-200 w-full p-2">
 				{@render boxes()}
 			</Row>
 		</div>
@@ -141,13 +141,13 @@ SPDX-License-Identifier: MIT
 </Story>
 
 <Story name="Wrapping">
-	<div class="w-64 bg-base-200 p-2">
+	<div class="bg-base-200 w-64 p-2">
 		<Row wrap={true} gap="2">
-			<div class="flex h-16 w-16 items-center justify-center rounded bg-primary">1</div>
-			<div class="flex h-16 w-16 items-center justify-center rounded bg-secondary">2</div>
-			<div class="flex h-16 w-16 items-center justify-center rounded bg-accent">3</div>
-			<div class="flex h-16 w-16 items-center justify-center rounded bg-info">4</div>
-			<div class="flex h-16 w-16 items-center justify-center rounded bg-success">5</div>
+			<div class="bg-primary flex h-16 w-16 items-center justify-center rounded">1</div>
+			<div class="bg-secondary flex h-16 w-16 items-center justify-center rounded">2</div>
+			<div class="bg-accent flex h-16 w-16 items-center justify-center rounded">3</div>
+			<div class="bg-info flex h-16 w-16 items-center justify-center rounded">4</div>
+			<div class="bg-success flex h-16 w-16 items-center justify-center rounded">5</div>
 		</Row>
 	</div>
 </Story>
