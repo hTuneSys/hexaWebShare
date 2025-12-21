@@ -2,6 +2,9 @@
 /* SPDX-License-Identifier: MIT */
 
 @import 'tailwindcss';
-@plugin 'daisyui';
+@plugin 'daisyui' {
+  themes: light --default, dark --prefersdark;
+  logs: false;
+}
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
