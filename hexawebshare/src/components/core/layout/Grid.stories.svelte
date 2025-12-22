@@ -156,18 +156,42 @@ SPDX-License-Identifier: MIT
 <Story name="TwelveColumns">
 	<Grid columns={12} gap="md">
 		{#snippet children()}
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">1</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">2</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">3</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">4</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">5</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">6</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">7</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">8</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">9</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">10</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">11</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">12</div>
+			<div class="bg-base-200 flex min-w-0 items-center justify-center rounded-lg p-1 text-center text-sm">
+				1
+			</div>
+			<div class="bg-base-200 flex min-w-0 items-center justify-center rounded-lg p-1 text-center text-sm">
+				2
+			</div>
+			<div class="bg-base-200 flex min-w-0 items-center justify-center rounded-lg p-1 text-center text-sm">
+				3
+			</div>
+			<div class="bg-base-200 flex min-w-0 items-center justify-center rounded-lg p-1 text-center text-sm">
+				4
+			</div>
+			<div class="bg-base-200 flex min-w-0 items-center justify-center rounded-lg p-1 text-center text-sm">
+				5
+			</div>
+			<div class="bg-base-200 flex min-w-0 items-center justify-center rounded-lg p-1 text-center text-sm">
+				6
+			</div>
+			<div class="bg-base-200 flex min-w-0 items-center justify-center rounded-lg p-1 text-center text-sm">
+				7
+			</div>
+			<div class="bg-base-200 flex min-w-0 items-center justify-center rounded-lg p-1 text-center text-sm">
+				8
+			</div>
+			<div class="bg-base-200 flex min-w-0 items-center justify-center rounded-lg p-1 text-center text-sm">
+				9
+			</div>
+			<div class="bg-base-200 flex min-w-0 items-center justify-center rounded-lg p-1 text-center text-sm">
+				10
+			</div>
+			<div class="bg-base-200 flex min-w-0 items-center justify-center rounded-lg p-1 text-center text-sm">
+				11
+			</div>
+			<div class="bg-base-200 flex min-w-0 items-center justify-center rounded-lg p-1 text-center text-sm">
+				12
+			</div>
 		{/snippet}
 	</Grid>
 </Story>
