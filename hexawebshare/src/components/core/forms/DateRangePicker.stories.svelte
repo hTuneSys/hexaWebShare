@@ -102,7 +102,10 @@ SPDX-License-Identifier: MIT
 <Story name="Default" args={{ label: 'Date Range' }} />
 
 <!-- With Label -->
-<Story name="With Label" args={{ label: 'Select Date Range', startLabel: 'From', endLabel: 'To' }} />
+<Story
+	name="With Label"
+	args={{ label: 'Select Date Range', startLabel: 'From', endLabel: 'To' }}
+/>
 
 <!-- With Value -->
 <Story
@@ -248,7 +251,12 @@ SPDX-License-Identifier: MIT
 
 <Story
 	name="With Error"
-	args={{ label: 'Date Range', error: 'Please select a valid date range', startLabel: 'Start Date', endLabel: 'End Date' }}
+	args={{
+		label: 'Date Range',
+		error: 'Please select a valid date range',
+		startLabel: 'Start Date',
+		endLabel: 'End Date'
+	}}
 />
 
 <Story
@@ -343,4 +351,3 @@ SPDX-License-Identifier: MIT
 		<button type="submit" class="btn btn-primary"> Submit </button>
 	</form>
 </Story>
-
