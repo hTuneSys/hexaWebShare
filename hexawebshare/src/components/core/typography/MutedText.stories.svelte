@@ -133,10 +133,7 @@ SPDX-License-Identifier: MIT
 <Story name="Light Weight" args={{ text: 'Light weight muted text.', weight: 'light' }} />
 <Story name="Normal Weight" args={{ text: 'Normal weight muted text.', weight: 'normal' }} />
 <Story name="Medium Weight" args={{ text: 'Medium weight muted text.', weight: 'medium' }} />
-<Story
-	name="Semibold Weight"
-	args={{ text: 'Semibold weight muted text.', weight: 'semibold' }}
-/>
+<Story name="Semibold Weight" args={{ text: 'Semibold weight muted text.', weight: 'semibold' }} />
 <Story name="Bold Weight" args={{ text: 'Bold weight muted text.', weight: 'bold' }} />
 
 <!-- Leading Stories -->
@@ -281,17 +278,17 @@ SPDX-License-Identifier: MIT
 
 <Story name="Product Description">
 	<div class="max-w-md space-y-3">
-		<p class="text-lg font-medium text-base-content">
+		<p class="text-base-content text-lg font-medium">
 			Premium quality product with exceptional features and modern design.
 		</p>
 		<MutedText text={sampleText} variant="muted" lineClamp={3} />
-		<p class="text-xl font-bold text-primary">$99.99</p>
+		<p class="text-primary text-xl font-bold">$99.99</p>
 	</div>
 </Story>
 
 <Story name="Error Message">
 	<div class="bg-error/10 max-w-md rounded-lg p-4">
-		<p class="text-error font-medium mb-2">Something went wrong</p>
+		<p class="text-error mb-2 font-medium">Something went wrong</p>
 		<MutedText
 			text="Please try again later or contact support if the problem persists."
 			variant="error"
@@ -302,7 +299,7 @@ SPDX-License-Identifier: MIT
 
 <Story name="Success Message">
 	<div class="bg-success/10 max-w-md rounded-lg p-4">
-		<p class="text-success font-medium mb-2">Success!</p>
+		<p class="text-success mb-2 font-medium">Success!</p>
 		<MutedText
 			text="Your changes have been saved successfully!"
 			variant="success"
@@ -313,13 +310,7 @@ SPDX-License-Identifier: MIT
 
 <Story name="Terms and Conditions">
 	<div class="max-w-xl space-y-4">
-		<MutedText
-			text={longText}
-			size="xs"
-			variant="muted"
-			align="justify"
-			leading="relaxed"
-		/>
+		<MutedText text={longText} size="xs" variant="muted" align="justify" leading="relaxed" />
 		<MutedText
 			text="By continuing, you agree to our terms and conditions."
 			size="sm"
@@ -346,4 +337,3 @@ SPDX-License-Identifier: MIT
 		strikethrough: false
 	}}
 />
-
