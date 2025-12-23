@@ -42,7 +42,12 @@ SPDX-License-Identifier: MIT
 	}}
 >
 	{#snippet children()}
-		<ButtonGroup orientation="horizontal" gap="sm" ariaLabel="Action buttons group" responsive={false}>
+		<ButtonGroup
+			orientation="horizontal"
+			gap="sm"
+			ariaLabel="Action buttons group"
+			responsive={false}
+		>
 			<Button label="Save" variant="primary" />
 			<Button label="Cancel" variant="secondary" />
 			<Button label="Delete" variant="error" />
