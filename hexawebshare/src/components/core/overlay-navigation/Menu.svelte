@@ -141,11 +141,7 @@ SPDX-License-Identifier: MIT
 
 	// Compute item classes based on state
 	const getItemClasses = (item: MenuItem, index: number) =>
-		[
-			item.active && 'active',
-			item.disabled && 'disabled',
-			focusedIndex === index && 'focus'
-		]
+		[item.active && 'active', item.disabled && 'disabled', focusedIndex === index && 'focus']
 			.filter(Boolean)
 			.join(' ');
 

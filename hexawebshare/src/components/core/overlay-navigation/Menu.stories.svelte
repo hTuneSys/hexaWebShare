@@ -178,14 +178,25 @@ SPDX-License-Identifier: MIT
 </Story>
 
 <!-- Horizontal Bordered -->
-<Story name="Horizontal Bordered" args={{ items: basicItems, orientation: 'horizontal', variant: 'bordered' }} />
+<Story
+	name="Horizontal Bordered"
+	args={{ items: basicItems, orientation: 'horizontal', variant: 'bordered' }}
+/>
 
 <!-- Compact Horizontal -->
-<Story name="Compact Horizontal" args={{ items: basicItems, orientation: 'horizontal', variant: 'compact' }} />
+<Story
+	name="Compact Horizontal"
+	args={{ items: basicItems, orientation: 'horizontal', variant: 'compact' }}
+/>
 
 <!-- Large Vertical -->
-<Story name="Large Vertical" args={{ items: itemsWithIcons, size: 'lg', orientation: 'vertical' }} />
+<Story
+	name="Large Vertical"
+	args={{ items: itemsWithIcons, size: 'lg', orientation: 'vertical' }}
+/>
 
 <!-- Small Horizontal -->
-<Story name="Small Horizontal" args={{ items: basicItems, size: 'sm', orientation: 'horizontal' }} />
-
+<Story
+	name="Small Horizontal"
+	args={{ items: basicItems, size: 'sm', orientation: 'horizontal' }}
+/>
