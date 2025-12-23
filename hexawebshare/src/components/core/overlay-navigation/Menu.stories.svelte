@@ -45,10 +45,10 @@ SPDX-License-Identifier: MIT
 	];
 
 	const itemsWithLinks = [
-		{ id: '1', label: 'Home', href: '#' },
-		{ id: '2', label: 'About', href: '#' },
-		{ id: '3', label: 'Services', href: '#' },
-		{ id: '4', label: 'Contact', href: '#' }
+		{ id: '1', label: 'Home', href: '/' },
+		{ id: '2', label: 'About', href: '/' },
+		{ id: '3', label: 'Services', href: '/' },
+		{ id: '4', label: 'Contact', href: '/' }
 	];
 
 	const complexItems = [
@@ -99,6 +99,26 @@ SPDX-License-Identifier: MIT
 	});
 </script>
 
+<script lang="ts">
+	import type { MenuItem } from './Menu.svelte';
+
+	let selectedItem = $state<string | number>('1');
+
+	const interactiveItems: MenuItem[] = [
+		{ id: '1', label: 'Option 1', onClick: () => (selectedItem = '1') },
+		{ id: '2', label: 'Option 2', onClick: () => (selectedItem = '2') },
+		{ id: '3', label: 'Option 3', onClick: () => (selectedItem = '3') }
+	];
+
+	// Update active state based on selection
+	let itemsWithActive = $derived(
+		interactiveItems.map((item) => ({
+			...item,
+			active: item.id === selectedItem
+		}))
+	);
+</script>
+
 <!-- Default Stories -->
 <Story name="Default" args={{ items: basicItems }} />
 
@@ -140,36 +160,15 @@ SPDX-License-Identifier: MIT
 <Story name="Slot Content">
 	<Menu ariaLabel="Custom menu with slot content">
 		{#snippet children()}
-			<li><a href="#">Custom Item 1</a></li>
-			<li><a href="#">Custom Item 2</a></li>
-			<li><a href="#">Custom Item 3</a></li>
+			<li><a href="/">Custom Item 1</a></li>
+			<li><a href="/">Custom Item 2</a></li>
+			<li><a href="/">Custom Item 3</a></li>
 		{/snippet}
 	</Menu>
 </Story>
 
 <!-- Interactive Example -->
 <Story name="Interactive">
-	<script lang="ts">
-		import Menu from './Menu.svelte';
-		import type { MenuItem } from './Menu.svelte';
-
-		let selectedItem = $state<string | number>('1');
-
-		const interactiveItems: MenuItem[] = [
-			{ id: '1', label: 'Option 1', onClick: () => (selectedItem = '1') },
-			{ id: '2', label: 'Option 2', onClick: () => (selectedItem = '2') },
-			{ id: '3', label: 'Option 3', onClick: () => (selectedItem = '3') }
-		];
-
-		// Update active state based on selection
-		let itemsWithActive = $derived(
-			interactiveItems.map((item) => ({
-				...item,
-				active: item.id === selectedItem
-			}))
-		);
-	</script>
-
 	<div class="space-y-4">
 		<Menu items={itemsWithActive} ariaLabel="Interactive menu" />
 		<p class="text-base-content/70 text-sm">
