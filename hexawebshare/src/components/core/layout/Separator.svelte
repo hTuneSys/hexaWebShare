@@ -83,9 +83,7 @@ SPDX-License-Identifier: MIT
 
 	// Static class mapping for orientation and width
 	let orientationClasses = $derived(
-		orientation === 'horizontal'
-			? 'w-full'
-			: 'h-full self-stretch flex-shrink-0'
+		orientation === 'horizontal' ? 'w-full' : 'h-full self-stretch flex-shrink-0'
 	);
 
 	// Static class mapping for thickness (horizontal uses border-top)
@@ -188,7 +186,7 @@ SPDX-License-Identifier: MIT
 
 {#if orientation === 'horizontal'}
 	<hr
-		class="{separatorClasses} border-b-0 border-l-0 border-r-0"
+		class="{separatorClasses} border-r-0 border-b-0 border-l-0"
 		{role}
 		aria-orientation={ariaOrientation}
 		aria-hidden={computedAriaHidden}
