@@ -56,20 +56,20 @@ SPDX-License-Identifier: MIT
 		 * @default false
 		 */
 		disabled?: boolean;
-	/**
-	 * Whether the radio group is required
-	 * @default false
-	 */
-	required?: boolean;
-	/**
-	 * Whether the radio group is in loading state
-	 * @default false
-	 */
-	loading?: boolean;
-	/**
-	 * HTML id attribute
-	 */
-	id?: string;
+		/**
+		 * Whether the radio group is required
+		 * @default false
+		 */
+		required?: boolean;
+		/**
+		 * Whether the radio group is in loading state
+		 * @default false
+		 */
+		loading?: boolean;
+		/**
+		 * HTML id attribute
+		 */
+		id?: string;
 		/**
 		 * Accessible label for screen readers
 		 */
@@ -195,8 +195,13 @@ SPDX-License-Identifier: MIT
 		class="relative flex flex-col gap-2"
 	>
 		{#if loading}
-			<div class="absolute top-0 left-0 z-10 flex h-full w-full items-center justify-center bg-base-100/80 rounded-lg" role="status" aria-label="Loading">
-				<span class="loading loading-spinner {loadingSizeClass} text-primary" aria-hidden="true"></span>
+			<div
+				class="bg-base-100/80 absolute top-0 left-0 z-10 flex h-full w-full items-center justify-center rounded-lg"
+				role="status"
+				aria-label="Loading"
+			>
+				<span class="loading loading-spinner {loadingSizeClass} text-primary" aria-hidden="true"
+				></span>
 			</div>
 		{/if}
 		{#each normalizedOptions as option, index (option.value)}
