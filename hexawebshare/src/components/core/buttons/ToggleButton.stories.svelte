@@ -156,7 +156,6 @@ SPDX-License-Identifier: MIT
 	}}
 />
 
-
 <!-- Interactive Playground -->
 <Story
 	name="Playground"

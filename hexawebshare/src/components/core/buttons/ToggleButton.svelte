@@ -69,29 +69,29 @@ SPDX-License-Identifier: MIT
 		 * @default false
 		 */
 		loading?: boolean;
-	/**
-	 * Custom content (icon, etc.) - if provided, label will be ignored
-	 */
-	children?: Snippet;
-	/**
-	 * Default icon polygon points (used when no children and no label provided)
-	 * @default '12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'
-	 */
-	defaultIconPoints?: string;
-	/**
-	 * Default icon width
-	 * @default '20'
-	 */
-	defaultIconWidth?: string | number;
-	/**
-	 * Default icon height
-	 * @default '20'
-	 */
-	defaultIconHeight?: string | number;
-	/**
-	 * ARIA label for accessibility
-	 */
-	ariaLabel?: string;
+		/**
+		 * Custom content (icon, etc.) - if provided, label will be ignored
+		 */
+		children?: Snippet;
+		/**
+		 * Default icon polygon points (used when no children and no label provided)
+		 * @default '12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'
+		 */
+		defaultIconPoints?: string;
+		/**
+		 * Default icon width
+		 * @default '20'
+		 */
+		defaultIconWidth?: string | number;
+		/**
+		 * Default icon height
+		 * @default '20'
+		 */
+		defaultIconHeight?: string | number;
+		/**
+		 * ARIA label for accessibility
+		 */
+		ariaLabel?: string;
 		/**
 		 * Callback when button is clicked/toggled
 		 */
