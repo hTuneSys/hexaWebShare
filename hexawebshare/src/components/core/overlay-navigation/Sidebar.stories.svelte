@@ -106,9 +106,8 @@ SPDX-License-Identifier: MIT
 
 <Story name="Disabled" args={{ title: 'Disabled Menu', disabled: true }} />
 
-<!-- Real-world Examples -->
 <Story
-	name="Admin Dashboard"
+	name="Bordered Variant"
 	args={{
 		title: 'Admin Panel',
 		variant: 'bordered',
@@ -118,15 +117,7 @@ SPDX-License-Identifier: MIT
 />
 
 <Story
-	name="App Navigation"
-	args={{
-		title: 'MyApp',
-		items: navigationItems
-	}}
-/>
-
-<Story
-	name="Settings Panel"
+	name="Compact Variant"
 	args={{
 		title: 'Settings',
 		variant: 'compact',
@@ -136,18 +127,6 @@ SPDX-License-Identifier: MIT
 			{ id: 'account', label: 'Account', icon: '👤', active: true },
 			{ id: 'security', label: 'Security', icon: '🔒' },
 			{ id: 'api', label: 'API Keys', icon: '🔑' }
-		]
-	}}
-/>
-
-<Story
-	name="With Disabled Items"
-	args={{
-		title: 'Menu',
-		items: [
-			{ id: '1', label: 'Available', icon: '✅' },
-			{ id: '2', label: 'Disabled Item', icon: '🚫', disabled: true },
-			{ id: '3', label: 'Another Available', icon: '✅' }
 		]
 	}}
 />

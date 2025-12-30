@@ -84,7 +84,7 @@ SPDX-License-Identifier: MIT
 	}}
 />
 
-<!-- With Title and Description -->
+<!-- With Description -->
 <Story
 	name="With Description"
 	args={{
@@ -96,90 +96,22 @@ SPDX-License-Identifier: MIT
 
 <!-- Variant Stories -->
 <Story
-	name="Bordered"
+	name="Variants"
 	args={{
-		title: 'Bordered Section',
+		title: 'Visual Variants',
 		variant: 'bordered',
-		content: 'This section has a visible border around it.'
-	}}
-/>
-
-<Story
-	name="Filled"
-	args={{
-		title: 'Filled Section',
-		variant: 'filled',
-		content: 'This section has a filled background.'
-	}}
-/>
-
-<Story
-	name="Ghost"
-	args={{
-		title: 'Ghost Section',
-		variant: 'ghost',
-		content: 'This section has a transparent background.'
+		content: 'This showcases the bordered variant style.'
 	}}
 />
 
 <!-- Padding Variants -->
 <Story
-	name="No Padding"
+	name="Padding Sizes"
 	args={{
-		title: 'No Padding',
-		padding: 'none',
-		variant: 'bordered',
-		content: 'This section has no padding.'
-	}}
-/>
-
-<Story
-	name="Extra Small Padding"
-	args={{
-		title: 'XS Padding',
-		padding: 'xs',
-		variant: 'bordered',
-		content: 'This section has extra small padding.'
-	}}
-/>
-
-<Story
-	name="Small Padding"
-	args={{
-		title: 'SM Padding',
-		padding: 'sm',
-		variant: 'bordered',
-		content: 'This section has small padding.'
-	}}
-/>
-
-<Story
-	name="Medium Padding"
-	args={{
-		title: 'MD Padding',
-		padding: 'md',
-		variant: 'bordered',
-		content: 'This section has medium padding (default).'
-	}}
-/>
-
-<Story
-	name="Large Padding"
-	args={{
-		title: 'LG Padding',
+		title: 'Padding Comparison',
 		padding: 'lg',
 		variant: 'bordered',
-		content: 'This section has large padding.'
-	}}
-/>
-
-<Story
-	name="Extra Large Padding"
-	args={{
-		title: 'XL Padding',
-		padding: 'xl',
-		variant: 'bordered',
-		content: 'This section has extra large padding.'
+		content: 'This section demonstrates the large padding option.'
 	}}
 />
 
@@ -195,8 +127,9 @@ SPDX-License-Identifier: MIT
 	}}
 />
 
+<!-- Collapsible Initially Collapsed -->
 <Story
-	name="Collapsible Initially Collapsed"
+	name="Initially Collapsed"
 	args={{
 		title: 'Initially Collapsed',
 		description: 'This section starts collapsed',
@@ -208,29 +141,13 @@ SPDX-License-Identifier: MIT
 
 <!-- State Stories -->
 <Story
-	name="Disabled"
+	name="States"
 	args={{
-		title: 'Disabled Section',
-		disabled: true,
-		content: 'This section is disabled and cannot be interacted with.'
-	}}
-/>
-
-<Story
-	name="Loading"
-	args={{
-		title: 'Loading Section',
-		loading: true,
-		content: 'This content is loading...'
-	}}
-/>
-
-<Story
-	name="With Divider"
-	args={{
-		title: 'Section with Divider',
+		title: 'Section States',
+		disabled: false,
+		loading: false,
 		divider: true,
-		content: 'This section has a divider at the bottom.'
+		content: 'This section showcases the divider state.'
 	}}
 />
 
@@ -253,18 +170,6 @@ SPDX-License-Identifier: MIT
 		description: 'This section has action buttons',
 		showHeaderActions: true,
 		content: 'Header actions appear on the right side of the header.'
-	}}
-/>
-
-<!-- With Icon and Description -->
-<Story
-	name="With Icon and Description"
-	args={{
-		title: 'Complete Section',
-		description: 'A section with all header elements',
-		showIcon: true,
-		variant: 'bordered',
-		content: 'This section showcases all header elements together.'
 	}}
 />
 

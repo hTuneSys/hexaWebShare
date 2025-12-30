@@ -7,6 +7,7 @@ SPDX-License-Identifier: MIT
 <script module>
 	import { defineMeta } from '@storybook/addon-svelte-csf';
 	import SegmentedControl from './SegmentedControl.svelte';
+	import { fn } from 'storybook/test';
 
 	const { Story } = defineMeta({
 		title: 'Core/Buttons/SegmentedControl',
@@ -21,6 +22,9 @@ SPDX-License-Identifier: MIT
 			},
 			disabled: { control: 'boolean' },
 			name: { control: 'text' }
+		},
+		args: {
+			onchange: fn()
 		}
 	});
 </script>
@@ -37,46 +41,31 @@ SPDX-License-Identifier: MIT
 	}}
 />
 
-<Story name="Size Variants">
-	<div class="flex flex-col items-start gap-4">
-		<SegmentedControl
-			options={[
-				{ label: 'Map', value: 'map' },
-				{ label: 'Transit', value: 'transit' },
-				{ label: 'Satellite', value: 'satellite' }
-			]}
-			value="map"
-			size="xs"
-		/>
-		<SegmentedControl
-			options={[
-				{ label: 'Map', value: 'map' },
-				{ label: 'Transit', value: 'transit' },
-				{ label: 'Satellite', value: 'satellite' }
-			]}
-			value="map"
-			size="sm"
-		/>
-		<SegmentedControl
-			options={[
-				{ label: 'Map', value: 'map' },
-				{ label: 'Transit', value: 'transit' },
-				{ label: 'Satellite', value: 'satellite' }
-			]}
-			value="map"
-			size="md"
-		/>
-		<SegmentedControl
-			options={[
-				{ label: 'Map', value: 'map' },
-				{ label: 'Transit', value: 'transit' },
-				{ label: 'Satellite', value: 'satellite' }
-			]}
-			value="map"
-			size="lg"
-		/>
-	</div>
-</Story>
+<Story
+	name="Small Size"
+	args={{
+		options: [
+			{ label: 'Map', value: 'map' },
+			{ label: 'Transit', value: 'transit' },
+			{ label: 'Satellite', value: 'satellite' }
+		],
+		value: 'map',
+		size: 'sm'
+	}}
+/>
+
+<Story
+	name="Large Size"
+	args={{
+		options: [
+			{ label: 'Map', value: 'map' },
+			{ label: 'Transit', value: 'transit' },
+			{ label: 'Satellite', value: 'satellite' }
+		],
+		value: 'map',
+		size: 'lg'
+	}}
+/>
 
 <Story
 	name="Disabled State"
@@ -104,7 +93,31 @@ SPDX-License-Identifier: MIT
 />
 
 <Story
-	name="Interactive Playground"
+	name="Two Options"
+	args={{
+		options: [
+			{ label: 'List View', value: 'list' },
+			{ label: 'Grid View', value: 'grid' }
+		],
+		value: 'list'
+	}}
+/>
+
+<Story
+	name="Four Options"
+	args={{
+		options: [
+			{ label: 'Today', value: 'today' },
+			{ label: 'Week', value: 'week' },
+			{ label: 'Month', value: 'month' },
+			{ label: 'Year', value: 'year' }
+		],
+		value: 'week'
+	}}
+/>
+
+<Story
+	name="Playground"
 	args={{
 		options: [
 			{ label: 'First', value: 'first' },

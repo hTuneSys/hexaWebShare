@@ -85,52 +85,55 @@ SPDX-License-Identifier: MIT
 	});
 </script>
 
-<!-- Default -->
+<!-- Main Variant Stories (5-10 required) -->
 <Story name="Default" args={{ value: 50, label: 'Volume', showValue: true }} />
 
-<!-- Variants -->
-<Story name="Primary" args={{ variant: 'primary', label: 'Primary', showValue: true }} />
-<Story name="Secondary" args={{ variant: 'secondary', label: 'Secondary', showValue: true }} />
-<Story name="Accent" args={{ variant: 'accent', label: 'Accent', showValue: true }} />
-<Story name="Neutral" args={{ variant: 'neutral', label: 'Neutral', showValue: true }} />
-<Story name="Info" args={{ variant: 'info', label: 'Info', showValue: true }} />
-<Story name="Success" args={{ variant: 'success', label: 'Success', showValue: true }} />
-<Story name="Warning" args={{ variant: 'warning', label: 'Warning', showValue: true }} />
-<Story name="Error" args={{ variant: 'error', label: 'Error', showValue: true }} />
+<Story name="Primary Variant" args={{ variant: 'primary', label: 'Primary', showValue: true }} />
 
-<!-- Sizes -->
-<Story name="Extra Small" args={{ size: 'xs', label: 'XS', showValue: true }} />
-<Story name="Small" args={{ size: 'sm', label: 'SM', showValue: true }} />
-<Story name="Medium" args={{ size: 'md', label: 'MD', showValue: true }} />
-<Story name="Large" args={{ size: 'lg', label: 'LG', showValue: true }} />
+<Story name="Small Size" args={{ size: 'sm', label: 'Small', showValue: true }} />
 
-<!-- States -->
-<Story name="Disabled" args={{ disabled: true, label: 'Disabled', value: 30, showValue: true }} />
+<Story name="Large Size" args={{ size: 'lg', label: 'Large', showValue: true }} />
+
 <Story
-	name="Loading"
+	name="Disabled State"
+	args={{ disabled: true, label: 'Disabled', value: 30, showValue: true }}
+/>
+
+<Story
+	name="Loading State"
 	args={{ loading: true, label: 'Loading state', value: 65, showValue: true }}
 />
-<Story name="Error State" args={{ error: 'Value not allowed', value: 90, showValue: true }} />
-<Story name="Required" args={{ required: true, label: 'Required value', showValue: true }} />
 
-<!-- Range variations -->
+<Story name="Error State" args={{ error: 'Value not allowed', value: 90, showValue: true }} />
+
 <Story
 	name="Custom Range"
 	args={{ min: 10, max: 200, step: 10, value: 60, showValue: true, label: 'Custom range' }}
 />
-<Story
-	name="Fine Steps"
-	args={{ min: 0, max: 10, step: 0.5, value: 4.5, showValue: true, label: 'Fine tuning' }}
-/>
 
-<!-- Marks -->
 <Story
 	name="With Marks"
 	args={{ marks: marksExample, value: 50, label: 'With markers', showValue: true }}
 />
 
-<!-- Interaction -->
+<!-- Interactive Playground (REQUIRED - must be last) -->
 <Story
-	name="Interactive"
-	args={{ value: 40, label: 'Interactive slider', showValue: true, marks: marksExample }}
+	name="Playground"
+	args={{
+		value: 50,
+		min: 0,
+		max: 100,
+		step: 1,
+		size: 'md',
+		variant: 'primary',
+		label: 'Slider label',
+		helpText: 'Use the slider to adjust the value.',
+		error: '',
+		required: false,
+		showValue: true,
+		loading: false,
+		disabled: false,
+		marks: [],
+		ariaLabel: 'Slider'
+	}}
 />

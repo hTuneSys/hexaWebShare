@@ -62,23 +62,7 @@ SPDX-License-Identifier: MIT
 </Story>
 
 <!-- Column Count Stories -->
-<Story name="SingleColumn">
-	<Grid columns={1} gap="md">
-		{#snippet children()}
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 1
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 2
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 3
-			</div>
-		{/snippet}
-	</Grid>
-</Story>
-
-<Story name="TwoColumns">
+<Story name="Two Columns">
 	<Grid columns={2} gap="md">
 		{#snippet children()}
 			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
@@ -97,7 +81,8 @@ SPDX-License-Identifier: MIT
 	</Grid>
 </Story>
 
-<Story name="FourColumns">
+<!-- Four Columns -->
+<Story name="Four Columns">
 	<Grid columns={4} gap="md">
 		{#snippet children()}
 			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
@@ -128,100 +113,8 @@ SPDX-License-Identifier: MIT
 	</Grid>
 </Story>
 
-<Story name="SixColumns">
-	<Grid columns={6} gap="md">
-		{#snippet children()}
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 1
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 2
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 3
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 4
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 5
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 6
-			</div>
-		{/snippet}
-	</Grid>
-</Story>
-
-<Story name="TwelveColumns">
-	<Grid columns={12} gap="md">
-		{#snippet children()}
-			<div
-				class="bg-base-200 flex min-w-0 items-center justify-center rounded-lg p-1 text-center text-sm"
-			>
-				1
-			</div>
-			<div
-				class="bg-base-200 flex min-w-0 items-center justify-center rounded-lg p-1 text-center text-sm"
-			>
-				2
-			</div>
-			<div
-				class="bg-base-200 flex min-w-0 items-center justify-center rounded-lg p-1 text-center text-sm"
-			>
-				3
-			</div>
-			<div
-				class="bg-base-200 flex min-w-0 items-center justify-center rounded-lg p-1 text-center text-sm"
-			>
-				4
-			</div>
-			<div
-				class="bg-base-200 flex min-w-0 items-center justify-center rounded-lg p-1 text-center text-sm"
-			>
-				5
-			</div>
-			<div
-				class="bg-base-200 flex min-w-0 items-center justify-center rounded-lg p-1 text-center text-sm"
-			>
-				6
-			</div>
-			<div
-				class="bg-base-200 flex min-w-0 items-center justify-center rounded-lg p-1 text-center text-sm"
-			>
-				7
-			</div>
-			<div
-				class="bg-base-200 flex min-w-0 items-center justify-center rounded-lg p-1 text-center text-sm"
-			>
-				8
-			</div>
-			<div
-				class="bg-base-200 flex min-w-0 items-center justify-center rounded-lg p-1 text-center text-sm"
-			>
-				9
-			</div>
-			<div
-				class="bg-base-200 flex min-w-0 items-center justify-center rounded-lg p-1 text-center text-sm"
-			>
-				10
-			</div>
-			<div
-				class="bg-base-200 flex min-w-0 items-center justify-center rounded-lg p-1 text-center text-sm"
-			>
-				11
-			</div>
-			<div
-				class="bg-base-200 flex min-w-0 items-center justify-center rounded-lg p-1 text-center text-sm"
-			>
-				12
-			</div>
-		{/snippet}
-	</Grid>
-</Story>
-
 <!-- Gap Variants -->
-<Story name="NoGap">
+<Story name="No Gap">
 	<Grid columns={3} gap="none">
 		{#snippet children()}
 			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
@@ -233,45 +126,12 @@ SPDX-License-Identifier: MIT
 			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
 				Item 3
 			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 4
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 5
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 6
-			</div>
 		{/snippet}
 	</Grid>
 </Story>
 
-<Story name="ExtraSmallGap">
-	<Grid columns={3} gap="xs">
-		{#snippet children()}
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 1
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 2
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 3
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 4
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 5
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 6
-			</div>
-		{/snippet}
-	</Grid>
-</Story>
-
-<Story name="SmallGap">
+<!-- Small Gap -->
+<Story name="Small Gap">
 	<Grid columns={3} gap="sm">
 		{#snippet children()}
 			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
@@ -283,20 +143,12 @@ SPDX-License-Identifier: MIT
 			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
 				Item 3
 			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 4
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 5
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 6
-			</div>
 		{/snippet}
 	</Grid>
 </Story>
 
-<Story name="LargeGap">
+<!-- Large Gap -->
+<Story name="Large Gap">
 	<Grid columns={3} gap="lg">
 		{#snippet children()}
 			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
@@ -308,71 +160,12 @@ SPDX-License-Identifier: MIT
 			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
 				Item 3
 			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 4
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 5
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 6
-			</div>
-		{/snippet}
-	</Grid>
-</Story>
-
-<Story name="ExtraLargeGap">
-	<Grid columns={3} gap="xl">
-		{#snippet children()}
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 1
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 2
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 3
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 4
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 5
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 6
-			</div>
-		{/snippet}
-	</Grid>
-</Story>
-
-<Story name="TwoXLGap">
-	<Grid columns={3} gap="2xl">
-		{#snippet children()}
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 1
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 2
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 3
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 4
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 5
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 6
-			</div>
 		{/snippet}
 	</Grid>
 </Story>
 
 <!-- Variant Stories -->
-<Story name="BorderedVariant">
+<Story name="Bordered Variant">
 	<Grid columns={3} gap="md" variant="bordered" background={true}>
 		{#snippet children()}
 			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
@@ -384,71 +177,12 @@ SPDX-License-Identifier: MIT
 			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
 				Item 3
 			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 4
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 5
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 6
-			</div>
-		{/snippet}
-	</Grid>
-</Story>
-
-<Story name="FilledVariant">
-	<Grid columns={3} gap="md" variant="filled" background={true}>
-		{#snippet children()}
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 1
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 2
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 3
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 4
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 5
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 6
-			</div>
-		{/snippet}
-	</Grid>
-</Story>
-
-<Story name="GhostVariant">
-	<Grid columns={3} gap="md" variant="ghost" background={true}>
-		{#snippet children()}
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 1
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 2
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 3
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 4
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 5
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 6
-			</div>
 		{/snippet}
 	</Grid>
 </Story>
 
 <!-- State Stories -->
-<Story name="LoadingState">
+<Story name="Loading State">
 	<Grid columns={3} gap="md" loading={true}>
 		{#snippet children()}
 			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
@@ -464,33 +198,8 @@ SPDX-License-Identifier: MIT
 	</Grid>
 </Story>
 
-<Story name="DisabledState">
-	<Grid columns={3} gap="md" disabled={true}>
-		{#snippet children()}
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 1
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 2
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 3
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 4
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 5
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 6
-			</div>
-		{/snippet}
-	</Grid>
-</Story>
-
 <!-- Responsive Columns -->
-<Story name="ResponsiveColumns">
+<Story name="Responsive Columns">
 	<Grid columns={1} gap="md" responsiveColumns={{ xs: 1, sm: 2, md: 3, lg: 4 }}>
 		{#snippet children()}
 			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
@@ -511,63 +220,19 @@ SPDX-License-Identifier: MIT
 			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
 				Item 6
 			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 7
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 8
-			</div>
 		{/snippet}
 	</Grid>
 </Story>
 
-<!-- Background Examples -->
-<Story name="WithBackground">
-	<Grid columns={3} gap="md" variant="default" background={true}>
-		{#snippet children()}
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 1
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 2
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 3
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 4
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 5
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 6
-			</div>
-		{/snippet}
-	</Grid>
-</Story>
-
-<Story name="WithoutBackground">
-	<Grid columns={3} gap="md" variant="default" background={false}>
-		{#snippet children()}
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 1
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 2
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 3
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 4
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 5
-			</div>
-			<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
-				Item 6
-			</div>
-		{/snippet}
-	</Grid>
-</Story>
+<!-- Playground -->
+<Story
+	name="Playground"
+	args={{
+		columns: 3,
+		gap: 'md',
+		variant: 'default',
+		loading: false,
+		disabled: false,
+		background: false
+	}}
+/>

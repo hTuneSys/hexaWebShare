@@ -6,6 +6,7 @@ SPDX-License-Identifier: MIT
 <script module>
 	import { defineMeta } from '@storybook/addon-svelte-csf';
 	import Chip from './Chip.svelte';
+	import { fn } from 'storybook/test';
 
 	const { Story } = defineMeta({
 		title: 'Core/Media/Chip',
@@ -60,66 +61,58 @@ SPDX-License-Identifier: MIT
 		args: {
 			label: 'Chip',
 			size: 'md',
-			variant: 'neutral'
+			variant: 'neutral',
+			onClose: fn()
 		}
 	});
-
-	// Handler for closable story
-	function handleClose() {
-		console.log('Chip closed');
-	}
 </script>
 
 <!-- Default Story -->
 <Story name="Default" args={{ label: 'Chip', size: 'md', variant: 'neutral' }} />
 
 <!-- Size Stories -->
-<Story name="Extra Small" args={{ label: 'Chip', size: 'xs', variant: 'neutral' }} />
-<Story name="Small" args={{ label: 'Chip', size: 'sm', variant: 'neutral' }} />
-<Story name="Medium" args={{ label: 'Chip', size: 'md', variant: 'neutral' }} />
-<Story name="Large" args={{ label: 'Chip', size: 'lg', variant: 'neutral' }} />
+<Story name="Small Size" args={{ label: 'Chip', size: 'sm', variant: 'neutral' }} />
+<Story name="Large Size" args={{ label: 'Chip', size: 'lg', variant: 'neutral' }} />
 
 <!-- Variant Stories -->
-<Story name="Primary" args={{ label: 'Chip', size: 'md', variant: 'primary' }} />
-<Story name="Secondary" args={{ label: 'Chip', size: 'md', variant: 'secondary' }} />
-<Story name="Accent" args={{ label: 'Chip', size: 'md', variant: 'accent' }} />
-<Story name="Neutral" args={{ label: 'Chip', size: 'md', variant: 'neutral' }} />
-<Story name="Info" args={{ label: 'Chip', size: 'md', variant: 'info' }} />
-<Story name="Success" args={{ label: 'Chip', size: 'md', variant: 'success' }} />
-<Story name="Warning" args={{ label: 'Chip', size: 'md', variant: 'warning' }} />
-<Story name="Error" args={{ label: 'Chip', size: 'md', variant: 'error' }} />
-<Story name="Ghost" args={{ label: 'Chip', size: 'md', variant: 'ghost' }} />
+<Story name="Primary Variant" args={{ label: 'Primary', size: 'md', variant: 'primary' }} />
+<Story name="Success Variant" args={{ label: 'Success', size: 'md', variant: 'success' }} />
+<Story name="Warning Variant" args={{ label: 'Warning', size: 'md', variant: 'warning' }} />
+<Story name="Error Variant" args={{ label: 'Error', size: 'md', variant: 'error' }} />
 
-<!-- Outline Story -->
-<Story name="Outline" args={{ label: 'Chip', size: 'md', variant: 'primary', outline: true }} />
+<!-- Style Stories -->
+<Story
+	name="Outline Style"
+	args={{ label: 'Outline', size: 'md', variant: 'primary', outline: true }}
+/>
 
-<!-- Closable Story -->
+<!-- Interactive Stories -->
 <Story
 	name="Closable"
 	args={{
-		label: 'Chip',
+		label: 'Closable Chip',
 		size: 'md',
-		variant: 'primary',
-		closable: true,
-		onClose: handleClose
+		variant: 'info',
+		closable: true
 	}}
 />
 
 <!-- State Stories -->
-<Story name="Disabled" args={{ label: 'Chip', size: 'md', variant: 'primary', disabled: true }} />
-
-<!-- Accessibility Stories -->
 <Story
-	name="With Aria Label"
-	args={{ label: 'Chip', size: 'md', variant: 'primary', ariaLabel: 'Status chip' }}
-/>
-<Story
-	name="Decorative (Aria Hidden)"
-	args={{ label: 'Chip', size: 'md', variant: 'neutral', ariaHidden: true }}
+	name="Disabled State"
+	args={{ label: 'Disabled', size: 'md', variant: 'primary', disabled: true }}
 />
 
 <!-- Interactive Examples -->
 <Story
 	name="Playground"
-	args={{ label: 'Chip', size: 'md', variant: 'primary', ariaLabel: 'Interactive chip' }}
+	args={{
+		label: 'Chip',
+		size: 'md',
+		variant: 'primary',
+		outline: false,
+		closable: false,
+		disabled: false,
+		ariaLabel: 'Interactive chip'
+	}}
 />

@@ -117,7 +117,7 @@ SPDX-License-Identifier: MIT
 	}: Props = $props();
 
 	// Generate unique ID if not provided
-	let fieldId = $derived(id || `datepicker-${Math.random().toString(36).substr(2, 9)}`);
+	let fieldId = $derived(id || `datepicker-${Math.random().toString(36).substring(2, 11)}`);
 	let labelForId = $derived(fieldId);
 
 	// Input classes

@@ -36,8 +36,8 @@ SPDX-License-Identifier: MIT
 	}: Props = $props();
 
 	// Generate unique IDs once (not reactive)
-	const titleId = `dialog-title-${crypto.randomUUID?.() ?? Math.random().toString(36).substr(2, 9)}`;
-	const descriptionId = `dialog-description-${crypto.randomUUID?.() ?? Math.random().toString(36).substr(2, 9)}`;
+	const titleId = `dialog-title-${crypto.randomUUID?.() ?? Math.random().toString(36).substring(2, 11)}`;
+	const descriptionId = `dialog-description-${crypto.randomUUID?.() ?? Math.random().toString(36).substring(2, 11)}`;
 
 	let modalClasses = $derived(['modal', open && 'modal-open', className].filter(Boolean).join(' '));
 

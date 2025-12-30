@@ -275,6 +275,20 @@ component-name/
 
 ## 📖 Storybook Story Pattern
 
+**⚠️ MANDATORY REQUIREMENTS:** Every component story file **MUST** follow these rules:
+
+### Story Count Requirements
+
+- ✅ **Minimum 5 stories** per component (excluding Playground)
+- ✅ **Maximum 10 stories** per component (excluding Playground)
+- ✅ **1 Interactive Playground story** as the last story (REQUIRED)
+- ✅ Each story must demonstrate **ONE specific variant or use case**
+- ✅ Stories should cover all major component variations (sizes, variants, states)
+
+**Total stories per file: 6-11 stories (5-10 variants + 1 Playground)**
+
+### Story Pattern Example
+
 ```svelte
 <!-- ComponentName.stories.svelte -->
 <script lang="ts">
@@ -288,12 +302,20 @@ component-name/
     argTypes: {
       variant: {
         control: 'select',
-        options: ['primary', 'secondary'],
+        options: ['primary', 'secondary', 'accent'],
+      },
+      size: {
+        control: 'select',
+        options: ['sm', 'md', 'lg'],
+      },
+      disabled: {
+        control: 'boolean',
       },
     },
   });
 </script>
 
+<!-- Variant Stories (5-10 required) -->
 <Story 
   name="Primary" 
   args={{ label: 'Primary Button', variant: 'primary' }} 
@@ -303,7 +325,61 @@ component-name/
   name="Secondary" 
   args={{ label: 'Secondary Button', variant: 'secondary' }} 
 />
+
+<Story 
+  name="Small Size" 
+  args={{ label: 'Small Button', size: 'sm' }} 
+/>
+
+<Story 
+  name="Large Size" 
+  args={{ label: 'Large Button', size: 'lg' }} 
+/>
+
+<Story 
+  name="Disabled State" 
+  args={{ label: 'Disabled Button', disabled: true }} 
+/>
+
+<!-- ✅ REQUIRED: Interactive Playground Story (must be last) -->
+<Story 
+  name="Playground" 
+  args={{ 
+    label: 'Interactive Button',
+    variant: 'primary',
+    size: 'md',
+    disabled: false
+  }} 
+/>
 ```
+
+### Playground Story Requirements
+
+- ✅ Must be named "Playground"
+- ✅ Must be the last story in the file
+- ✅ Must include all configurable props in `args`
+- ✅ Must include all event handlers defined in `argTypes`
+- ✅ Must use default/reasonable values for all props
+- ✅ Allows testing all component features via Storybook controls
+
+### Story Naming Guidelines
+
+Each story should clearly indicate what it demonstrates:
+
+**Good Examples:**
+- "Primary Variant"
+- "Small Size"
+- "Disabled State"
+- "With Icon"
+- "Loading State"
+- "Error State"
+- "Full Width"
+
+**Bad Examples:**
+- "Example 1"
+- "Test"
+- "Demo"
+- "Another One"
 
 ---
 
@@ -403,6 +479,8 @@ Before creating a commit or PR, verify:
 - [ ] TypeScript interfaces defined for all components
 - [ ] DaisyUI classes used correctly (static, not dynamic)
 - [ ] Storybook story created for new components
+- [ ] Story file has 5-10 variant stories (excluding Playground)
+- [ ] Playground story included as last story in Storybook file
 - [ ] Component exported in `src/lib/index.ts`
 - [ ] `pnpm check` passes
 - [ ] `pnpm format` applied

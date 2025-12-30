@@ -4,7 +4,6 @@ SPDX-License-Identifier: MIT
 -->
 
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
 	import type { Snippet } from 'svelte';
 	import Spinner from './Spinner.svelte';
 
@@ -99,12 +98,18 @@ SPDX-License-Identifier: MIT
 		 */
 		ariaLabel?: string;
 		/**
+		 * Callback when alert is closed
+		 */
+		onclose?: () => void;
+		/**
+		 * Callback when action button is clicked
+		 */
+		onaction?: () => void;
+		/**
 		 * Additional CSS classes
 		 */
 		class?: string;
 	}
-
-	const dispatch = createEventDispatcher<{ close: void; action: void }>();
 
 	const {
 		title = '',
@@ -124,6 +129,8 @@ SPDX-License-Identifier: MIT
 		ariaLive,
 		role,
 		ariaLabel,
+		onclose,
+		onaction,
 		class: className = '',
 		...props
 	}: Props = $props();
@@ -219,11 +226,11 @@ SPDX-License-Identifier: MIT
 		if (!isControlled) {
 			isVisible = false;
 		}
-		dispatch('close');
+		onclose?.();
 	};
 
 	const handleAction = () => {
-		dispatch('action');
+		onaction?.();
 	};
 </script>
 

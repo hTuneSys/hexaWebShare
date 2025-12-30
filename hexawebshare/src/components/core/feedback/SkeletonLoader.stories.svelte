@@ -110,3 +110,18 @@ SPDX-License-Identifier: MIT
 		<SkeletonLoader shape="text" lines={3} width="long" gap="sm" />
 	</div>
 </Story>
+
+<!-- Playground -->
+<Story
+	name="Playground"
+	args={{
+		shape: 'rect',
+		size: 'md',
+		width: 'medium',
+		variant: 'base',
+		lines: 1,
+		gap: 'sm',
+		animated: true,
+		ariaLabel: 'Loading content'
+	}}
+/>

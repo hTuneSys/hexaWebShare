@@ -7,6 +7,7 @@ SPDX-License-Identifier: MIT
 	import { defineMeta } from '@storybook/addon-svelte-csf';
 	import ContextMenu from './ContextMenu.svelte';
 	import type { MenuItem } from './ContextMenu.svelte';
+	import { fn } from 'storybook/test';
 
 	const { Story } = defineMeta({
 		title: 'Core/Overlay Navigation/ContextMenu',
@@ -33,6 +34,9 @@ SPDX-License-Identifier: MIT
 				control: 'text',
 				description: 'ARIA label for accessibility'
 			}
+		},
+		args: {
+			onClose: fn()
 		}
 	});
 
@@ -106,7 +110,7 @@ SPDX-License-Identifier: MIT
 />
 
 <Story
-	name="Top Left"
+	name="Top Left Position"
 	args={{
 		open: true,
 		x: 20,
@@ -117,29 +121,7 @@ SPDX-License-Identifier: MIT
 />
 
 <Story
-	name="Top Right"
-	args={{
-		open: true,
-		x: 600,
-		y: 20,
-		items: defaultItems,
-		ariaLabel: 'Context menu at top right'
-	}}
-/>
-
-<Story
-	name="Bottom Left"
-	args={{
-		open: true,
-		x: 20,
-		y: 400,
-		items: defaultItems,
-		ariaLabel: 'Context menu at bottom left'
-	}}
-/>
-
-<Story
-	name="Bottom Right"
+	name="Bottom Right Position"
 	args={{
 		open: true,
 		x: 600,
@@ -172,7 +154,7 @@ SPDX-License-Identifier: MIT
 />
 
 <Story
-	name="Interactive"
+	name="Interactive Example"
 	args={{
 		open: true,
 		x: 100,
@@ -182,19 +164,5 @@ SPDX-License-Identifier: MIT
 	}}
 />
 
-<Story
-	name="Accessibility Demo"
-	args={{
-		open: true,
-		x: 100,
-		y: 100,
-		items: [
-			{ label: 'Copy', onClick: () => console.log('Copy') },
-			{ label: 'Paste', onClick: () => console.log('Paste') },
-			{ label: 'Cut', onClick: () => console.log('Cut') }
-		],
-		onClose: () => console.log('Menu closed - Use Controls to toggle open state'),
-		ariaLabel:
-			'File operations context menu - Use arrow keys to navigate, Enter to select, Escape to close'
-	}}
-/>
+<!-- Playground -->
+<Story name="Playground" args={{}} />

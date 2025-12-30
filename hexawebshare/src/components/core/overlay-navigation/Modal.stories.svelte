@@ -6,6 +6,7 @@ SPDX-License-Identifier: MIT
 <script module>
 	import { defineMeta } from '@storybook/addon-svelte-csf';
 	import Modal from './Modal.svelte';
+	import { fn } from 'storybook/test';
 
 	const { Story } = defineMeta({
 		title: 'Core/Overlay Navigation/Modal',
@@ -22,7 +23,7 @@ SPDX-License-Identifier: MIT
 		},
 		args: {
 			open: true,
-			onclose: () => console.log('closed')
+			onclose: fn()
 		}
 	});
 </script>
@@ -87,3 +88,6 @@ SPDX-License-Identifier: MIT
 		<p>Clicking outside (on the backdrop) will NOT close this modal.</p>
 	{/snippet}
 </Story>
+
+<!-- Playground -->
+<Story name="Playground" args={{}} />

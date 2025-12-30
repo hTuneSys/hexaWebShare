@@ -58,38 +58,28 @@ SPDX-License-Identifier: MIT
 </Story>
 
 <!-- Variant Stories -->
-<Story name="Primary" args={{ variant: 'primary' }} />
-
-<Story name="Secondary" args={{ variant: 'secondary' }} />
-
-<Story name="Accent" args={{ variant: 'accent' }} />
-
-<Story name="Neutral" args={{ variant: 'neutral' }} />
-
-<Story name="Info" args={{ variant: 'info' }} />
-
-<Story name="Success" args={{ variant: 'success' }} />
-
-<Story name="Warning" args={{ variant: 'warning' }} />
-
-<Story name="Error" args={{ variant: 'error' }} />
+<Story name="Color Variants" args={{ variant: 'primary' }} />
 
 <!-- Thickness Stories -->
-<Story name="Thickness 1px" args={{ thickness: '1' }} />
-
-<Story name="Thickness 2px" args={{ thickness: '2' }} />
-
-<Story name="Thickness 4px" args={{ thickness: '4' }} />
+<Story name="Thickness Comparison">
+	<div class="flex w-full flex-col gap-6">
+		<div>
+			<p class="mb-2 text-sm font-semibold">1px (Default)</p>
+			<Separator thickness="1" />
+		</div>
+		<div>
+			<p class="mb-2 text-sm font-semibold">2px</p>
+			<Separator thickness="2" />
+		</div>
+		<div>
+			<p class="mb-2 text-sm font-semibold">4px</p>
+			<Separator thickness="4" />
+		</div>
+	</div>
+</Story>
 
 <!-- Spacing Stories -->
-<Story name="Spacing None" args={{ spacing: 'none' }} />
-
-<Story name="Spacing Small" args={{ spacing: 'sm' }} />
-
-<Story name="Spacing Large" args={{ spacing: 'lg' }} />
-
-<!-- Accessibility -->
-<Story name="With Aria Label" args={{ ariaLabel: 'Content separator', ariaHidden: false }} />
+<Story name="Spacing Variants" args={{ spacing: 'sm' }} />
 
 <!-- Usage Examples -->
 <Story name="Content Separation">
@@ -121,50 +111,26 @@ SPDX-License-Identifier: MIT
 </Story>
 
 <!-- All Variants Showcase -->
-<Story name="All Variants">
+<Story name="All Color Variants">
 	<div class="flex w-full flex-col gap-4">
 		<Separator variant="default" />
 		<Separator variant="primary" />
 		<Separator variant="secondary" />
 		<Separator variant="accent" />
-		<Separator variant="neutral" />
 		<Separator variant="info" />
 		<Separator variant="success" />
-		<Separator variant="warning" />
-		<Separator variant="error" />
 	</div>
 </Story>
 
-<Story name="Thickness Comparison">
-	<div class="flex w-full flex-col gap-6">
-		<div>
-			<p class="mb-2 text-sm font-semibold">1px (Default)</p>
-			<Separator thickness="1" />
-		</div>
-		<div>
-			<p class="mb-2 text-sm font-semibold">2px</p>
-			<Separator thickness="2" />
-		</div>
-		<div>
-			<p class="mb-2 text-sm font-semibold">4px</p>
-			<Separator thickness="4" />
-		</div>
-	</div>
-</Story>
-
-<Story name="Vertical Thickness Comparison">
-	<div class="flex h-32 items-center gap-6">
-		<div class="flex h-full flex-col items-center gap-2">
-			<p class="text-xs font-semibold">1px</p>
-			<Separator orientation="vertical" thickness="1" spacing="sm" class="flex-1" />
-		</div>
-		<div class="flex h-full flex-col items-center gap-2">
-			<p class="text-xs font-semibold">2px</p>
-			<Separator orientation="vertical" thickness="2" spacing="sm" class="flex-1" />
-		</div>
-		<div class="flex h-full flex-col items-center gap-2">
-			<p class="text-xs font-semibold">4px</p>
-			<Separator orientation="vertical" thickness="4" spacing="sm" class="flex-1" />
-		</div>
-	</div>
-</Story>
+<!-- Playground -->
+<Story
+	name="Playground"
+	args={{
+		orientation: 'horizontal',
+		variant: 'default',
+		spacing: 'md',
+		thickness: '1',
+		ariaLabel: 'Content separator',
+		ariaHidden: true
+	}}
+/>

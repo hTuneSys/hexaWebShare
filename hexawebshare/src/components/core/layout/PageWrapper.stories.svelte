@@ -115,24 +115,6 @@ SPDX-License-Identifier: MIT
 	</PageWrapper>
 </Story>
 
-<!-- With Footer -->
-<Story name="With Footer">
-	<PageWrapper>
-		{#snippet children()}
-			<div class="space-y-4">
-				<h1 class="text-3xl font-bold">Page Title</h1>
-				<p>This page has a footer section.</p>
-			</div>
-		{/snippet}
-
-		{#snippet footer()}
-			<div class="text-base-content/60 text-center text-sm">
-				<p>© 2025 hexaTune LLC. All rights reserved.</p>
-			</div>
-		{/snippet}
-	</PageWrapper>
-</Story>
-
 <!-- Complete Page -->
 <Story name="Complete Page">
 	<PageWrapper>
@@ -173,7 +155,7 @@ SPDX-License-Identifier: MIT
 </Story>
 
 <!-- Variants -->
-<Story name="Bordered Variant">
+<Story name="Variants">
 	<PageWrapper variant="bordered">
 		{#snippet children()}
 			<div class="space-y-4">
@@ -184,29 +166,7 @@ SPDX-License-Identifier: MIT
 	</PageWrapper>
 </Story>
 
-<Story name="Filled Variant">
-	<PageWrapper variant="filled">
-		{#snippet children()}
-			<div class="space-y-4">
-				<h1 class="text-3xl font-bold">Filled Variant</h1>
-				<p>This page wrapper has a filled background.</p>
-			</div>
-		{/snippet}
-	</PageWrapper>
-</Story>
-
-<Story name="Ghost Variant">
-	<PageWrapper variant="ghost">
-		{#snippet children()}
-			<div class="space-y-4">
-				<h1 class="text-3xl font-bold">Ghost Variant</h1>
-				<p>This page wrapper has a transparent background.</p>
-			</div>
-		{/snippet}
-	</PageWrapper>
-</Story>
-
-<!-- Max Width Variants -->
+<!-- Max Width Constrained -->
 <Story name="Constrained Width">
 	<PageWrapper maxWidth="lg" centered={true}>
 		{#snippet children()}
@@ -230,6 +190,7 @@ SPDX-License-Identifier: MIT
 	</PageWrapper>
 </Story>
 
+<!-- Large Padding -->
 <Story name="Large Padding">
 	<PageWrapper padding="xl">
 		{#snippet children()}
@@ -253,17 +214,7 @@ SPDX-License-Identifier: MIT
 	</PageWrapper>
 </Story>
 
-<Story name="Disabled State">
-	<PageWrapper disabled={true}>
-		{#snippet children()}
-			<div class="space-y-4">
-				<h1 class="text-3xl font-bold">Disabled</h1>
-				<p>This page wrapper is disabled.</p>
-			</div>
-		{/snippet}
-	</PageWrapper>
-</Story>
-
+<!-- No Background -->
 <Story name="No Background">
 	<div class="bg-base-300 p-4">
 		<PageWrapper background={false}>
@@ -277,13 +228,19 @@ SPDX-License-Identifier: MIT
 	</div>
 </Story>
 
-<Story name="Auto Height">
-	<PageWrapper minHeight="auto">
-		{#snippet children()}
-			<div class="space-y-4">
-				<h1 class="text-3xl font-bold">Auto Height</h1>
-				<p>This page wrapper has auto minimum height instead of full screen.</p>
-			</div>
-		{/snippet}
-	</PageWrapper>
-</Story>
+<!-- Playground -->
+<Story
+	name="Playground"
+	args={{
+		variant: 'default',
+		maxWidth: 'full',
+		padding: 'md',
+		centered: false,
+		loading: false,
+		disabled: false,
+		background: true,
+		minHeight: 'screen',
+		showHeader: true,
+		showFooter: true
+	}}
+/>

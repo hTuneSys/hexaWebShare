@@ -212,7 +212,6 @@ animate-pulse bg-base-300 rounded text-transparent select-none
 	aria-label={ariaLabel}
 	aria-hidden={isDecorative || undefined}
 	aria-busy={loading || undefined}
-	style={loading ? 'color: transparent !important;' : ''}
 	{...props}
 >
 	{#if children}

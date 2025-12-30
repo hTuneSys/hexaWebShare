@@ -66,7 +66,7 @@ SPDX-License-Identifier: MIT
 	];
 </script>
 
-<!-- Default Story -->
+<!-- Main Variant Stories (5-10 required) -->
 <Story
 	name="Default"
 	args={{
@@ -77,7 +77,6 @@ SPDX-License-Identifier: MIT
 	}}
 />
 
-<!-- Orientation Stories -->
 <Story
 	name="Horizontal"
 	args={{
@@ -98,9 +97,8 @@ SPDX-License-Identifier: MIT
 	}}
 />
 
-<!-- Variant Stories -->
 <Story
-	name="Primary"
+	name="Primary Variant"
 	args={{
 		steps: sampleSteps,
 		currentStep: 2,
@@ -109,25 +107,7 @@ SPDX-License-Identifier: MIT
 />
 
 <Story
-	name="Secondary"
-	args={{
-		steps: sampleSteps,
-		currentStep: 2,
-		variant: 'secondary'
-	}}
-/>
-
-<Story
-	name="Accent"
-	args={{
-		steps: sampleSteps,
-		currentStep: 2,
-		variant: 'accent'
-	}}
-/>
-
-<Story
-	name="Success"
+	name="Success Variant"
 	args={{
 		steps: sampleSteps,
 		currentStep: 2,
@@ -136,56 +116,39 @@ SPDX-License-Identifier: MIT
 />
 
 <Story
-	name="Info"
+	name="With Icons"
 	args={{
-		steps: sampleSteps,
-		currentStep: 2,
-		variant: 'info'
-	}}
-/>
-
-<Story
-	name="Warning"
-	args={{
-		steps: sampleSteps,
-		currentStep: 2,
-		variant: 'warning'
-	}}
-/>
-
-<Story
-	name="Error"
-	args={{
-		steps: sampleSteps,
-		currentStep: 2,
-		variant: 'error'
-	}}
-/>
-
-<!-- State Stories -->
-<Story
-	name="First Step"
-	args={{
-		steps: sampleSteps,
-		currentStep: 0,
-		variant: 'primary'
-	}}
-/>
-
-<Story
-	name="Middle Step"
-	args={{
-		steps: sampleSteps,
+		steps: stepsWithIcons,
 		currentStep: 2,
 		variant: 'primary'
 	}}
 />
 
 <Story
-	name="Last Step"
+	name="Many Steps"
+	args={{
+		steps: longSteps,
+		currentStep: 2,
+		variant: 'primary'
+	}}
+/>
+
+<Story
+	name="Clickable"
 	args={{
 		steps: sampleSteps,
-		currentStep: 3,
+		currentStep: 1,
+		clickable: true,
+		variant: 'primary'
+	}}
+/>
+
+<Story
+	name="Disabled State"
+	args={{
+		steps: sampleSteps,
+		currentStep: 1,
+		disabled: true,
 		variant: 'primary'
 	}}
 />
@@ -199,94 +162,5 @@ SPDX-License-Identifier: MIT
 	}}
 />
 
-<!-- Interactive Stories -->
-<Story
-	name="Clickable"
-	args={{
-		steps: sampleSteps,
-		currentStep: 1,
-		clickable: true,
-		variant: 'primary'
-	}}
-/>
-
-<Story
-	name="Disabled"
-	args={{
-		steps: sampleSteps,
-		currentStep: 1,
-		disabled: true,
-		variant: 'primary'
-	}}
-/>
-
-<Story
-	name="With Disabled Step"
-	args={{
-		steps: [
-			{ id: 1, label: 'Step 1', description: 'Enabled' },
-			{ id: 2, label: 'Step 2', description: 'enabled' },
-			{ id: 3, label: 'Step 3', description: 'Enabled' },
-			{ id: 4, label: 'Step 4', description: 'Enabled' }
-		],
-		currentStep: 0,
-		variant: 'primary'
-	}}
-/>
-
-<!-- With Icons -->
-<Story
-	name="With Icons"
-	args={{
-		steps: stepsWithIcons,
-		currentStep: 2,
-		variant: 'primary'
-	}}
-/>
-
-<!-- Long Steps -->
-<Story
-	name="Many Steps"
-	args={{
-		steps: longSteps,
-		currentStep: 2,
-		variant: 'primary'
-	}}
-/>
-
-<!-- Minimal Steps -->
-<Story
-	name="Minimal Steps"
-	args={{
-		steps: [
-			{ id: 1, label: 'Start' },
-			{ id: 2, label: 'Middle' },
-			{ id: 3, label: 'End' }
-		],
-		currentStep: 1,
-		variant: 'primary'
-	}}
-/>
-
-<!-- Vertical with Many Steps -->
-<Story
-	name="Vertical Many Steps"
-	args={{
-		steps: longSteps,
-		currentStep: 2,
-		orientation: 'vertical',
-		variant: 'primary'
-	}}
-/>
-
-<!-- Clickable Vertical -->
-<Story
-	name="Clickable Vertical"
-	args={{
-		steps: sampleSteps,
-		currentStep: 1,
-		orientation: 'vertical',
-		clickable: true,
-		variant: 'primary'
-	}}
-/>
+<!-- Interactive Playground (REQUIRED - must be last) -->
+<Story name="Playground" args={{}} />

@@ -6,6 +6,7 @@ SPDX-License-Identifier: MIT
 <script module>
 	import { defineMeta } from '@storybook/addon-svelte-csf';
 	import Alert from './Alert.svelte';
+	import { fn } from 'storybook/test';
 
 	const { Story } = defineMeta({
 		title: 'Core/Feedback/Alert',
@@ -51,7 +52,9 @@ SPDX-License-Identifier: MIT
 			withIcon: true,
 			loading: false,
 			disabled: false,
-			fullWidth: true
+			fullWidth: true,
+			onclose: fn(),
+			onaction: fn()
 		}
 	});
 </script>
@@ -88,8 +91,6 @@ SPDX-License-Identifier: MIT
 
 <Story name="Without Icon" args={{ withIcon: false }} />
 
-<Story name="Non Closable" args={{ closable: false }} />
-
 <Story name="With Action" args={{ actionLabel: 'Retry' }} />
 
 <Story name="Loading State" args={{ loading: true, actionLabel: 'Details' }} />
@@ -104,17 +105,25 @@ SPDX-License-Identifier: MIT
 	}}
 />
 
-<Story
-	name="Compact Width"
-	args={{ fullWidth: false, title: 'Compact', description: 'Fits content width.' }}
-/>
-
 <Story name="Small Size" args={{ size: 'sm', title: 'Small alert' }} />
 
 <Story name="Large Size" args={{ size: 'lg', title: 'Large alert' }} />
 
-<Story name="Custom Content">
-	<Alert title="Backup running" description="We are syncing your files.">
-		<div class="text-xs opacity-70">This may take a few minutes. Keep this tab open.</div>
-	</Alert>
-</Story>
+<!-- Playground -->
+<Story
+	name="Playground"
+	args={{
+		title: 'System notice',
+		description: 'A concise alert message with helpful context.',
+		variant: 'info',
+		size: 'md',
+		open: true,
+		closable: true,
+		withIcon: true,
+		loading: false,
+		disabled: false,
+		fullWidth: true,
+		onclose: fn(),
+		onaction: fn()
+	}}
+/>

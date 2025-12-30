@@ -89,7 +89,7 @@ SPDX-License-Identifier: MIT
 
 <!-- Size Stories -->
 <Story
-	name="Small"
+	name="Small Size"
 	args={{
 		title: 'No results',
 		description: 'Try adjusting your search criteria.',
@@ -98,16 +98,7 @@ SPDX-License-Identifier: MIT
 />
 
 <Story
-	name="Medium"
-	args={{
-		title: 'No items found',
-		description: 'There are no items to display at the moment.',
-		size: 'md'
-	}}
-/>
-
-<Story
-	name="Large"
+	name="Large Size"
 	args={{
 		title: 'Welcome to your dashboard',
 		description:
@@ -118,52 +109,7 @@ SPDX-License-Identifier: MIT
 
 <!-- Variant Stories -->
 <Story
-	name="Primary"
-	args={{
-		title: 'Get started',
-		description: 'Create your first project to begin.',
-		variant: 'primary'
-	}}
-/>
-
-<Story
-	name="Secondary"
-	args={{
-		title: 'No notifications',
-		description: "You're all caught up!",
-		variant: 'secondary'
-	}}
-/>
-
-<Story
-	name="Accent"
-	args={{
-		title: 'Discover something new',
-		description: 'Browse our collection to find what you need.',
-		variant: 'accent'
-	}}
-/>
-
-<Story
-	name="Neutral"
-	args={{
-		title: 'Nothing here yet',
-		description: 'This section is empty.',
-		variant: 'neutral'
-	}}
-/>
-
-<Story
-	name="Info"
-	args={{
-		title: 'No data available',
-		description: 'Data will appear here once available.',
-		variant: 'info'
-	}}
-/>
-
-<Story
-	name="Success"
+	name="Success Variant"
 	args={{
 		title: 'All tasks completed',
 		description: 'Great job! You have completed all your tasks.',
@@ -172,16 +118,7 @@ SPDX-License-Identifier: MIT
 />
 
 <Story
-	name="Warning"
-	args={{
-		title: 'Action required',
-		description: 'Please complete the required steps to continue.',
-		variant: 'warning'
-	}}
-/>
-
-<Story
-	name="Error"
+	name="Error Variant"
 	args={{
 		title: 'Something went wrong',
 		description: 'We encountered an error while loading your data.',
@@ -191,7 +128,7 @@ SPDX-License-Identifier: MIT
 
 <!-- State Stories -->
 <Story
-	name="Loading"
+	name="Loading State"
 	args={{
 		title: 'Loading items',
 		description: 'Please wait while we fetch your data.',
@@ -199,34 +136,7 @@ SPDX-License-Identifier: MIT
 	}}
 />
 
-<Story
-	name="Disabled"
-	args={{
-		title: 'Feature unavailable',
-		description: 'This feature is currently disabled.',
-		disabled: true
-	}}
-/>
-
 <!-- Style Variants -->
-<Story
-	name="Bordered"
-	args={{
-		title: 'No messages',
-		description: 'Your inbox is empty.',
-		bordered: true
-	}}
-/>
-
-<Story
-	name="Filled"
-	args={{
-		title: 'No recent activity',
-		description: 'Activity will appear here.',
-		filled: true
-	}}
-/>
-
 <Story
 	name="Bordered and Filled"
 	args={{
@@ -234,48 +144,6 @@ SPDX-License-Identifier: MIT
 		description: 'Add items to your collection to see them here.',
 		bordered: true,
 		filled: true
-	}}
-/>
-
-<!-- All Sizes Showcase -->
-<Story name="All Sizes">
-	<div class="space-y-8">
-		<EmptyState title="Small Size" description="Compact empty state for tight spaces." size="sm" />
-		<EmptyState title="Medium Size" description="Default size for most use cases." size="md" />
-		<EmptyState
-			title="Large Size"
-			description="Prominent empty state for main content areas."
-			size="lg"
-		/>
-	</div>
-</Story>
-
-<!-- All Variants Showcase -->
-<Story name="All Variants">
-	<div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-		<EmptyState title="Primary" description="Primary variant" variant="primary" bordered={true} />
-		<EmptyState
-			title="Secondary"
-			description="Secondary variant"
-			variant="secondary"
-			bordered={true}
-		/>
-		<EmptyState title="Accent" description="Accent variant" variant="accent" bordered={true} />
-		<EmptyState title="Neutral" description="Neutral variant" variant="neutral" bordered={true} />
-		<EmptyState title="Info" description="Info variant" variant="info" bordered={true} />
-		<EmptyState title="Success" description="Success variant" variant="success" bordered={true} />
-		<EmptyState title="Warning" description="Warning variant" variant="warning" bordered={true} />
-		<EmptyState title="Error" description="Error variant" variant="error" bordered={true} />
-	</div>
-</Story>
-
-<!-- Accessibility Stories -->
-<Story
-	name="With Aria Label"
-	args={{
-		title: 'No items',
-		description: 'Empty state description',
-		ariaLabel: 'Empty state: No items available in this section'
 	}}
 />
 

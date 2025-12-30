@@ -44,7 +44,18 @@ SPDX-License-Identifier: MIT
 />
 
 <Story
-	name="Sizes"
+	name="Small Size"
+	args={{
+		src: 'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp',
+		alt: 'Small Avatar',
+		size: 'xs',
+		shape: 'circle',
+		status: null
+	}}
+/>
+
+<Story
+	name="Large Size"
 	args={{
 		src: 'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp',
 		alt: 'Large Avatar',
@@ -55,43 +66,13 @@ SPDX-License-Identifier: MIT
 />
 
 <Story
-	name="Shapes"
+	name="Squircle Shape"
 	args={{
 		src: 'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp',
 		alt: 'Squircle Avatar',
 		size: 'md',
 		shape: 'squircle',
 		status: null
-	}}
-/>
-
-<Story
-	name="Status Indicators"
-	args={{
-		src: 'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp',
-		alt: 'Online Avatar',
-		size: 'md',
-		shape: 'circle',
-		status: 'online'
-	}}
-/>
-
-<Story
-	name="Placeholder"
-	args={{
-		alt: 'Placeholder Avatar',
-		size: 'md',
-		shape: 'circle',
-		placeholder: 'AB'
-	}}
-/>
-
-<Story
-	name="Loading"
-	args={{
-		size: 'md',
-		shape: 'circle',
-		loading: true
 	}}
 />
 
@@ -107,12 +88,13 @@ SPDX-License-Identifier: MIT
 />
 
 <Story
-	name="Triangle Shape"
+	name="Online Status"
 	args={{
 		src: 'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp',
-		alt: 'Triangle Avatar',
+		alt: 'Online Avatar',
 		size: 'md',
-		shape: 'triangle'
+		shape: 'circle',
+		status: 'online'
 	}}
 />
 
@@ -128,44 +110,34 @@ SPDX-License-Identifier: MIT
 />
 
 <Story
-	name="Small Size"
+	name="Placeholder"
 	args={{
-		src: 'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp',
-		alt: 'Small Avatar',
-		size: 'xs',
-		shape: 'circle',
-		status: null
-	}}
-/>
-
-<Story
-	name="Custom Placeholder"
-	args={{
-		alt: 'Custom Placeholder',
-		size: 'lg',
-		shape: 'circle',
-		placeholder: 'JD'
-	}}
-/>
-
-<Story
-	name="Large with Status"
-	args={{
-		src: 'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp',
-		alt: 'Large Online Avatar',
-		size: 'lg',
-		shape: 'circle',
-		status: 'online'
-	}}
-/>
-
-<Story
-	name="Squircle Online"
-	args={{
-		src: 'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp',
-		alt: 'Squircle Online Avatar',
+		alt: 'Placeholder Avatar',
 		size: 'md',
-		shape: 'squircle',
-		status: 'online'
+		shape: 'circle',
+		placeholder: 'AB'
+	}}
+/>
+
+<Story
+	name="Loading State"
+	args={{
+		size: 'md',
+		shape: 'circle',
+		loading: true
+	}}
+/>
+
+<!-- Playground -->
+<Story
+	name="Playground"
+	args={{
+		src: 'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp',
+		alt: 'Interactive Avatar',
+		size: 'md',
+		shape: 'circle',
+		status: null,
+		placeholder: '',
+		loading: false
 	}}
 />

@@ -108,40 +108,9 @@ SPDX-License-Identifier: MIT
 	}}
 />
 
-<!-- Basic Examples -->
-<Story
-	name="Simple"
-	args={{
-		items: simpleItems,
-		separator: '/',
-		size: 'md',
-		variant: 'neutral'
-	}}
-/>
-
-<Story
-	name="Long Path"
-	args={{
-		items: longItems,
-		separator: '/',
-		size: 'md',
-		variant: 'neutral'
-	}}
-/>
-
 <!-- Size Variants -->
 <Story
-	name="Extra Small"
-	args={{
-		items: sampleItems,
-		separator: '/',
-		size: 'xs',
-		variant: 'neutral'
-	}}
-/>
-
-<Story
-	name="Small"
+	name="Small Size"
 	args={{
 		items: sampleItems,
 		separator: '/',
@@ -151,17 +120,7 @@ SPDX-License-Identifier: MIT
 />
 
 <Story
-	name="Medium"
-	args={{
-		items: sampleItems,
-		separator: '/',
-		size: 'md',
-		variant: 'neutral'
-	}}
-/>
-
-<Story
-	name="Large"
+	name="Large Size"
 	args={{
 		items: sampleItems,
 		separator: '/',
@@ -172,82 +131,12 @@ SPDX-License-Identifier: MIT
 
 <!-- Variant Colors -->
 <Story
-	name="Primary"
+	name="Primary Variant"
 	args={{
 		items: sampleItems,
 		separator: '/',
 		size: 'md',
 		variant: 'primary'
-	}}
-/>
-
-<Story
-	name="Secondary"
-	args={{
-		items: sampleItems,
-		separator: '/',
-		size: 'md',
-		variant: 'secondary'
-	}}
-/>
-
-<Story
-	name="Accent"
-	args={{
-		items: sampleItems,
-		separator: '/',
-		size: 'md',
-		variant: 'accent'
-	}}
-/>
-
-<Story
-	name="Neutral"
-	args={{
-		items: sampleItems,
-		separator: '/',
-		size: 'md',
-		variant: 'neutral'
-	}}
-/>
-
-<Story
-	name="Info"
-	args={{
-		items: sampleItems,
-		separator: '/',
-		size: 'md',
-		variant: 'info'
-	}}
-/>
-
-<Story
-	name="Success"
-	args={{
-		items: sampleItems,
-		separator: '/',
-		size: 'md',
-		variant: 'success'
-	}}
-/>
-
-<Story
-	name="Warning"
-	args={{
-		items: sampleItems,
-		separator: '/',
-		size: 'md',
-		variant: 'warning'
-	}}
-/>
-
-<Story
-	name="Error"
-	args={{
-		items: sampleItems,
-		separator: '/',
-		size: 'md',
-		variant: 'error'
 	}}
 />
 
@@ -262,9 +151,9 @@ SPDX-License-Identifier: MIT
 	}}
 />
 
-<!-- Custom Separators -->
+<!-- Custom Separator -->
 <Story
-	name="Custom Separator - Arrow"
+	name="Custom Separator"
 	args={{
 		items: sampleItems,
 		separator: '→',
@@ -273,31 +162,12 @@ SPDX-License-Identifier: MIT
 	}}
 />
 
+<!-- Long Path -->
 <Story
-	name="Custom Separator - Chevron"
+	name="Long Path"
 	args={{
-		items: sampleItems,
-		separator: '›',
-		size: 'md',
-		variant: 'neutral'
-	}}
-/>
-
-<Story
-	name="Custom Separator - Dot"
-	args={{
-		items: sampleItems,
-		separator: '•',
-		size: 'md',
-		variant: 'neutral'
-	}}
-/>
-
-<Story
-	name="Custom Separator - Pipe"
-	args={{
-		items: sampleItems,
-		separator: '|',
+		items: longItems,
+		separator: '/',
 		size: 'md',
 		variant: 'neutral'
 	}}
@@ -305,7 +175,7 @@ SPDX-License-Identifier: MIT
 
 <!-- States -->
 <Story
-	name="Disabled"
+	name="Disabled State"
 	args={{
 		items: sampleItems,
 		separator: '/',
@@ -316,7 +186,7 @@ SPDX-License-Identifier: MIT
 />
 
 <Story
-	name="Loading"
+	name="Loading State"
 	args={{
 		items: sampleItems,
 		separator: '/',
@@ -326,95 +196,5 @@ SPDX-License-Identifier: MIT
 	}}
 />
 
-<Story
-	name="With Disabled Item"
-	args={{
-		items: itemsWithDisabled,
-		separator: '/',
-		size: 'md',
-		variant: 'neutral'
-	}}
-/>
-
-<!-- Interactive Examples -->
-<Story
-	name="With Button Handlers"
-	args={{
-		items: itemsWithButtons,
-		separator: '/',
-		size: 'md',
-		variant: 'primary'
-	}}
-/>
-
-<!-- Edge Cases -->
-<Story
-	name="Single Item"
-	args={{
-		items: [{ id: 1, label: 'Home', current: true }],
-		separator: '/',
-		size: 'md',
-		variant: 'neutral'
-	}}
-/>
-
-<Story
-	name="Two Items"
-	args={{
-		items: [
-			{ id: 1, label: 'Home', href: '/' },
-			{ id: 2, label: 'Current', current: true }
-		],
-		separator: '/',
-		size: 'md',
-		variant: 'neutral'
-	}}
-/>
-
-<Story
-	name="Three Items"
-	args={{
-		items: [
-			{ id: 1, label: 'Home', href: '/' },
-			{ id: 2, label: 'Category', href: '/category' },
-			{ id: 3, label: 'Current', current: true }
-		],
-		separator: '/',
-		size: 'md',
-		variant: 'neutral'
-	}}
-/>
-
-<!-- Accessibility Testing -->
-<Story
-	name="Accessibility - Full Example"
-	args={{
-		items: sampleItems,
-		separator: '/',
-		size: 'md',
-		variant: 'neutral',
-		ariaLabel: 'Breadcrumb navigation for product page'
-	}}
-/>
-
-<Story
-	name="Accessibility - With Icons"
-	args={{
-		items: itemsWithIcons,
-		separator: '/',
-		size: 'md',
-		variant: 'primary',
-		ariaLabel: 'Breadcrumb navigation with icons'
-	}}
-/>
-
-<!-- Responsive Example -->
-<Story
-	name="Responsive - Long Path"
-	args={{
-		items: longItems,
-		separator: '/',
-		size: 'md',
-		variant: 'neutral'
-	}}
-/>
+<!-- Playground -->
+<Story name="Playground" args={{}} />

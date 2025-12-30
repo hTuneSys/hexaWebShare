@@ -247,7 +247,6 @@ SPDX-License-Identifier: MIT
 			'flex-wrap',
 			'items-center',
 			'gap-1',
-			'min-h-[2.5rem]',
 			'px-3',
 			'py-1.5',
 			'border',
@@ -274,10 +273,10 @@ SPDX-License-Identifier: MIT
 			!variant && isOpen && 'ring-primary',
 			error && 'border-error',
 			error && isOpen && 'ring-error',
-			size === 'xs' && 'min-h-[1.75rem] text-xs',
-			size === 'sm' && 'min-h-[2rem] text-sm',
-			size === 'md' && 'min-h-[2.5rem] text-base',
-			size === 'lg' && 'min-h-[3rem] text-lg',
+			size === 'xs' && 'min-h-7 text-xs',
+			size === 'sm' && 'min-h-8 text-sm',
+			size === 'md' && 'min-h-10 text-base',
+			size === 'lg' && 'min-h-12 text-lg',
 			disabled && 'pointer-events-none',
 			className
 		]
@@ -592,7 +591,7 @@ SPDX-License-Identifier: MIT
 				<input
 					bind:this={searchInputRef}
 					type="text"
-					class="min-w-[60px] flex-1 border-none bg-transparent outline-none focus:ring-0"
+					class="min-w-16 flex-1 border-none bg-transparent outline-none focus:ring-0"
 					placeholder={selectedOptions.length === 0 ? placeholder : 'Search...'}
 					bind:value={searchQuery}
 					onclick={(e) => e.stopPropagation()}
@@ -678,7 +677,20 @@ SPDX-License-Identifier: MIT
 						>
 							<input
 								type="checkbox"
-								class="checkbox checkbox-sm {variant ? `checkbox-${variant}` : 'checkbox-primary'}"
+								class={[
+									'checkbox',
+									'checkbox-sm',
+									variant === 'primary' && 'checkbox-primary',
+									variant === 'secondary' && 'checkbox-secondary',
+									variant === 'accent' && 'checkbox-accent',
+									variant === 'success' && 'checkbox-success',
+									variant === 'warning' && 'checkbox-warning',
+									variant === 'info' && 'checkbox-info',
+									variant === 'error' && 'checkbox-error',
+									!variant && 'checkbox-primary'
+								]
+									.filter(Boolean)
+									.join(' ')}
 								checked={isSelected}
 								disabled={isDisabled}
 								tabindex={-1}

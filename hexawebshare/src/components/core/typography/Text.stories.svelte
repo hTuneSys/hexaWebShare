@@ -5,31 +5,46 @@ SPDX-License-Identifier: MIT
 
 <script module>
 	import { defineMeta } from '@storybook/addon-svelte-csf';
-	import MutedText from './MutedText.svelte';
+	import Text from './Text.svelte';
 
 	const { Story } = defineMeta({
-		title: 'Core/Typography/MutedText',
-		component: MutedText,
+		title: 'Core/Typography/Text',
+		component: Text,
 		tags: ['autodocs'],
 		argTypes: {
 			text: {
 				control: 'text',
-				description: 'Text content of the muted text'
+				description: 'Text content'
+			},
+			display: {
+				control: { type: 'select' },
+				options: ['inline', 'inline-block', 'block'],
+				description: 'Display type of the text element'
 			},
 			size: {
 				control: { type: 'select' },
 				options: ['xs', 'sm', 'base', 'lg', 'xl', '2xl'],
-				description: 'Size variant of the muted text'
+				description: 'Size variant of the text'
 			},
 			align: {
 				control: { type: 'select' },
 				options: ['left', 'center', 'right', 'justify'],
-				description: 'Text alignment'
+				description: 'Text alignment (only applies when display is block)'
 			},
 			variant: {
 				control: { type: 'select' },
-				options: ['muted', 'primary', 'secondary', 'accent', 'info', 'success', 'warning', 'error'],
-				description: 'Color variant of the muted text'
+				options: [
+					'default',
+					'muted',
+					'primary',
+					'secondary',
+					'accent',
+					'info',
+					'success',
+					'warning',
+					'error'
+				],
+				description: 'Color variant of the text'
 			},
 			weight: {
 				control: { type: 'select' },
@@ -76,82 +91,81 @@ SPDX-License-Identifier: MIT
 			},
 			ariaHidden: {
 				control: 'boolean',
-				description: 'Hide muted text from screen readers'
+				description: 'Hide text from screen readers'
 			}
 		},
 		args: {
-			text: 'This is muted text with reduced opacity, typically used for secondary or less important content.',
+			text: 'This is sample text with default styling.',
+			display: 'inline',
 			size: 'base',
 			align: 'left',
-			variant: 'muted',
+			variant: 'default',
 			weight: 'normal',
 			leading: 'normal'
 		}
 	});
 
 	const sampleText =
-		'This is a sample muted text paragraph. Muted text is typically used for secondary information, captions, or less prominent content that should be visually de-emphasized.';
+		'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
 
 	const longText =
 		'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.';
 </script>
 
-<!-- Default -->
-<Story name="Default" args={{ text: sampleText }} />
+<!-- Inline Display -->
+<Story name="Inline">
+	<div>
+		This is regular text with <Text text="inline text" /> in the middle of a sentence.
+	</div>
+</Story>
+
+<!-- Block Display -->
+<Story name="Block">
+	<div class="space-y-2">
+		<Text text="Block text element - takes full width" display="block" />
+		<Text text="Another block element" display="block" />
+	</div>
+</Story>
+
+<!-- Small Size -->
+<Story name="Small" args={{ text: sampleText, size: 'sm', display: 'block' }} />
+
+<!-- Large Size -->
+<Story name="Large" args={{ text: sampleText, size: 'lg', display: 'block' }} />
+
+<!-- Primary Variant -->
+<Story
+	name="Primary"
+	args={{ text: 'Primary colored text.', variant: 'primary', display: 'block' }}
+/>
 
 <!-- Muted Variant -->
 <Story
 	name="Muted"
-	args={{
-		text: 'This is muted text with the default muted variant (reduced opacity).',
-		variant: 'muted'
-	}}
+	args={{ text: 'Muted text for secondary content.', variant: 'muted', display: 'block' }}
 />
 
-<!-- Primary Variant -->
-<Story name="Primary" args={{ text: 'Primary colored muted text.', variant: 'primary' }} />
+<!-- Bold Weight -->
+<Story name="Bold Weight" args={{ text: 'Bold weight text.', weight: 'bold', display: 'block' }} />
 
-<!-- Small Size -->
-<Story
-	name="Small Size"
-	args={{ text: 'Small muted text for captions and metadata', size: 'sm' }}
-/>
-
-<!-- Large Size -->
-<Story name="Large Size" args={{ text: 'Larger muted text for emphasis', size: 'lg' }} />
-
-<!-- Medium Weight -->
-<Story
-	name="Medium Weight"
-	args={{ text: 'Medium weight muted text for subtle emphasis.', weight: 'medium' }}
-/>
-
-<!-- Italic Style -->
-<Story name="Italic" args={{ text: 'This muted text is styled with italic.', italic: true }} />
+<!-- Center Aligned -->
+<Story name="Center Aligned" args={{ text: sampleText, align: 'center', display: 'block' }} />
 
 <!-- Line Clamp -->
-<Story name="Line Clamp" args={{ text: longText, lineClamp: 3 }} />
+<Story name="Line Clamp" args={{ text: longText, lineClamp: 2, display: 'block' }} />
 
 <!-- Loading State -->
-<Story name="Loading" args={{ text: sampleText, loading: true }} />
-
-<!-- Disabled State -->
-<Story
-	name="Disabled"
-	args={{
-		text: 'This is muted text in disabled state.',
-		disabled: true
-	}}
-/>
+<Story name="Loading" args={{ text: sampleText, loading: true, display: 'block' }} />
 
 <!-- Playground -->
 <Story
 	name="Playground"
 	args={{
 		text: sampleText,
+		display: 'inline',
 		size: 'base',
 		align: 'left',
-		variant: 'muted',
+		variant: 'default',
 		weight: 'normal',
 		leading: 'normal',
 		truncate: false,
