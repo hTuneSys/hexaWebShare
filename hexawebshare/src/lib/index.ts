@@ -75,6 +75,8 @@ export { default as ContextMenu } from '../components/core/overlay-navigation/Co
 export type { MenuItem as ContextMenuItem } from '../components/core/overlay-navigation/ContextMenu.svelte';
 export { default as Dialog } from '../components/core/overlay-navigation/Dialog.svelte';
 export { default as Drawer } from '../components/core/overlay-navigation/Drawer.svelte';
+export { default as Dropdown } from '../components/core/overlay-navigation/Dropdown.svelte';
+export type { DropdownItem } from '../components/core/overlay-navigation/Dropdown.svelte';
 export { default as Menu } from '../components/core/overlay-navigation/Menu.svelte';
 export type { MenuItem } from '../components/core/overlay-navigation/Menu.svelte';
 export { default as Modal } from '../components/core/overlay-navigation/Modal.svelte';
