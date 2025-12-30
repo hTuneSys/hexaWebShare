@@ -8,6 +8,10 @@ SPDX-License-Identifier: MIT
 
 	interface Props {
 		/**
+		 * Unique ID for the drawer (auto-generated if not provided)
+		 */
+		id?: string;
+		/**
 		 * Whether the drawer is open
 		 */
 		open?: boolean;
@@ -70,6 +74,7 @@ SPDX-License-Identifier: MIT
 	}
 
 	let {
+		id,
 		open = $bindable(false),
 		side = 'left',
 		children,
@@ -87,6 +92,10 @@ SPDX-License-Identifier: MIT
 		onopen,
 		...props
 	}: Props = $props();
+
+	// Generate unique IDs to avoid collisions when multiple drawers are on the same page
+	const drawerId = $derived(id ?? `drawer-${crypto.randomUUID()}`);
+	const toggleId = $derived(`${drawerId}-toggle`);
 
 	// Previous open state for tracking changes
 	let previousOpen = $state(open);
@@ -173,7 +182,7 @@ SPDX-License-Identifier: MIT
 	<!-- Hidden checkbox for DaisyUI drawer state -->
 	<input
 		type="checkbox"
-		id="drawer-toggle"
+		id={toggleId}
 		class="drawer-toggle"
 		checked={open}
 		aria-label={ariaLabel || 'Toggle drawer'}
@@ -191,7 +200,7 @@ SPDX-License-Identifier: MIT
 		<!-- Backdrop overlay -->
 		{#if overlay}
 			<label
-				for="drawer-toggle"
+				for={toggleId}
 				class="drawer-overlay"
 				onclick={handleBackdropClick}
 				aria-label="Close drawer"

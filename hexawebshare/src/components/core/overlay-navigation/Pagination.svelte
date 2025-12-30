@@ -9,6 +9,10 @@ SPDX-License-Identifier: MIT
 	 */
 	interface Props {
 		/**
+		 * Unique ID for the pagination (auto-generated if not provided)
+		 */
+		id?: string;
+		/**
 		 * Current page number (1-indexed)
 		 * @default 1
 		 */
@@ -105,6 +109,7 @@ SPDX-License-Identifier: MIT
 	}
 
 	const {
+		id,
 		currentPage = 1,
 		totalPages: propTotalPages,
 		totalItems,
@@ -125,6 +130,10 @@ SPDX-License-Identifier: MIT
 		class: className = '',
 		...props
 	}: Props = $props();
+
+	// Generate unique IDs to avoid collisions when multiple paginations are on the same page
+	const paginationId = $derived(id ?? `pagination-${crypto.randomUUID()}`);
+	const pageSizeSelectId = $derived(`${paginationId}-pagesize`);
 
 	// Calculate total pages from totalItems if provided
 	let totalPages = $derived(
@@ -384,9 +393,9 @@ SPDX-License-Identifier: MIT
 
 		{#if showPageSize}
 			<div class="flex items-center gap-2">
-				<label for="page-size-select" class="text-base-content/70 text-sm"> Items per page: </label>
+				<label for={pageSizeSelectId} class="text-base-content/70 text-sm"> Items per page: </label>
 				<select
-					id="page-size-select"
+					id={pageSizeSelectId}
 					class="select select-bordered select-sm"
 					disabled={disabled || loading}
 					value={pageSize}

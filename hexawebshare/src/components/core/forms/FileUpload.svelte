@@ -129,7 +129,7 @@ SPDX-License-Identifier: MIT
 	}: Props = $props();
 
 	// Generate unique ID if not provided
-	let fieldId = $derived(id || `file-upload-${Math.random().toString(36).substr(2, 9)}`);
+	let fieldId = $derived(id || `file-upload-${Math.random().toString(36).slice(2, 11)}`);
 
 	// State for selected files
 	let selectedFiles = $state<File[]>([]);

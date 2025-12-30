@@ -41,24 +41,24 @@ SPDX-License-Identifier: MIT
 	});
 
 	const defaultItems: MenuItem[] = [
-		{ label: 'Copy', onClick: () => console.log('Copy clicked') },
-		{ label: 'Paste', onClick: () => console.log('Paste clicked') },
-		{ label: 'Cut', onClick: () => console.log('Cut clicked') }
+		{ label: 'Copy', onClick: fn() },
+		{ label: 'Paste', onClick: fn() },
+		{ label: 'Cut', onClick: fn() }
 	];
 
 	const itemsWithDisabled: MenuItem[] = [
-		{ label: 'Copy', onClick: () => console.log('Copy clicked') },
-		{ label: 'Paste', disabled: true, onClick: () => console.log('Paste clicked') },
-		{ label: 'Cut', onClick: () => console.log('Cut clicked') },
-		{ label: 'Delete', disabled: true, onClick: () => console.log('Delete clicked') }
+		{ label: 'Copy', onClick: fn() },
+		{ label: 'Paste', disabled: true, onClick: fn() },
+		{ label: 'Cut', onClick: fn() },
+		{ label: 'Delete', disabled: true, onClick: fn() }
 	];
 
 	const itemsWithDividers: MenuItem[] = [
-		{ label: 'Copy', onClick: () => console.log('Copy clicked') },
-		{ label: 'Paste', onClick: () => console.log('Paste clicked'), divider: true },
-		{ label: 'Cut', onClick: () => console.log('Cut clicked') },
-		{ label: 'Delete', onClick: () => console.log('Delete clicked'), divider: true },
-		{ label: 'Select All', onClick: () => console.log('Select All clicked') }
+		{ label: 'Copy', onClick: fn() },
+		{ label: 'Paste', onClick: fn(), divider: true },
+		{ label: 'Cut', onClick: fn() },
+		{ label: 'Delete', onClick: fn(), divider: true },
+		{ label: 'Select All', onClick: fn() }
 	];
 
 	const interactiveItems: MenuItem[] = [
@@ -104,7 +104,7 @@ SPDX-License-Identifier: MIT
 		x: 100,
 		y: 100,
 		items: defaultItems,
-		onClose: () => console.log('Menu closed'),
+		onClose: fn(),
 		ariaLabel: 'Context menu'
 	}}
 />

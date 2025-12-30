@@ -81,7 +81,7 @@ SPDX-License-Identifier: MIT
 	}: Props = $props();
 
 	// Generate unique ID if not provided
-	let fieldId = $derived(id || `form-field-${Math.random().toString(36).substr(2, 9)}`);
+	let fieldId = $derived(id || `form-field-${Math.random().toString(36).slice(2, 11)}`);
 	let labelForId = $derived(labelFor || fieldId);
 
 	// Reference to the wrapper div containing the input

@@ -75,16 +75,12 @@ SPDX-License-Identifier: MIT
 		{
 			id: 1,
 			label: 'Home',
-			onclick: () => {
-				console.log('Home clicked');
-			}
+			onclick: fn()
 		},
 		{
 			id: 2,
 			label: 'Products',
-			onclick: () => {
-				console.log('Products clicked');
-			}
+			onclick: fn()
 		},
 		{ id: 3, label: 'Current Page', current: true }
 	];
