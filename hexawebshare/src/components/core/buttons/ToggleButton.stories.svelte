@@ -100,6 +100,9 @@ SPDX-License-Identifier: MIT
 						'A toggle button component that can be pressed/unpressed. Supports multiple variants, sizes, and states. Built with DaisyUI and Svelte 5.'
 				}
 			}
+		},
+		args: {
+			onclick: fn()
 		}
 	});
 </script>

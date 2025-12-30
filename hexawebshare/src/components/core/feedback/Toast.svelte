@@ -4,7 +4,7 @@ SPDX-License-Identifier: MIT
 -->
 
 <script lang="ts">
-	import { createEventDispatcher, onDestroy } from 'svelte';
+	import { onDestroy } from 'svelte';
 
 	type ToastVariant = 'info' | 'success' | 'warning' | 'error' | 'neutral';
 	type ToastPosition =
@@ -64,8 +64,6 @@ SPDX-License-Identifier: MIT
 		/** Additional classes applied to the outer container */
 		class?: string;
 	}
-
-	const dispatch = createEventDispatcher<{ dismiss: void; action: void }>();
 
 	const {
 		message = 'Notification',
@@ -199,14 +197,12 @@ SPDX-License-Identifier: MIT
 		visible = false;
 		clearTimer();
 		onDismiss?.();
-		dispatch('dismiss');
 	}
 
 	function handleAction() {
 		if (disabled) return;
 
 		onAction?.();
-		dispatch('action');
 
 		if (dismissOnAction) {
 			handleDismiss();

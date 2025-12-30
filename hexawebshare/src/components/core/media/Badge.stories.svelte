@@ -65,40 +65,36 @@ SPDX-License-Identifier: MIT
 <Story name="Default" args={{ label: 'Badge', size: 'md', variant: 'neutral' }} />
 
 <!-- Size Stories -->
-<Story name="Extra Small" args={{ label: 'Badge', size: 'xs', variant: 'neutral' }} />
-<Story name="Small" args={{ label: 'Badge', size: 'sm', variant: 'neutral' }} />
-<Story name="Medium" args={{ label: 'Badge', size: 'md', variant: 'neutral' }} />
-<Story name="Large" args={{ label: 'Badge', size: 'lg', variant: 'neutral' }} />
+<Story name="Small Size" args={{ label: 'Badge', size: 'sm', variant: 'neutral' }} />
+<Story name="Large Size" args={{ label: 'Badge', size: 'lg', variant: 'neutral' }} />
 
 <!-- Variant Stories -->
-<Story name="Primary" args={{ label: 'Badge', size: 'md', variant: 'primary' }} />
-<Story name="Secondary" args={{ label: 'Badge', size: 'md', variant: 'secondary' }} />
-<Story name="Accent" args={{ label: 'Badge', size: 'md', variant: 'accent' }} />
-<Story name="Neutral" args={{ label: 'Badge', size: 'md', variant: 'neutral' }} />
-<Story name="Info" args={{ label: 'Badge', size: 'md', variant: 'info' }} />
-<Story name="Success" args={{ label: 'Badge', size: 'md', variant: 'success' }} />
-<Story name="Warning" args={{ label: 'Badge', size: 'md', variant: 'warning' }} />
-<Story name="Error" args={{ label: 'Badge', size: 'md', variant: 'error' }} />
-<Story name="Ghost" args={{ label: 'Badge', size: 'md', variant: 'ghost' }} />
+<Story name="Primary Variant" args={{ label: 'Primary', size: 'md', variant: 'primary' }} />
+<Story name="Success Variant" args={{ label: 'Success', size: 'md', variant: 'success' }} />
+<Story name="Warning Variant" args={{ label: 'Warning', size: 'md', variant: 'warning' }} />
+<Story name="Error Variant" args={{ label: 'Error', size: 'md', variant: 'error' }} />
 
-<!-- Outline Story -->
-<Story name="Outline" args={{ label: 'Badge', size: 'md', variant: 'primary', outline: true }} />
+<!-- Style Stories -->
+<Story
+	name="Outline Style"
+	args={{ label: 'Outline', size: 'md', variant: 'primary', outline: true }}
+/>
 
 <!-- State Stories -->
-<Story name="Disabled" args={{ label: 'Badge', size: 'md', variant: 'primary', disabled: true }} />
-
-<!-- Accessibility Stories -->
 <Story
-	name="With Aria Label"
-	args={{ label: 'Badge', size: 'md', variant: 'primary', ariaLabel: 'Status badge' }}
-/>
-<Story
-	name="Decorative (Aria Hidden)"
-	args={{ label: 'Badge', size: 'md', variant: 'neutral', ariaHidden: true }}
+	name="Disabled State"
+	args={{ label: 'Disabled', size: 'md', variant: 'primary', disabled: true }}
 />
 
 <!-- Interactive Examples -->
 <Story
 	name="Playground"
-	args={{ label: 'Badge', size: 'md', variant: 'primary', ariaLabel: 'Interactive badge' }}
+	args={{
+		label: 'Badge',
+		size: 'md',
+		variant: 'primary',
+		outline: false,
+		disabled: false,
+		ariaLabel: 'Interactive badge'
+	}}
 />

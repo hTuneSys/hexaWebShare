@@ -6,6 +6,7 @@ SPDX-License-Identifier: MIT
 <script module>
 	import { defineMeta } from '@storybook/addon-svelte-csf';
 	import Toast from './Toast.svelte';
+	import { fn } from 'storybook/test';
 
 	const { Story } = defineMeta({
 		title: 'Core/Feedback/Toast',
@@ -61,7 +62,9 @@ SPDX-License-Identifier: MIT
 			showIcon: false,
 			loading: false,
 			disabled: false,
-			ariaLive: 'polite'
+			ariaLive: 'polite',
+			onAction: fn(),
+			onDismiss: fn()
 		}
 	});
 </script>
@@ -84,8 +87,7 @@ SPDX-License-Identifier: MIT
 		title: 'Warning',
 		message: 'Storage is almost full',
 		variant: 'warning',
-		showIcon: true,
-		closable: true
+		showIcon: true
 	}}
 />
 
@@ -101,13 +103,12 @@ SPDX-License-Identifier: MIT
 />
 
 <Story
-	name="AutoDismiss"
+	name="Auto Dismiss"
 	args={{
 		title: 'Synced',
 		message: 'This toast will dismiss after 4 seconds',
 		variant: 'info',
-		duration: 4000,
-		closable: true
+		duration: 4000
 	}}
 />
 
@@ -118,7 +119,6 @@ SPDX-License-Identifier: MIT
 		message: 'Please wait while we process your file',
 		variant: 'neutral',
 		loading: true,
-		showIcon: false,
 		duration: null
 	}}
 />
@@ -130,13 +130,12 @@ SPDX-License-Identifier: MIT
 		message: 'Action buttons are disabled in this state',
 		variant: 'neutral',
 		disabled: true,
-		actionLabel: 'Retry',
-		closable: true
+		actionLabel: 'Retry'
 	}}
 />
 
 <Story
-	name="WithAction"
+	name="With Action"
 	args={{
 		title: 'Undo',
 		message: 'Item archived',
@@ -147,7 +146,7 @@ SPDX-License-Identifier: MIT
 />
 
 <Story
-	name="BottomLeft"
+	name="Bottom Left Position"
 	args={{
 		title: 'New message',
 		message: 'Positioned at the bottom left',
@@ -158,11 +157,31 @@ SPDX-License-Identifier: MIT
 />
 
 <Story
-	name="TopCenter"
+	name="Top Center Position"
 	args={{
 		title: 'Centered',
 		message: 'Appears at the top center of the viewport',
 		variant: 'neutral',
 		position: 'top-center'
+	}}
+/>
+
+<!-- Playground -->
+<Story
+	name="Playground"
+	args={{
+		title: 'Notification',
+		message: 'File uploaded successfully',
+		variant: 'info',
+		position: 'top-right',
+		closable: true,
+		duration: null,
+		pauseOnHover: true,
+		showIcon: false,
+		loading: false,
+		disabled: false,
+		ariaLive: 'polite',
+		onAction: fn(),
+		onDismiss: fn()
 	}}
 />

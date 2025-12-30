@@ -8,6 +8,7 @@ SPDX-License-Identifier: MIT
 	import Popover from './Popover.svelte';
 	import Button from '../buttons/Button.svelte';
 	import Paragraph from '../typography/Paragraph.svelte';
+	import { fn } from 'storybook/test';
 
 	const { Story } = defineMeta({
 		title: 'Core/Overlay Navigation/Popover',
@@ -76,7 +77,8 @@ SPDX-License-Identifier: MIT
 			defaultOpen: false,
 			closeOnOutsideClick: true,
 			closeOnEscape: true,
-			disabled: false
+			disabled: false,
+			onOpenChange: fn()
 		}
 	});
 </script>
@@ -152,94 +154,39 @@ SPDX-License-Identifier: MIT
 	</Popover>
 </Story>
 
-<Story name="Tones">
-	<div class="flex flex-wrap gap-4">
-		<Popover tone="primary">
-			{#snippet trigger()}
-				<Button label="Primary" />
-			{/snippet}
-			{#snippet children()}
-				<p class="text-sm">Primary tone with brand emphasis.</p>
-			{/snippet}
-		</Popover>
-		<Popover tone="info">
-			{#snippet trigger()}
-				<Button label="Info" variant="info" />
-			{/snippet}
-			{#snippet children()}
-				<p class="text-sm">Information tone for guidance.</p>
-			{/snippet}
-		</Popover>
-		<Popover tone="success">
-			{#snippet trigger()}
-				<Button label="Success" variant="success" />
-			{/snippet}
-			{#snippet children()}
-				<p class="text-sm">Success tone for confirmations.</p>
-			{/snippet}
-		</Popover>
-		<Popover tone="warning">
-			{#snippet trigger()}
-				<Button label="Warning" variant="warning" />
-			{/snippet}
-			{#snippet children()}
-				<p class="text-sm">Warning tone for cautions.</p>
-			{/snippet}
-		</Popover>
-		<Popover tone="error">
-			{#snippet trigger()}
-				<Button label="Error" variant="error" />
-			{/snippet}
-			{#snippet children()}
-				<p class="text-sm">Error tone for critical alerts.</p>
-			{/snippet}
-		</Popover>
-	</div>
-</Story>
-
-<Story name="Sizes">
-	<div class="flex flex-wrap gap-4">
-		<Popover size="sm">
-			{#snippet trigger()}
-				<Button label="Small" />
-			{/snippet}
-			{#snippet children()}
-				<p class="text-sm">Compact content for concise notes.</p>
-			{/snippet}
-		</Popover>
-		<Popover size="md">
-			{#snippet trigger()}
-				<Button label="Medium" />
-			{/snippet}
-			{#snippet children()}
-				<p class="text-sm">Default sizing for most use cases.</p>
-			{/snippet}
-		</Popover>
-		<Popover size="lg">
-			{#snippet trigger()}
-				<Button label="Large" />
-			{/snippet}
-			{#snippet children()}
-				<div class="space-y-1">
-					<p class="font-semibold">Large popover</p>
-					<Paragraph size="sm" variant="muted">
-						Great for richer explanations or short forms inside overlays.
-					</Paragraph>
-				</div>
-			{/snippet}
-		</Popover>
-	</div>
-</Story>
-
-<Story name="With Badges">
-	<Popover>
+<Story name="Primary Tone">
+	<Popover tone="primary">
 		{#snippet trigger()}
-			<Button label="Popover with badge" />
+			<Button label="Primary" />
 		{/snippet}
 		{#snippet children()}
-			<div class="flex items-center gap-2">
-				<p class="text-sm">Attach metadata inside popovers.</p>
-				<Badge label="New" variant="success" />
+			<p class="text-sm">Primary tone with brand emphasis.</p>
+		{/snippet}
+	</Popover>
+</Story>
+
+<Story name="Small Size">
+	<Popover size="sm">
+		{#snippet trigger()}
+			<Button label="Small" />
+		{/snippet}
+		{#snippet children()}
+			<p class="text-sm">Compact content for concise notes.</p>
+		{/snippet}
+	</Popover>
+</Story>
+
+<Story name="Large Size">
+	<Popover size="lg">
+		{#snippet trigger()}
+			<Button label="Large" />
+		{/snippet}
+		{#snippet children()}
+			<div class="space-y-1">
+				<p class="font-semibold">Large popover</p>
+				<Paragraph size="sm" variant="muted">
+					Great for richer explanations or short forms inside overlays.
+				</Paragraph>
 			</div>
 		{/snippet}
 	</Popover>
@@ -256,7 +203,7 @@ SPDX-License-Identifier: MIT
 	</Popover>
 </Story>
 
-<Story name="Disabled" args={{ disabled: true }}>
+<Story name="Disabled State" args={{ disabled: true }}>
 	<Popover disabled={true}>
 		{#snippet trigger()}
 			<Button label="Disabled popover" disabled={true} />
@@ -265,30 +212,6 @@ SPDX-License-Identifier: MIT
 			<p class="text-sm">Interactions are disabled.</p>
 		{/snippet}
 	</Popover>
-</Story>
-
-<Story name="Controlled">
-	<div class="flex items-center gap-4">
-		<Button
-			label={controlledOpen ? 'Close popover' : 'Open popover'}
-			onclick={() => (controlledOpen = !controlledOpen)}
-		/>
-		<Popover
-			open={controlledOpen}
-			onOpenChange={(value) => (controlledOpen = value)}
-			closeOnOutsideClick={true}
-		>
-			{#snippet trigger()}
-				<Button label="Controlled trigger" variant="secondary" />
-			{/snippet}
-			{#snippet children()}
-				<div class="space-y-1">
-					<p class="font-semibold">Controlled popover</p>
-					<p class="text-base-content/80 text-sm">State is managed externally.</p>
-				</div>
-			{/snippet}
-		</Popover>
-	</div>
 </Story>
 
 <Story

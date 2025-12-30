@@ -151,3 +151,6 @@ SPDX-License-Identifier: MIT
 		</Row>
 	</div>
 </Story>
+
+<!-- Playground -->
+<Story name="Playground" args={{}} />

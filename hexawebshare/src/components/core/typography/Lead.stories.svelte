@@ -101,7 +101,7 @@ SPDX-License-Identifier: MIT
 	});
 </script>
 
-<!-- Default Story -->
+<!-- Default -->
 <Story
 	name="Default"
 	args={{
@@ -109,7 +109,7 @@ SPDX-License-Identifier: MIT
 	}}
 />
 
-<!-- Variant Examples -->
+<!-- Primary -->
 <Story
 	name="Primary"
 	args={{
@@ -117,6 +117,8 @@ SPDX-License-Identifier: MIT
 		variant: 'primary'
 	}}
 />
+
+<!-- Muted -->
 <Story
 	name="Muted"
 	args={{
@@ -125,30 +127,26 @@ SPDX-License-Identifier: MIT
 	}}
 />
 
-<!-- States -->
+<!-- Large Size -->
 <Story
-	name="Loading"
+	name="Large Size"
 	args={{
-		text: 'This is a loading lead paragraph.',
-		loading: true
-	}}
-/>
-<Story
-	name="Disabled"
-	args={{
-		text: 'This is a disabled lead paragraph.',
-		disabled: true
+		text: 'This is a larger lead paragraph for more prominent introductions.',
+		size: 'xl'
 	}}
 />
 
-<!-- Truncation Examples -->
+<!-- Centered -->
 <Story
-	name="Truncated"
+	name="Centered"
 	args={{
-		text: 'This is a very long lead paragraph that should be truncated with an ellipsis at the end when it exceeds the container width.',
-		truncate: true
+		text: 'This lead paragraph is centered, perfect for hero sections and landing pages.',
+		align: 'center',
+		weight: 'medium'
 	}}
 />
+
+<!-- Line Clamp -->
 <Story
 	name="Line Clamp"
 	args={{
@@ -157,7 +155,25 @@ SPDX-License-Identifier: MIT
 	}}
 />
 
-<!-- Real-world Example -->
+<!-- Loading State -->
+<Story
+	name="Loading"
+	args={{
+		text: 'This is a loading lead paragraph.',
+		loading: true
+	}}
+/>
+
+<!-- Disabled State -->
+<Story
+	name="Disabled"
+	args={{
+		text: 'This is a disabled lead paragraph.',
+		disabled: true
+	}}
+/>
+
+<!-- Hero Section -->
 <Story
 	name="Hero Section"
 	args={{
@@ -170,7 +186,7 @@ SPDX-License-Identifier: MIT
 	}}
 />
 
-<!-- Interactive Playground -->
+<!-- Playground -->
 <Story
 	name="Playground"
 	args={{
@@ -179,6 +195,13 @@ SPDX-License-Identifier: MIT
 		variant: 'default',
 		weight: 'normal',
 		align: 'left',
-		leading: 'relaxed'
+		leading: 'relaxed',
+		truncate: false,
+		lineClamp: undefined,
+		loading: false,
+		disabled: false,
+		italic: false,
+		underline: false,
+		strikethrough: false
 	}}
 />

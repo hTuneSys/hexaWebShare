@@ -92,73 +92,28 @@ SPDX-License-Identifier: MIT
 	});
 </script>
 
-<!-- Default Story -->
+<!-- Main Variant Stories (5-10 required) -->
 <Story name="Default" args={{ label: 'Select Time' }} />
 
-<!-- With Value -->
 <Story name="With Value" args={{ label: 'Appointment Time', value: '14:30' }} />
 
-<!-- Variant Stories -->
-<Story name="Primary" args={{ variant: 'primary', label: 'Primary Time Picker', value: '09:00' }} />
-
 <Story
-	name="Secondary"
-	args={{ variant: 'secondary', label: 'Secondary Time Picker', value: '09:00' }}
+	name="Primary Variant"
+	args={{ variant: 'primary', label: 'Primary Time Picker', value: '09:00' }}
 />
 
-<Story name="Accent" args={{ variant: 'accent', label: 'Accent Time Picker', value: '09:00' }} />
+<Story name="Small Size" args={{ size: 'sm', label: 'Small', value: '09:00' }} />
 
-<Story name="Neutral" args={{ variant: 'neutral', label: 'Neutral Time Picker', value: '09:00' }} />
+<Story name="Large Size" args={{ size: 'lg', label: 'Large', value: '09:00' }} />
 
-<Story name="Info" args={{ variant: 'info', label: 'Info Time Picker', value: '09:00' }} />
-
-<Story name="Success" args={{ variant: 'success', label: 'Success Time Picker', value: '09:00' }} />
-
-<Story name="Warning" args={{ variant: 'warning', label: 'Warning Time Picker', value: '09:00' }} />
-
-<Story name="Error" args={{ variant: 'error', label: 'Error Time Picker', value: '09:00' }} />
-
-<!-- Size Stories -->
-<Story name="Extra Small" args={{ size: 'xs', label: 'Extra Small', value: '09:00' }} />
-
-<Story name="Small" args={{ size: 'sm', label: 'Small', value: '09:00' }} />
-
-<Story name="Medium" args={{ size: 'md', label: 'Medium (Default)', value: '09:00' }} />
-
-<Story name="Large" args={{ size: 'lg', label: 'Large', value: '09:00' }} />
-
-<!-- State Stories -->
-<Story name="Required" args={{ label: 'Required Time *', required: true }} />
-
-<Story name="Disabled" args={{ label: 'Disabled Time Picker', disabled: true, value: '14:30' }} />
+<Story name="Required Field" args={{ label: 'Required Time *', required: true }} />
 
 <Story
-	name="Disabled with Value"
-	args={{ label: 'Disabled with Value', disabled: true, value: '14:30' }}
+	name="Disabled State"
+	args={{ label: 'Disabled Time Picker', disabled: true, value: '14:30' }}
 />
 
 <Story name="With Error" args={{ label: 'Time', error: 'Please select a valid time' }} />
-
-<Story
-	name="With Help Text"
-	args={{ label: 'Meeting Time', helpText: 'Select a time for your meeting' }}
-/>
-
-<Story
-	name="Error with Variant"
-	args={{ variant: 'secondary', label: 'Time', error: 'This field is required' }}
-/>
-
-<!-- Time Range Stories -->
-<Story
-	name="With Min Time"
-	args={{ label: 'Business Hours', min: '09:00', helpText: 'Select a time from 9 AM onwards' }}
-/>
-
-<Story
-	name="With Max Time"
-	args={{ label: 'Before Closing', max: '17:00', helpText: 'Select a time before 5 PM' }}
-/>
 
 <Story
 	name="With Time Range"
@@ -170,9 +125,8 @@ SPDX-License-Identifier: MIT
 	}}
 />
 
-<!-- Step Stories -->
 <Story
-	name="FifteenMinuteSteps"
+	name="Fifteen Minute Steps"
 	args={{
 		label: 'Appointment Time',
 		step: 900,
@@ -181,139 +135,18 @@ SPDX-License-Identifier: MIT
 	}}
 />
 
+<!-- Interactive Playground (REQUIRED - must be last) -->
 <Story
-	name="ThirtyMinuteSteps"
+	name="Playground"
 	args={{
-		label: 'Meeting Time',
-		step: 1800,
-		helpText: 'Time slots available in 30-minute intervals',
-		value: '10:00'
+		label: 'Playground',
+		value: '14:30',
+		variant: 'primary',
+		size: 'md',
+		required: false,
+		disabled: false,
+		helpText: 'Select your preferred time',
+		onchange: fn(),
+		oninput: fn()
 	}}
 />
-
-<Story
-	name="OneHourSteps"
-	args={{
-		label: 'Hourly Schedule',
-		step: 3600,
-		helpText: 'Time slots available in 1-hour intervals',
-		value: '10:00'
-	}}
-/>
-
-<!-- Combined States -->
-<Story
-	name="Required with Error"
-	args={{ label: 'Required Time *', required: true, error: 'This field is required' }}
-/>
-
-<Story
-	name="Required with Help Text"
-	args={{ label: 'Meeting Time *', required: true, helpText: 'Select the time for your meeting' }}
-/>
-
-<Story
-	name="Medium Error Required"
-	args={{
-		variant: 'secondary',
-		size: 'lg',
-		label: 'Time *',
-		required: true,
-		error: 'This field is required'
-	}}
-/>
-
-<!-- Without Label -->
-<Story name="No Label" args={{ ariaLabel: 'Time picker without visible label', value: '14:30' }} />
-
-<!-- All Variants Showcase -->
-<Story name="All Variants">
-	<div class="w-full max-w-xs space-y-4">
-		<TimePicker variant="primary" label="Primary" value="09:00" />
-		<TimePicker variant="secondary" label="Secondary" value="09:00" />
-		<TimePicker variant="accent" label="Accent" value="09:00" />
-		<TimePicker variant="neutral" label="Neutral" value="09:00" />
-		<TimePicker variant="info" label="Info" value="09:00" />
-		<TimePicker variant="success" label="Success" value="09:00" />
-		<TimePicker variant="warning" label="Warning" value="09:00" />
-		<TimePicker variant="error" label="Error" value="09:00" />
-	</div>
-</Story>
-
-<!-- All Sizes Showcase -->
-<Story name="All Sizes">
-	<div class="w-full max-w-xs space-y-4">
-		<TimePicker size="xs" label="Extra Small" value="09:00" />
-		<TimePicker size="sm" label="Small" value="09:00" />
-		<TimePicker size="md" label="Medium" value="09:00" />
-		<TimePicker size="lg" label="Large" value="09:00" />
-	</div>
-</Story>
-
-<!-- Form Example -->
-<Story name="Form Example">
-	<form class="space-y-4" on:submit|preventDefault={() => {}}>
-		<TimePicker label="Start Time *" name="startTime" required={true} min="09:00" value="10:00" />
-		<TimePicker
-			label="End Time *"
-			name="endTime"
-			required={true}
-			min="10:00"
-			helpText="Must be after start time"
-		/>
-		<TimePicker
-			label="Break Time"
-			name="breakTime"
-			min="12:00"
-			max="13:00"
-			helpText="Select a time between 12 PM and 1 PM"
-		/>
-		<TimePicker
-			label="Appointment Time"
-			name="appointmentTime"
-			error="Please select a valid time"
-		/>
-		<button type="submit" class="btn btn-primary"> Submit </button>
-	</form>
-</Story>
-
-<!-- Interactive States -->
-<Story name="Interactive States">
-	<div class="w-full max-w-xs space-y-4">
-		<TimePicker label="Default" />
-		<TimePicker label="With Value" value="14:30" />
-		<TimePicker label="Required" required={true} />
-		<TimePicker label="Disabled" disabled={true} value="14:30" />
-		<TimePicker label="With Error" error="Invalid time selected" />
-		<TimePicker label="With Help Text" helpText="Select your preferred time" />
-	</div>
-</Story>
-
-<!-- Real-world Examples -->
-<Story name="Appointment Booking">
-	<div class="w-full max-w-md space-y-4">
-		<TimePicker
-			label="Preferred Appointment Time *"
-			required={true}
-			min="09:00"
-			max="17:00"
-			step={1800}
-			helpText="Available slots: 9 AM - 5 PM (30-minute intervals)"
-		/>
-	</div>
-</Story>
-
-<Story name="Event Schedule">
-	<div class="w-full max-w-md space-y-4">
-		<TimePicker label="Event Start Time *" required={true} value="18:00" />
-		<TimePicker
-			label="Event End Time *"
-			required={true}
-			min="18:00"
-			helpText="Must be after start time"
-		/>
-	</div>
-</Story>
-
-<!-- Interactive Playground -->
-<Story name="Playground" args={{ label: 'Playground', placeholder: 'Try different props' }} />

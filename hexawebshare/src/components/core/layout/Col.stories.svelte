@@ -88,14 +88,6 @@ SPDX-License-Identifier: MIT
 	}}
 />
 
-<!-- Half Width (span-6) -->
-<Story
-	name="Half Width"
-	args={{
-		span: '6'
-	}}
-/>
-
 <!-- Quarter Width (span-3) -->
 <Story
 	name="Quarter Width"
@@ -140,3 +132,6 @@ SPDX-License-Identifier: MIT
 		start: '4'
 	}}
 />
+
+<!-- Playground -->
+<Story name="Playground" args={{}} />

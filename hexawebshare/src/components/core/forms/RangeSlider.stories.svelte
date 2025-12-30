@@ -98,83 +98,42 @@ SPDX-License-Identifier: MIT
 	});
 </script>
 
-<!-- Default -->
+<!-- Main Variant Stories (5-10 required) -->
 <Story
 	name="Default"
 	args={{ minValue: 20, maxValue: 80, label: 'Price range', showValues: true }}
 />
 
-<!-- Variants -->
 <Story
-	name="Primary"
+	name="Primary Variant"
 	args={{ variant: 'primary', minValue: 25, maxValue: 75, label: 'Primary', showValues: true }}
 />
+
 <Story
-	name="Secondary"
-	args={{ variant: 'secondary', minValue: 30, maxValue: 70, label: 'Secondary', showValues: true }}
-/>
-<Story
-	name="Accent"
-	args={{ variant: 'accent', minValue: 20, maxValue: 80, label: 'Accent', showValues: true }}
-/>
-<Story
-	name="Neutral"
-	args={{ variant: 'neutral', minValue: 15, maxValue: 85, label: 'Neutral', showValues: true }}
-/>
-<Story
-	name="Info"
-	args={{ variant: 'info', minValue: 25, maxValue: 75, label: 'Info', showValues: true }}
-/>
-<Story
-	name="Success"
-	args={{ variant: 'success', minValue: 30, maxValue: 70, label: 'Success', showValues: true }}
-/>
-<Story
-	name="Warning"
-	args={{ variant: 'warning', minValue: 20, maxValue: 80, label: 'Warning', showValues: true }}
-/>
-<Story
-	name="Error"
-	args={{ variant: 'error', minValue: 25, maxValue: 75, label: 'Error', showValues: true }}
+	name="Small Size"
+	args={{ size: 'sm', minValue: 25, maxValue: 75, label: 'Small', showValues: true }}
 />
 
-<!-- Sizes -->
 <Story
-	name="Extra Small"
-	args={{ size: 'xs', minValue: 20, maxValue: 80, label: 'XS', showValues: true }}
-/>
-<Story
-	name="Small"
-	args={{ size: 'sm', minValue: 25, maxValue: 75, label: 'SM', showValues: true }}
-/>
-<Story
-	name="Medium"
-	args={{ size: 'md', minValue: 30, maxValue: 70, label: 'MD', showValues: true }}
-/>
-<Story
-	name="Large"
-	args={{ size: 'lg', minValue: 20, maxValue: 80, label: 'LG', showValues: true }}
+	name="Large Size"
+	args={{ size: 'lg', minValue: 20, maxValue: 80, label: 'Large', showValues: true }}
 />
 
-<!-- States -->
 <Story
-	name="Disabled"
+	name="Disabled State"
 	args={{ disabled: true, minValue: 30, maxValue: 70, label: 'Disabled', showValues: true }}
 />
+
 <Story
-	name="Loading"
+	name="Loading State"
 	args={{ loading: true, minValue: 25, maxValue: 75, label: 'Loading state', showValues: true }}
 />
+
 <Story
 	name="Error State"
 	args={{ error: 'Invalid range selected', minValue: 20, maxValue: 80, showValues: true }}
 />
-<Story
-	name="Required"
-	args={{ required: true, minValue: 30, maxValue: 70, label: 'Required range', showValues: true }}
-/>
 
-<!-- Range variations -->
 <Story
 	name="Custom Range"
 	args={{
@@ -187,20 +146,7 @@ SPDX-License-Identifier: MIT
 		label: 'Custom range'
 	}}
 />
-<Story
-	name="Fine Steps"
-	args={{
-		min: 0,
-		max: 10,
-		step: 0.5,
-		minValue: 2.5,
-		maxValue: 7.5,
-		showValues: true,
-		label: 'Fine tuning'
-	}}
-/>
 
-<!-- Marks -->
 <Story
 	name="With Marks"
 	args={{
@@ -212,65 +158,26 @@ SPDX-License-Identifier: MIT
 	}}
 />
 
-<!-- Interaction -->
+<!-- Interactive Playground (REQUIRED - must be last) -->
 <Story
-	name="Interactive"
+	name="Playground"
 	args={{
 		minValue: 20,
 		maxValue: 80,
-		label: 'Interactive range slider',
-		showValues: true,
-		marks: marksExample
-	}}
-/>
-
-<!-- Real-world examples -->
-<Story
-	name="Price Range"
-	args={{
 		min: 0,
-		max: 1000,
-		step: 10,
-		minValue: 100,
-		maxValue: 500,
-		label: 'Price range ($)',
-		showValues: true,
-		helpText: 'Select your budget range'
-	}}
-/>
-
-<Story
-	name="Date Range"
-	args={{
-		min: 0,
-		max: 365,
+		max: 100,
 		step: 1,
-		minValue: 30,
-		maxValue: 180,
-		label: 'Days range',
+		size: 'md',
+		variant: 'primary',
+		label: 'Price range',
+		helpText: 'Select your preferred price range.',
+		error: '',
+		required: false,
 		showValues: true,
-		helpText: 'Select number of days'
-	}}
-/>
-
-<Story
-	name="With Help Text"
-	args={{
-		minValue: 25,
-		maxValue: 75,
-		label: 'Volume range',
-		helpText: 'Adjust the minimum and maximum volume levels',
-		showValues: true
-	}}
-/>
-
-<Story
-	name="With Error"
-	args={{
-		minValue: 10,
-		maxValue: 90,
-		label: 'Range selection',
-		error: 'Selected range is too wide',
-		showValues: true
+		loading: false,
+		disabled: false,
+		marks: [],
+		markCount: 5,
+		ariaLabel: 'Range slider'
 	}}
 />

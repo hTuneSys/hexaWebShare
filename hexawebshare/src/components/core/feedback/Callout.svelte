@@ -4,7 +4,6 @@ SPDX-License-Identifier: MIT
 -->
 
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
 	import type { Snippet } from 'svelte';
 	import Spinner from './Spinner.svelte';
 
@@ -83,6 +82,14 @@ SPDX-License-Identifier: MIT
 		 */
 		role?: 'status' | 'alert' | 'note';
 		/**
+		 * Callback when callout is closed
+		 */
+		onclose?: () => void;
+		/**
+		 * Callback when action button is clicked
+		 */
+		onaction?: () => void;
+		/**
 		 * Additional CSS classes
 		 */
 		class?: string;
@@ -103,11 +110,11 @@ SPDX-License-Identifier: MIT
 		fullWidth = true,
 		ariaLive,
 		role,
+		onclose,
+		onaction,
 		class: className = '',
 		...props
 	}: Props = $props();
-
-	const dispatch = createEventDispatcher<{ close: void; action: void }>();
 
 	const defaultSlot = $derived(typeof children === 'function' ? children : children?.default);
 
@@ -164,11 +171,11 @@ SPDX-License-Identifier: MIT
 	);
 
 	const handleClose = () => {
-		dispatch('close');
+		onclose?.();
 	};
 
 	const handleAction = () => {
-		dispatch('action');
+		onaction?.();
 	};
 </script>
 

@@ -24,6 +24,7 @@ SPDX-License-Identifier: MIT
 		glass?: boolean;
 		disabled?: boolean;
 		loading?: boolean;
+		ariaLabel?: string;
 		onclick?: () => void;
 	}
 
@@ -37,6 +38,7 @@ SPDX-License-Identifier: MIT
 		glass = false,
 		disabled = false,
 		loading = false,
+		ariaLabel,
 		...props
 	}: Props = $props();
 
@@ -67,7 +69,7 @@ SPDX-License-Identifier: MIT
 	);
 </script>
 
-<button type="button" class={buttonClasses} {disabled} {...props}>
+<button type="button" class={buttonClasses} {disabled} aria-label={ariaLabel} {...props}>
 	{#if loading}
 		<span class="loading loading-spinner"></span>
 	{/if}

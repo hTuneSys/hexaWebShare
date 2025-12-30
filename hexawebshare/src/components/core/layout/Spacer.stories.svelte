@@ -44,20 +44,32 @@ SPDX-License-Identifier: MIT
 <Story name="Default" args={{ size: 'md', axis: 'vertical', showOutline: true }} />
 
 <!-- Size Variants -->
-<Story name="Size XS" args={{ size: 'xs', axis: 'vertical', showOutline: true }} />
-<Story name="Size SM" args={{ size: 'sm', axis: 'vertical', showOutline: true }} />
-<Story name="Size MD" args={{ size: 'md', axis: 'vertical', showOutline: true }} />
-<Story name="Size LG" args={{ size: 'lg', axis: 'vertical', showOutline: true }} />
-<Story name="Size XL" args={{ size: 'xl', axis: 'vertical', showOutline: true }} />
+<Story name="Size Extra Small" args={{ size: 'xs', axis: 'vertical', showOutline: true }} />
+
+<Story name="Size Small" args={{ size: 'sm', axis: 'vertical', showOutline: true }} />
+
+<Story name="Size Medium" args={{ size: 'md', axis: 'vertical', showOutline: true }} />
+
+<Story name="Size Large" args={{ size: 'lg', axis: 'vertical', showOutline: true }} />
+
+<Story name="Size Extra Large" args={{ size: 'xl', axis: 'vertical', showOutline: true }} />
+
 <Story name="Size 2XL" args={{ size: '2xl', axis: 'vertical', showOutline: true }} />
 
 <!-- Axis Variants -->
-<Story name="Vertical" args={{ size: 'lg', axis: 'vertical', showOutline: true }} />
-<Story name="Horizontal" args={{ size: 'lg', axis: 'horizontal', showOutline: true }} />
-<Story name="Both" args={{ size: 'lg', axis: 'both', showOutline: true }} />
+<Story name="Vertical Axis" args={{ size: 'lg', axis: 'vertical', showOutline: true }} />
 
-<!-- Production Example (no outline) -->
-<Story name="Production Example" args={{ size: 'md', axis: 'vertical', showOutline: false }} />
+<Story name="Horizontal Axis" args={{ size: 'lg', axis: 'horizontal', showOutline: true }} />
+
+<Story name="Both Axes" args={{ size: 'lg', axis: 'both', showOutline: true }} />
 
 <!-- Playground -->
-<Story name="Playground" args={{ size: 'md', axis: 'vertical', showOutline: true }} />
+<Story
+	name="Playground"
+	args={{
+		size: 'md',
+		axis: 'vertical',
+		ariaHidden: true,
+		showOutline: true
+	}}
+/>

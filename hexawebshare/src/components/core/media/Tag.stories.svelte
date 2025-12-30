@@ -6,6 +6,7 @@ SPDX-License-Identifier: MIT
 <script module>
 	import { defineMeta } from '@storybook/addon-svelte-csf';
 	import Tag from './Tag.svelte';
+	import { fn } from 'storybook/test';
 
 	const { Story } = defineMeta({
 		title: 'Core/Media/Tag',
@@ -75,13 +76,31 @@ SPDX-License-Identifier: MIT
 			disabled: false,
 			loading: false,
 			removable: false,
-			clickable: false
+			clickable: false,
+			onclick: fn()
 		}
 	});
 </script>
 
 <!-- Default -->
 <Story name="Default" args={{ label: 'Tag', variant: 'neutral', size: 'md' }} />
+
+<!-- Size Stories -->
+<Story name="Small Size" args={{ label: 'Small Tag', size: 'sm', variant: 'primary' }} />
+<Story name="Large Size" args={{ label: 'Large Tag', size: 'lg', variant: 'primary' }} />
+
+<!-- Variant Stories -->
+<Story name="Primary Variant" args={{ label: 'Primary', variant: 'primary' }} />
+<Story name="Success Variant" args={{ label: 'Success', variant: 'success' }} />
+<Story name="Warning Variant" args={{ label: 'Warning', variant: 'warning' }} />
+<Story name="Error Variant" args={{ label: 'Error', variant: 'error' }} />
+
+<!-- Style Stories -->
+<Story name="Outline Style" args={{ label: 'Outline', variant: 'primary', outline: true }} />
+<Story name="Soft Style" args={{ label: 'Soft', variant: 'primary', soft: true }} />
+
+<!-- Interactive Stories -->
+<Story name="Removable" args={{ label: 'Removable', variant: 'info', removable: true }} />
 
 <!-- Playground -->
 <Story
@@ -99,28 +118,3 @@ SPDX-License-Identifier: MIT
 		clickable: false
 	}}
 />
-
-<!-- Variants -->
-<Story name="Primary" args={{ label: 'Primary', variant: 'primary' }} />
-<Story name="Success" args={{ label: 'Success', variant: 'success' }} />
-<Story name="Warning" args={{ label: 'Warning', variant: 'warning' }} />
-<Story name="Error" args={{ label: 'Error', variant: 'error' }} />
-<Story name="Info" args={{ label: 'Info', variant: 'info' }} />
-
-<!-- Sizes -->
-<Story name="Extra Small" args={{ label: 'XS Tag', size: 'xs', variant: 'primary' }} />
-<Story name="Large" args={{ label: 'Large Tag', size: 'lg', variant: 'primary' }} />
-<Story name="Extra Large" args={{ label: 'XL Tag', size: 'xl', variant: 'primary' }} />
-
-<!-- Styles -->
-<Story name="Outline" args={{ label: 'Outline Tag', variant: 'primary', outline: true }} />
-<Story name="Soft" args={{ label: 'Soft Tag', variant: 'primary', soft: true }} />
-<Story name="Dash" args={{ label: 'Dash Tag', variant: 'primary', dash: true }} />
-
-<!-- States -->
-<Story name="Disabled" args={{ label: 'Disabled', variant: 'primary', disabled: true }} />
-<Story name="Loading" args={{ label: 'Loading', variant: 'info', loading: true }} />
-
-<!-- Interactive -->
-<Story name="Removable" args={{ label: 'Click × to remove', variant: 'info', removable: true }} />
-<Story name="Clickable" args={{ label: 'Clickable', variant: 'success', clickable: true }} />

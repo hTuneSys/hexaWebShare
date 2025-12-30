@@ -37,6 +37,11 @@ SPDX-License-Identifier: MIT
 		wrap?: boolean;
 
 		/**
+		 * ARIA label for accessibility
+		 */
+		ariaLabel?: string;
+
+		/**
 		 * Additional CSS classes
 		 * @default ''
 		 */
@@ -49,6 +54,7 @@ SPDX-License-Identifier: MIT
 		align = 'center',
 		justify = 'start',
 		wrap = false,
+		ariaLabel,
 		class: className = '',
 		...props
 	}: Props = $props();
@@ -108,6 +114,11 @@ SPDX-License-Identifier: MIT
 	let wrapClass = $derived(wrap ? 'flex-wrap' : 'flex-nowrap');
 </script>
 
-<div class="flex {gapClass} {alignClass} {justifyClass} {wrapClass} {className}" {...props}>
+<div
+	class="flex {gapClass} {alignClass} {justifyClass} {wrapClass} {className}"
+	role="group"
+	aria-label={ariaLabel}
+	{...props}
+>
 	{@render children?.()}
 </div>

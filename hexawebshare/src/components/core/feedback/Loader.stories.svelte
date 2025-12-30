@@ -75,8 +75,7 @@ SPDX-License-Identifier: MIT
 		status: 'success',
 		label: 'Completed',
 		description: 'All items processed successfully.',
-		variant: 'success',
-		type: 'ring'
+		variant: 'success'
 	}}
 />
 
@@ -86,8 +85,7 @@ SPDX-License-Identifier: MIT
 		status: 'warning',
 		label: 'Almost there',
 		description: 'We are finalizing the operation.',
-		variant: 'warning',
-		type: 'bars'
+		variant: 'warning'
 	}}
 />
 
@@ -97,18 +95,20 @@ SPDX-License-Identifier: MIT
 		status: 'error',
 		label: 'Failed',
 		description: 'Something went wrong. Please retry.',
-		variant: 'error',
-		type: 'spinner'
+		variant: 'error'
 	}}
 />
 
-<Story name="Dots" args={{ type: 'dots', label: 'Loading dots', variant: 'primary' }} />
-<Story name="Bars" args={{ type: 'bars', label: 'Loading bars', variant: 'secondary' }} />
-<Story name="Ring" args={{ type: 'ring', label: 'Loading ring', variant: 'accent' }} />
-<Story name="Ball" args={{ type: 'ball', label: 'Loading ball', variant: 'info' }} />
+<Story name="Dots Type" args={{ type: 'dots', label: 'Loading dots', variant: 'primary' }} />
+
+<Story name="Ring Type" args={{ type: 'ring', label: 'Loading ring', variant: 'accent' }} />
+
+<Story name="Bars Type" args={{ type: 'bars', label: 'Loading bars', variant: 'secondary' }} />
+
+<Story name="Ball Type" args={{ type: 'ball', label: 'Loading ball', variant: 'info' }} />
 
 <Story
-	name="Large"
+	name="Large With Backdrop"
 	args={{
 		size: 'lg',
 		label: 'Large loader',
@@ -118,32 +118,28 @@ SPDX-License-Identifier: MIT
 />
 
 <Story
-	name="FullWidthBackdrop"
+	name="Full Width Centered"
 	args={{
 		fullWidth: true,
 		showBackdrop: true,
 		label: 'Center aligned',
-		description: 'Centered within its container.',
-		type: 'spinner'
+		description: 'Centered within its container.'
 	}}
 />
 
+<!-- Playground -->
 <Story
-	name="Disabled"
+	name="Playground"
 	args={{
-		disabled: true,
-		label: 'Disabled state',
-		description: 'Interactions disabled, display only.',
-		type: 'dots'
-	}}
-/>
-
-<Story
-	name="WithDescription"
-	args={{
-		label: 'Syncing',
-		description: 'Preparing your workspace and syncing changes.',
+		status: 'loading',
+		label: 'Loading data',
+		description: 'Fetching your content, please wait.',
 		type: 'spinner',
-		variant: 'primary'
+		size: 'md',
+		variant: 'info',
+		fullWidth: false,
+		showBackdrop: false,
+		disabled: false,
+		ariaLive: 'polite'
 	}}
 />

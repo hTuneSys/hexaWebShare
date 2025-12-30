@@ -182,7 +182,7 @@ SPDX-License-Identifier: MIT
 
 <!-- Size Stories -->
 <Story
-	name="Extra Small"
+	name="Extra Small Size"
 	args={{
 		columns: simpleColumns,
 		data: simpleData,
@@ -192,27 +192,7 @@ SPDX-License-Identifier: MIT
 />
 
 <Story
-	name="Small"
-	args={{
-		columns: simpleColumns,
-		data: simpleData,
-		size: 'sm',
-		ariaLabel: 'Small table'
-	}}
-/>
-
-<Story
-	name="Medium"
-	args={{
-		columns: simpleColumns,
-		data: simpleData,
-		size: 'md',
-		ariaLabel: 'Medium table'
-	}}
-/>
-
-<Story
-	name="Large"
+	name="Large Size"
 	args={{
 		columns: simpleColumns,
 		data: simpleData,
@@ -252,19 +232,9 @@ SPDX-License-Identifier: MIT
 	}}
 />
 
-<Story
-	name="No Hover"
-	args={{
-		columns: simpleColumns,
-		data: simpleData,
-		hover: false,
-		ariaLabel: 'Table without hover effect'
-	}}
-/>
-
 <!-- Pinned Headers and Columns -->
 <Story
-	name="Pinned Rows"
+	name="Pinned Header Rows"
 	args={{
 		columns: productColumns,
 		data: productData,
@@ -273,34 +243,14 @@ SPDX-License-Identifier: MIT
 	}}
 />
 
-<Story
-	name="Pinned Columns"
-	args={{
-		columns: productColumns,
-		data: productData,
-		pinCols: true,
-		ariaLabel: 'Table with pinned first column'
-	}}
-/>
-
 <!-- State Stories -->
 <Story
-	name="Loading"
+	name="Loading State"
 	args={{
 		columns: sampleColumns,
 		data: [],
 		loading: true,
 		ariaLabel: 'Loading table'
-	}}
-/>
-
-<Story
-	name="Disabled"
-	args={{
-		columns: sampleColumns,
-		data: sampleData,
-		disabled: true,
-		ariaLabel: 'Disabled table'
 	}}
 />
 
@@ -313,201 +263,6 @@ SPDX-License-Identifier: MIT
 		ariaLabel: 'Empty table'
 	}}
 />
-
-<!-- Interactive Stories -->
-<Story
-	name="Sortable"
-	args={{
-		columns: productColumns,
-		data: productData,
-		sortState: { column: 'product', direction: 'asc' },
-		ariaLabel: 'Sortable table'
-	}}
-/>
-
-<Story
-	name="Selectable Rows"
-	args={{
-		columns: sampleColumns,
-		data: sampleData,
-		selectable: true,
-		selectedRows: [0, 2],
-		ariaLabel: 'Selectable table'
-	}}
-/>
-
-<Story
-	name="Row Click Handler"
-	args={{
-		columns: sampleColumns,
-		data: sampleData,
-		ariaLabel: 'Clickable rows table'
-	}}
-/>
-
-<!-- Accessibility Stories -->
-<Story
-	name="With Caption"
-	args={{
-		columns: sampleColumns,
-		data: sampleData,
-		caption: 'List of registered users in the system',
-		ariaLabel: 'Table with visible caption'
-	}}
-/>
-
-<Story
-	name="With Hidden Caption"
-	args={{
-		columns: sampleColumns,
-		data: sampleData,
-		caption: 'User accounts data for screen readers',
-		captionHidden: true,
-		ariaLabel: 'Table with screen reader only caption'
-	}}
-/>
-
-<!-- Responsive Story -->
-<Story
-	name="Responsive with Hidden Columns"
-	args={{
-		columns: productColumns,
-		data: productData,
-		responsive: true,
-		ariaLabel: 'Responsive table with columns hidden on mobile'
-	}}
-/>
-
-<!-- Showcase Stories -->
-<Story name="All Sizes">
-	<div class="space-y-8">
-		<div>
-			<h3 class="mb-2 text-lg font-semibold">Extra Small</h3>
-			<Table
-				columns={simpleColumns}
-				data={simpleData}
-				size="xs"
-				ariaLabel="Extra small table example"
-			/>
-		</div>
-		<div>
-			<h3 class="mb-2 text-lg font-semibold">Small</h3>
-			<Table columns={simpleColumns} data={simpleData} size="sm" ariaLabel="Small table example" />
-		</div>
-		<div>
-			<h3 class="mb-2 text-lg font-semibold">Medium</h3>
-			<Table columns={simpleColumns} data={simpleData} size="md" ariaLabel="Medium table example" />
-		</div>
-		<div>
-			<h3 class="mb-2 text-lg font-semibold">Large</h3>
-			<Table columns={simpleColumns} data={simpleData} size="lg" ariaLabel="Large table example" />
-		</div>
-	</div>
-</Story>
-
-<Story name="Style Variants Showcase">
-	<div class="space-y-8">
-		<div>
-			<h3 class="mb-2 text-lg font-semibold">Default</h3>
-			<Table columns={simpleColumns} data={simpleData} ariaLabel="Default style table" />
-		</div>
-		<div>
-			<h3 class="mb-2 text-lg font-semibold">Zebra Striped</h3>
-			<Table
-				columns={simpleColumns}
-				data={simpleData}
-				zebra={true}
-				ariaLabel="Zebra striped table"
-			/>
-		</div>
-		<div>
-			<h3 class="mb-2 text-lg font-semibold">Bordered</h3>
-			<Table columns={simpleColumns} data={simpleData} bordered={true} ariaLabel="Bordered table" />
-		</div>
-		<div>
-			<h3 class="mb-2 text-lg font-semibold">Zebra + Bordered</h3>
-			<Table
-				columns={simpleColumns}
-				data={simpleData}
-				zebra={true}
-				bordered={true}
-				ariaLabel="Zebra and bordered table"
-			/>
-		</div>
-	</div>
-</Story>
-
-<Story name="Real-world Example: User Management">
-	<div class="space-y-4">
-		<div class="flex items-center justify-between">
-			<h2 class="text-xl font-bold">User Management</h2>
-			<button class="btn btn-primary btn-sm">Add User</button>
-		</div>
-		<Table
-			columns={sampleColumns}
-			data={sampleData}
-			zebra={true}
-			hover={true}
-			selectable={true}
-			selectedRows={[]}
-			caption="Manage user accounts and permissions"
-			captionHidden={true}
-			ariaLabel="User management table"
-		/>
-	</div>
-</Story>
-
-<Story name="Real-world Example: Product Inventory">
-	<div class="space-y-4">
-		<div class="flex items-center justify-between">
-			<h2 class="text-xl font-bold">Product Inventory</h2>
-			<div class="flex gap-2">
-				<input type="text" placeholder="Search products..." class="input input-sm input-bordered" />
-				<button class="btn btn-primary btn-sm">Export</button>
-			</div>
-		</div>
-		<Table
-			columns={productColumns}
-			data={productData}
-			zebra={true}
-			hover={true}
-			pinRows={true}
-			sortState={{ column: 'stock', direction: 'asc' }}
-			ariaLabel="Product inventory table"
-		/>
-	</div>
-</Story>
-
-<Story name="States Showcase">
-	<div class="space-y-8">
-		<div>
-			<h3 class="mb-2 text-lg font-semibold">Normal State</h3>
-			<Table columns={simpleColumns} data={simpleData} ariaLabel="Normal state table" />
-		</div>
-		<div>
-			<h3 class="mb-2 text-lg font-semibold">Loading State</h3>
-			<Table columns={simpleColumns} data={[]} loading={true} ariaLabel="Loading state table" />
-		</div>
-		<div>
-			<h3 class="mb-2 text-lg font-semibold">Empty State</h3>
-			<Table
-				columns={simpleColumns}
-				data={[]}
-				emptyMessage="No records found. Try adjusting your filters."
-				ariaLabel="Empty state table"
-			/>
-		</div>
-		<div>
-			<h3 class="mb-2 text-lg font-semibold">Disabled State</h3>
-			<Table
-				columns={simpleColumns}
-				data={simpleData}
-				disabled={true}
-				ariaLabel="Disabled state table"
-			/>
-		</div>
-	</div>
-</Story>
 
 <!-- Playground -->
 <Story
