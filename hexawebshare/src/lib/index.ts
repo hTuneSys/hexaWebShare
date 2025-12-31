@@ -95,3 +95,6 @@ export { default as Link } from '../components/core/typography/Link.svelte';
 export { default as MutedText } from '../components/core/typography/MutedText.svelte';
 export { default as Paragraph } from '../components/core/typography/Paragraph.svelte';
 export { default as Text } from '../components/core/typography/Text.svelte';
+
+// Utility / Utility
+export { default as GlobalSearchBar } from '../components/utility/utility/GlobalSearchBar.svelte';
