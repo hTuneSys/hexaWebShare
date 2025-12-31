@@ -4,8 +4,6 @@ SPDX-License-Identifier: MIT
 -->
 
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
-
 	/**
 	 * Marker type used to render tick marks below the slider.
 	 */
@@ -116,15 +114,18 @@ SPDX-License-Identifier: MIT
 		 */
 		name?: string;
 		/**
+		 * Callback when range values change (on release)
+		 */
+		onchange?: (values: { minValue: number; maxValue: number }) => void;
+		/**
+		 * Callback when range values are being changed (during drag)
+		 */
+		oninput?: (values: { minValue: number; maxValue: number }) => void;
+		/**
 		 * Additional CSS classes for the container.
 		 */
 		class?: string;
 	}
-
-	const dispatch = createEventDispatcher<{
-		change: { minValue: number; maxValue: number };
-		input: { minValue: number; maxValue: number };
-	}>();
 
 	let {
 		minValue = $bindable(0),
@@ -146,6 +147,8 @@ SPDX-License-Identifier: MIT
 		ariaLabel = 'Range slider',
 		id,
 		name,
+		onchange,
+		oninput,
 		class: className = '',
 		...props
 	}: Props = $props();
@@ -214,7 +217,7 @@ SPDX-License-Identifier: MIT
 		const newMinValue = Number(target.value);
 		if (newMinValue <= maxValue) {
 			minValue = newMinValue;
-			dispatch('input', { minValue, maxValue });
+			oninput?.({ minValue, maxValue });
 		}
 	}
 
@@ -223,16 +226,16 @@ SPDX-License-Identifier: MIT
 		const newMaxValue = Number(target.value);
 		if (newMaxValue >= minValue) {
 			maxValue = newMaxValue;
-			dispatch('input', { minValue, maxValue });
+			oninput?.({ minValue, maxValue });
 		}
 	}
 
 	function handleMinChange() {
-		dispatch('change', { minValue, maxValue });
+		onchange?.({ minValue, maxValue });
 	}
 
 	function handleMaxChange() {
-		dispatch('change', { minValue, maxValue });
+		onchange?.({ minValue, maxValue });
 	}
 
 	function generateDefaultMarks(

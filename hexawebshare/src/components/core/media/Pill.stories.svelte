@@ -65,40 +65,36 @@ SPDX-License-Identifier: MIT
 <Story name="Default" args={{ label: 'Pill', size: 'md', variant: 'neutral' }} />
 
 <!-- Size Stories -->
-<Story name="Extra Small" args={{ label: 'Pill', size: 'xs', variant: 'neutral' }} />
-<Story name="Small" args={{ label: 'Pill', size: 'sm', variant: 'neutral' }} />
-<Story name="Medium" args={{ label: 'Pill', size: 'md', variant: 'neutral' }} />
-<Story name="Large" args={{ label: 'Pill', size: 'lg', variant: 'neutral' }} />
+<Story name="Small Size" args={{ label: 'Pill', size: 'sm', variant: 'neutral' }} />
+<Story name="Large Size" args={{ label: 'Pill', size: 'lg', variant: 'neutral' }} />
 
 <!-- Variant Stories -->
-<Story name="Primary" args={{ label: 'Pill', size: 'md', variant: 'primary' }} />
-<Story name="Secondary" args={{ label: 'Pill', size: 'md', variant: 'secondary' }} />
-<Story name="Accent" args={{ label: 'Pill', size: 'md', variant: 'accent' }} />
-<Story name="Neutral" args={{ label: 'Pill', size: 'md', variant: 'neutral' }} />
-<Story name="Info" args={{ label: 'Pill', size: 'md', variant: 'info' }} />
-<Story name="Success" args={{ label: 'Pill', size: 'md', variant: 'success' }} />
-<Story name="Warning" args={{ label: 'Pill', size: 'md', variant: 'warning' }} />
-<Story name="Error" args={{ label: 'Pill', size: 'md', variant: 'error' }} />
-<Story name="Ghost" args={{ label: 'Pill', size: 'md', variant: 'ghost' }} />
+<Story name="Primary Variant" args={{ label: 'Primary', size: 'md', variant: 'primary' }} />
+<Story name="Success Variant" args={{ label: 'Success', size: 'md', variant: 'success' }} />
+<Story name="Warning Variant" args={{ label: 'Warning', size: 'md', variant: 'warning' }} />
+<Story name="Error Variant" args={{ label: 'Error', size: 'md', variant: 'error' }} />
 
-<!-- Outline Story -->
-<Story name="Outline" args={{ label: 'Pill', size: 'md', variant: 'primary', outline: true }} />
+<!-- Style Stories -->
+<Story
+	name="Outline Style"
+	args={{ label: 'Outline', size: 'md', variant: 'primary', outline: true }}
+/>
 
 <!-- State Stories -->
-<Story name="Disabled" args={{ label: 'Pill', size: 'md', variant: 'primary', disabled: true }} />
-
-<!-- Accessibility Stories -->
 <Story
-	name="With Aria Label"
-	args={{ label: 'Pill', size: 'md', variant: 'primary', ariaLabel: 'Status pill' }}
-/>
-<Story
-	name="Decorative (Aria Hidden)"
-	args={{ label: 'Pill', size: 'md', variant: 'neutral', ariaHidden: true }}
+	name="Disabled State"
+	args={{ label: 'Disabled', size: 'md', variant: 'primary', disabled: true }}
 />
 
 <!-- Interactive Examples -->
 <Story
 	name="Playground"
-	args={{ label: 'Pill', size: 'md', variant: 'primary', ariaLabel: 'Interactive pill' }}
+	args={{
+		label: 'Pill',
+		size: 'md',
+		variant: 'primary',
+		outline: false,
+		disabled: false,
+		ariaLabel: 'Interactive pill'
+	}}
 />

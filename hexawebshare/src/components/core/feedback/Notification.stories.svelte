@@ -5,6 +5,7 @@ SPDX-License-Identifier: MIT
 <script module>
 	import { defineMeta } from '@storybook/addon-svelte-csf';
 	import Notification from './Notification.svelte';
+	import { fn } from 'storybook/test';
 
 	const { Story } = defineMeta({
 		title: 'Core/Feedback/Notification',
@@ -50,7 +51,9 @@ SPDX-License-Identifier: MIT
 			withIcon: true,
 			loading: false,
 			disabled: false,
-			fullWidth: true
+			fullWidth: true,
+			onclose: fn(),
+			onaction: fn()
 		}
 	});
 </script>
@@ -96,8 +99,21 @@ SPDX-License-Identifier: MIT
 	}}
 />
 
-<Story name="Custom Content">
-	<Notification title="Backup running" message="We are syncing your files.">
-		<div class="text-xs opacity-70">This may take a few minutes. Keep this tab open.</div>
-	</Notification>
-</Story>
+<!-- Playground -->
+<Story
+	name="Playground"
+	args={{
+		variant: 'info',
+		title: 'System update available',
+		message: 'A new version is ready to install. Please review the changes.',
+		open: true,
+		closable: true,
+		actionLabel: 'Review',
+		withIcon: true,
+		loading: false,
+		disabled: false,
+		fullWidth: true,
+		onclose: fn(),
+		onaction: fn()
+	}}
+/>

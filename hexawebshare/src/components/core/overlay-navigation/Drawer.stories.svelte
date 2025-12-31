@@ -848,3 +848,6 @@ SPDX-License-Identifier: MIT
 		</div>
 	{/snippet}
 </Story>
+
+<!-- Playground -->
+<Story name="Playground" args={{}} />

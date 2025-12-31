@@ -35,19 +35,8 @@ SPDX-License-Identifier: MIT
 	});
 </script>
 
-<!-- Default Story with Controls -->
-<Story
-	name="Default"
-	args={{
-		variant: 'default',
-		size: 'md',
-		multiple: false,
-		disabled: false
-	}}
-/>
-
-<!-- Basic Accordion -->
-<Story name="Basic">
+<!-- Default Story -->
+<Story name="Default">
 	<Accordion>
 		<AccordionItem title="Item 1" index={0}>
 			<p>This is the content for item 1. It can contain any HTML or components.</p>
@@ -65,44 +54,6 @@ SPDX-License-Identifier: MIT
 		</AccordionItem>
 	</Accordion>
 </Story>
-
-<!-- Multiple Open -->
-<Story
-	name="Multiple Open"
-	args={{
-		multiple: true,
-		variant: 'default',
-		size: 'md',
-		disabled: false
-	}}
-/>
-
-<!-- Default Open -->
-<Story name="Default Open">
-	<Accordion defaultOpen={0}>
-		<AccordionItem title="Item 1 (Open by default)" index={0}>
-			<p>This item is open by default. You can specify which items should be open initially.</p>
-		</AccordionItem>
-		<AccordionItem title="Item 2" index={1}>
-			<p>This item is closed by default.</p>
-		</AccordionItem>
-		<AccordionItem title="Item 3" index={2}>
-			<p>This item is also closed by default.</p>
-		</AccordionItem>
-	</Accordion>
-</Story>
-
-<!-- Multiple Default Open -->
-<Story
-	name="Multiple Default Open"
-	args={{
-		multiple: true,
-		defaultOpen: [0, 2],
-		variant: 'default',
-		size: 'md',
-		disabled: false
-	}}
-/>
 
 <!-- Variants -->
 <Story name="Bordered Variant">
@@ -156,7 +107,18 @@ SPDX-License-Identifier: MIT
 	</Accordion>
 </Story>
 
-<!-- Disabled -->
+<!-- Multiple Open -->
+<Story
+	name="Multiple Open"
+	args={{
+		multiple: true,
+		variant: 'default',
+		size: 'md',
+		disabled: false
+	}}
+/>
+
+<!-- Disabled State -->
 <Story name="Disabled">
 	<Accordion disabled={true}>
 		<AccordionItem title="Item 1" index={0}>
@@ -168,11 +130,5 @@ SPDX-License-Identifier: MIT
 	</Accordion>
 </Story>
 
-<!-- Standalone Item -->
-<Story name="Standalone Item">
-	<AccordionItem title="Standalone Accordion Item">
-		<p>
-			AccordionItem can be used standalone without the Accordion wrapper. It manages its own state.
-		</p>
-	</AccordionItem>
-</Story>
+<!-- Playground -->
+<Story name="Playground" args={{}} />

@@ -6,6 +6,7 @@ SPDX-License-Identifier: MIT
 <script module>
 	import { defineMeta } from '@storybook/addon-svelte-csf';
 	import Callout from './Callout.svelte';
+	import { fn } from 'storybook/test';
 
 	const { Story } = defineMeta({
 		title: 'Core/Feedback/Callout',
@@ -55,7 +56,9 @@ SPDX-License-Identifier: MIT
 			withIcon: true,
 			loading: false,
 			disabled: false,
-			fullWidth: true
+			fullWidth: true,
+			onclose: fn(),
+			onaction: fn()
 		}
 	});
 </script>
@@ -67,8 +70,7 @@ SPDX-License-Identifier: MIT
 	args={{
 		variant: 'success',
 		title: 'Success',
-		message: 'Your action completed successfully.',
-		loading: false
+		message: 'Your action completed successfully.'
 	}}
 />
 
@@ -77,8 +79,7 @@ SPDX-License-Identifier: MIT
 	args={{
 		variant: 'warning',
 		title: 'Warning',
-		message: 'Please double-check your inputs before proceeding.',
-		loading: false
+		message: 'Please double-check your inputs before proceeding.'
 	}}
 />
 
@@ -87,56 +88,15 @@ SPDX-License-Identifier: MIT
 	args={{
 		variant: 'error',
 		title: 'Error',
-		message: 'Something went wrong. Please try again.',
-		loading: false
+		message: 'Something went wrong. Please try again.'
 	}}
 />
 
-<Story
-	name="Primary"
-	args={{
-		variant: 'primary',
-		title: 'Primary Callout',
-		message: 'This is a primary variant callout.',
-		loading: false
-	}}
-/>
+<Story name="Without Icon" args={{ withIcon: false }} />
 
-<Story
-	name="Secondary"
-	args={{
-		variant: 'secondary',
-		title: 'Secondary Callout',
-		message: 'This is a secondary variant callout.',
-		loading: false
-	}}
-/>
+<Story name="Closable" args={{ closable: true }} />
 
-<Story
-	name="Accent"
-	args={{
-		variant: 'accent',
-		title: 'Accent Callout',
-		message: 'This is an accent variant callout.',
-		loading: false
-	}}
-/>
-
-<Story
-	name="Neutral"
-	args={{
-		variant: 'neutral',
-		title: 'Neutral Callout',
-		message: 'This is a neutral variant callout.',
-		loading: false
-	}}
-/>
-
-<Story name="Without Icon" args={{ withIcon: false, loading: false }} />
-
-<Story name="Closable" args={{ closable: true, loading: false }} />
-
-<Story name="With Action" args={{ actionLabel: 'Learn More', loading: false }} />
+<Story name="With Action" args={{ actionLabel: 'Learn More' }} />
 
 <Story name="Loading State" args={{ loading: true, actionLabel: 'Details' }} />
 
@@ -146,28 +106,9 @@ SPDX-License-Identifier: MIT
 		disabled: true,
 		actionLabel: 'Details',
 		title: 'Disabled callout',
-		message: 'Interactions are disabled.',
-		loading: false
+		message: 'Interactions are disabled.'
 	}}
 />
-
-<Story
-	name="Compact Width"
-	args={{ fullWidth: false, title: 'Compact', message: 'Fits content width.', loading: false }}
-/>
-
-<Story name="Title Only" args={{ title: 'Important Notice', message: '', loading: false }} />
-
-<Story
-	name="Message Only"
-	args={{ title: '', message: 'This callout has no title, only a message.', loading: false }}
-/>
-
-<Story name="Custom Content">
-	<Callout title="Backup in progress" message="We are syncing your files.">
-		<div class="text-xs opacity-70">This may take a few minutes. Keep this tab open.</div>
-	</Callout>
-</Story>
 
 <Story
 	name="With Action and Close"
@@ -175,31 +116,25 @@ SPDX-License-Identifier: MIT
 		closable: true,
 		actionLabel: 'View Details',
 		title: 'System Update',
-		message: 'A new version is available for download.',
-		loading: false
+		message: 'A new version is available for download.'
 	}}
 />
 
+<!-- Playground -->
 <Story
-	name="Error State"
+	name="Playground"
 	args={{
-		variant: 'error',
-		title: 'Connection Failed',
-		message: 'Unable to connect to the server. Please check your internet connection.',
-		actionLabel: 'Retry',
-		closable: true,
-		loading: false
-	}}
-/>
-
-<Story
-	name="Success with Action"
-	args={{
-		variant: 'success',
-		title: 'Changes Saved',
-		message: 'Your changes have been successfully saved.',
-		actionLabel: 'View Changes',
-		closable: true,
-		loading: false
+		variant: 'info',
+		title: 'Information',
+		message:
+			'This is an informational callout. Use it to highlight important information to users.',
+		closable: false,
+		actionLabel: '',
+		withIcon: true,
+		loading: false,
+		disabled: false,
+		fullWidth: true,
+		onclose: fn(),
+		onaction: fn()
 	}}
 />

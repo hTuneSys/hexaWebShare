@@ -4,8 +4,6 @@ SPDX-License-Identifier: MIT
 -->
 
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
-
 	/**
 	 * Marker type used to render tick marks below the slider.
 	 */
@@ -111,15 +109,18 @@ SPDX-License-Identifier: MIT
 		 */
 		name?: string;
 		/**
+		 * Callback when slider value changes (on release)
+		 */
+		onchange?: (value: number) => void;
+		/**
+		 * Callback when slider value is being changed (during drag)
+		 */
+		oninput?: (value: number) => void;
+		/**
 		 * Additional CSS classes for the input.
 		 */
 		class?: string;
 	}
-
-	const dispatch = createEventDispatcher<{
-		change: number;
-		input: number;
-	}>();
 
 	let {
 		value = $bindable(50),
@@ -140,6 +141,8 @@ SPDX-License-Identifier: MIT
 		ariaLabel = 'Slider',
 		id,
 		name,
+		onchange,
+		oninput,
 		class: className = '',
 		...props
 	}: Props = $props();
@@ -191,11 +194,11 @@ SPDX-License-Identifier: MIT
 	function handleInput(event: Event) {
 		const target = event.target as HTMLInputElement;
 		value = Number(target.value);
-		dispatch('input', value);
+		oninput?.(value);
 	}
 
 	function handleChange(event: Event) {
-		dispatch('change', value);
+		onchange?.(value);
 	}
 
 	function generateDefaultMarks(minValue: number, maxValue: number, count: number): SliderMark[] {

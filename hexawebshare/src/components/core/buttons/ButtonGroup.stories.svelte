@@ -5,117 +5,146 @@ SPDX-License-Identifier: MIT
 
 <script module>
 	import { defineMeta } from '@storybook/addon-svelte-csf';
-	import ButtonGroupWrapper from './ButtonGroupWrapper.svelte';
+	import ButtonGroup from './ButtonGroup.svelte';
+	import Button from './Button.svelte';
+	import { fn } from 'storybook/test';
 
 	const { Story } = defineMeta({
-		title: 'Core/ButtonGroup',
-		component: ButtonGroupWrapper,
+		title: 'Core/Buttons/ButtonGroup',
+		component: ButtonGroup,
 		tags: ['autodocs'],
 		argTypes: {
 			orientation: {
 				control: { type: 'select' },
 				options: ['horizontal', 'vertical']
-			}
+			},
+			gap: {
+				control: { type: 'select' },
+				options: ['xs', 'sm', 'md', 'lg']
+			},
+			responsive: { control: 'boolean' },
+			ariaLabel: { control: 'text' }
+		},
+		args: {
+			onclick: fn()
 		}
 	});
 </script>
 
-<!-- Default Horizontal Group -->
+<!-- Essential Variants (5-10 stories required) -->
 <Story
-	name="Horizontal"
+	name="Default Horizontal"
 	args={{
 		orientation: 'horizontal',
-		buttons: [
-			{ label: 'First', variant: 'primary' },
-			{ label: 'Second', variant: 'primary' },
-			{ label: 'Third', variant: 'primary' }
-		]
+		gap: 'sm',
+		ariaLabel: 'Action buttons group',
+		responsive: false
 	}}
-/>
+>
+	{#snippet children()}
+		<ButtonGroup
+			orientation="horizontal"
+			gap="sm"
+			ariaLabel="Action buttons group"
+			responsive={false}
+		>
+			<Button label="Save" variant="primary" />
+			<Button label="Cancel" variant="secondary" />
+			<Button label="Delete" variant="error" />
+		</ButtonGroup>
+	{/snippet}
+</Story>
 
-<!-- Vertical Group -->
-<Story
-	name="Vertical"
-	args={{
-		orientation: 'vertical',
-		buttons: [
-			{ label: 'First', variant: 'primary' },
-			{ label: 'Second', variant: 'primary' },
-			{ label: 'Third', variant: 'primary' }
-		]
-	}}
-/>
+<Story name="Vertical Orientation">
+	{#snippet children()}
+		<ButtonGroup orientation="vertical" ariaLabel="Vertical button group">
+			<Button label="First" variant="primary" />
+			<Button label="Second" variant="primary" />
+			<Button label="Third" variant="primary" />
+		</ButtonGroup>
+	{/snippet}
+</Story>
 
-<!-- Small Size -->
-<Story
-	name="Small Size"
-	args={{
-		buttons: [
-			{ label: 'Small', variant: 'primary', size: 'sm' },
-			{ label: 'Small', variant: 'primary', size: 'sm' },
-			{ label: 'Small', variant: 'primary', size: 'sm' }
-		]
-	}}
-/>
+<Story name="Small Gap">
+	{#snippet children()}
+		<ButtonGroup gap="sm" ariaLabel="Small gap button group">
+			<Button label="Button 1" variant="primary" />
+			<Button label="Button 2" variant="primary" />
+			<Button label="Button 3" variant="primary" />
+		</ButtonGroup>
+	{/snippet}
+</Story>
 
-<!-- Medium Size -->
-<Story
-	name="Medium Size"
-	args={{
-		buttons: [
-			{ label: 'Medium', variant: 'primary', size: 'md' },
-			{ label: 'Medium', variant: 'primary', size: 'md' },
-			{ label: 'Medium', variant: 'primary', size: 'md' }
-		]
-	}}
-/>
+<Story name="Large Gap">
+	{#snippet children()}
+		<ButtonGroup gap="lg" ariaLabel="Large gap button group">
+			<Button label="Button 1" variant="primary" />
+			<Button label="Button 2" variant="primary" />
+			<Button label="Button 3" variant="primary" />
+		</ButtonGroup>
+	{/snippet}
+</Story>
 
-<!-- Large Size -->
-<Story
-	name="Large Size"
-	args={{
-		buttons: [
-			{ label: 'Large', variant: 'primary', size: 'lg' },
-			{ label: 'Large', variant: 'primary', size: 'lg' },
-			{ label: 'Large', variant: 'primary', size: 'lg' }
-		]
-	}}
-/>
+<Story name="Mixed Variants">
+	{#snippet children()}
+		<ButtonGroup ariaLabel="Mixed button variants">
+			<Button label="Primary" variant="primary" />
+			<Button label="Secondary" variant="secondary" />
+			<Button label="Success" variant="success" />
+			<Button label="Error" variant="error" />
+		</ButtonGroup>
+	{/snippet}
+</Story>
 
-<!-- With Icons -->
-<Story
-	name="With Icons"
-	args={{
-		buttons: [
-			{ label: '✓ Save', variant: 'primary' },
-			{ label: '✏ Edit', variant: 'secondary' },
-			{ label: '🗑 Delete', variant: 'error' }
-		]
-	}}
-/>
+<Story name="Outline Style">
+	{#snippet children()}
+		<ButtonGroup ariaLabel="Outline button group">
+			<Button label="Primary" variant="primary" outline />
+			<Button label="Secondary" variant="secondary" outline />
+			<Button label="Accent" variant="accent" outline />
+		</ButtonGroup>
+	{/snippet}
+</Story>
 
-<!-- Disabled States -->
-<Story
-	name="Disabled States"
-	args={{
-		buttons: [
-			{ label: 'Enabled', variant: 'primary' },
-			{ label: 'Disabled', variant: 'primary', disabled: true },
-			{ label: 'Enabled', variant: 'primary' }
-		]
-	}}
-/>
+<Story name="With Disabled">
+	{#snippet children()}
+		<ButtonGroup ariaLabel="Button group with disabled buttons">
+			<Button label="Enabled" variant="primary" />
+			<Button label="Disabled" variant="primary" disabled />
+			<Button label="Enabled" variant="primary" />
+		</ButtonGroup>
+	{/snippet}
+</Story>
 
-<!-- Mixed Button Variants -->
-<Story
-	name="Mixed Variants"
-	args={{
-		buttons: [
-			{ label: 'Primary', variant: 'primary' },
-			{ label: 'Secondary', variant: 'secondary' },
-			{ label: 'Accent', variant: 'accent' },
-			{ label: 'Info', variant: 'info' },
-			{ label: 'Success', variant: 'success' }
-		]
-	}}
-/>
+<Story name="With Loading">
+	{#snippet children()}
+		<ButtonGroup ariaLabel="Button group with loading buttons">
+			<Button label="Save" variant="primary" loading />
+			<Button label="Cancel" variant="secondary" />
+			<Button label="Delete" variant="error" />
+		</ButtonGroup>
+	{/snippet}
+</Story>
+
+<Story name="Responsive">
+	{#snippet children()}
+		<ButtonGroup orientation="horizontal" responsive ariaLabel="Responsive horizontal button group">
+			<Button label="Button 1" variant="primary" />
+			<Button label="Button 2" variant="primary" />
+			<Button label="Button 3" variant="primary" />
+		</ButtonGroup>
+	{/snippet}
+</Story>
+
+<Story name="Small Size Buttons">
+	{#snippet children()}
+		<ButtonGroup ariaLabel="Small buttons">
+			<Button label="Small" variant="primary" size="sm" />
+			<Button label="Small" variant="primary" size="sm" />
+			<Button label="Small" variant="primary" size="sm" />
+		</ButtonGroup>
+	{/snippet}
+</Story>
+
+<!-- Playground -->
+<Story name="Playground" />

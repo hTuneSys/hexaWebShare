@@ -3,7 +3,6 @@ SPDX-FileCopyrightText: 2025 hexaTune LLC
 SPDX-License-Identifier: MIT
 -->
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
 	import type { Snippet } from 'svelte';
 	import Spinner from './Spinner.svelte';
 
@@ -87,6 +86,14 @@ SPDX-License-Identifier: MIT
 		 */
 		role?: 'status' | 'alert';
 		/**
+		 * Callback when notification is closed
+		 */
+		onclose?: () => void;
+		/**
+		 * Callback when action button is clicked
+		 */
+		onaction?: () => void;
+		/**
 		 * Additional CSS classes
 		 */
 		class?: string;
@@ -108,13 +115,14 @@ SPDX-License-Identifier: MIT
 		fullWidth = true,
 		ariaLive,
 		role,
+		onclose,
+		onaction,
 		class: className = '',
 		...props
 	}: Props = $props();
 
 	const isControlled = open !== undefined;
 
-	const dispatch = createEventDispatcher<{ close: void; action: void }>();
 	let isVisible = $state(open ?? true);
 
 	const visible = $derived(isControlled ? (open ?? false) : isVisible);
@@ -176,11 +184,11 @@ SPDX-License-Identifier: MIT
 		if (!isControlled) {
 			isVisible = false;
 		}
-		dispatch('close');
+		onclose?.();
 	};
 
 	const handleAction = () => {
-		dispatch('action');
+		onaction?.();
 	};
 </script>
 

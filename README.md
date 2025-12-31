@@ -81,6 +81,19 @@ Cross-cutting utilities:
 - **pnpm** 9+ (Install: `npm install -g pnpm`)
 - **Git** for version control
 
+### Requirements
+
+- **Svelte >= 5.0.0** (uses runes: `$props`, `$derived`, `$effect`, `{@render}`)
+- **Client-side only** - This library is designed for client-side rendering. SSR/hydration is not currently supported.
+
+#### Why Svelte 5?
+
+This library uses Svelte 5's new runes syntax throughout all components. Projects using Svelte 4 will encounter build errors.
+
+#### SSR/Hydration Notice
+
+Components generate unique IDs at runtime using `crypto.randomUUID()`. This approach works perfectly for client-side rendering but is not compatible with SSR hydration. If you need SSR support, please open an issue to discuss implementation strategies.
+
 ### Installation for Development
 
 1. **Clone the repository**

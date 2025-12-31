@@ -54,7 +54,6 @@ SPDX-License-Identifier: MIT
 <Story name="Default" args={{ type: 'spinner', size: 'md', variant: 'primary' }} />
 
 <!-- Type Stories -->
-<Story name="Spinner" args={{ type: 'spinner' }} />
 <Story name="Dots" args={{ type: 'dots' }} />
 <Story name="Ring" args={{ type: 'ring' }} />
 <Story name="Ball" args={{ type: 'ball' }} />
@@ -62,23 +61,20 @@ SPDX-License-Identifier: MIT
 <Story name="Infinity" args={{ type: 'infinity' }} />
 
 <!-- Size Stories -->
-<Story name="Extra Small" args={{ size: 'xs' }} />
 <Story name="Small" args={{ size: 'sm' }} />
-<Story name="Medium" args={{ size: 'md' }} />
 <Story name="Large" args={{ size: 'lg' }} />
 
 <!-- Variant Stories -->
-<Story name="Primary" args={{ variant: 'primary' }} />
-<Story name="Secondary" args={{ variant: 'secondary' }} />
-<Story name="Accent" args={{ variant: 'accent' }} />
-<Story name="Neutral" args={{ variant: 'neutral' }} />
-<Story name="Info" args={{ variant: 'info' }} />
 <Story name="Success" args={{ variant: 'success' }} />
-<Story name="Warning" args={{ variant: 'warning' }} />
 <Story name="Error" args={{ variant: 'error' }} />
 
-<!-- Combined Examples -->
-<Story name="Large Primary Ring" args={{ type: 'ring', size: 'lg', variant: 'primary' }} />
-<Story name="Small Success Dots" args={{ type: 'dots', size: 'sm', variant: 'success' }} />
-<Story name="Medium Error Bars" args={{ type: 'bars', size: 'md', variant: 'error' }} />
-<Story name="Large Info Infinity" args={{ type: 'infinity', size: 'lg', variant: 'info' }} />
+<!-- Playground -->
+<Story
+	name="Playground"
+	args={{
+		type: 'spinner',
+		size: 'md',
+		variant: 'primary',
+		ariaLabel: 'Loading'
+	}}
+/>

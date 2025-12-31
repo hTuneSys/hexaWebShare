@@ -92,16 +92,9 @@ SPDX-License-Identifier: MIT
 	});
 </script>
 
-<!-- Default Story - Basic usage -->
-<Story name="Default" args={{ placeholder: 'Search...' }} />
+<!-- Main Variant Stories (5-10 required) -->
+<Story name="Default" args={{ label: 'Search Products', placeholder: 'Search...' }} />
 
-<!-- With Label -->
-<Story
-	name="With Label"
-	args={{ label: 'Search Products', placeholder: 'Enter product name...' }}
-/>
-
-<!-- With Value -->
 <Story
 	name="With Value"
 	args={{
@@ -111,9 +104,17 @@ SPDX-License-Identifier: MIT
 	}}
 />
 
-<!-- Loading State -->
 <Story
-	name="Loading"
+	name="Primary Variant"
+	args={{ variant: 'primary', label: 'Primary Search', placeholder: 'Search...' }}
+/>
+
+<Story name="Small Size" args={{ size: 'sm', label: 'Small Search', placeholder: 'Search...' }} />
+
+<Story name="Large Size" args={{ size: 'lg', label: 'Large Search', placeholder: 'Search...' }} />
+
+<Story
+	name="Loading State"
 	args={{
 		label: 'Search',
 		placeholder: 'Searching...',
@@ -122,9 +123,8 @@ SPDX-License-Identifier: MIT
 	}}
 />
 
-<!-- Disabled State -->
 <Story
-	name="Disabled"
+	name="Disabled State"
 	args={{
 		label: 'Search',
 		placeholder: 'Search is disabled',
@@ -132,7 +132,6 @@ SPDX-License-Identifier: MIT
 	}}
 />
 
-<!-- With Error -->
 <Story
 	name="With Error"
 	args={{
@@ -142,17 +141,6 @@ SPDX-License-Identifier: MIT
 	}}
 />
 
-<!-- With Help Text -->
-<Story
-	name="With Help Text"
-	args={{
-		label: 'Search',
-		placeholder: 'Search...',
-		helpText: 'Press Enter to search or Escape to clear'
-	}}
-/>
-
-<!-- Search On Type (with debounce) -->
 <Story
 	name="Search On Type"
 	args={{
@@ -164,7 +152,6 @@ SPDX-License-Identifier: MIT
 	}}
 />
 
-<!-- Without Clear Button -->
 <Story
 	name="Without Clear Button"
 	args={{
@@ -175,129 +162,25 @@ SPDX-License-Identifier: MIT
 	}}
 />
 
-<!-- Sizes Showcase -->
-<Story name="Sizes">
-	<div class="flex w-full max-w-md flex-col gap-4">
-		<SearchInput size="xs" label="Extra Small" placeholder="XS size search..." />
-		<SearchInput size="sm" label="Small" placeholder="SM size search..." />
-		<SearchInput size="md" label="Medium (Default)" placeholder="MD size search..." />
-		<SearchInput size="lg" label="Large" placeholder="LG size search..." />
-	</div>
-</Story>
-
-<!-- Variants Showcase -->
-<Story name="Variants">
-	<div class="flex w-full max-w-md flex-col gap-4">
-		<SearchInput label="Default" placeholder="Default variant..." />
-		<SearchInput variant="primary" label="Primary" placeholder="Primary variant..." />
-		<SearchInput variant="secondary" label="Secondary" placeholder="Secondary variant..." />
-		<SearchInput variant="accent" label="Accent" placeholder="Accent variant..." />
-		<SearchInput variant="info" label="Info" placeholder="Info variant..." />
-		<SearchInput variant="success" label="Success" placeholder="Success variant..." />
-		<SearchInput variant="warning" label="Warning" placeholder="Warning variant..." />
-		<SearchInput variant="error" label="Error" placeholder="Error variant..." />
-	</div>
-</Story>
-
-<!-- States Showcase -->
-<Story name="States">
-	<div class="flex w-full max-w-md flex-col gap-4">
-		<SearchInput label="Default" placeholder="Default state..." />
-		<SearchInput label="With Value" value="example search" placeholder="Has value..." />
-		<SearchInput label="Loading" placeholder="Loading..." loading={true} value="searching" />
-		<SearchInput label="Disabled" placeholder="Disabled..." disabled={true} />
-		<SearchInput label="Error" placeholder="Error state..." error="Something went wrong" />
-		<SearchInput
-			label="With Help Text"
-			placeholder="With help..."
-			helpText="This is helpful information"
-		/>
-	</div>
-</Story>
-
-<!-- Real-world Examples -->
-<Story name="Product Search Example">
-	<div class="w-full max-w-lg">
-		<SearchInput
-			label="Search Products"
-			placeholder="Search by name, SKU, or category..."
-			helpText="Try searching for 'laptop', 'phone', or 'accessories'"
-			searchOnType={true}
-			debounceMs={500}
-		/>
-	</div>
-</Story>
-
-<Story name="User Search Example">
-	<div class="w-full max-w-md">
-		<SearchInput
-			variant="primary"
-			label="Find Users"
-			placeholder="Enter username or email..."
-			helpText="Search across all registered users"
-		/>
-	</div>
-</Story>
-
-<Story name="Document Search Example">
-	<div class="w-full max-w-xl">
-		<SearchInput
-			size="lg"
-			placeholder="Search documents, files, and folders..."
-			ariaLabel="Search documents"
-		/>
-	</div>
-</Story>
-
-<Story name="Compact Header Search">
-	<div class="bg-base-200 rounded-lg p-4">
-		<div class="flex items-center gap-4">
-			<span class="text-lg font-bold">Logo</span>
-			<div class="max-w-xs flex-1">
-				<SearchInput size="sm" placeholder="Quick search..." showClearButton={true} />
-			</div>
-			<button class="btn btn-ghost btn-sm">Menu</button>
-		</div>
-	</div>
-</Story>
-
-<Story name="Search with Filters">
-	<div class="w-full max-w-lg space-y-4">
-		<SearchInput
-			label="Search with Filters"
-			placeholder="Search..."
-			helpText="Use filters below to narrow your search"
-		/>
-		<div class="flex flex-wrap gap-2">
-			<span class="badge badge-outline">Category: All</span>
-			<span class="badge badge-outline">Date: Any time</span>
-			<span class="badge badge-outline">Status: Active</span>
-		</div>
-	</div>
-</Story>
-
-<!-- Accessibility Demo -->
-<Story name="Accessibility">
-	<div class="flex w-full max-w-md flex-col gap-4">
-		<SearchInput
-			ariaLabel="Search products without visible label"
-			placeholder="Search (ARIA label only)..."
-			helpText="This input has only an ARIA label, no visible label"
-		/>
-		<SearchInput
-			label="Accessible Search"
-			placeholder="Type and press Enter..."
-			helpText="Press Enter to search, Escape to clear"
-		/>
-	</div>
-</Story>
-
-<!-- Interactive Playground -->
+<!-- Interactive Playground (REQUIRED - must be last) -->
 <Story
 	name="Playground"
 	args={{
 		label: 'Playground',
-		placeholder: 'Try different props in the controls panel...',
-		helpText: 'Customize this component using the controls below'
+		placeholder: 'Try different props...',
+		helpText: 'Customize this component using the controls below',
+		variant: 'primary',
+		size: 'md',
+		disabled: false,
+		loading: false,
+		searchOnType: false,
+		showClearButton: true,
+		debounceMs: 300,
+		onsearch: fn(),
+		onclear: fn(),
+		oninput: fn(),
+		onchange: fn(),
+		onblur: fn(),
+		onfocus: fn()
 	}}
 />

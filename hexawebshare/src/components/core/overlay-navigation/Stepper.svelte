@@ -248,90 +248,31 @@ SPDX-License-Identifier: MIT
 	}
 
 	.step.step-disabled::before {
-		opacity: 1 !important;
-		background-color: hsl(var(--bc) / 0.3) !important;
-	}
-
-	.step.step-disabled::after {
-		background-color: hsl(var(--bc) / 0.15) !important;
-		border: 2px solid hsl(var(--bc) / 0.4) !important;
-		color: hsl(var(--bc) / 0.8) !important;
-		font-weight: 600 !important;
-
-		opacity: 1 !important;
-
-		display: flex !important;
-		align-items: center !important;
-		justify-content: center !important;
-	}
-
-	.step.step-disabled .step-wrapper,
-	.step.step-disabled span,
-	.step.step-disabled .step-text {
-		opacity: 1 !important;
-		color: hsl(var(--bc) / 0.8) !important;
-	}
-
-	.step.step-disabled {
-		cursor: not-allowed;
-		pointer-events: none;
+		background-color: hsl(var(--bc) / 0.25);
 		opacity: 1;
 	}
 
-	.step.step-disabled::before {
-		background-color: hsl(var(--bc) / 0.25) !important;
-		opacity: 1 !important;
-	}
-
 	.step.step-disabled::after {
-		background-color: hsl(var(--bc) / 0.15) !important;
-		border: 2px solid hsl(var(--bc) / 0.4) !important;
-		color: hsl(var(--bc) / 0.7) !important;
+		background-color: hsl(var(--bc) / 0.15);
+		border: 2px solid hsl(var(--bc) / 0.4);
+		color: hsl(var(--bc) / 0.7);
 		font-weight: 600;
-
 		display: flex;
 		align-items: center;
 		justify-content: center;
 	}
 
-	.step.step-disabled .step-text,
-	.step.step-disabled span {
-		opacity: 0.7;
-	}
-
-	.step.step-disabled {
-		pointer-events: none;
-		cursor: not-allowed;
-	}
-
-	.step.step-disabled::after {
-		background-color: hsl(var(--bc) / 0.15) !important;
-		color: hsl(var(--bc) / 0.6) !important;
-		border-color: hsl(var(--bc) / 0.3) !important;
-	}
-
-	.step.step-disabled::before {
-		background-color: hsl(var(--bc) / 0.25) !important;
-		opacity: 1 !important;
-	}
-
-	.step.step-disabled .step-title,
-	.step.step-disabled .step-description,
-	.step.step-disabled span {
-		opacity: 0.6;
-	}
-
-	.step-disabled .step-label {
+	.step.step-disabled .step-label {
 		color: hsl(var(--bc) / 0.85);
 		font-weight: 500;
 	}
 
-	.step-disabled .step-description {
+	.step.step-disabled .step-description {
 		color: hsl(var(--bc) / 0.7);
 		opacity: 1;
 	}
 
-	.step-disabled .step-icon {
+	.step.step-disabled .step-icon {
 		opacity: 0.8;
 	}
 

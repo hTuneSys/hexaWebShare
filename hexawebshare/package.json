@@ -32,7 +32,10 @@
 		}
 	},
 	"peerDependencies": {
-		"svelte": "^5.0.0"
+		"svelte": ">=5.0.0"
+	},
+	"engines": {
+		"node": ">=18.0.0"
 	},
 	"devDependencies": {
 		"@chromatic-com/storybook": "^4.1.3",

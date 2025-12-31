@@ -6,6 +6,7 @@ SPDX-License-Identifier: MIT
 <script module>
 	import { defineMeta } from '@storybook/addon-svelte-csf';
 	import Dialog from './Dialog.svelte';
+	import { fn } from 'storybook/test';
 
 	const { Story } = defineMeta({
 		title: 'Core/Overlay Navigation/Dialog',
@@ -49,7 +50,8 @@ SPDX-License-Identifier: MIT
 		args: {
 			open: true,
 			title: 'Dialog Title',
-			size: 'md'
+			size: 'md',
+			onClose: fn()
 		}
 	});
 </script>
@@ -67,28 +69,17 @@ SPDX-License-Identifier: MIT
 
 <!-- Size Stories -->
 <Story
-	name="Extra Small"
-	args={{
-		open: true,
-		title: 'Extra Small Dialog',
-		description: 'This is an extra small dialog.',
-		size: 'xs'
-	}}
-/>
-<Story
-	name="Small"
+	name="Small Size"
 	args={{ open: true, title: 'Small Dialog', description: 'This is a small dialog.', size: 'sm' }}
 />
+
 <Story
-	name="Medium"
-	args={{ open: true, title: 'Medium Dialog', description: 'This is a medium dialog.', size: 'md' }}
-/>
-<Story
-	name="Large"
+	name="Large Size"
 	args={{ open: true, title: 'Large Dialog', description: 'This is a large dialog.', size: 'lg' }}
 />
+
 <Story
-	name="Extra Large"
+	name="Extra Large Size"
 	args={{
 		open: true,
 		title: 'Extra Large Dialog',
@@ -107,6 +98,7 @@ SPDX-License-Identifier: MIT
 		size: 'md'
 	}}
 />
+
 <Story name="Title Only" args={{ open: true, title: 'Dialog Title Only', size: 'md' }} />
 
 <!-- Accessibility Stories -->
@@ -117,16 +109,6 @@ SPDX-License-Identifier: MIT
 		title: 'Accessible Dialog',
 		description: 'This dialog has a custom aria-label.',
 		ariaLabel: 'Custom dialog label',
-		size: 'md'
-	}}
-/>
-<Story
-	name="With Aria Labelled By"
-	args={{
-		open: true,
-		title: 'Dialog with Custom Label',
-		description: 'This dialog uses aria-labelledby.',
-		ariaLabelledBy: 'custom-title',
 		size: 'md'
 	}}
 />

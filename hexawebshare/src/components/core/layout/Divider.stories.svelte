@@ -66,13 +66,14 @@ SPDX-License-Identifier: MIT
 	</div>
 </Story>
 
-<!-- Orientation Stories -->
+<!-- Horizontal -->
 <Story name="Horizontal">
 	<div class="w-full">
 		<Divider />
 	</div>
 </Story>
 
+<!-- Vertical -->
 <Story name="Vertical">
 	<div class="flex h-24 items-center gap-4">
 		<span>Left</span>
@@ -81,94 +82,54 @@ SPDX-License-Identifier: MIT
 	</div>
 </Story>
 
-<!-- With Label Stories -->
+<!-- With Label -->
 <Story name="With Label">
 	<div class="w-full">
 		<Divider label="OR" />
 	</div>
 </Story>
 
-<Story name="Label Start">
-	<div class="w-full">
+<!-- Label Positions -->
+<Story name="Label Positions">
+	<div class="flex w-full flex-col gap-4">
 		<Divider label="Start" labelPosition="start" />
-	</div>
-</Story>
-
-<Story name="Label Center">
-	<div class="w-full">
 		<Divider label="Center" labelPosition="center" />
-	</div>
-</Story>
-
-<Story name="Label End">
-	<div class="w-full">
 		<Divider label="End" labelPosition="end" />
 	</div>
 </Story>
 
-<!-- Variant Stories -->
-<Story name="Primary">
-	<div class="w-full">
-		<Divider variant="primary" label="Primary" />
+<!-- Variants -->
+<Story name="Color Variants">
+	<div class="flex w-full flex-col gap-4">
+		<Divider label="Primary" variant="primary" />
+		<Divider label="Secondary" variant="secondary" />
+		<Divider label="Accent" variant="accent" />
+		<Divider label="Info" variant="info" />
+		<Divider label="Success" variant="success" />
 	</div>
 </Story>
 
-<Story name="Secondary">
-	<div class="w-full">
-		<Divider variant="secondary" label="Secondary" />
+<!-- Login Separator -->
+<Story name="Login Separator">
+	<div class="flex w-80 flex-col gap-4">
+		<button class="btn btn-primary">Continue with Google</button>
+		<Divider label="OR" variant="neutral" />
+		<button class="btn btn-outline">Sign in with Email</button>
 	</div>
 </Story>
 
-<Story name="Accent">
-	<div class="w-full">
-		<Divider variant="accent" label="Accent" />
+<!-- Vertical in Flex -->
+<Story name="Vertical Navigation">
+	<div class="bg-base-200 flex h-16 items-center gap-4 rounded-lg p-4">
+		<span class="font-medium">Home</span>
+		<Divider orientation="vertical" />
+		<span class="font-medium">Products</span>
+		<Divider orientation="vertical" />
+		<span class="font-medium">Contact</span>
 	</div>
 </Story>
 
-<Story name="Neutral">
-	<div class="w-full">
-		<Divider variant="neutral" label="Neutral" />
-	</div>
-</Story>
-
-<Story name="Info">
-	<div class="w-full">
-		<Divider variant="info" label="Info" />
-	</div>
-</Story>
-
-<Story name="Success">
-	<div class="w-full">
-		<Divider variant="success" label="Success" />
-	</div>
-</Story>
-
-<Story name="Warning">
-	<div class="w-full">
-		<Divider variant="warning" label="Warning" />
-	</div>
-</Story>
-
-<Story name="Error">
-	<div class="w-full">
-		<Divider variant="error" label="Error" />
-	</div>
-</Story>
-
-<!-- Accessibility Stories -->
-<Story name="With Aria Label">
-	<div class="w-full">
-		<Divider ariaLabel="Content separator" />
-	</div>
-</Story>
-
-<Story name="Decorative (Aria Hidden)">
-	<div class="w-full">
-		<Divider ariaHidden={true} />
-	</div>
-</Story>
-
-<!-- Usage Examples -->
+<!-- Content Separation -->
 <Story name="Content Separation">
 	<div class="flex w-full flex-col gap-4">
 		<div class="bg-base-200 rounded-lg p-4">
@@ -181,44 +142,6 @@ SPDX-License-Identifier: MIT
 	</div>
 </Story>
 
-<Story name="Login Separator">
-	<div class="flex w-80 flex-col gap-4">
-		<button class="btn btn-primary">Continue with Google</button>
-		<Divider label="OR" variant="neutral" />
-		<button class="btn btn-outline">Sign in with Email</button>
-	</div>
-</Story>
-
-<Story name="Vertical in Flex">
-	<div class="bg-base-200 flex h-16 items-center gap-4 rounded-lg p-4">
-		<span class="font-medium">Home</span>
-		<Divider orientation="vertical" />
-		<span class="font-medium">Products</span>
-		<Divider orientation="vertical" />
-		<span class="font-medium">Contact</span>
-	</div>
-</Story>
-
-<Story name="Custom Content">
-	<Divider>
-		<span class="badge badge-primary">NEW</span>
-	</Divider>
-</Story>
-
-<Story name="All Variants">
-	<div class="flex w-full flex-col gap-4">
-		<Divider label="Default" variant="default" />
-		<Divider label="Primary" variant="primary" />
-		<Divider label="Secondary" variant="secondary" />
-		<Divider label="Accent" variant="accent" />
-		<Divider label="Neutral" variant="neutral" />
-		<Divider label="Info" variant="info" />
-		<Divider label="Success" variant="success" />
-		<Divider label="Warning" variant="warning" />
-		<Divider label="Error" variant="error" />
-	</div>
-</Story>
-
 <!-- Playground -->
 <Story name="Playground">
 	<div class="w-full">
@@ -226,7 +149,9 @@ SPDX-License-Identifier: MIT
 			variant="primary"
 			label="Divider"
 			labelPosition="center"
+			orientation="horizontal"
 			ariaLabel="Interactive divider"
+			ariaHidden={false}
 		/>
 	</div>
 </Story>
