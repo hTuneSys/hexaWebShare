@@ -310,7 +310,7 @@ SPDX-License-Identifier: MIT
 				<Button
 					label={confirmText}
 					variant={effectiveConfirmVariant}
-					loading={loading}
+					{loading}
 					disabled={confirmDisabled || loading}
 					onclick={handleConfirm}
 				/>

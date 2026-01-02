@@ -35,12 +35,34 @@ SPDX-License-Identifier: MIT
 			},
 			confirmVariant: {
 				control: { type: 'select' },
-				options: ['primary', 'secondary', 'accent', 'neutral', 'info', 'success', 'warning', 'error', 'ghost', 'link'],
+				options: [
+					'primary',
+					'secondary',
+					'accent',
+					'neutral',
+					'info',
+					'success',
+					'warning',
+					'error',
+					'ghost',
+					'link'
+				],
 				description: 'Confirm button color variant (ignored if destructive is true)'
 			},
 			cancelVariant: {
 				control: { type: 'select' },
-				options: ['primary', 'secondary', 'accent', 'neutral', 'info', 'success', 'warning', 'error', 'ghost', 'link'],
+				options: [
+					'primary',
+					'secondary',
+					'accent',
+					'neutral',
+					'info',
+					'success',
+					'warning',
+					'error',
+					'ghost',
+					'link'
+				],
 				description: 'Cancel button color variant'
 			},
 			size: {
