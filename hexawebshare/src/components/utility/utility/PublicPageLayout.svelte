@@ -128,7 +128,9 @@ SPDX-License-Identifier: MIT
 			variant === 'bordered' && 'border-4 border-primary/30 m-2 rounded-xl',
 			variant === 'filled' && background && 'bg-base-200',
 			variant === 'ghost' && background && 'bg-base-200/30 backdrop-blur-sm',
-			variant === 'gradient' && background && 'bg-gradient-to-br from-primary/10 via-base-100 to-secondary/10',
+			variant === 'gradient' &&
+				background &&
+				'bg-gradient-to-br from-primary/10 via-base-100 to-secondary/10',
 			!background && variant !== 'bordered' && 'bg-transparent',
 			disabled && 'opacity-50 pointer-events-none',
 			className
@@ -156,14 +158,7 @@ SPDX-License-Identifier: MIT
 	);
 
 	// Header container classes
-	let headerClasses = $derived(
-		[
-			'public-page-header',
-			'w-full'
-		]
-			.filter(Boolean)
-			.join(' ')
-	);
+	let headerClasses = $derived(['public-page-header', 'w-full'].filter(Boolean).join(' '));
 
 	// Main content container classes
 	let contentClasses = $derived(

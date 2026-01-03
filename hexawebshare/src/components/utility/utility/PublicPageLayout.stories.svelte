@@ -6,12 +6,17 @@ SPDX-License-Identifier: MIT
 <script module>
 	import { defineMeta } from '@storybook/addon-svelte-csf';
 	import PublicPageLayout from './PublicPageLayout.svelte';
-	import PublicPageLayoutWrapper from './PublicPageLayoutWrapper.svelte';
 	import Button from '../../core/buttons/Button.svelte';
+	import Card from '../../core/layout/Card.svelte';
+	import Heading from '../../core/typography/Heading.svelte';
+	import Paragraph from '../../core/typography/Paragraph.svelte';
+	import Container from '../../core/layout/Container.svelte';
+	import Alert from '../../core/feedback/Alert.svelte';
+	import Spinner from '../../core/feedback/Spinner.svelte';
+	import Link from '../../core/typography/Link.svelte';
 
 	const { Story } = defineMeta({
 		title: 'Utility/Utility/PublicPageLayout',
-		component: PublicPageLayoutWrapper,
 		tags: ['autodocs'],
 		argTypes: {
 			variant: {
@@ -69,79 +74,102 @@ SPDX-License-Identifier: MIT
 <Story name="Default Variant">
 	<PublicPageLayout variant="default">
 		{#snippet navbar()}
-			<div class="container mx-auto px-6 py-4">
+			<Container padding="md" className="py-4">
 				<div class="flex items-center justify-between">
 					<div class="flex items-center gap-2">
-						<div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-							<span class="text-primary-content font-bold text-sm">H</span>
+						<div class="bg-primary flex h-8 w-8 items-center justify-center rounded-lg">
+							<span class="text-primary-content text-sm font-bold">H</span>
 						</div>
-						<span class="text-xl font-bold">hexaWebShare</span>
+						<Heading level="h2" size="xl" weight="bold" text="hexaWebShare" />
 					</div>
-					<nav class="hidden md:flex gap-6">
-						<button class="link-hover link btn-ghost btn-sm">Features</button>
-						<button class="link-hover link btn-ghost btn-sm">Pricing</button>
-						<button class="link-hover link btn-ghost btn-sm">Docs</button>
+					<nav class="hidden gap-6 md:flex">
+						<Button variant="ghost" size="sm" label="Features" />
+						<Button variant="ghost" size="sm" label="Pricing" />
+						<Button variant="ghost" size="sm" label="Docs" />
 					</nav>
 					<div class="flex gap-2">
 						<Button variant="ghost" size="sm" label="Sign In" />
 						<Button variant="primary" size="sm" label="Get Started" />
 					</div>
 				</div>
-			</div>
+			</Container>
 		{/snippet}
 
 		{#snippet header()}
-			<div class="bg-base-100 border-b border-base-300 py-16">
-				<div class="container mx-auto px-6 text-center">
-					<h1 class="text-5xl font-bold mb-4">Default Variant</h1>
-					<p class="text-xl mb-8 text-base-content/70">
-						Clean, standard layout with base-100 background. Perfect for professional websites and applications.
-					</p>
-					<div class="flex gap-4 justify-center">
+			<div class="bg-base-100 border-base-300 border-b py-16">
+				<Container padding="md" centered={true} className="text-center">
+					<div class="mb-4">
+						<Heading level="h1" size="4xl" weight="bold" align="center" text="Default Variant" />
+					</div>
+					<Paragraph
+						size="xl"
+						variant="muted"
+						align="center"
+						class="mb-8"
+						text="Clean, standard layout with base-100 background. Perfect for professional websites and applications."
+					/>
+					<div class="flex justify-center gap-4">
 						<Button size="lg" variant="primary" label="Get Started" />
 						<Button size="lg" outline={true} label="Learn More" />
 					</div>
-				</div>
+				</Container>
 			</div>
 		{/snippet}
 
 		{#snippet children()}
 			<div class="space-y-12 py-12">
 				<section class="text-center">
-					<h2 class="text-4xl font-bold mb-4">Why Choose Default?</h2>
-					<p class="text-base-content/70 text-lg mb-8">
-						The default variant provides a clean, professional appearance with standard base colors.
-					</p>
-					<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-						<div class="card bg-base-200 shadow-lg">
-							<div class="card-body">
-								<h3 class="card-title">Clean Design</h3>
-								<p>Standard base-100 background provides a clean, professional look.</p>
-							</div>
-						</div>
-						<div class="card bg-base-200 shadow-lg">
-							<div class="card-body">
-								<h3 class="card-title">Versatile</h3>
-								<p>Works well for any type of website or application.</p>
-							</div>
-						</div>
-						<div class="card bg-base-200 shadow-lg">
-							<div class="card-body">
-								<h3 class="card-title">Professional</h3>
-								<p>Perfect for corporate sites, dashboards, and business applications.</p>
-							</div>
-						</div>
+					<Heading
+						level="h2"
+						size="3xl"
+						weight="bold"
+						align="center"
+						class="mb-4"
+						text="Why Choose Default?"
+					/>
+					<Paragraph
+						variant="muted"
+						size="lg"
+						align="center"
+						class="mb-8"
+						text="The default variant provides a clean, professional appearance with standard base colors."
+					/>
+					<div class="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3">
+						<Card title="Clean Design" shadow={true} shadowSize="lg" class="bg-base-200">
+							{#snippet children()}
+								<Paragraph
+									text="Standard base-100 background provides a clean, professional look."
+								/>
+							{/snippet}
+						</Card>
+						<Card title="Versatile" shadow={true} shadowSize="lg" class="bg-base-200">
+							{#snippet children()}
+								<Paragraph text="Works well for any type of website or application." />
+							{/snippet}
+						</Card>
+						<Card title="Professional" shadow={true} shadowSize="lg" class="bg-base-200">
+							{#snippet children()}
+								<Paragraph
+									text="Perfect for corporate sites, dashboards, and business applications."
+								/>
+							{/snippet}
+						</Card>
 					</div>
 				</section>
 			</div>
 		{/snippet}
 
 		{#snippet footer()}
-			<div class="container mx-auto px-6 py-8">
-				<div class="text-center text-sm text-base-content/60">
-					<p>© 2025 hexaTune LLC. All rights reserved.</p>
+			<Container padding="md" className="py-8">
+				<div class="text-center">
+					<Paragraph
+						size="sm"
+						variant="muted"
+						align="center"
+						text="© 2025 hexaTune LLC. All rights reserved."
+					/>
 				</div>
-			</div>
+			</Container>
 		{/snippet}
 	</PublicPageLayout>
 </Story>
@@ -151,10 +179,12 @@ SPDX-License-Identifier: MIT
 	<PublicPageLayout>
 		{#snippet children()}
 			<div class="space-y-4 py-12">
-				<h1 class="text-4xl font-bold text-center">Welcome to Our Site</h1>
-				<p class="text-center text-base-content/70">
-					This is a basic public page layout with just content - no navbar, header, or footer.
-				</p>
+				<Heading level="h1" size="3xl" weight="bold" align="center" text="Welcome to Our Site" />
+				<Paragraph
+					variant="muted"
+					align="center"
+					text="This is a basic public page layout with just content - no navbar, header, or footer."
+				/>
 			</div>
 		{/snippet}
 	</PublicPageLayout>
@@ -164,24 +194,26 @@ SPDX-License-Identifier: MIT
 <Story name="With Navbar">
 	<PublicPageLayout>
 		{#snippet navbar()}
-			<div class="container mx-auto px-6 py-4">
+			<Container padding="md" className="py-4">
 				<div class="flex items-center justify-between">
-					<div class="text-xl font-bold">Logo</div>
+					<Heading level="h2" size="xl" weight="bold" text="Logo" />
 					<nav class="flex gap-6">
-						<a href="javascript:void(0)" class="link-hover link">Home</a>
-						<a href="javascript:void(0)" class="link-hover link">About</a>
-						<a href="javascript:void(0)" class="link-hover link">Contact</a>
+						<Link href="javascript:void(0)" label="Home" />
+						<Link href="javascript:void(0)" label="About" />
+						<Link href="javascript:void(0)" label="Contact" />
 					</nav>
 				</div>
-			</div>
+			</Container>
 		{/snippet}
 
 		{#snippet children()}
 			<div class="space-y-4 py-12">
-				<h1 class="text-4xl font-bold text-center">Page with Navigation</h1>
-				<p class="text-center text-base-content/70">
-					This page includes a navigation bar at the top.
-				</p>
+				<Heading level="h1" size="3xl" weight="bold" align="center" text="Page with Navigation" />
+				<Paragraph
+					variant="muted"
+					align="center"
+					text="This page includes a navigation bar at the top."
+				/>
 			</div>
 		{/snippet}
 	</PublicPageLayout>
@@ -191,30 +223,39 @@ SPDX-License-Identifier: MIT
 <Story name="With Hero Header">
 	<PublicPageLayout>
 		{#snippet navbar()}
-			<div class="container mx-auto px-6 py-4">
+			<Container padding="md" className="py-4">
 				<div class="flex items-center justify-between">
-					<div class="text-xl font-bold">Logo</div>
+					<Heading level="h2" size="xl" weight="bold" text="Logo" />
 					<Button variant="primary" size="sm" label="Get Started" />
 				</div>
-			</div>
+			</Container>
 		{/snippet}
 
 		{#snippet header()}
 			<div class="bg-primary text-primary-content py-20">
-				<div class="container mx-auto px-6 text-center">
-					<h1 class="text-5xl font-bold mb-4">Hero Section</h1>
-					<p class="text-xl mb-8">This is a prominent hero section for landing pages.</p>
+				<Container padding="md" centered={true} className="text-center">
+					<div class="text-primary-content mb-4">
+						<Heading level="h1" size="4xl" weight="bold" align="center" text="Hero Section" />
+					</div>
+					<Paragraph
+						size="xl"
+						align="center"
+						class="text-primary-content mb-8"
+						text="This is a prominent hero section for landing pages."
+					/>
 					<Button size="lg" variant="accent" label="Call to Action" />
-				</div>
+				</Container>
 			</div>
 		{/snippet}
 
 		{#snippet children()}
 			<div class="space-y-4 py-12">
-				<h2 class="text-3xl font-bold text-center">Main Content</h2>
-				<p class="text-center text-base-content/70">
-					Content continues below the hero section.
-				</p>
+				<Heading level="h2" size="2xl" weight="bold" align="center" text="Main Content" />
+				<Paragraph
+					variant="muted"
+					align="center"
+					text="Content continues below the hero section."
+				/>
 			</div>
 		{/snippet}
 	</PublicPageLayout>
@@ -224,67 +265,89 @@ SPDX-License-Identifier: MIT
 <Story name="Complete Layout">
 	<PublicPageLayout>
 		{#snippet navbar()}
-			<div class="container mx-auto px-6 py-4">
+			<Container padding="md" className="py-4">
 				<div class="flex items-center justify-between">
-					<div class="text-xl font-bold">hexaWebShare</div>
-					<nav class="hidden md:flex gap-6">
-						<button class="link-hover link btn-ghost btn-sm">Features</button>
-						<button class="link-hover link btn-ghost btn-sm">Pricing</button>
-						<button class="link-hover link btn-ghost btn-sm">Docs</button>
+					<Heading level="h2" size="xl" weight="bold" text="hexaWebShare" />
+					<nav class="hidden gap-6 md:flex">
+						<Button variant="ghost" size="sm" label="Features" />
+						<Button variant="ghost" size="sm" label="Pricing" />
+						<Button variant="ghost" size="sm" label="Docs" />
 					</nav>
 					<Button variant="primary" size="sm" label="Sign Up" />
 				</div>
-			</div>
+			</Container>
 		{/snippet}
 
 		{#snippet header()}
-			<div class="bg-gradient-to-r from-primary to-secondary text-primary-content py-20">
-				<div class="container mx-auto px-6 text-center">
-					<h1 class="text-5xl font-bold mb-4">Complete Public Page</h1>
-					<p class="text-xl mb-8">This layout includes navbar, header, content, and footer.</p>
-				</div>
+			<div class="from-primary to-secondary text-primary-content bg-gradient-to-r py-20">
+				<Container padding="md" centered={true} className="text-center">
+					<div class="text-primary-content mb-4">
+						<Heading
+							level="h1"
+							size="4xl"
+							weight="bold"
+							align="center"
+							text="Complete Public Page"
+						/>
+					</div>
+					<Paragraph
+						size="xl"
+						align="center"
+						class="text-primary-content mb-8"
+						text="This layout includes navbar, header, content, and footer."
+					/>
+				</Container>
 			</div>
 		{/snippet}
 
 		{#snippet children()}
 			<div class="space-y-8 py-12">
 				<section class="text-center">
-					<h2 class="text-3xl font-bold mb-4">Features</h2>
-					<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-						<div class="card bg-base-200">
-							<div class="card-body">
-								<h3 class="card-title">Feature 1</h3>
-								<p>Description of feature one.</p>
-							</div>
-						</div>
-						<div class="card bg-base-200">
-							<div class="card-body">
-								<h3 class="card-title">Feature 2</h3>
-								<p>Description of feature two.</p>
-							</div>
-						</div>
-						<div class="card bg-base-200">
-							<div class="card-body">
-								<h3 class="card-title">Feature 3</h3>
-								<p>Description of feature three.</p>
-							</div>
-						</div>
+					<Heading
+						level="h2"
+						size="2xl"
+						weight="bold"
+						align="center"
+						class="mb-4"
+						text="Features"
+					/>
+					<div class="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3">
+						<Card title="Feature 1" class="bg-base-200">
+							{#snippet children()}
+								<Paragraph text="Description of feature one." />
+							{/snippet}
+						</Card>
+						<Card title="Feature 2" class="bg-base-200">
+							{#snippet children()}
+								<Paragraph text="Description of feature two." />
+							{/snippet}
+						</Card>
+						<Card title="Feature 3" class="bg-base-200">
+							{#snippet children()}
+								<Paragraph text="Description of feature three." />
+							{/snippet}
+						</Card>
 					</div>
 				</section>
 			</div>
 		{/snippet}
 
 		{#snippet footer()}
-			<div class="container mx-auto px-6 py-8">
-				<div class="text-center text-sm text-base-content/60">
-					<p>© 2025 hexaTune LLC. All rights reserved.</p>
-					<div class="flex gap-4 justify-center mt-4">
-						<a href="javascript:void(0)" class="link-hover link">Privacy</a>
-						<a href="javascript:void(0)" class="link-hover link">Terms</a>
-						<a href="javascript:void(0)" class="link-hover link">Contact</a>
+			<Container padding="md" className="py-8">
+				<div class="text-center">
+					<Paragraph
+						size="sm"
+						variant="muted"
+						align="center"
+						text="© 2025 hexaTune LLC. All rights reserved."
+					/>
+					<div class="mt-4 flex justify-center gap-4">
+						<Link href="javascript:void(0)" label="Privacy" />
+						<Link href="javascript:void(0)" label="Terms" />
+						<Link href="javascript:void(0)" label="Contact" />
 					</div>
 				</div>
-			</div>
+			</Container>
 		{/snippet}
 	</PublicPageLayout>
 </Story>
@@ -293,72 +356,109 @@ SPDX-License-Identifier: MIT
 <Story name="Bordered Variant">
 	<PublicPageLayout variant="bordered">
 		{#snippet navbar()}
-			<div class="container mx-auto px-6 py-4">
+			<Container padding="md" className="py-4">
 				<div class="flex items-center justify-between">
 					<div class="flex items-center gap-2">
-						<div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center border-2 border-primary">
-							<span class="text-primary-content font-bold text-sm">B</span>
+						<div
+							class="bg-primary border-primary flex h-8 w-8 items-center justify-center rounded-lg border-2"
+						>
+							<span class="text-primary-content text-sm font-bold">B</span>
 						</div>
-						<span class="text-xl font-bold">Bordered Layout</span>
+						<Heading level="h2" size="xl" weight="bold" text="Bordered Layout" />
 					</div>
-					<nav class="hidden md:flex gap-6">
-						<button class="link-hover link btn-ghost btn-sm">Home</button>
-						<button class="link-hover link btn-ghost btn-sm">About</button>
-						<button class="link-hover link btn-ghost btn-sm">Contact</button>
+					<nav class="hidden gap-6 md:flex">
+						<Button variant="ghost" size="sm" label="Home" />
+						<Button variant="ghost" size="sm" label="About" />
+						<Button variant="ghost" size="sm" label="Contact" />
 					</nav>
 					<Button size="sm" outline={true} label="Menu" />
 				</div>
-			</div>
+			</Container>
 		{/snippet}
 
 		{#snippet header()}
-			<div class="bg-base-100 border-b-2 border-primary/20 py-16">
-				<div class="container mx-auto px-6 text-center">
-					<div class="inline-block p-4 border-4 border-primary/30 rounded-lg mb-6">
-						<h1 class="text-5xl font-bold mb-4">Bordered Variant</h1>
+			<div class="bg-base-100 border-primary/20 border-b-2 py-16">
+				<Container padding="md" centered={true} className="text-center">
+					<div class="border-primary/30 mb-6 inline-block rounded-lg border-4 p-4">
+						<div class="mb-4">
+							<Heading level="h1" size="4xl" weight="bold" align="center" text="Bordered Variant" />
+						</div>
 					</div>
-					<p class="text-xl mb-8 text-base-content/70">
-						Notice the prominent border around the entire layout. Perfect for modal-like pages, embedded content, or when you need clear visual boundaries.
-					</p>
-					<div class="flex gap-4 justify-center">
+					<Paragraph
+						size="xl"
+						variant="muted"
+						align="center"
+						class="mb-8"
+						text="Notice the prominent border around the entire layout. Perfect for modal-like pages, embedded content, or when you need clear visual boundaries."
+					/>
+					<div class="flex justify-center gap-4">
 						<Button size="lg" outline={true} variant="primary" label="Explore" />
 						<Button size="lg" variant="primary" label="Get Started" />
 					</div>
-				</div>
+				</Container>
 			</div>
 		{/snippet}
 
 		{#snippet children()}
 			<div class="space-y-8 py-12">
 				<section class="text-center">
-					<h2 class="text-3xl font-bold mb-4">Clear Boundaries</h2>
-					<p class="text-base-content/70 mb-8">
-						The bordered variant uses a thick border (border-4) with primary color tint, margin, and rounded corners to create distinct page boundaries.
-					</p>
-					<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-						<div class="card bg-base-200 border-2 border-base-300 shadow-lg">
-							<div class="card-body">
-								<h3 class="card-title">Modal Pages</h3>
-								<p>Perfect for modal-like pages that need to stand out from the background.</p>
-							</div>
-						</div>
-						<div class="card bg-base-200 border-2 border-base-300 shadow-lg">
-							<div class="card-body">
-								<h3 class="card-title">Embedded Content</h3>
-								<p>Great for embedded widgets or content that needs clear separation.</p>
-							</div>
-						</div>
+					<Heading
+						level="h2"
+						size="2xl"
+						weight="bold"
+						align="center"
+						class="mb-4"
+						text="Clear Boundaries"
+					/>
+					<Paragraph
+						variant="muted"
+						align="center"
+						class="mb-8"
+						text="The bordered variant uses a thick border (border-4) with primary color tint, margin, and rounded corners to create distinct page boundaries."
+					/>
+					<div class="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2">
+						<Card
+							title="Modal Pages"
+							bordered={true}
+							shadow={true}
+							shadowSize="lg"
+							class="bg-base-200 border-base-300 border-2"
+						>
+							{#snippet children()}
+								<Paragraph
+									text="Perfect for modal-like pages that need to stand out from the background."
+								/>
+							{/snippet}
+						</Card>
+						<Card
+							title="Embedded Content"
+							bordered={true}
+							shadow={true}
+							shadowSize="lg"
+							class="bg-base-200 border-base-300 border-2"
+						>
+							{#snippet children()}
+								<Paragraph
+									text="Great for embedded widgets or content that needs clear separation."
+								/>
+							{/snippet}
+						</Card>
 					</div>
 				</section>
 			</div>
 		{/snippet}
 
 		{#snippet footer()}
-			<div class="container mx-auto px-6 py-8 border-t-2 border-primary/20">
-				<div class="text-center text-sm text-base-content/60">
-					<p>© 2025 hexaTune LLC. All rights reserved.</p>
+			<Container padding="md" className="py-8 border-t-2 border-primary/20">
+				<div class="text-center">
+					<Paragraph
+						size="sm"
+						variant="muted"
+						align="center"
+						text="© 2025 hexaTune LLC. All rights reserved."
+					/>
 				</div>
-			</div>
+			</Container>
 		{/snippet}
 	</PublicPageLayout>
 </Story>
@@ -367,81 +467,141 @@ SPDX-License-Identifier: MIT
 <Story name="Gradient Variant">
 	<PublicPageLayout variant="gradient">
 		{#snippet navbar()}
-			<div class="container mx-auto px-6 py-4">
+			<Container padding="md" className="py-4">
 				<div class="flex items-center justify-between">
 					<div class="flex items-center gap-2">
-						<div class="w-8 h-8 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
-							<span class="text-primary-content font-bold text-sm">G</span>
+						<div
+							class="from-primary to-secondary flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br"
+						>
+							<span class="text-primary-content text-sm font-bold">G</span>
 						</div>
-						<span class="text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Gradient Layout</span>
+						<Heading
+							level="h2"
+							size="xl"
+							weight="bold"
+							gradient={true}
+							gradientFrom="primary"
+							gradientTo="secondary"
+							text="Gradient Layout"
+						/>
 					</div>
-					<nav class="hidden md:flex gap-6">
-						<button class="link-hover link btn-ghost btn-sm">Features</button>
-						<button class="link-hover link btn-ghost btn-sm">Pricing</button>
-						<button class="link-hover link btn-ghost btn-sm">About</button>
+					<nav class="hidden gap-6 md:flex">
+						<Button variant="ghost" size="sm" label="Features" />
+						<Button variant="ghost" size="sm" label="Pricing" />
+						<Button variant="ghost" size="sm" label="About" />
 					</nav>
 					<Button variant="primary" size="sm" label="Get Started" />
 				</div>
-			</div>
+			</Container>
 		{/snippet}
 
 		{#snippet header()}
-			<div class="bg-gradient-to-br from-primary/20 via-base-100 to-secondary/20 py-20">
-				<div class="container mx-auto px-6 text-center">
-					<h1 class="text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-						Gradient Variant
-					</h1>
-					<p class="text-xl mb-8 text-base-content/70">
-						Beautiful gradient backgrounds create depth and visual interest. Perfect for modern, eye-catching designs.
-					</p>
-					<div class="flex gap-4 justify-center">
+			<div class="from-primary/20 via-base-100 to-secondary/20 bg-gradient-to-br py-20">
+				<Container padding="md" centered={true} className="text-center">
+					<div class="mb-4">
+						<Heading
+							level="h1"
+							size="4xl"
+							weight="bold"
+							align="center"
+							gradient={true}
+							gradientFrom="primary"
+							gradientTo="secondary"
+							text="Gradient Variant"
+						/>
+					</div>
+					<Paragraph
+						size="xl"
+						variant="muted"
+						align="center"
+						class="mb-8"
+						text="Beautiful gradient backgrounds create depth and visual interest. Perfect for modern, eye-catching designs."
+					/>
+					<div class="flex justify-center gap-4">
 						<Button size="lg" variant="primary" label="Explore" />
 						<Button size="lg" variant="secondary" label="Learn More" />
 					</div>
-				</div>
+				</Container>
 			</div>
 		{/snippet}
 
 		{#snippet children()}
 			<div class="space-y-12 py-12">
 				<section class="text-center">
-					<h2 class="text-4xl font-bold mb-4">Gradient Magic</h2>
-					<p class="text-base-content/70 text-lg mb-8">
-						The gradient variant uses a diagonal gradient from primary to secondary colors, creating a modern, dynamic appearance.
-					</p>
-					<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-						<div class="card bg-base-100 shadow-xl border border-primary/10">
-							<div class="card-body">
-								<div class="w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-lg mb-4"></div>
-								<h3 class="card-title">Modern Design</h3>
-								<p>Gradients add depth and modern aesthetics to your layout.</p>
-							</div>
-						</div>
-						<div class="card bg-base-100 shadow-xl border border-secondary/10">
-							<div class="card-body">
-								<div class="w-12 h-12 bg-gradient-to-br from-secondary to-accent rounded-lg mb-4"></div>
-								<h3 class="card-title">Visual Interest</h3>
-								<p>Creates engaging, eye-catching designs that stand out.</p>
-							</div>
-						</div>
-						<div class="card bg-base-100 shadow-xl border border-accent/10">
-							<div class="card-body">
-								<div class="w-12 h-12 bg-gradient-to-br from-accent to-primary rounded-lg mb-4"></div>
-								<h3 class="card-title">Brand Identity</h3>
-								<p>Use your brand colors to create cohesive gradient designs.</p>
-							</div>
-						</div>
+					<Heading
+						level="h2"
+						size="3xl"
+						weight="bold"
+						align="center"
+						class="mb-4"
+						text="Gradient Magic"
+					/>
+					<Paragraph
+						variant="muted"
+						size="lg"
+						align="center"
+						class="mb-8"
+						text="The gradient variant uses a diagonal gradient from primary to secondary colors, creating a modern, dynamic appearance."
+					/>
+					<div class="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3">
+						<Card
+							title="Modern Design"
+							shadow={true}
+							shadowSize="xl"
+							bordered={true}
+							class="bg-base-100 border-primary/10 border"
+						>
+							{#snippet children()}
+								<div
+									class="from-primary to-secondary mb-4 h-12 w-12 rounded-lg bg-gradient-to-br"
+								></div>
+								<Paragraph text="Gradients add depth and modern aesthetics to your layout." />
+							{/snippet}
+						</Card>
+						<Card
+							title="Visual Interest"
+							shadow={true}
+							shadowSize="xl"
+							bordered={true}
+							class="bg-base-100 border-secondary/10 border"
+						>
+							{#snippet children()}
+								<div
+									class="from-secondary to-accent mb-4 h-12 w-12 rounded-lg bg-gradient-to-br"
+								></div>
+								<Paragraph text="Creates engaging, eye-catching designs that stand out." />
+							{/snippet}
+						</Card>
+						<Card
+							title="Brand Identity"
+							shadow={true}
+							shadowSize="xl"
+							bordered={true}
+							class="bg-base-100 border-accent/10 border"
+						>
+							{#snippet children()}
+								<div
+									class="from-accent to-primary mb-4 h-12 w-12 rounded-lg bg-gradient-to-br"
+								></div>
+								<Paragraph text="Use your brand colors to create cohesive gradient designs." />
+							{/snippet}
+						</Card>
 					</div>
 				</section>
 			</div>
 		{/snippet}
 
 		{#snippet footer()}
-			<div class="container mx-auto px-6 py-8">
-				<div class="text-center text-sm text-base-content/60">
-					<p>© 2025 hexaTune LLC. All rights reserved.</p>
+			<Container padding="md" className="py-8">
+				<div class="text-center">
+					<Paragraph
+						size="sm"
+						variant="muted"
+						align="center"
+						text="© 2025 hexaTune LLC. All rights reserved."
+					/>
 				</div>
-			</div>
+			</Container>
 		{/snippet}
 	</PublicPageLayout>
 </Story>
@@ -450,67 +610,92 @@ SPDX-License-Identifier: MIT
 <Story name="Filled Variant">
 	<PublicPageLayout variant="filled">
 		{#snippet navbar()}
-			<div class="container mx-auto px-6 py-4">
+			<Container padding="md" className="py-4">
 				<div class="flex items-center justify-between">
 					<div class="flex items-center gap-2">
-						<div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-							<span class="text-primary-content font-bold text-sm">F</span>
+						<div class="bg-primary flex h-8 w-8 items-center justify-center rounded-lg">
+							<span class="text-primary-content text-sm font-bold">F</span>
 						</div>
-						<span class="text-xl font-bold">Filled Layout</span>
+						<Heading level="h2" size="xl" weight="bold" text="Filled Layout" />
 					</div>
-					<nav class="hidden md:flex gap-6">
-						<button class="link-hover link btn-ghost btn-sm">Products</button>
-						<button class="link-hover link btn-ghost btn-sm">Services</button>
-						<button class="link-hover link btn-ghost btn-sm">Support</button>
+					<nav class="hidden gap-6 md:flex">
+						<Button variant="ghost" size="sm" label="Products" />
+						<Button variant="ghost" size="sm" label="Services" />
+						<Button variant="ghost" size="sm" label="Support" />
 					</nav>
 					<Button variant="primary" size="sm" label="Contact Us" />
 				</div>
-			</div>
+			</Container>
 		{/snippet}
 
 		{#snippet header()}
-			<div class="bg-base-300 border-b border-base-400 py-16">
-				<div class="container mx-auto px-6 text-center">
-					<h1 class="text-5xl font-bold mb-4">Filled Variant</h1>
-					<p class="text-xl mb-8 text-base-content/80">
-						Darker background (base-300) provides better contrast and makes content pop. Ideal for content-heavy pages and dashboards.
-					</p>
-					<div class="flex gap-4 justify-center">
+			<div class="bg-base-300 border-base-400 border-b py-16">
+				<Container padding="md" centered={true} className="text-center">
+					<div class="mb-4">
+						<Heading level="h1" size="4xl" weight="bold" align="center" text="Filled Variant" />
+					</div>
+					<Paragraph
+						size="xl"
+						variant="default"
+						align="center"
+						class="text-base-content/80 mb-8"
+						text="Darker background (base-300) provides better contrast and makes content pop. Ideal for content-heavy pages and dashboards."
+					/>
+					<div class="flex justify-center gap-4">
 						<Button size="lg" variant="primary" label="Get Started" />
 						<Button size="lg" outline={true} label="View Demo" />
 					</div>
-				</div>
+				</Container>
 			</div>
 		{/snippet}
 
 		{#snippet children()}
 			<div class="space-y-12 py-12">
 				<section class="text-center">
-					<h2 class="text-4xl font-bold mb-4">Enhanced Contrast</h2>
-					<p class="text-base-content/70 text-lg mb-8">
-						The filled variant uses base-300 for layout, navbar, and footer, creating a darker, more prominent appearance.
-					</p>
-					<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-						<div class="card bg-base-100 shadow-2xl">
-							<div class="card-body">
-								<h3 class="card-title text-2xl">Better Readability</h3>
-								<p class="text-base-content/80">
-									The darker background creates better contrast with white cards and content, improving readability.
-								</p>
-							</div>
-						</div>
-						<div class="card bg-base-100 shadow-2xl">
-							<div class="card-body">
-								<h3 class="card-title text-2xl">Content Focus</h3>
-								<p class="text-base-content/80">
-									Perfect for dashboards, admin panels, and content-heavy pages where you want content to stand out.
-								</p>
-							</div>
-						</div>
+					<Heading
+						level="h2"
+						size="3xl"
+						weight="bold"
+						align="center"
+						class="mb-4"
+						text="Enhanced Contrast"
+					/>
+					<Paragraph
+						variant="muted"
+						size="lg"
+						align="center"
+						class="mb-8"
+						text="The filled variant uses base-300 for layout, navbar, and footer, creating a darker, more prominent appearance."
+					/>
+					<div class="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2">
+						<Card title="Better Readability" shadow={true} shadowSize="2xl" class="bg-base-100">
+							{#snippet children()}
+								<div class="mb-2">
+									<Heading level="h3" size="2xl" weight="bold" text="Better Readability" />
+								</div>
+								<Paragraph
+									variant="default"
+									class="text-base-content/80"
+									text="The darker background creates better contrast with white cards and content, improving readability."
+								/>
+							{/snippet}
+						</Card>
+						<Card title="Content Focus" shadow={true} shadowSize="2xl" class="bg-base-100">
+							{#snippet children()}
+								<div class="mb-2">
+									<Heading level="h3" size="2xl" weight="bold" text="Content Focus" />
+								</div>
+								<Paragraph
+									variant="default"
+									class="text-base-content/80"
+									text="Perfect for dashboards, admin panels, and content-heavy pages where you want content to stand out."
+								/>
+							{/snippet}
+						</Card>
 					</div>
 				</section>
 				<section class="text-center">
-					<div class="stats stats-vertical lg:stats-horizontal shadow bg-base-100">
+					<div class="stats stats-vertical lg:stats-horizontal bg-base-100 shadow">
 						<div class="stat">
 							<div class="stat-title">Users</div>
 							<div class="stat-value text-primary">12K</div>
@@ -532,100 +717,160 @@ SPDX-License-Identifier: MIT
 		{/snippet}
 
 		{#snippet footer()}
-			<div class="container mx-auto px-6 py-8 border-t border-base-400">
-				<div class="text-center text-sm text-base-content/60">
-					<p>© 2025 hexaTune LLC. All rights reserved.</p>
+			<Container padding="md" className="py-8 border-t border-base-400">
+				<div class="text-center">
+					<Paragraph
+						size="sm"
+						variant="muted"
+						align="center"
+						text="© 2025 hexaTune LLC. All rights reserved."
+					/>
 				</div>
-			</div>
+			</Container>
 		{/snippet}
 	</PublicPageLayout>
 </Story>
 
 <!-- Ghost Variant Story -->
 <Story name="Ghost Variant">
-	<div class="min-h-screen bg-gradient-to-br from-primary/20 via-secondary/20 to-accent/20 p-4">
+	<div class="from-primary/20 via-secondary/20 to-accent/20 min-h-screen bg-gradient-to-br p-4">
 		<PublicPageLayout variant="ghost">
 			{#snippet navbar()}
-				<div class="container mx-auto px-6 py-4">
+				<Container padding="md" className="py-4">
 					<div class="flex items-center justify-between">
 						<div class="flex items-center gap-2">
-							<div class="w-8 h-8 bg-primary/50 backdrop-blur-sm rounded-lg flex items-center justify-center border border-primary/30">
-								<span class="text-primary-content font-bold text-sm">G</span>
+							<div
+								class="bg-primary/50 border-primary/30 flex h-8 w-8 items-center justify-center rounded-lg border backdrop-blur-sm"
+							>
+								<span class="text-primary-content text-sm font-bold">G</span>
 							</div>
-							<span class="text-xl font-bold">Ghost Layout</span>
+							<Heading level="h2" size="xl" weight="bold" text="Ghost Layout" />
 						</div>
-						<nav class="hidden md:flex gap-6">
-							<button class="link-hover link btn-ghost btn-sm">Home</button>
-							<button class="link-hover link btn-ghost btn-sm">Portfolio</button>
-							<button class="link-hover link btn-ghost btn-sm">Contact</button>
+						<nav class="hidden gap-6 md:flex">
+							<Button variant="ghost" size="sm" label="Home" />
+							<Button variant="ghost" size="sm" label="Portfolio" />
+							<Button variant="ghost" size="sm" label="Contact" />
 						</nav>
 						<Button size="sm" outline={true} label="Menu" />
 					</div>
-				</div>
+				</Container>
 			{/snippet}
 
 			{#snippet header()}
-				<div class="bg-base-200/30 backdrop-blur-sm border-b border-base-300/50 py-16">
-					<div class="container mx-auto px-6 text-center">
-						<h1 class="text-5xl font-bold mb-4">Ghost Variant</h1>
-						<p class="text-xl mb-8 text-base-content/80">
-							Semi-transparent background with backdrop blur creates a modern, glass-morphism effect. Perfect for overlays and modern UI designs.
-						</p>
-						<div class="flex gap-4 justify-center">
+				<div class="bg-base-200/30 border-base-300/50 border-b py-16 backdrop-blur-sm">
+					<Container padding="md" centered={true} className="text-center">
+						<div class="mb-4">
+							<Heading level="h1" size="4xl" weight="bold" align="center" text="Ghost Variant" />
+						</div>
+						<Paragraph
+							size="xl"
+							variant="default"
+							align="center"
+							class="text-base-content/80 mb-8"
+							text="Semi-transparent background with backdrop blur creates a modern, glass-morphism effect. Perfect for overlays and modern UI designs."
+						/>
+						<div class="flex justify-center gap-4">
 							<Button size="lg" variant="primary" label="Explore" />
 							<Button size="lg" outline={true} label="Learn More" />
 						</div>
-					</div>
+					</Container>
 				</div>
 			{/snippet}
 
 			{#snippet children()}
 				<div class="space-y-12 py-12">
 					<section class="text-center">
-						<h2 class="text-4xl font-bold mb-4">Glass Morphism</h2>
-						<p class="text-base-content/70 text-lg mb-8">
-							The ghost variant uses semi-transparent backgrounds (base-200/30) with backdrop blur for a modern, translucent effect.
-						</p>
-						<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-							<div class="card bg-base-100/80 backdrop-blur-md shadow-xl border border-base-300/50">
-								<div class="card-body">
-									<h3 class="card-title">Modern Design</h3>
-									<p>Glass-morphism effect creates a modern, premium appearance.</p>
-								</div>
-							</div>
-							<div class="card bg-base-100/80 backdrop-blur-md shadow-xl border border-base-300/50">
-								<div class="card-body">
-									<h3 class="card-title">Overlay Friendly</h3>
-									<p>Perfect for overlays, modals, and content that needs to blend with backgrounds.</p>
-								</div>
-							</div>
-							<div class="card bg-base-100/80 backdrop-blur-md shadow-xl border border-base-300/50">
-								<div class="card-body">
-									<h3 class="card-title">Visual Depth</h3>
-									<p>Creates visual depth and layering in your design.</p>
-								</div>
-							</div>
+						<Heading
+							level="h2"
+							size="3xl"
+							weight="bold"
+							align="center"
+							class="mb-4"
+							text="Glass Morphism"
+						/>
+						<Paragraph
+							variant="muted"
+							size="lg"
+							align="center"
+							class="mb-8"
+							text="The ghost variant uses semi-transparent backgrounds (base-200/30) with backdrop blur for a modern, translucent effect."
+						/>
+						<div class="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3">
+							<Card
+								title="Modern Design"
+								glass={true}
+								shadow={true}
+								shadowSize="xl"
+								bordered={true}
+								class="bg-base-100/80 border-base-300/50 border backdrop-blur-md"
+							>
+								{#snippet children()}
+									<Paragraph text="Glass-morphism effect creates a modern, premium appearance." />
+								{/snippet}
+							</Card>
+							<Card
+								title="Overlay Friendly"
+								glass={true}
+								shadow={true}
+								shadowSize="xl"
+								bordered={true}
+								class="bg-base-100/80 border-base-300/50 border backdrop-blur-md"
+							>
+								{#snippet children()}
+									<Paragraph
+										text="Perfect for overlays, modals, and content that needs to blend with backgrounds."
+									/>
+								{/snippet}
+							</Card>
+							<Card
+								title="Visual Depth"
+								glass={true}
+								shadow={true}
+								shadowSize="xl"
+								bordered={true}
+								class="bg-base-100/80 border-base-300/50 border backdrop-blur-md"
+							>
+								{#snippet children()}
+									<Paragraph text="Creates visual depth and layering in your design." />
+								{/snippet}
+							</Card>
 						</div>
 					</section>
 					<section class="text-center">
-						<div class="card bg-base-100/60 backdrop-blur-lg shadow-2xl border border-primary/20 max-w-2xl mx-auto">
-							<div class="card-body">
-								<h3 class="card-title text-2xl">See Through Effect</h3>
-								<p class="text-base-content/80">
-									Notice how the background gradient shows through the semi-transparent layout. This creates a beautiful, layered effect.
-								</p>
-							</div>
-						</div>
+						<Card
+							title="See Through Effect"
+							glass={true}
+							shadow={true}
+							shadowSize="2xl"
+							bordered={true}
+							class="bg-base-100/60 border-primary/20 mx-auto max-w-2xl border backdrop-blur-lg"
+						>
+							{#snippet children()}
+								<div class="mb-2">
+									<Heading level="h3" size="2xl" weight="bold" text="See Through Effect" />
+								</div>
+								<Paragraph
+									variant="default"
+									class="text-base-content/80"
+									text="Notice how the background gradient shows through the semi-transparent layout. This creates a beautiful, layered effect."
+								/>
+							{/snippet}
+						</Card>
 					</section>
 				</div>
 			{/snippet}
 
 			{#snippet footer()}
-				<div class="container mx-auto px-6 py-8 border-t border-base-300/50">
-					<div class="text-center text-sm text-base-content/60">
-						<p>© 2025 hexaTune LLC. All rights reserved.</p>
+				<Container padding="md" className="py-8 border-t border-base-300/50">
+					<div class="text-center">
+						<Paragraph
+							size="sm"
+							variant="muted"
+							align="center"
+							text="© 2025 hexaTune LLC. All rights reserved."
+						/>
 					</div>
-				</div>
+				</Container>
 			{/snippet}
 		</PublicPageLayout>
 	</div>
@@ -635,25 +880,28 @@ SPDX-License-Identifier: MIT
 <Story name="Constrained Width">
 	<PublicPageLayout maxWidth="lg" centered={true}>
 		{#snippet navbar()}
-			<div class="container mx-auto px-6 py-4">
+			<Container padding="md" className="py-4">
 				<div class="flex items-center justify-between">
-					<div class="text-xl font-bold">Narrow Layout</div>
+					<Heading level="h2" size="xl" weight="bold" text="Narrow Layout" />
 					<Button variant="ghost" size="sm" label="Menu" />
 				</div>
-			</div>
+			</Container>
 		{/snippet}
 
 		{#snippet children()}
 			<div class="space-y-4 py-12">
-				<h1 class="text-4xl font-bold text-center">Constrained Width</h1>
-				<p class="text-center text-base-content/70">
-					This content is constrained to a maximum width (lg) and centered. Perfect for blog posts, articles, or focused content.
-				</p>
-				<div class="prose max-w-none mt-8">
-					<p class="text-base-content/80">
-						The constrained width makes long-form content more readable by limiting line length.
-						This improves reading comprehension and reduces eye strain.
-					</p>
+				<Heading level="h1" size="3xl" weight="bold" align="center" text="Constrained Width" />
+				<Paragraph
+					variant="muted"
+					align="center"
+					text="This content is constrained to a maximum width (lg) and centered. Perfect for blog posts, articles, or focused content."
+				/>
+				<div class="prose mt-8 max-w-none">
+					<Paragraph
+						variant="default"
+						class="text-base-content/80"
+						text="The constrained width makes long-form content more readable by limiting line length. This improves reading comprehension and reduces eye strain."
+					/>
 				</div>
 			</div>
 		{/snippet}
@@ -664,20 +912,25 @@ SPDX-License-Identifier: MIT
 <Story name="No Padding">
 	<PublicPageLayout padding="none">
 		{#snippet navbar()}
-			<div class="w-full px-6 py-4 bg-base-100 border-b">
+			<div class="bg-base-100 w-full border-b px-6 py-4">
 				<div class="text-xl font-bold">No Padding Layout</div>
 			</div>
 		{/snippet}
 
 		{#snippet children()}
-			<div class="p-6 bg-base-200">
-				<h1 class="text-4xl font-bold mb-4">No Padding</h1>
-				<p class="mb-4">This layout has no automatic padding. All spacing is controlled manually, giving you full control over the layout.</p>
-				<div class="card bg-base-100 shadow">
-					<div class="card-body">
-						<p>This is useful when you want edge-to-edge content or custom spacing.</p>
-					</div>
-				</div>
+			<div class="bg-base-200 p-6">
+				<Heading level="h1" size="3xl" weight="bold" class="mb-4" text="No Padding" />
+				<Paragraph
+					class="mb-4"
+					text="This layout has no automatic padding. All spacing is controlled manually, giving you full control over the layout."
+				/>
+				<Card shadow={true} class="bg-base-100">
+					{#snippet children()}
+						<Paragraph
+							text="This is useful when you want edge-to-edge content or custom spacing."
+						/>
+					{/snippet}
+				</Card>
 			</div>
 		{/snippet}
 	</PublicPageLayout>
@@ -686,23 +939,26 @@ SPDX-License-Identifier: MIT
 <Story name="Large Padding">
 	<PublicPageLayout padding="xl">
 		{#snippet navbar()}
-			<div class="container mx-auto px-6 py-4">
-				<div class="text-xl font-bold">Spacious Layout</div>
-			</div>
+			<Container padding="md" className="py-4">
+				<Heading level="h2" size="xl" weight="bold" text="Spacious Layout" />
+			</Container>
 		{/snippet}
 
 		{#snippet children()}
 			<div class="space-y-4">
-				<h1 class="text-4xl font-bold text-center">Large Padding</h1>
-				<p class="text-center text-base-content/70">
-					This layout has extra large padding (xl) for spacious, breathable layouts.
-				</p>
-				<div class="card bg-base-200 shadow-lg mt-8">
-					<div class="card-body">
-						<h3 class="card-title">Spacious Design</h3>
-						<p>Large padding creates more white space, making the layout feel more premium and less cramped.</p>
-					</div>
-				</div>
+				<Heading level="h1" size="3xl" weight="bold" align="center" text="Large Padding" />
+				<Paragraph
+					variant="muted"
+					align="center"
+					text="This layout has extra large padding (xl) for spacious, breathable layouts."
+				/>
+				<Card title="Spacious Design" shadow={true} shadowSize="lg" class="bg-base-200 mt-8">
+					{#snippet children()}
+						<Paragraph
+							text="Large padding creates more white space, making the layout feel more premium and less cramped."
+						/>
+					{/snippet}
+				</Card>
 			</div>
 		{/snippet}
 	</PublicPageLayout>
@@ -712,24 +968,28 @@ SPDX-License-Identifier: MIT
 <Story name="Loading State">
 	<PublicPageLayout loading={true}>
 		{#snippet navbar()}
-			<div class="container mx-auto px-6 py-4">
-				<div class="text-xl font-bold">Loading Page</div>
-			</div>
+			<Container padding="md" className="py-4">
+				<Heading level="h2" size="xl" weight="bold" text="Loading Page" />
+			</Container>
 		{/snippet}
 
 		{#snippet header()}
 			<div class="bg-primary text-primary-content py-20">
-				<div class="container mx-auto px-6 text-center">
-					<h1 class="text-5xl font-bold">Loading...</h1>
-				</div>
+				<Container padding="md" centered={true} className="text-center">
+					<div class="text-primary-content">
+						<Heading level="h1" size="4xl" weight="bold" text="Loading..." />
+					</div>
+				</Container>
 			</div>
 		{/snippet}
 
 		{#snippet children()}
 			<div class="space-y-4 py-12">
-				<p class="text-center text-base-content/70">
-					When loading is true, a spinner is displayed instead of the content.
-				</p>
+				<Paragraph
+					variant="muted"
+					align="center"
+					text="When loading is true, a spinner is displayed instead of the content."
+				/>
 			</div>
 		{/snippet}
 	</PublicPageLayout>
@@ -748,25 +1008,30 @@ SPDX-License-Identifier: MIT
 
 		{#snippet header()}
 			<div class="bg-base-200 py-16">
-				<div class="container mx-auto px-6 text-center">
-					<h1 class="text-5xl font-bold mb-4">Disabled State</h1>
-					<p class="text-xl mb-8 text-base-content/70">
-						When disabled is true, the layout becomes non-interactive with reduced opacity.
-					</p>
-				</div>
+				<Container padding="md" centered={true} className="text-center">
+					<div class="mb-4">
+						<Heading level="h1" size="4xl" weight="bold" align="center" text="Disabled State" />
+					</div>
+					<Paragraph
+						size="xl"
+						variant="muted"
+						align="center"
+						class="mb-8"
+						text="When disabled is true, the layout becomes non-interactive with reduced opacity."
+					/>
+				</Container>
 			</div>
 		{/snippet}
 
 		{#snippet children()}
 			<div class="space-y-4 py-12">
-				<div class="card bg-base-200 shadow-lg">
-					<div class="card-body">
-						<h3 class="card-title">Disabled Layout</h3>
-						<p>
-							The layout is disabled and all pointer events are blocked. This is useful when you want to prevent user interaction temporarily.
-						</p>
-					</div>
-				</div>
+				<Card title="Disabled Layout" shadow={true} shadowSize="lg" class="bg-base-200">
+					{#snippet children()}
+						<Paragraph
+							text="The layout is disabled and all pointer events are blocked. This is useful when you want to prevent user interaction temporarily."
+						/>
+					{/snippet}
+				</Card>
 			</div>
 		{/snippet}
 	</PublicPageLayout>
@@ -775,58 +1040,74 @@ SPDX-License-Identifier: MIT
 <Story name="Error State">
 	<PublicPageLayout>
 		{#snippet navbar()}
-			<div class="container mx-auto px-6 py-4">
+			<Container padding="md" className="py-4">
 				<div class="flex items-center justify-between">
-					<div class="text-xl font-bold">Error Page</div>
+					<Heading level="h2" size="xl" weight="bold" text="Error Page" />
 					<Button variant="ghost" size="sm" label="Home" />
 				</div>
-			</div>
+			</Container>
 		{/snippet}
 
 		{#snippet children()}
 			<div class="space-y-6 py-12">
 				<div class="text-center">
-					<div class="text-6xl mb-4">⚠️</div>
-					<h1 class="text-5xl font-bold mb-4 text-error">Error 404</h1>
-					<p class="text-xl mb-8 text-base-content/70">
-						Page not found. The requested resource could not be located.
-					</p>
-					<div class="flex gap-4 justify-center">
+					<div class="mb-4 text-6xl">⚠️</div>
+					<div class="mb-4">
+						<Heading
+							level="h1"
+							size="4xl"
+							weight="bold"
+							variant="error"
+							align="center"
+							text="Error 404"
+						/>
+					</div>
+					<Paragraph
+						size="xl"
+						variant="muted"
+						align="center"
+						class="mb-8"
+						text="Page not found. The requested resource could not be located."
+					/>
+					<div class="flex justify-center gap-4">
 						<Button variant="primary" size="lg" label="Go Home" />
 						<Button variant="primary" size="lg" outline={true} label="Go Back" />
 					</div>
 				</div>
-				<div class="alert alert-error max-w-2xl mx-auto">
-					<svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-					</svg>
-					<span>An error occurred while loading this page. Please try again later.</span>
-				</div>
+				<Alert
+					variant="error"
+					description="An error occurred while loading this page. Please try again later."
+					class="mx-auto max-w-2xl"
+				/>
 			</div>
 		{/snippet}
 	</PublicPageLayout>
 </Story>
 
 <Story name="No Background">
-	<div class="bg-base-300 p-4 min-h-screen">
+	<div class="bg-base-300 min-h-screen p-4">
 		<PublicPageLayout background={false}>
 			{#snippet navbar()}
-				<div class="container mx-auto px-6 py-4 bg-base-100 rounded-lg mb-4">
+				<div class="bg-base-100 container mx-auto mb-4 rounded-lg px-6 py-4">
 					<div class="text-xl font-bold">Transparent Layout</div>
 				</div>
 			{/snippet}
 
 			{#snippet children()}
-				<div class="space-y-4 py-12 bg-base-100 rounded-lg p-6">
-					<h1 class="text-4xl font-bold text-center">No Background</h1>
-					<p class="text-center text-base-content/70">
-						This layout has no background color (transparent). The gray background you see is from the parent container.
-					</p>
-					<div class="card bg-base-200 shadow mt-8">
-						<div class="card-body">
-							<p>This is useful when you want the layout to blend with its parent container.</p>
-						</div>
-					</div>
+				<div class="bg-base-100 space-y-4 rounded-lg p-6 py-12">
+					<Heading level="h1" size="3xl" weight="bold" align="center" text="No Background" />
+					<Paragraph
+						variant="muted"
+						align="center"
+						text="This layout has no background color (transparent). The gray background you see is from the parent container."
+					/>
+					<Card shadow={true} class="bg-base-200 mt-8">
+						{#snippet children()}
+							<Paragraph
+								text="This is useful when you want the layout to blend with its parent container."
+							/>
+						{/snippet}
+					</Card>
 				</div>
 			{/snippet}
 		</PublicPageLayout>
@@ -836,23 +1117,25 @@ SPDX-License-Identifier: MIT
 <Story name="Non-Sticky Navbar">
 	<PublicPageLayout stickyNavbar={false}>
 		{#snippet navbar()}
-			<div class="container mx-auto px-6 py-4">
+			<Container padding="md" className="py-4">
 				<div class="flex items-center justify-between">
-					<div class="text-xl font-bold">Logo</div>
+					<Heading level="h2" size="xl" weight="bold" text="Logo" />
 					<nav class="flex gap-6">
-						<a href="javascript:void(0)" class="link-hover link">Home</a>
-						<a href="javascript:void(0)" class="link-hover link">About</a>
+						<Link href="javascript:void(0)" label="Home" />
+						<Link href="javascript:void(0)" label="About" />
 					</nav>
 				</div>
-			</div>
+			</Container>
 		{/snippet}
 
 		{#snippet children()}
 			<div class="space-y-4 py-12">
-				<h1 class="text-4xl font-bold text-center">Non-Sticky Navbar</h1>
-				<p class="text-center text-base-content/70">
-					The navbar scrolls with the page content.
-				</p>
+				<Heading level="h1" size="3xl" weight="bold" align="center" text="Non-Sticky Navbar" />
+				<Paragraph
+					variant="muted"
+					align="center"
+					text="The navbar scrolls with the page content."
+				/>
 			</div>
 		{/snippet}
 	</PublicPageLayout>
@@ -862,9 +1145,11 @@ SPDX-License-Identifier: MIT
 <Story name="Accessibility Test">
 	<PublicPageLayout ariaLabel="Accessible public page layout example">
 		{#snippet navbar()}
-			<div class="container mx-auto px-6 py-4">
+			<Container padding="md" className="py-4">
 				<div class="flex items-center justify-between">
-					<div class="text-xl font-bold" role="banner">Accessible Layout</div>
+					<div role="banner">
+						<Heading level="h2" size="xl" weight="bold" text="Accessible Layout" />
+					</div>
 					<nav aria-label="Main navigation">
 						<div class="flex gap-4">
 							<Button variant="ghost" size="sm" label="Home" ariaLabel="Navigate to home page" />
@@ -872,51 +1157,67 @@ SPDX-License-Identifier: MIT
 						</div>
 					</nav>
 				</div>
-			</div>
+			</Container>
 		{/snippet}
 
 		{#snippet header()}
 			<div class="bg-base-200 py-16">
-				<div class="container mx-auto px-6 text-center">
-					<h1 class="text-5xl font-bold mb-4">Accessibility Features</h1>
-					<p class="text-xl mb-8 text-base-content/70">
-						This layout includes proper ARIA labels, semantic HTML, and keyboard navigation support.
-					</p>
-				</div>
+				<Container padding="md" centered={true} className="text-center">
+					<div class="mb-4">
+						<Heading
+							level="h1"
+							size="4xl"
+							weight="bold"
+							align="center"
+							text="Accessibility Features"
+						/>
+					</div>
+					<Paragraph
+						size="xl"
+						variant="muted"
+						align="center"
+						class="mb-8"
+						text="This layout includes proper ARIA labels, semantic HTML, and keyboard navigation support."
+					/>
+				</Container>
 			</div>
 		{/snippet}
 
 		{#snippet children()}
 			<div class="space-y-8 py-12">
 				<section aria-labelledby="accessibility-features">
-					<h2 id="accessibility-features" class="text-3xl font-bold mb-4 text-center">
-						Accessibility Checklist
-					</h2>
-					<div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-						<div class="card bg-base-200 shadow-lg">
-							<div class="card-body">
-								<h3 class="card-title">✅ ARIA Labels</h3>
-								<p>All interactive elements have proper ARIA labels for screen readers.</p>
-							</div>
-						</div>
-						<div class="card bg-base-200 shadow-lg">
-							<div class="card-body">
-								<h3 class="card-title">✅ Semantic HTML</h3>
-								<p>Uses proper semantic elements (nav, header, main, footer).</p>
-							</div>
-						</div>
-						<div class="card bg-base-200 shadow-lg">
-							<div class="card-body">
-								<h3 class="card-title">✅ Keyboard Navigation</h3>
-								<p>All interactive elements are keyboard accessible.</p>
-							</div>
-						</div>
-						<div class="card bg-base-200 shadow-lg">
-							<div class="card-body">
-								<h3 class="card-title">✅ Responsive Design</h3>
-								<p>Layout adapts to different screen sizes and devices.</p>
-							</div>
-						</div>
+					<div id="accessibility-features" class="mb-4">
+						<Heading
+							level="h2"
+							size="2xl"
+							weight="bold"
+							align="center"
+							text="Accessibility Checklist"
+						/>
+					</div>
+					<div class="mx-auto grid max-w-4xl grid-cols-1 gap-6 md:grid-cols-2">
+						<Card title="✅ ARIA Labels" shadow={true} shadowSize="lg" class="bg-base-200">
+							{#snippet children()}
+								<Paragraph
+									text="All interactive elements have proper ARIA labels for screen readers."
+								/>
+							{/snippet}
+						</Card>
+						<Card title="✅ Semantic HTML" shadow={true} shadowSize="lg" class="bg-base-200">
+							{#snippet children()}
+								<Paragraph text="Uses proper semantic elements (nav, header, main, footer)." />
+							{/snippet}
+						</Card>
+						<Card title="✅ Keyboard Navigation" shadow={true} shadowSize="lg" class="bg-base-200">
+							{#snippet children()}
+								<Paragraph text="All interactive elements are keyboard accessible." />
+							{/snippet}
+						</Card>
+						<Card title="✅ Responsive Design" shadow={true} shadowSize="lg" class="bg-base-200">
+							{#snippet children()}
+								<Paragraph text="Layout adapts to different screen sizes and devices." />
+							{/snippet}
+						</Card>
 					</div>
 				</section>
 			</div>
@@ -924,7 +1225,7 @@ SPDX-License-Identifier: MIT
 
 		{#snippet footer()}
 			<div class="container mx-auto px-6 py-8">
-				<div class="text-center text-sm text-base-content/60">
+				<div class="text-base-content/60 text-center text-sm">
 					<p>© 2025 hexaTune LLC. All rights reserved.</p>
 				</div>
 			</div>
@@ -936,44 +1237,56 @@ SPDX-License-Identifier: MIT
 <Story name="Responsive Design">
 	<PublicPageLayout>
 		{#snippet navbar()}
-			<div class="container mx-auto px-4 sm:px-6 py-4">
-				<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-					<div class="text-xl font-bold">Responsive Layout</div>
+			<Container padding="sm" className="py-4 px-4 sm:px-6">
+				<div class="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+					<Heading level="h2" size="xl" weight="bold" text="Responsive Layout" />
 					<nav class="flex flex-wrap gap-2 sm:gap-4">
 						<Button variant="ghost" size="sm" label="Home" />
 						<Button variant="ghost" size="sm" label="About" />
 						<Button variant="ghost" size="sm" label="Contact" />
 					</nav>
 				</div>
-			</div>
+			</Container>
 		{/snippet}
 
 		{#snippet children()}
 			<div class="space-y-8 py-8 sm:py-12">
-				<section class="text-center px-4 sm:px-6">
-					<h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">Responsive Design</h1>
-					<p class="text-base sm:text-lg lg:text-xl mb-8 text-base-content/70">
-						This layout adapts to different screen sizes using Tailwind's responsive breakpoints.
-					</p>
-					<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mt-8">
-						<div class="card bg-base-200 shadow-lg">
-							<div class="card-body">
-								<h3 class="card-title text-lg">Mobile</h3>
-								<p class="text-sm">Single column layout on mobile devices.</p>
-							</div>
-						</div>
-						<div class="card bg-base-200 shadow-lg">
-							<div class="card-body">
-								<h3 class="card-title text-lg">Tablet</h3>
-								<p class="text-sm">Two column layout on tablet devices.</p>
-							</div>
-						</div>
-						<div class="card bg-base-200 shadow-lg">
-							<div class="card-body">
-								<h3 class="card-title text-lg">Desktop</h3>
-								<p class="text-sm">Three column layout on desktop screens.</p>
-							</div>
-						</div>
+				<section class="px-4 text-center sm:px-6">
+					<div class="mb-4 sm:text-3xl lg:text-4xl">
+						<Heading level="h1" size="2xl" weight="bold" align="center" text="Responsive Design" />
+					</div>
+					<Paragraph
+						variant="muted"
+						size="base"
+						align="center"
+						class="mb-8 sm:text-lg lg:text-xl"
+						text="This layout adapts to different screen sizes using Tailwind's responsive breakpoints."
+					/>
+					<div class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+						<Card title="Mobile" shadow={true} shadowSize="lg" class="bg-base-200">
+							{#snippet children()}
+								<div class="mb-2">
+									<Heading level="h3" size="lg" weight="bold" text="Mobile" />
+								</div>
+								<Paragraph size="sm" text="Single column layout on mobile devices." />
+							{/snippet}
+						</Card>
+						<Card title="Tablet" shadow={true} shadowSize="lg" class="bg-base-200">
+							{#snippet children()}
+								<div class="mb-2">
+									<Heading level="h3" size="lg" weight="bold" text="Tablet" />
+								</div>
+								<Paragraph size="sm" text="Two column layout on tablet devices." />
+							{/snippet}
+						</Card>
+						<Card title="Desktop" shadow={true} shadowSize="lg" class="bg-base-200">
+							{#snippet children()}
+								<div class="mb-2">
+									<Heading level="h3" size="lg" weight="bold" text="Desktop" />
+								</div>
+								<Paragraph size="sm" text="Three column layout on desktop screens." />
+							{/snippet}
+						</Card>
 					</div>
 				</section>
 			</div>
@@ -998,4 +1311,3 @@ SPDX-License-Identifier: MIT
 		showHeader: true
 	}}
 />
-

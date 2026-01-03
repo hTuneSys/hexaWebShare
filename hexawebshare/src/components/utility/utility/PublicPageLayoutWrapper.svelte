@@ -64,12 +64,12 @@ SPDX-License-Identifier: MIT
 			<div class="container mx-auto px-6 py-4">
 				<div class="flex items-center justify-between">
 					<div class="flex items-center gap-2">
-						<div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-							<span class="text-primary-content font-bold text-sm">H</span>
+						<div class="bg-primary flex h-8 w-8 items-center justify-center rounded-lg">
+							<span class="text-primary-content text-sm font-bold">H</span>
 						</div>
 						<span class="text-xl font-bold">hexaWebShare</span>
 					</div>
-					<nav class="hidden md:flex gap-6">
+					<nav class="hidden gap-6 md:flex">
 						<a href="#" class="link-hover link">Features</a>
 						<a href="#" class="link-hover link">Pricing</a>
 						<a href="#" class="link-hover link">Docs</a>
@@ -86,13 +86,13 @@ SPDX-License-Identifier: MIT
 
 	{#snippet header()}
 		{#if showHeader}
-			<div class="bg-gradient-to-r from-primary to-secondary text-primary-content py-20">
+			<div class="from-primary to-secondary text-primary-content bg-gradient-to-r py-20">
 				<div class="container mx-auto px-6 text-center">
-					<h1 class="text-5xl font-bold mb-4">Welcome to hexaWebShare</h1>
-					<p class="text-xl mb-8 opacity-90">
+					<h1 class="mb-4 text-5xl font-bold">Welcome to hexaWebShare</h1>
+					<p class="mb-8 text-xl opacity-90">
 						Build beautiful web applications with our comprehensive component library
 					</p>
-					<div class="flex gap-4 justify-center">
+					<div class="flex justify-center gap-4">
 						<button class="btn btn-lg btn-accent">Get Started</button>
 						<button class="btn btn-lg btn-outline btn-primary-content">Learn More</button>
 					</div>
@@ -104,11 +104,11 @@ SPDX-License-Identifier: MIT
 	{#snippet children()}
 		<div class="space-y-12 py-12">
 			<section class="text-center">
-				<h2 class="text-4xl font-bold mb-4">Features</h2>
-				<p class="text-base-content/70 text-lg mb-8">
+				<h2 class="mb-4 text-4xl font-bold">Features</h2>
+				<p class="text-base-content/70 mb-8 text-lg">
 					Everything you need to build modern web applications
 				</p>
-				<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+				<div class="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3">
 					<div class="card bg-base-200 shadow-lg">
 						<div class="card-body">
 							<h3 class="card-title">Fast & Reliable</h3>
@@ -131,7 +131,7 @@ SPDX-License-Identifier: MIT
 			</section>
 
 			<section class="text-center">
-				<h2 class="text-4xl font-bold mb-4">Why Choose Us?</h2>
+				<h2 class="mb-4 text-4xl font-bold">Why Choose Us?</h2>
 				<p class="text-base-content/70 text-lg">
 					Join thousands of developers building amazing applications with our component library.
 				</p>
@@ -142,9 +142,9 @@ SPDX-License-Identifier: MIT
 	{#snippet footer()}
 		{#if showFooter}
 			<div class="container mx-auto px-6 py-8">
-				<div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+				<div class="mb-8 grid grid-cols-1 gap-8 md:grid-cols-4">
 					<div>
-						<h3 class="font-bold text-lg mb-4">Product</h3>
+						<h3 class="mb-4 text-lg font-bold">Product</h3>
 						<ul class="space-y-2 text-sm">
 							<li><a href="#" class="link-hover link">Features</a></li>
 							<li><a href="#" class="link-hover link">Pricing</a></li>
@@ -152,7 +152,7 @@ SPDX-License-Identifier: MIT
 						</ul>
 					</div>
 					<div>
-						<h3 class="font-bold text-lg mb-4">Company</h3>
+						<h3 class="mb-4 text-lg font-bold">Company</h3>
 						<ul class="space-y-2 text-sm">
 							<li><a href="#" class="link-hover link">About</a></li>
 							<li><a href="#" class="link-hover link">Blog</a></li>
@@ -160,7 +160,7 @@ SPDX-License-Identifier: MIT
 						</ul>
 					</div>
 					<div>
-						<h3 class="font-bold text-lg mb-4">Legal</h3>
+						<h3 class="mb-4 text-lg font-bold">Legal</h3>
 						<ul class="space-y-2 text-sm">
 							<li><a href="#" class="link-hover link">Privacy</a></li>
 							<li><a href="#" class="link-hover link">Terms</a></li>
@@ -168,7 +168,7 @@ SPDX-License-Identifier: MIT
 						</ul>
 					</div>
 					<div>
-						<h3 class="font-bold text-lg mb-4">Connect</h3>
+						<h3 class="mb-4 text-lg font-bold">Connect</h3>
 						<ul class="space-y-2 text-sm">
 							<li><a href="#" class="link-hover link">Twitter</a></li>
 							<li><a href="#" class="link-hover link">GitHub</a></li>
@@ -176,11 +176,10 @@ SPDX-License-Identifier: MIT
 						</ul>
 					</div>
 				</div>
-				<div class="border-t border-base-300 pt-8 text-center text-sm text-base-content/60">
+				<div class="border-base-300 text-base-content/60 border-t pt-8 text-center text-sm">
 					<p>© 2025 hexaTune LLC. All rights reserved.</p>
 				</div>
 			</div>
 		{/if}
 	{/snippet}
 </PublicPageLayout>
-
