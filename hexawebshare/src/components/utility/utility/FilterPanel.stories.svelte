@@ -346,44 +346,46 @@ SPDX-License-Identifier: MIT
 	{/snippet}
 </Story>
 
-<Story
-	name="With Header Actions"
-	args={{
-		title: 'Filter Products',
-		showApplyButton: true,
-		showResetButton: true
-	}}
->
-	{#snippet headerActions()}
-		<button type="button" class="btn btn-ghost btn-sm" aria-label="Collapse filters">
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				class="h-5 w-5"
-				fill="none"
-				viewBox="0 0 24 24"
-				stroke="currentColor"
-			>
-				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-			</svg>
-		</button>
-	{/snippet}
-	{#snippet children()}
-		<div>
-			<h3 class="mb-3 font-semibold">Category</h3>
-			<div class="form-control">
-				<label class="label cursor-pointer justify-start gap-2">
-					<input type="checkbox" class="checkbox checkbox-primary" checked />
-					<span class="label-text">Electronics</span>
-				</label>
+<Story name="With Header Actions">
+	<FilterPanel
+		title="Filter Products"
+		showApplyButton={true}
+		showResetButton={true}
+		onapply={fn()}
+		onreset={fn()}
+		onclear={fn()}
+	>
+		{#snippet headerActions()}
+			<button type="button" class="btn btn-ghost btn-sm" aria-label="Collapse filters">
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					class="h-5 w-5"
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke="currentColor"
+				>
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+				</svg>
+			</button>
+		{/snippet}
+		{#snippet children()}
+			<div>
+				<h3 class="mb-3 font-semibold">Category</h3>
+				<div class="form-control">
+					<label class="label cursor-pointer justify-start gap-2">
+						<input type="checkbox" class="checkbox checkbox-primary" checked />
+						<span class="label-text">Electronics</span>
+					</label>
+				</div>
+				<div class="form-control">
+					<label class="label cursor-pointer justify-start gap-2">
+						<input type="checkbox" class="checkbox checkbox-primary" />
+						<span class="label-text">Clothing</span>
+					</label>
+				</div>
 			</div>
-			<div class="form-control">
-				<label class="label cursor-pointer justify-start gap-2">
-					<input type="checkbox" class="checkbox checkbox-primary" />
-					<span class="label-text">Clothing</span>
-				</label>
-			</div>
-		</div>
-	{/snippet}
+		{/snippet}
+	</FilterPanel>
 </Story>
 
 <!-- Interactive Playground (REQUIRED - must be last) -->
