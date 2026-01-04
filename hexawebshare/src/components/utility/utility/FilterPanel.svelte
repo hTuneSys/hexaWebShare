@@ -186,9 +186,7 @@ SPDX-License-Identifier: MIT
 	);
 
 	// Card body classes
-	let bodyClasses = $derived(
-		['card-body', compact && 'p-4'].filter(Boolean).join(' ')
-	);
+	let bodyClasses = $derived(['card-body', compact && 'p-4'].filter(Boolean).join(' '));
 
 	// Button classes
 	let applyButtonClasses = $derived(
@@ -238,9 +236,9 @@ SPDX-License-Identifier: MIT
 	{...props}
 >
 	{#if loading}
-		<div class="card-body items-center justify-center min-h-64">
+		<div class="card-body min-h-64 items-center justify-center">
 			<span class="loading loading-spinner loading-lg"></span>
-			<p class="text-sm opacity-70 mt-4">Loading filters...</p>
+			<p class="mt-4 text-sm opacity-70">Loading filters...</p>
 		</div>
 	{:else}
 		<div class={bodyClasses}>
@@ -287,14 +285,14 @@ SPDX-License-Identifier: MIT
 
 			<!-- Helper Text -->
 			{#if helpText && (!error || error === '')}
-				<div class="text-sm text-base-content/70 mt-4">
+				<div class="text-base-content/70 mt-4 text-sm">
 					{helpText}
 				</div>
 			{/if}
 
 			<!-- Action Buttons -->
 			{#if showApplyButton || showResetButton || showClearButton}
-				<div class="flex items-center gap-2 mt-6 pt-4 border-t border-base-300">
+				<div class="border-base-300 mt-6 flex items-center gap-2 border-t pt-4">
 					{#if showApplyButton}
 						<button
 							type="button"
