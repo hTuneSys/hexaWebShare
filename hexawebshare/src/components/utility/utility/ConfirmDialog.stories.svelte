@@ -86,6 +86,27 @@ SPDX-License-Identifier: MIT
 				control: 'boolean',
 				description: 'Whether to show the close button'
 			},
+			closeButtonVariant: {
+				control: { type: 'select' },
+				options: [
+					'primary',
+					'secondary',
+					'accent',
+					'neutral',
+					'info',
+					'success',
+					'warning',
+					'error',
+					'ghost',
+					'link'
+				],
+				description: 'Close button color variant'
+			},
+			closeButtonSize: {
+				control: { type: 'select' },
+				options: ['xs', 'sm', 'md', 'lg'],
+				description: 'Close button size'
+			},
 			closeOnBackdropClick: {
 				control: 'boolean',
 				description: 'Whether clicking backdrop closes the dialog'
@@ -108,6 +129,8 @@ SPDX-License-Identifier: MIT
 			confirmDisabled: false,
 			cancelDisabled: false,
 			closable: true,
+			closeButtonVariant: 'ghost',
+			closeButtonSize: 'sm',
 			closeOnBackdropClick: true,
 			destructive: false,
 			onConfirm: fn(),
@@ -122,7 +145,10 @@ SPDX-License-Identifier: MIT
 	args={{
 		open: true,
 		title: 'Confirm Action',
-		description: 'Are you sure you want to proceed with this action?'
+		description: 'Are you sure you want to proceed with this action?',
+		onClose: fn(),
+		onConfirm: fn(),
+		onCancel: fn()
 	}}
 />
 
@@ -133,7 +159,10 @@ SPDX-License-Identifier: MIT
 		title: 'Delete Item',
 		description: 'This action cannot be undone. Are you sure you want to delete this item?',
 		destructive: true,
-		confirmText: 'Delete'
+		confirmText: 'Delete',
+		onClose: fn(),
+		onConfirm: fn(),
+		onCancel: fn()
 	}}
 />
 
@@ -144,7 +173,10 @@ SPDX-License-Identifier: MIT
 		title: 'Processing',
 		description: 'Please wait while we process your request...',
 		loading: true,
-		confirmText: 'Processing...'
+		confirmText: 'Processing...',
+		onClose: fn(),
+		onConfirm: fn(),
+		onCancel: fn()
 	}}
 />
 
@@ -154,7 +186,10 @@ SPDX-License-Identifier: MIT
 		open: true,
 		title: 'Quick Confirm',
 		description: 'Are you sure?',
-		size: 'sm'
+		size: 'sm',
+		onClose: fn(),
+		onConfirm: fn(),
+		onCancel: fn()
 	}}
 />
 
@@ -165,7 +200,10 @@ SPDX-License-Identifier: MIT
 		title: 'Confirm Important Action',
 		description:
 			'This is an important action that requires your confirmation. Please review the details carefully before proceeding.',
-		size: 'lg'
+		size: 'lg',
+		onClose: fn(),
+		onConfirm: fn(),
+		onCancel: fn()
 	}}
 />
 
@@ -176,7 +214,10 @@ SPDX-License-Identifier: MIT
 		title: 'Save Changes?',
 		description: 'You have unsaved changes. Do you want to save them before leaving?',
 		confirmText: 'Save',
-		cancelText: 'Discard'
+		cancelText: 'Discard',
+		onClose: fn(),
+		onConfirm: fn(),
+		onCancel: fn()
 	}}
 />
 
@@ -187,7 +228,10 @@ SPDX-License-Identifier: MIT
 		title: 'Action Restricted',
 		description: 'This action is currently disabled.',
 		confirmDisabled: true,
-		cancelDisabled: true
+		cancelDisabled: true,
+		onClose: fn(),
+		onConfirm: fn(),
+		onCancel: fn()
 	}}
 />
 
@@ -198,7 +242,10 @@ SPDX-License-Identifier: MIT
 		title: 'Confirm Success Action',
 		description: 'This action will complete successfully.',
 		confirmVariant: 'success',
-		confirmText: 'Complete'
+		confirmText: 'Complete',
+		onClose: fn(),
+		onConfirm: fn(),
+		onCancel: fn()
 	}}
 />
 
@@ -209,19 +256,24 @@ SPDX-License-Identifier: MIT
 		title: 'Required Action',
 		description: 'You must make a choice to continue.',
 		closable: false,
-		closeOnBackdropClick: false
+		closeOnBackdropClick: false,
+		onClose: fn(),
+		onConfirm: fn(),
+		onCancel: fn()
 	}}
 />
 
 <Story
-	name="Error Variant"
+	name="Custom Close Button Variant"
 	args={{
 		open: true,
-		title: 'Error Occurred',
-		description: 'An unexpected error has occurred. Please try again.',
-		confirmVariant: 'error',
-		confirmText: 'Close',
-		cancelText: 'Report'
+		title: 'Custom Close Button',
+		description: 'Close button with custom variant and size.',
+		closeButtonVariant: 'error',
+		closeButtonSize: 'md',
+		onClose: fn(),
+		onConfirm: fn(),
+		onCancel: fn()
 	}}
 />
 
@@ -240,6 +292,8 @@ SPDX-License-Identifier: MIT
 		confirmDisabled: false,
 		cancelDisabled: false,
 		closable: true,
+		closeButtonVariant: 'ghost',
+		closeButtonSize: 'sm',
 		closeOnBackdropClick: true,
 		destructive: false,
 		onConfirm: fn(),

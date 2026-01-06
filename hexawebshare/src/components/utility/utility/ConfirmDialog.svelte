@@ -6,6 +6,7 @@ SPDX-License-Identifier: MIT
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 	import Button from '../../core/buttons/Button.svelte';
+	import IconButton from '../../core/buttons/IconButton.svelte';
 
 	/**
 	 * Props interface for the ConfirmDialog component
@@ -93,6 +94,26 @@ SPDX-License-Identifier: MIT
 		 */
 		closable?: boolean;
 		/**
+		 * Close button color variant
+		 * @default 'ghost'
+		 */
+		closeButtonVariant?:
+			| 'primary'
+			| 'secondary'
+			| 'accent'
+			| 'neutral'
+			| 'info'
+			| 'success'
+			| 'warning'
+			| 'error'
+			| 'ghost'
+			| 'link';
+		/**
+		 * Close button size
+		 * @default 'sm'
+		 */
+		closeButtonSize?: 'xs' | 'sm' | 'md' | 'lg';
+		/**
 		 * Whether clicking backdrop closes the dialog
 		 * @default true
 		 */
@@ -143,6 +164,8 @@ SPDX-License-Identifier: MIT
 		confirmDisabled = false,
 		cancelDisabled = false,
 		closable = true,
+		closeButtonVariant = 'ghost',
+		closeButtonSize = 'sm',
 		closeOnBackdropClick = true,
 		destructive = false,
 		icon,
@@ -267,15 +290,33 @@ SPDX-License-Identifier: MIT
 	>
 		<div class={modalBoxClasses}>
 			{#if closable}
-				<button
-					class="btn btn-circle btn-ghost btn-sm absolute top-2 right-2"
-					onclick={handleClose}
-					aria-label="Close dialog"
-					type="button"
-					disabled={loading}
-				>
-					✕
-				</button>
+				<div class="absolute top-2 right-2">
+					<IconButton
+						variant={closeButtonVariant}
+						size={closeButtonSize}
+						circle={true}
+						ariaLabel="Close dialog"
+						onclick={handleClose}
+						disabled={loading}
+					>
+						{#snippet children()}
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="20"
+								height="20"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+							>
+								<line x1="18" y1="6" x2="6" y2="18"></line>
+								<line x1="6" y1="6" x2="18" y2="18"></line>
+							</svg>
+						{/snippet}
+					</IconButton>
+				</div>
 			{/if}
 
 			{#if icon || title}
@@ -319,7 +360,7 @@ SPDX-License-Identifier: MIT
 
 		{#if closeOnBackdropClick}
 			<form method="dialog" class="modal-backdrop">
-				<button type="button" onclick={handleClose} disabled={loading}>close</button>
+				<button type="button" onclick={onClose} disabled={loading} aria-label="Close dialog by clicking backdrop">close</button>
 			</form>
 		{/if}
 	</div>
