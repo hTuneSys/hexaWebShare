@@ -2,7 +2,7 @@
 SPDX-FileCopyrightText: 2025 hexaTune LLC
 SPDX-License-Identifier: MIT
 -->
-<script module>
+<script module lang="ts">
 	import { defineMeta } from '@storybook/addon-svelte-csf';
 	import NotificationCenter from './NotificationCenter.svelte';
 	import { fn } from 'storybook/test';
