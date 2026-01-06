@@ -32,7 +32,17 @@ SPDX-License-Identifier: MIT
 	export interface AuditTrailItem {
 		id: string | number;
 		user: AuditTrailUser;
-		action: 'created' | 'updated' | 'deleted' | 'viewed' | 'exported' | 'imported' | 'logged_in' | 'logged_out' | 'permission_changed' | 'other';
+		action:
+			| 'created'
+			| 'updated'
+			| 'deleted'
+			| 'viewed'
+			| 'exported'
+			| 'imported'
+			| 'logged_in'
+			| 'logged_out'
+			| 'permission_changed'
+			| 'other';
 		entity: string;
 		entityId?: string | number;
 		timestamp: Date | string;
@@ -303,15 +313,11 @@ SPDX-License-Identifier: MIT
 	{#if loading}
 		<!-- Loading skeleton -->
 		{#each Array(3) as _, index}
-			<div
-				role="listitem"
-				class={itemClasses}
-				aria-label="Loading audit trail entry"
-			>
+			<div role="listitem" class={itemClasses} aria-label="Loading audit trail entry">
 				<div class="flex items-start justify-between gap-4">
-					<div class="flex items-center gap-3 flex-1 min-w-0">
+					<div class="flex min-w-0 flex-1 items-center gap-3">
 						<div class={[avatarClasses, 'bg-base-300 skeleton'].filter(Boolean).join(' ')}></div>
-						<div class="flex-1 min-w-0 space-y-2">
+						<div class="min-w-0 flex-1 space-y-2">
 							<div class={[nameClasses, 'skeleton h-4 w-32'].filter(Boolean).join(' ')}></div>
 							<div class={[emailClasses, 'skeleton h-3 w-40'].filter(Boolean).join(' ')}></div>
 						</div>
@@ -319,16 +325,12 @@ SPDX-License-Identifier: MIT
 					<div class={[timestampClasses, 'skeleton h-4 w-24'].filter(Boolean).join(' ')}></div>
 				</div>
 				<div
-					class={[
-						size === 'sm' && 'ml-11',
-						size === 'md' && 'ml-14',
-						size === 'lg' && 'ml-16'
-					]
+					class={[size === 'sm' && 'ml-11', size === 'md' && 'ml-14', size === 'lg' && 'ml-16']
 						.filter(Boolean)
 						.join(' ')}
 				>
 					<div class={[actionClasses, 'skeleton h-4 w-48'].filter(Boolean).join(' ')}></div>
-					<div class={[emailClasses, 'skeleton h-3 w-64 mt-2'].filter(Boolean).join(' ')}></div>
+					<div class={[emailClasses, 'skeleton mt-2 h-3 w-64'].filter(Boolean).join(' ')}></div>
 				</div>
 			</div>
 		{/each}
@@ -337,7 +339,7 @@ SPDX-License-Identifier: MIT
 		<div class="flex items-center justify-center py-12">
 			<Alert
 				variant="error"
-				size={size}
+				{size}
 				title="Error loading audit trail"
 				description={error}
 				ariaLabel="Error message"
@@ -351,85 +353,91 @@ SPDX-License-Identifier: MIT
 				title="No audit trail entries"
 				description={emptyMessage}
 				variant="neutral"
-				size={size}
+				{size}
 				ariaLabel="Empty audit trail list"
 			/>
 		</div>
 	{:else}
 		{#each items as item, index (item.id)}
-		<div
-			id="{listId}-item-{index}"
-			role="listitem"
-			class={itemClasses}
-			onclick={() => handleItemClick(item, index)}
-			onkeydown={(e) => handleKeyDown(e, item, index)}
-			onfocus={() => handleFocus(index)}
-			onblur={handleBlur}
-			tabindex={onItemClick ? (focusedIndex === -1 ? (index === 0 ? 0 : -1) : (focusedIndex === index ? 0 : -1)) : -1}
-			aria-label={`Audit trail entry: ${formatAction(item.action)} ${item.entity} by ${item.user.name} on ${formatTimestamp(item.timestamp)}`}
-		>
-			<div class="flex items-start justify-between gap-4">
-				<div class="flex items-center gap-3 flex-1 min-w-0">
-					{#if item.user.avatar}
-						<img
-							src={item.user.avatar}
-							alt={`${item.user.name} avatar`}
-							class={avatarClasses}
-							aria-hidden="false"
-						/>
-					{:else}
-						<div
-							class={[avatarClasses, 'bg-base-300'].filter(Boolean).join(' ')}
-							aria-hidden="true"
-						>
-							<span class="font-semibold">
-								{item.user.name.charAt(0).toUpperCase()}
-							</span>
+			<div
+				id="{listId}-item-{index}"
+				role="listitem"
+				class={itemClasses}
+				onclick={() => handleItemClick(item, index)}
+				onkeydown={(e) => handleKeyDown(e, item, index)}
+				onfocus={() => handleFocus(index)}
+				onblur={handleBlur}
+				tabindex={onItemClick
+					? focusedIndex === -1
+						? index === 0
+							? 0
+							: -1
+						: focusedIndex === index
+							? 0
+							: -1
+					: -1}
+				aria-label={`Audit trail entry: ${formatAction(item.action)} ${item.entity} by ${item.user.name} on ${formatTimestamp(item.timestamp)}`}
+			>
+				<div class="flex items-start justify-between gap-4">
+					<div class="flex min-w-0 flex-1 items-center gap-3">
+						{#if item.user.avatar}
+							<img
+								src={item.user.avatar}
+								alt={`${item.user.name} avatar`}
+								class={avatarClasses}
+								aria-hidden="false"
+							/>
+						{:else}
+							<div
+								class={[avatarClasses, 'bg-base-300'].filter(Boolean).join(' ')}
+								aria-hidden="true"
+							>
+								<span class="font-semibold">
+									{item.user.name.charAt(0).toUpperCase()}
+								</span>
+							</div>
+						{/if}
+						<div class="min-w-0 flex-1">
+							<div class={nameClasses}>{item.user.name}</div>
+							{#if item.user.email}
+								<div class={emailClasses}>{item.user.email}</div>
+							{/if}
 						</div>
-					{/if}
-					<div class="flex-1 min-w-0">
-						<div class={nameClasses}>{item.user.name}</div>
-						{#if item.user.email}
-							<div class={emailClasses}>{item.user.email}</div>
+					</div>
+					<time
+						class={timestampClasses}
+						datetime={typeof item.timestamp === 'string'
+							? item.timestamp
+							: item.timestamp.toISOString()}
+						aria-label={`Timestamp: ${formatTimestamp(item.timestamp)}`}
+					>
+						{formatTimestamp(item.timestamp)}
+					</time>
+				</div>
+				<div
+					class={[size === 'sm' && 'ml-11', size === 'md' && 'ml-14', size === 'lg' && 'ml-16']
+						.filter(Boolean)
+						.join(' ')}
+				>
+					<div class={actionClasses}>
+						<span class="font-medium" aria-label="Action">{formatAction(item.action)}</span>
+						<span class="text-base-content/60" aria-label="Entity"> {item.entity}</span>
+						{#if item.entityId}
+							<span class="text-base-content/60" aria-label="Entity ID"> (#{item.entityId})</span>
 						{/if}
 					</div>
-				</div>
-				<time
-					class={timestampClasses}
-					datetime={typeof item.timestamp === 'string' ? item.timestamp : item.timestamp.toISOString()}
-					aria-label={`Timestamp: ${formatTimestamp(item.timestamp)}`}
-				>
-					{formatTimestamp(item.timestamp)}
-				</time>
-			</div>
-			<div
-				class={[
-					size === 'sm' && 'ml-11',
-					size === 'md' && 'ml-14',
-					size === 'lg' && 'ml-16'
-				]
-					.filter(Boolean)
-					.join(' ')}
-			>
-				<div class={actionClasses}>
-					<span class="font-medium" aria-label="Action">{formatAction(item.action)}</span>
-					<span class="text-base-content/60" aria-label="Entity"> {item.entity}</span>
-					{#if item.entityId}
-						<span class="text-base-content/60" aria-label="Entity ID"> (#{item.entityId})</span>
+					{#if item.details}
+						<div class={[emailClasses, 'mt-1'].filter(Boolean).join(' ')}>
+							{item.details}
+						</div>
+					{/if}
+					{#if item.ipAddress}
+						<div class="text-base-content/50 mt-1 text-xs" aria-label="IP Address">
+							IP: {item.ipAddress}
+						</div>
 					{/if}
 				</div>
-				{#if item.details}
-					<div class={[emailClasses, 'mt-1'].filter(Boolean).join(' ')}>
-						{item.details}
-					</div>
-				{/if}
-				{#if item.ipAddress}
-					<div class="text-xs text-base-content/50 mt-1" aria-label="IP Address">
-						IP: {item.ipAddress}
-					</div>
-				{/if}
 			</div>
-		</div>
 		{/each}
 	{/if}
 </div>

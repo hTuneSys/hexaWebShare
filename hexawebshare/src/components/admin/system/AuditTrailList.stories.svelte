@@ -323,7 +323,10 @@ SPDX-License-Identifier: MIT
 
 <Story name="Default" args={{ items: defaultItems }} />
 
-<Story name="With Avatars" args={{ items: itemsWithAvatars, ariaLabel: 'Audit trail with user avatars' }} />
+<Story
+	name="With Avatars"
+	args={{ items: itemsWithAvatars, ariaLabel: 'Audit trail with user avatars' }}
+/>
 
 <Story
 	name="With Details and IP"
@@ -347,7 +350,10 @@ SPDX-License-Identifier: MIT
 
 <Story name="Empty State" args={{ items: [] }} />
 
-<Story name="Error State" args={{ error: 'Failed to load audit trail entries. Please try again later.' }} />
+<Story
+	name="Error State"
+	args={{ error: 'Failed to load audit trail entries. Please try again later.' }}
+/>
 
 <!-- Playground -->
 <Story
@@ -363,4 +369,3 @@ SPDX-License-Identifier: MIT
 		ariaLabel: 'Audit trail list'
 	}}
 />
-
