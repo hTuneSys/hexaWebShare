@@ -209,20 +209,6 @@ SPDX-License-Identifier: MIT
 			.join(' ')
 	);
 
-	// Item container classes
-	function getItemClasses(index: number): string {
-		return [
-			'flex items-center gap-3 w-full transition-colors duration-200',
-			size === 'sm' && 'px-3 py-2 text-sm',
-			size === 'md' && 'px-4 py-3 text-base',
-			size === 'lg' && 'px-5 py-4 text-lg',
-			onItemClick && 'hover:bg-base-200 cursor-pointer',
-			variant === 'card' && index < displayedItems.length - 1 && 'border-b border-base-300'
-		]
-			.filter(Boolean)
-			.join(' ');
-	}
-
 	// Handle item click
 	function handleItemClick(entry: ActivityLogEntry, index: number) {
 		onItemClick?.(entry, index);
@@ -261,7 +247,16 @@ SPDX-License-Identifier: MIT
 				{#if onItemClick}
 					<!-- Interactive item -->
 					<div
-						class={getItemClasses(index)}
+						class={[
+							'flex w-full items-center gap-3 transition-colors duration-200',
+							size === 'sm' && 'px-3 py-2 text-sm',
+							size === 'md' && 'px-4 py-3 text-base',
+							size === 'lg' && 'px-5 py-4 text-lg',
+							'hover:bg-base-200 cursor-pointer',
+							variant === 'card' && index < displayedItems.length - 1 && 'border-base-300 border-b'
+						]
+							.filter(Boolean)
+							.join(' ')}
 						role="button"
 						tabindex="0"
 						aria-label={`Activity: ${entry.action}`}
@@ -320,7 +315,18 @@ SPDX-License-Identifier: MIT
 					</div>
 				{:else}
 					<!-- Non-interactive item -->
-					<div class={getItemClasses(index)} role="listitem">
+					<div
+						class={[
+							'flex w-full items-center gap-3 transition-colors duration-200',
+							size === 'sm' && 'px-3 py-2 text-sm',
+							size === 'md' && 'px-4 py-3 text-base',
+							size === 'lg' && 'px-5 py-4 text-lg',
+							variant === 'card' && index < displayedItems.length - 1 && 'border-base-300 border-b'
+						]
+							.filter(Boolean)
+							.join(' ')}
+						role="listitem"
+					>
 						<!-- Leading: Avatar -->
 						{#if showAvatars}
 							<div class="flex-shrink-0" aria-hidden="true">
