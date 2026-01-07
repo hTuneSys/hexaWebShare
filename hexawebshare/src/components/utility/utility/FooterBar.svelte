@@ -5,6 +5,8 @@ SPDX-License-Identifier: MIT
 
 <script lang="ts">
 	import type { Snippet } from 'svelte';
+	import Link from '../../core/typography/Link.svelte';
+	import IconButton from '../../core/buttons/IconButton.svelte';
 
 	/**
 	 * Footer link item interface
@@ -258,7 +260,7 @@ SPDX-License-Identifier: MIT
 	);
 </script>
 
-<footer class={footerClasses} aria-label={ariaLabel}>
+<div class={footerClasses} role="contentinfo" aria-label={ariaLabel}>
 	<div class={contentClasses}>
 		{#if layout === 'multi-column' && (sections.length > 0 || brand || brandText || brandLogo)}
 			<!-- Multi-column layout -->
@@ -271,13 +273,18 @@ SPDX-License-Identifier: MIT
 						{:else}
 							<div class="flex flex-col gap-2">
 								{#if brandLogo}
-									<img src={brandLogo} alt={brandLogoAlt} class="mb-2 h-8 w-auto" loading="lazy" />
+									<div
+										class="mb-2 h-8 w-auto bg-contain bg-center bg-no-repeat"
+										style="background-image: url({brandLogo})"
+										role="img"
+										aria-label={brandLogoAlt}
+									></div>
 								{/if}
 								{#if brandText}
-									<h3 class="footer-title text-lg font-bold">{brandText}</h3>
+									<div class="footer-title text-lg font-bold">{brandText}</div>
 								{/if}
 								{#if brandDescription}
-									<p class="text-sm opacity-70">{brandDescription}</p>
+									<div class="text-sm opacity-70">{brandDescription}</div>
 								{/if}
 							</div>
 						{/if}
@@ -286,12 +293,14 @@ SPDX-License-Identifier: MIT
 						{#if socialLinks.length > 0 && !minimal}
 							<div class={socialClasses + ' mt-4'}>
 								{#each socialLinks as socialLink}
-									<a
-										href={socialLink.href}
-										target="_blank"
-										rel="noopener noreferrer"
-										class="btn btn-circle btn-ghost btn-sm"
-										aria-label={socialLink.ariaLabel || `Visit our ${socialLink.platform} page`}
+									<IconButton
+										variant="ghost"
+										circle={true}
+										size="sm"
+										ariaLabel={socialLink.ariaLabel || `Visit our ${socialLink.platform} page`}
+										onclick={() => {
+											window.open(socialLink.href, '_blank', 'noopener,noreferrer');
+										}}
 									>
 										{#if socialLink.icon}
 											{@render socialLink.icon()}
@@ -299,7 +308,7 @@ SPDX-License-Identifier: MIT
 											<span class="text-xs font-semibold">{socialLink.platform.charAt(0)}</span>
 											<span class="sr-only">{socialLink.platform}</span>
 										{/if}
-									</a>
+									</IconButton>
 								{/each}
 							</div>
 						{/if}
@@ -308,24 +317,24 @@ SPDX-License-Identifier: MIT
 
 				<!-- Footer Sections -->
 				{#each sections as section}
-					<nav class={sectionClasses} aria-label={section.title}>
-						<h3 class="footer-title mb-4 text-base font-semibold">{section.title}</h3>
-						<ul class="flex flex-col gap-2">
+					<div class={sectionClasses} role="navigation" aria-label={section.title}>
+						<div class="footer-title mb-4 text-base font-semibold">{section.title}</div>
+						<div class="flex flex-col gap-2" role="list">
 							{#each section.links as link}
-								<li>
-									<a
+								<div role="listitem">
+									<Link
 										href={link.href}
+										label={link.label}
 										target={link.target || '_self'}
 										rel={link.rel || (link.target === '_blank' ? 'noopener noreferrer' : undefined)}
-										class="link link-hover text-sm"
-										aria-label={link.ariaLabel || link.label}
-									>
-										{link.label}
-									</a>
-								</li>
+										size="sm"
+										underline="hover"
+										ariaLabel={link.ariaLabel || link.label}
+									/>
+								</div>
 							{/each}
-						</ul>
-					</nav>
+						</div>
+					</div>
 				{/each}
 			</div>
 		{:else if layout === 'single-column'}
@@ -338,13 +347,18 @@ SPDX-License-Identifier: MIT
 						{:else}
 							<div class="flex flex-col items-center gap-2">
 								{#if brandLogo}
-									<img src={brandLogo} alt={brandLogoAlt} class="h-8 w-auto" loading="lazy" />
+									<div
+										class="h-8 w-auto bg-contain bg-center bg-no-repeat"
+										style="background-image: url({brandLogo})"
+										role="img"
+										aria-label={brandLogoAlt}
+									></div>
 								{/if}
 								{#if brandText}
-									<h3 class="footer-title text-lg font-bold">{brandText}</h3>
+									<div class="footer-title text-lg font-bold">{brandText}</div>
 								{/if}
 								{#if brandDescription}
-									<p class="text-center text-sm opacity-70">{brandDescription}</p>
+									<div class="text-center text-sm opacity-70">{brandDescription}</div>
 								{/if}
 							</div>
 						{/if}
@@ -353,27 +367,28 @@ SPDX-License-Identifier: MIT
 
 				{#if sections.length > 0}
 					{#each sections as section}
-						<nav class={sectionClasses} aria-label={section.title}>
-							<h3 class="footer-title mb-4 text-center text-base font-semibold">
+						<div class={sectionClasses} role="navigation" aria-label={section.title}>
+							<div class="footer-title mb-4 text-center text-base font-semibold">
 								{section.title}
-							</h3>
-							<ul class="flex flex-col items-center gap-2">
+							</div>
+							<div class="flex flex-col items-center gap-2" role="list">
 								{#each section.links as link}
-									<li>
-										<a
+									<div role="listitem">
+										<Link
 											href={link.href}
 											target={link.target || '_self'}
 											rel={link.rel ||
 												(link.target === '_blank' ? 'noopener noreferrer' : undefined)}
-											class="link link-hover text-sm"
-											aria-label={link.ariaLabel || link.label}
+											size="sm"
+											underline="hover"
+											ariaLabel={link.ariaLabel || link.label}
 										>
 											{link.label}
-										</a>
-									</li>
+										</Link>
+									</div>
 								{/each}
-							</ul>
-						</nav>
+							</div>
+						</div>
 					{/each}
 				{/if}
 
@@ -408,13 +423,18 @@ SPDX-License-Identifier: MIT
 						{:else}
 							<div class="flex flex-col items-center gap-2">
 								{#if brandLogo}
-									<img src={brandLogo} alt={brandLogoAlt} class="h-8 w-auto" loading="lazy" />
+									<div
+										class="h-8 w-auto bg-contain bg-center bg-no-repeat"
+										style="background-image: url({brandLogo})"
+										role="img"
+										aria-label={brandLogoAlt}
+									></div>
 								{/if}
 								{#if brandText}
-									<h3 class="footer-title text-lg font-bold">{brandText}</h3>
+									<div class="footer-title text-lg font-bold">{brandText}</div>
 								{/if}
 								{#if brandDescription}
-									<p class="text-sm opacity-70">{brandDescription}</p>
+									<div class="text-sm opacity-70">{brandDescription}</div>
 								{/if}
 							</div>
 						{/if}
@@ -423,25 +443,26 @@ SPDX-License-Identifier: MIT
 
 				{#if sections.length > 0}
 					{#each sections as section}
-						<nav class={sectionClasses} aria-label={section.title}>
-							<h3 class="footer-title mb-4 text-base font-semibold">{section.title}</h3>
-							<ul class="flex flex-wrap justify-center gap-4">
+						<div class={sectionClasses} role="navigation" aria-label={section.title}>
+							<div class="footer-title mb-4 text-base font-semibold">{section.title}</div>
+							<div class="flex flex-wrap justify-center gap-4" role="list">
 								{#each section.links as link}
-									<li>
-										<a
+									<div role="listitem">
+										<Link
 											href={link.href}
 											target={link.target || '_self'}
 											rel={link.rel ||
 												(link.target === '_blank' ? 'noopener noreferrer' : undefined)}
-											class="link link-hover text-sm"
-											aria-label={link.ariaLabel || link.label}
+											size="sm"
+											underline="hover"
+											ariaLabel={link.ariaLabel || link.label}
 										>
 											{link.label}
-										</a>
-									</li>
+										</Link>
+									</div>
 								{/each}
-							</ul>
-						</nav>
+							</div>
+						</div>
 					{/each}
 				{/if}
 
@@ -476,10 +497,15 @@ SPDX-License-Identifier: MIT
 						{:else}
 							<div class="flex flex-col items-center gap-2">
 								{#if brandLogo}
-									<img src={brandLogo} alt={brandLogoAlt} class="h-6 w-auto" loading="lazy" />
+									<div
+										class="h-6 w-auto bg-contain bg-center bg-no-repeat"
+										style="background-image: url({brandLogo})"
+										role="img"
+										aria-label={brandLogoAlt}
+									></div>
 								{/if}
 								{#if brandText}
-									<h3 class="footer-title text-base font-bold">{brandText}</h3>
+									<div class="footer-title text-base font-bold">{brandText}</div>
 								{/if}
 							</div>
 						{/if}
@@ -487,26 +513,27 @@ SPDX-License-Identifier: MIT
 				{/if}
 
 				{#if sections.length > 0 && !minimal}
-					<nav class={sectionClasses} aria-label="Footer links">
-						<ul class="flex flex-wrap justify-center gap-4">
+					<div class={sectionClasses} role="navigation" aria-label="Footer links">
+						<div class="flex flex-wrap justify-center gap-4" role="list">
 							{#each sections as section}
 								{#each section.links as link}
-									<li>
-										<a
+									<div role="listitem">
+										<Link
 											href={link.href}
 											target={link.target || '_self'}
 											rel={link.rel ||
 												(link.target === '_blank' ? 'noopener noreferrer' : undefined)}
-											class="link link-hover text-sm"
-											aria-label={link.ariaLabel || link.label}
+											size="sm"
+											underline="hover"
+											ariaLabel={link.ariaLabel || link.label}
 										>
 											{link.label}
-										</a>
-									</li>
+										</Link>
+									</div>
 								{/each}
 							{/each}
-						</ul>
-					</nav>
+						</div>
+					</div>
 				{/if}
 
 				{#if socialLinks.length > 0 && !minimal}
@@ -536,11 +563,11 @@ SPDX-License-Identifier: MIT
 		<div class="divider my-4"></div>
 		<div class="flex flex-col items-center justify-between gap-4 text-sm opacity-70 md:flex-row">
 			<div>
-				<p>{copyrightText()}</p>
+				<div>{copyrightText()}</div>
 			</div>
 			{#if bottomContent}
 				<div>{@render bottomContent()}</div>
 			{/if}
 		</div>
 	</div>
-</footer>
+</div>
