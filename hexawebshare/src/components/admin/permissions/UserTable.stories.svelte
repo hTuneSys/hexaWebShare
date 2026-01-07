@@ -274,4 +274,3 @@ SPDX-License-Identifier: MIT
 		emptyMessage: 'No users found'
 	}}
 />
-

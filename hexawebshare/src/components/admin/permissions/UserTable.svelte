@@ -278,7 +278,7 @@ SPDX-License-Identifier: MIT
 				<th scope="col" class="hidden sm:table-cell" role="columnheader">Role</th>
 				<th scope="col" role="columnheader">Status</th>
 				{#if showActions}
-					<th scope="col" class="text-right w-[100px]" role="columnheader">Actions</th>
+					<th scope="col" class="w-[100px] text-right" role="columnheader">Actions</th>
 				{/if}
 			</tr>
 		</thead>
@@ -286,10 +286,10 @@ SPDX-License-Identifier: MIT
 		<tbody>
 			{#if loading}
 				<tr role="row">
-					<td colspan={showActions ? 5 : 4} class="text-center py-12" role="gridcell">
+					<td colspan={showActions ? 5 : 4} class="py-12 text-center" role="gridcell">
 						<div class="flex flex-col items-center justify-center gap-3">
 							<span class="loading loading-spinner loading-md" aria-hidden="true"></span>
-							<span class="text-sm text-base-content/60">
+							<span class="text-base-content/60 text-sm">
 								<span class="sr-only">Loading users table</span>
 								<span aria-hidden="true">Loading users...</span>
 							</span>
@@ -298,7 +298,7 @@ SPDX-License-Identifier: MIT
 				</tr>
 			{:else if error}
 				<tr role="row">
-					<td colspan={showActions ? 5 : 4} class="text-center py-12" role="gridcell">
+					<td colspan={showActions ? 5 : 4} class="py-12 text-center" role="gridcell">
 						<div class="flex flex-col items-center justify-center gap-3">
 							<div class="flex flex-col items-center gap-2">
 								<svg
@@ -343,7 +343,9 @@ SPDX-License-Identifier: MIT
 											>
 												<polyline points="23 4 23 10 17 10"></polyline>
 												<polyline points="1 20 1 14 7 14"></polyline>
-												<path d="M3.51 9a9 9 0 0 1 14.85-3.7L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+												<path
+													d="M3.51 9a9 9 0 0 1 14.85-3.7L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"
+												></path>
 											</svg>
 											Retry
 										</button>
@@ -355,7 +357,7 @@ SPDX-License-Identifier: MIT
 				</tr>
 			{:else if users.length === 0}
 				<tr role="row">
-					<td colspan={showActions ? 5 : 4} class="text-center py-12" role="gridcell">
+					<td colspan={showActions ? 5 : 4} class="py-12 text-center" role="gridcell">
 						<div class="flex flex-col items-center justify-center gap-3">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -387,7 +389,9 @@ SPDX-License-Identifier: MIT
 						role="row"
 						aria-rowindex={index + 2}
 						tabindex={onuserclick && !disabled && !loading ? 0 : undefined}
-						aria-label={onuserclick ? `User ${user.name}, ${user.role}, ${user.status}. Press Enter or Space to select.` : undefined}
+						aria-label={onuserclick
+							? `User ${user.name}, ${user.role}, ${user.status}. Press Enter or Space to select.`
+							: undefined}
 					>
 						<td class="min-w-[200px]" role="gridcell">
 							<div class="flex items-center gap-3">
@@ -399,22 +403,33 @@ SPDX-License-Identifier: MIT
 									ariaLabel={`${user.name} avatar`}
 									ariaHidden={true}
 								/>
-								<div class="flex flex-col min-w-0">
-									<span class="font-medium truncate">{user.name}</span>
+								<div class="flex min-w-0 flex-col">
+									<span class="truncate font-medium">{user.name}</span>
 									{#if user.lastLogin}
-										<span class="text-xs text-base-content/60 hidden lg:inline" aria-label="Last login">
-											Last login: {typeof user.lastLogin === 'string' ? user.lastLogin : user.lastLogin.toLocaleDateString()}
+										<span
+											class="text-base-content/60 hidden text-xs lg:inline"
+											aria-label="Last login"
+										>
+											Last login: {typeof user.lastLogin === 'string'
+												? user.lastLogin
+												: user.lastLogin.toLocaleDateString()}
 										</span>
 									{/if}
 									<!-- Mobile: Show email on small screens -->
-									<span class="text-xs text-base-content/60 md:hidden truncate" aria-label="Email address">
+									<span
+										class="text-base-content/60 truncate text-xs md:hidden"
+										aria-label="Email address"
+									>
 										{user.email}
 									</span>
 								</div>
 							</div>
 						</td>
 						<td class="hidden md:table-cell" role="gridcell">
-							<span class="text-base-content truncate block max-w-[200px]" aria-label="Email address">
+							<span
+								class="text-base-content block max-w-[200px] truncate"
+								aria-label="Email address"
+							>
 								{user.email}
 							</span>
 						</td>
@@ -445,12 +460,16 @@ SPDX-License-Identifier: MIT
 							/>
 						</td>
 						{#if showActions}
-							<td class="text-right w-[100px]" role="gridcell">
-								<div class="flex items-center justify-end gap-1 sm:gap-2" role="group" aria-label="User actions">
+							<td class="w-[100px] text-right" role="gridcell">
+								<div
+									class="flex items-center justify-end gap-1 sm:gap-2"
+									role="group"
+									aria-label="User actions"
+								>
 									{#if onedit}
 										<button
 											type="button"
-											class="btn btn-ghost btn-xs btn-circle hover:bg-base-200 transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+											class="btn btn-ghost btn-xs btn-circle hover:bg-base-200 focus:ring-primary transition-colors focus:ring-2 focus:ring-offset-2 focus:outline-none"
 											aria-label={`Edit user ${user.name}`}
 											onclick={(e) => handleEdit(user, index, e)}
 											disabled={disabled || loading}
@@ -476,7 +495,7 @@ SPDX-License-Identifier: MIT
 									{#if ondelete}
 										<button
 											type="button"
-											class="btn btn-ghost btn-xs btn-circle text-error hover:bg-error/10 transition-colors focus:outline-none focus:ring-2 focus:ring-error focus:ring-offset-2"
+											class="btn btn-ghost btn-xs btn-circle text-error hover:bg-error/10 focus:ring-error transition-colors focus:ring-2 focus:ring-offset-2 focus:outline-none"
 											aria-label={`Delete user ${user.name}`}
 											onclick={(e) => handleDelete(user, index, e)}
 											disabled={disabled || loading}
