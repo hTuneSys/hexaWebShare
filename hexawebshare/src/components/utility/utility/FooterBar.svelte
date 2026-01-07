@@ -239,10 +239,7 @@ SPDX-License-Identifier: MIT
 
 	// Section classes
 	let sectionClasses = $derived(
-		[
-			layout === 'centered' && 'text-center',
-			layout === 'minimal' && 'text-center'
-		]
+		[layout === 'centered' && 'text-center', layout === 'minimal' && 'text-center']
 			.filter(Boolean)
 			.join(' ')
 	);
@@ -274,12 +271,7 @@ SPDX-License-Identifier: MIT
 						{:else}
 							<div class="flex flex-col gap-2">
 								{#if brandLogo}
-									<img
-										src={brandLogo}
-										alt={brandLogoAlt}
-										class="h-8 w-auto mb-2"
-										loading="lazy"
-									/>
+									<img src={brandLogo} alt={brandLogoAlt} class="mb-2 h-8 w-auto" loading="lazy" />
 								{/if}
 								{#if brandText}
 									<h3 class="footer-title text-lg font-bold">{brandText}</h3>
@@ -317,7 +309,7 @@ SPDX-License-Identifier: MIT
 				<!-- Footer Sections -->
 				{#each sections as section}
 					<nav class={sectionClasses} aria-label={section.title}>
-						<h3 class="footer-title text-base font-semibold mb-4">{section.title}</h3>
+						<h3 class="footer-title mb-4 text-base font-semibold">{section.title}</h3>
 						<ul class="flex flex-col gap-2">
 							{#each section.links as link}
 								<li>
@@ -346,18 +338,13 @@ SPDX-License-Identifier: MIT
 						{:else}
 							<div class="flex flex-col items-center gap-2">
 								{#if brandLogo}
-									<img
-										src={brandLogo}
-										alt={brandLogoAlt}
-										class="h-8 w-auto"
-										loading="lazy"
-									/>
+									<img src={brandLogo} alt={brandLogoAlt} class="h-8 w-auto" loading="lazy" />
 								{/if}
 								{#if brandText}
 									<h3 class="footer-title text-lg font-bold">{brandText}</h3>
 								{/if}
 								{#if brandDescription}
-									<p class="text-sm opacity-70 text-center">{brandDescription}</p>
+									<p class="text-center text-sm opacity-70">{brandDescription}</p>
 								{/if}
 							</div>
 						{/if}
@@ -367,7 +354,7 @@ SPDX-License-Identifier: MIT
 				{#if sections.length > 0}
 					{#each sections as section}
 						<nav class={sectionClasses} aria-label={section.title}>
-							<h3 class="footer-title text-base font-semibold mb-4 text-center">
+							<h3 class="footer-title mb-4 text-center text-base font-semibold">
 								{section.title}
 							</h3>
 							<ul class="flex flex-col items-center gap-2">
@@ -376,7 +363,8 @@ SPDX-License-Identifier: MIT
 										<a
 											href={link.href}
 											target={link.target || '_self'}
-											rel={link.rel || (link.target === '_blank' ? 'noopener noreferrer' : undefined)}
+											rel={link.rel ||
+												(link.target === '_blank' ? 'noopener noreferrer' : undefined)}
 											class="link link-hover text-sm"
 											aria-label={link.ariaLabel || link.label}
 										>
@@ -420,12 +408,7 @@ SPDX-License-Identifier: MIT
 						{:else}
 							<div class="flex flex-col items-center gap-2">
 								{#if brandLogo}
-									<img
-										src={brandLogo}
-										alt={brandLogoAlt}
-										class="h-8 w-auto"
-										loading="lazy"
-									/>
+									<img src={brandLogo} alt={brandLogoAlt} class="h-8 w-auto" loading="lazy" />
 								{/if}
 								{#if brandText}
 									<h3 class="footer-title text-lg font-bold">{brandText}</h3>
@@ -441,14 +424,15 @@ SPDX-License-Identifier: MIT
 				{#if sections.length > 0}
 					{#each sections as section}
 						<nav class={sectionClasses} aria-label={section.title}>
-							<h3 class="footer-title text-base font-semibold mb-4">{section.title}</h3>
+							<h3 class="footer-title mb-4 text-base font-semibold">{section.title}</h3>
 							<ul class="flex flex-wrap justify-center gap-4">
 								{#each section.links as link}
 									<li>
 										<a
 											href={link.href}
 											target={link.target || '_self'}
-											rel={link.rel || (link.target === '_blank' ? 'noopener noreferrer' : undefined)}
+											rel={link.rel ||
+												(link.target === '_blank' ? 'noopener noreferrer' : undefined)}
 											class="link link-hover text-sm"
 											aria-label={link.ariaLabel || link.label}
 										>
@@ -492,12 +476,7 @@ SPDX-License-Identifier: MIT
 						{:else}
 							<div class="flex flex-col items-center gap-2">
 								{#if brandLogo}
-									<img
-										src={brandLogo}
-										alt={brandLogoAlt}
-										class="h-6 w-auto"
-										loading="lazy"
-									/>
+									<img src={brandLogo} alt={brandLogoAlt} class="h-6 w-auto" loading="lazy" />
 								{/if}
 								{#if brandText}
 									<h3 class="footer-title text-base font-bold">{brandText}</h3>
@@ -516,7 +495,8 @@ SPDX-License-Identifier: MIT
 										<a
 											href={link.href}
 											target={link.target || '_self'}
-											rel={link.rel || (link.target === '_blank' ? 'noopener noreferrer' : undefined)}
+											rel={link.rel ||
+												(link.target === '_blank' ? 'noopener noreferrer' : undefined)}
 											class="link link-hover text-sm"
 											aria-label={link.ariaLabel || link.label}
 										>
@@ -554,7 +534,7 @@ SPDX-License-Identifier: MIT
 
 		<!-- Bottom Section (Copyright and additional content) -->
 		<div class="divider my-4"></div>
-		<div class="flex flex-col md:flex-row justify-between items-center gap-4 text-sm opacity-70">
+		<div class="flex flex-col items-center justify-between gap-4 text-sm opacity-70 md:flex-row">
 			<div>
 				<p>{copyrightText()}</p>
 			</div>
@@ -564,4 +544,3 @@ SPDX-License-Identifier: MIT
 		</div>
 	</div>
 </footer>
-

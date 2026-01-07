@@ -56,15 +56,7 @@ SPDX-License-Identifier: MIT
 			},
 			variant: {
 				control: { type: 'select' },
-				options: [
-					undefined,
-					'primary',
-					'secondary',
-					'accent',
-					'neutral',
-					'base-200',
-					'base-300'
-				],
+				options: [undefined, 'primary', 'secondary', 'accent', 'neutral', 'base-200', 'base-300'],
 				description: 'Color variant'
 			},
 			bordered: {
@@ -288,4 +280,3 @@ SPDX-License-Identifier: MIT
 		copyrightYear: new Date().getFullYear()
 	}}
 />
-

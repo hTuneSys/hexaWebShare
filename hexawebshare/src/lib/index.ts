@@ -98,5 +98,9 @@ export { default as Text } from '../components/core/typography/Text.svelte';
 
 // Utility / Utility
 export { default as FooterBar } from '../components/utility/utility/FooterBar.svelte';
-export type { FooterLink, FooterSection, SocialLink } from '../components/utility/utility/FooterBar.svelte';
+export type {
+	FooterLink,
+	FooterSection,
+	SocialLink
+} from '../components/utility/utility/FooterBar.svelte';
 export { default as GlobalSearchBar } from '../components/utility/utility/GlobalSearchBar.svelte';
