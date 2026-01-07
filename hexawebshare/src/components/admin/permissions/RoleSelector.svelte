@@ -213,12 +213,10 @@ SPDX-License-Identifier: MIT
 			class={selectClasses}
 			aria-label={ariaLabel || (label ? undefined : placeholder)}
 			aria-describedby={describedByIds}
-			aria-invalid={error !== undefined && error !== '' ? 'true' : 'false'}
+			aria-invalid={error !== undefined && error !== '' ? 'true' : undefined}
 			aria-required={required}
 			aria-disabled={disabled || loading}
 			aria-busy={loading}
-			aria-expanded="false"
-			role="combobox"
 			{onchange}
 			{onblur}
 			{onfocus}
