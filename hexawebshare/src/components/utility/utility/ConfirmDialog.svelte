@@ -277,6 +277,23 @@ SPDX-License-Identifier: MIT
 	});
 </script>
 
+{#snippet closeIcon()}
+	<svg
+		xmlns="http://www.w3.org/2000/svg"
+		width="20"
+		height="20"
+		viewBox="0 0 24 24"
+		fill="none"
+		stroke="currentColor"
+		stroke-width="2"
+		stroke-linecap="round"
+		stroke-linejoin="round"
+	>
+		<line x1="18" y1="6" x2="6" y2="18"></line>
+		<line x1="6" y1="6" x2="18" y2="18"></line>
+	</svg>
+{/snippet}
+
 {#if open}
 	<div
 		bind:this={modalElement}
@@ -298,24 +315,8 @@ SPDX-License-Identifier: MIT
 						ariaLabel="Close dialog"
 						onclick={handleClose}
 						disabled={loading}
-					>
-						{#snippet children()}
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								width="20"
-								height="20"
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								stroke-width="2"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-							>
-								<line x1="18" y1="6" x2="6" y2="18"></line>
-								<line x1="6" y1="6" x2="18" y2="18"></line>
-							</svg>
-						{/snippet}
-					</IconButton>
+						children={closeIcon}
+					/>
 				</div>
 			{/if}
 
@@ -360,7 +361,12 @@ SPDX-License-Identifier: MIT
 
 		{#if closeOnBackdropClick}
 			<form method="dialog" class="modal-backdrop">
-				<button type="button" onclick={onClose} disabled={loading} aria-label="Close dialog by clicking backdrop">close</button>
+				<button
+					type="button"
+					onclick={onClose}
+					disabled={loading}
+					aria-label="Close dialog by clicking backdrop">close</button
+				>
 			</form>
 		{/if}
 	</div>
