@@ -84,18 +84,18 @@ SPDX-License-Identifier: MIT
 
 	// Derive color indicator size
 	let colorSize = $derived(
-		size === 'xs' ? 'w-2 h-2' : size === 'sm' ? 'w-3 h-3' : size === 'md' ? 'w-3.5 h-3.5' : 'w-4 h-4'
+		size === 'xs'
+			? 'w-2 h-2'
+			: size === 'sm'
+				? 'w-3 h-3'
+				: size === 'md'
+					? 'w-3.5 h-3.5'
+					: 'w-4 h-4'
 	);
 
 	// Derive text size
 	let textSize = $derived(
-		size === 'xs'
-			? 'text-xs'
-			: size === 'sm'
-				? 'text-sm'
-				: size === 'md'
-					? 'text-base'
-					: 'text-lg'
+		size === 'xs' ? 'text-xs' : size === 'sm' ? 'text-sm' : size === 'md' ? 'text-base' : 'text-lg'
 	);
 
 	// Handle legend item click
@@ -131,13 +131,7 @@ SPDX-License-Identifier: MIT
 	}
 </script>
 
-<div
-	class={containerClasses}
-	aria-label={ariaLabel}
-	aria-live={ariaLive}
-	role="list"
-	{...props}
->
+<div class={containerClasses} aria-label={ariaLabel} aria-live={ariaLive} role="list" {...props}>
 	{#each items as item, index}
 		{#if interactive && !item.disabled}
 			<button
@@ -154,7 +148,7 @@ SPDX-License-Identifier: MIT
 				></span>
 				<span class="font-medium {textSize}" aria-hidden="true">{item.label}</span>
 				{#if showValues && item.value !== undefined}
-					<span class="font-semibold {textSize} ml-1 text-base-content/70" aria-hidden="true"
+					<span class="font-semibold {textSize} text-base-content/70 ml-1" aria-hidden="true"
 						>{item.value}</span
 					>
 				{/if}
@@ -168,7 +162,7 @@ SPDX-License-Identifier: MIT
 				></span>
 				<span class="font-medium {textSize}">{item.label}</span>
 				{#if showValues && item.value !== undefined}
-					<span class="font-semibold {textSize} ml-1 text-base-content/70">{item.value}</span>
+					<span class="font-semibold {textSize} text-base-content/70 ml-1">{item.value}</span>
 				{/if}
 			</div>
 		{/if}
