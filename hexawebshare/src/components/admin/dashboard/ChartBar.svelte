@@ -190,7 +190,7 @@ SPDX-License-Identifier: MIT
 	aria-busy={loading}
 	aria-disabled={disabled}
 	aria-describedby="chart-description"
-	tabindex={disabled ? '-1' : '0'}
+	tabindex={disabled ? -1 : 0}
 	{...props}
 >
 	<!-- Hidden description for screen readers -->
@@ -213,7 +213,7 @@ SPDX-License-Identifier: MIT
 					"
 					role="group"
 					aria-label="{item.label}: {item.value} ({item.percentage.toFixed(1)}% of maximum)"
-					tabindex="0"
+					tabindex={0}
 				>
 					{#if orientation === 'vertical'}
 						<!-- Vertical bars -->
@@ -222,7 +222,7 @@ SPDX-License-Identifier: MIT
 							style="height: {item.percentage}%; width: 100%; min-height: {item.value > 0 ? '8px' : '0'};"
 							role="img"
 							aria-hidden="true"
-							tabindex="-1"
+							tabindex={-1}
 						>
 							{#if showValues && item.value > 0}
 								<div
@@ -258,7 +258,7 @@ SPDX-License-Identifier: MIT
 							style="width: {item.percentage}%; height: 100%; min-width: {item.value > 0 ? '8px' : '0'};"
 							role="img"
 							aria-hidden="true"
-							tabindex="-1"
+							tabindex={-1}
 						>
 							{#if showValues && item.value > 0}
 								<div
