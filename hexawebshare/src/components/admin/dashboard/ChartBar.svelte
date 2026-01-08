@@ -143,10 +143,12 @@ SPDX-License-Identifier: MIT
 	let processedData = $derived(
 		data && data.length > 0
 			? data.map((item) => {
-					const rawPercentage = calculatedMaxValue > 0 ? (item.value / calculatedMaxValue) * 100 : 0;
+					const rawPercentage =
+						calculatedMaxValue > 0 ? (item.value / calculatedMaxValue) * 100 : 0;
 					// Ensure minimum 2% height for visibility, but only if value > 0
 					const minPercentage = 2;
-					const percentage = item.value > 0 && rawPercentage < minPercentage ? minPercentage : rawPercentage;
+					const percentage =
+						item.value > 0 && rawPercentage < minPercentage ? minPercentage : rawPercentage;
 					return {
 						label: item.label,
 						value: item.value,
@@ -169,10 +171,8 @@ SPDX-License-Identifier: MIT
 	let accessibleDescription = $derived(
 		data && data.length > 0
 			? `Bar chart with ${data.length} ${data.length === 1 ? 'bar' : 'bars'}. ` +
-				data
-					.map((item, index) => `${item.label}: ${item.value}`)
-					.join('. ') +
-				`. Maximum value: ${calculatedMaxValue}.`
+					data.map((item, index) => `${item.label}: ${item.value}`).join('. ') +
+					`. Maximum value: ${calculatedMaxValue}.`
 			: 'No data available in chart.'
 	);
 
@@ -202,14 +202,19 @@ SPDX-License-Identifier: MIT
 			<span class="loading loading-spinner loading-lg"></span>
 		</div>
 	{:else if data && data.length > 0}
-		<div class={wrapperClasses} style={orientation === 'vertical' ? `height: ${height};` : `width: ${height};`}>
+		<div
+			class={wrapperClasses}
+			style={orientation === 'vertical' ? `height: ${height};` : `width: ${height};`}
+		>
 			{#each processedData as item, index}
 				<div
-					class="bar-item flex {orientation === 'vertical' ? 'flex-col items-center' : 'flex-row items-center'} focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-primary rounded"
+					class="bar-item flex {orientation === 'vertical'
+						? 'flex-col items-center'
+						: 'flex-row items-center'} focus-within:outline-primary rounded focus-within:outline focus-within:outline-2 focus-within:outline-offset-2"
 					style="
-						{orientation === 'vertical' 
-							? `width: ${barSize}; margin-right: ${index < processedData.length - 1 ? barSpacing : 0}px;` 
-							: `height: ${barSize}; margin-bottom: ${index < processedData.length - 1 ? barSpacing : 0}px;`}
+						{orientation === 'vertical'
+						? `width: ${barSize}; margin-right: ${index < processedData.length - 1 ? barSpacing : 0}px;`
+						: `height: ${barSize}; margin-bottom: ${index < processedData.length - 1 ? barSpacing : 0}px;`}
 					"
 					role="group"
 					aria-label="{item.label}: {item.value} ({item.percentage.toFixed(1)}% of maximum)"
@@ -218,15 +223,17 @@ SPDX-License-Identifier: MIT
 					{#if orientation === 'vertical'}
 						<!-- Vertical bars -->
 						<div
-							class="bar {barColorClasses} rounded-t transition-all duration-300 hover:opacity-80 relative focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-primary"
-							style="height: {item.percentage}%; width: 100%; min-height: {item.value > 0 ? '8px' : '0'};"
+							class="bar {barColorClasses} focus:outline-primary relative rounded-t transition-all duration-300 hover:opacity-80 focus:outline focus:outline-2 focus:outline-offset-2"
+							style="height: {item.percentage}%; width: 100%; min-height: {item.value > 0
+								? '8px'
+								: '0'};"
 							role="img"
 							aria-hidden="true"
 							tabindex={-1}
 						>
 							{#if showValues && item.value > 0}
 								<div
-									class="absolute -top-6 left-1/2 transform -translate-x-1/2 text-xs text-base-content whitespace-nowrap"
+									class="text-base-content absolute -top-6 left-1/2 -translate-x-1/2 transform text-xs whitespace-nowrap"
 									aria-label="Value: {item.value}"
 								>
 									{item.value}
@@ -235,7 +242,7 @@ SPDX-License-Identifier: MIT
 						</div>
 						{#if showLabels}
 							<div
-								class="mt-2 text-xs text-base-content text-center truncate w-full"
+								class="text-base-content mt-2 w-full truncate text-center text-xs"
 								title={item.label}
 								aria-label="Label: {item.label}"
 							>
@@ -246,7 +253,7 @@ SPDX-License-Identifier: MIT
 						<!-- Horizontal bars -->
 						{#if showLabels}
 							<div
-								class="mr-2 text-xs text-base-content text-right min-w-[80px] truncate"
+								class="text-base-content mr-2 min-w-[80px] truncate text-right text-xs"
 								title={item.label}
 								aria-label="Label: {item.label}"
 							>
@@ -254,15 +261,17 @@ SPDX-License-Identifier: MIT
 							</div>
 						{/if}
 						<div
-							class="bar {barColorClasses} rounded-l transition-all duration-300 hover:opacity-80 relative flex-1 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-primary"
-							style="width: {item.percentage}%; height: 100%; min-width: {item.value > 0 ? '8px' : '0'};"
+							class="bar {barColorClasses} focus:outline-primary relative flex-1 rounded-l transition-all duration-300 hover:opacity-80 focus:outline focus:outline-2 focus:outline-offset-2"
+							style="width: {item.percentage}%; height: 100%; min-width: {item.value > 0
+								? '8px'
+								: '0'};"
 							role="img"
 							aria-hidden="true"
 							tabindex={-1}
 						>
 							{#if showValues && item.value > 0}
 								<div
-									class="absolute left-full ml-2 top-1/2 transform -translate-y-1/2 text-xs text-base-content whitespace-nowrap"
+									class="text-base-content absolute top-1/2 left-full ml-2 -translate-y-1/2 transform text-xs whitespace-nowrap"
 									aria-label="Value: {item.value}"
 								>
 									{item.value}
@@ -275,7 +284,7 @@ SPDX-License-Identifier: MIT
 		</div>
 	{:else}
 		<div
-			class="flex items-center justify-center text-base-content/50"
+			class="text-base-content/50 flex items-center justify-center"
 			style="height: {height};"
 			role="status"
 			aria-live="polite"

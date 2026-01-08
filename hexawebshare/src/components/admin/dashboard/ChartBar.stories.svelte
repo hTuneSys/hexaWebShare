@@ -226,4 +226,3 @@ SPDX-License-Identifier: MIT
 		ariaLabel: 'Interactive bar chart'
 	}}
 />
-
