@@ -101,7 +101,8 @@ SPDX-License-Identifier: MIT
 		{
 			id: 2,
 			key: 'Very Long Key Name That Might Wrap',
-			value: 'This is a very long value that might wrap to multiple lines depending on the container width and layout variant being used'
+			value:
+				'This is a very long value that might wrap to multiple lines depending on the container width and layout variant being used'
 		},
 		{
 			id: 3,
@@ -263,4 +264,3 @@ SPDX-License-Identifier: MIT
 		ariaLabel: 'User details'
 	}}
 />
-

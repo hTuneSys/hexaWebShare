@@ -134,10 +134,7 @@ SPDX-License-Identifier: MIT
 	}: Props = $props();
 
 	// Map admin size to core table size
-	let tableSize = $derived(size === 'sm' ? 'sm' : size === 'lg' ? 'lg' : 'md');
-
-	// Table columns for the table variant using core Table component
-	type KeyValueRow = KeyValuePair;
+	let tableSize: 'sm' | 'md' | 'lg' = $derived(size === 'sm' ? 'sm' : size === 'lg' ? 'lg' : 'md');
 
 	let keyColumnWidth = $derived(
 		keyWidth === 'narrow'
@@ -149,25 +146,31 @@ SPDX-License-Identifier: MIT
 					: undefined
 	);
 
-	let tableColumns = $derived<TableColumn<KeyValueRow>[]>([
+	// Table columns for the table variant using core Table component
+	let tableColumns = $derived<TableColumn[]>([
 		{
 			key: 'key',
 			label: 'Key',
 			width: keyColumnWidth,
-			render: (row) => `${keyPrefix}${row.key}${keySuffix}`
+			render: (row) => {
+				const typedRow = row as unknown as KeyValuePair;
+				return `${keyPrefix}${typedRow.key}${keySuffix}`;
+			}
 		},
 		{
 			key: 'value',
 			label: 'Value',
 			render: (row) => {
-				const base = formatValue(row.value);
-				return row.description ? `${base} — ${row.description}` : base;
+				const typedRow = row as unknown as KeyValuePair;
+				const base = formatValue(typedRow.value);
+				return typedRow.description ? `${base} — ${typedRow.description}` : base;
 			}
 		}
 	]);
 
 	// Generate unique ID for accessibility
-	const listId = crypto.randomUUID?.() ?? `key-value-list-${Math.random().toString(36).slice(2, 9)}`;
+	const listId =
+		crypto.randomUUID?.() ?? `key-value-list-${Math.random().toString(36).slice(2, 9)}`;
 
 	// Format value for display
 	function formatValue(value: string | number | boolean | null | undefined): string {
@@ -201,7 +204,10 @@ SPDX-License-Identifier: MIT
 			variant === 'horizontal' && 'flex flex-row items-start gap-4',
 			variant === 'table' && 'table-row',
 			variant === 'compact' && 'flex flex-row items-center gap-2',
-			dividers && variant !== 'table' && variant !== 'compact' && 'border-b border-base-300 last:border-b-0',
+			dividers &&
+				variant !== 'table' &&
+				variant !== 'compact' &&
+				'border-b border-base-300 last:border-b-0',
 			bordered && variant !== 'table' && 'border border-base-300 rounded-lg p-4',
 			size === 'sm' && variant !== 'table' && 'py-2',
 			size === 'md' && variant !== 'table' && 'py-3',
@@ -226,7 +232,11 @@ SPDX-License-Identifier: MIT
 			size === 'lg' && 'text-base',
 			keyWidth === 'narrow' && variant === 'horizontal' && 'w-32',
 			keyWidth === 'wide' && variant === 'horizontal' && 'w-48',
-			keyWidth !== 'auto' && keyWidth !== 'narrow' && keyWidth !== 'wide' && variant === 'horizontal' && `w-[${keyWidth}]`
+			keyWidth !== 'auto' &&
+				keyWidth !== 'narrow' &&
+				keyWidth !== 'wide' &&
+				variant === 'horizontal' &&
+				`w-[${keyWidth}]`
 		]
 			.filter(Boolean)
 			.join(' ')
@@ -250,16 +260,10 @@ SPDX-License-Identifier: MIT
 
 	// Description classes
 	let descriptionClasses = $derived(
-		[
-			'text-xs',
-			'text-base-content/60',
-			'mt-1',
-			variant === 'horizontal' && 'col-span-2'
-		]
+		['text-xs', 'text-base-content/60', 'mt-1', variant === 'horizontal' && 'col-span-2']
 			.filter(Boolean)
 			.join(' ')
 	);
-
 </script>
 
 {#if variant === 'table'}
@@ -269,13 +273,13 @@ SPDX-License-Identifier: MIT
 		<!-- Table variant using core Table component -->
 		<Table
 			columns={tableColumns}
-			data={items}
+			data={items as unknown as Record<string, unknown>[]}
 			size={tableSize}
-			bordered={bordered}
-			loading={loading}
-			disabled={disabled}
-			emptyMessage={emptyMessage}
-			ariaLabel={ariaLabel}
+			{bordered}
+			{loading}
+			{disabled}
+			{emptyMessage}
+			{ariaLabel}
 			class={className}
 			{...props}
 		/>
@@ -304,7 +308,7 @@ SPDX-License-Identifier: MIT
 			</div>
 		{:else if items.length === 0 && showEmptyState}
 			<!-- Empty state -->
-			<div class="flex items-center justify-center py-8 text-base-content/50">
+			<div class="text-base-content/50 flex items-center justify-center py-8">
 				<span class="text-sm">{emptyMessage}</span>
 			</div>
 		{:else}
