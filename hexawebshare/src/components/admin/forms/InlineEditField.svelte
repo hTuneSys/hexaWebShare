@@ -262,7 +262,6 @@ SPDX-License-Identifier: MIT
 		value && value.trim() !== '' ? (displayFormat ? displayFormat(value) : value) : emptyText
 	);
 
-
 	// Display text classes
 	let displayClasses = $derived(
 		[
@@ -325,11 +324,11 @@ SPDX-License-Identifier: MIT
 						error=""
 						loading={false}
 						ariaLabel={ariaLabel || (label ? undefined : placeholder)}
-						ariaDescribedby={ariaDescribedby}
+						{ariaDescribedby}
 						oninput={handleInputChange}
-						onchange={onchange}
+						{onchange}
 						onblur={handleBlur}
-						onfocus={onfocus}
+						{onfocus}
 					/>
 				</div>
 				{#if showButtons}
@@ -341,7 +340,8 @@ SPDX-License-Identifier: MIT
 							ariaLabel="Save changes"
 							onclick={saveChanges}
 						>
-							{@const checkIconSize = size === 'xs' ? '12' : size === 'sm' ? '16' : size === 'md' ? '16' : '20'}
+							{@const checkIconSize =
+								size === 'xs' ? '12' : size === 'sm' ? '16' : size === 'md' ? '16' : '20'}
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								width={checkIconSize}
@@ -361,7 +361,8 @@ SPDX-License-Identifier: MIT
 							ariaLabel="Cancel editing"
 							onclick={cancelEditing}
 						>
-							{@const closeIconSize = size === 'xs' ? '12' : size === 'sm' ? '16' : size === 'md' ? '16' : '20'}
+							{@const closeIconSize =
+								size === 'xs' ? '12' : size === 'sm' ? '16' : size === 'md' ? '16' : '20'}
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								width={closeIconSize}

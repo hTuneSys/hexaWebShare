@@ -56,10 +56,7 @@ SPDX-License-Identifier: MIT
 	args={{ value: 'John Doe', label: 'Full Name', placeholder: 'Enter name' }}
 />
 
-<Story
-	name="Empty State"
-	args={{ label: 'Description', emptyText: 'Click to add description' }}
-/>
+<Story name="Empty State" args={{ label: 'Description', emptyText: 'Click to add description' }} />
 
 <Story
 	name="Primary Variant"
@@ -85,10 +82,7 @@ SPDX-License-Identifier: MIT
 	args={{ disabled: true, value: 'Cannot edit this', label: 'Disabled Field' }}
 />
 
-<Story
-	name="Loading State"
-	args={{ loading: true, value: 'Saving...', label: 'Loading Field' }}
-/>
+<Story name="Loading State" args={{ loading: true, value: 'Saving...', label: 'Loading Field' }} />
 
 <Story
 	name="With Error"
@@ -149,4 +143,3 @@ SPDX-License-Identifier: MIT
 		onfocus: fn()
 	}}
 />
-
