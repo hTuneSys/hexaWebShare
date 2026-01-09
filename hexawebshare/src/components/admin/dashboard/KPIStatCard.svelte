@@ -100,12 +100,7 @@ SPDX-License-Identifier: MIT
 
 	// Card body classes with size variants
 	let bodyClasses = $derived(
-		[
-			'card-body',
-			size === 'sm' && 'p-4',
-			size === 'md' && 'p-6',
-			size === 'lg' && 'p-8'
-		]
+		['card-body', size === 'sm' && 'p-4', size === 'md' && 'p-6', size === 'lg' && 'p-8']
 			.filter(Boolean)
 			.join(' ')
 	);
@@ -148,19 +143,13 @@ SPDX-License-Identifier: MIT
 
 	// Icon size classes
 	let iconSizeClasses = $derived(
-		[
-			size === 'sm' && 'h-5 w-5',
-			size === 'md' && 'h-6 w-6',
-			size === 'lg' && 'h-8 w-8'
-		]
+		[size === 'sm' && 'h-5 w-5', size === 'md' && 'h-6 w-6', size === 'lg' && 'h-8 w-8']
 			.filter(Boolean)
 			.join(' ')
 	);
 
 	// Icon wrapper classes (size + opacity)
-	let iconWrapperClasses = $derived(
-		[iconSizeClasses, 'opacity-80'].filter(Boolean).join(' ')
-	);
+	let iconWrapperClasses = $derived([iconSizeClasses, 'opacity-80'].filter(Boolean).join(' '));
 
 	// Loading container min-height based on size
 	let loadingMinHeight = $derived(
@@ -178,7 +167,7 @@ SPDX-License-Identifier: MIT
 	// Down: red on red variant (error) → white, otherwise red
 	let trendTextClasses = $derived(
 		trendDirection === 'up'
-			? (variant === 'success' || variant === 'accent')
+			? variant === 'success' || variant === 'accent'
 				? 'text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)] font-bold'
 				: 'text-green-700 dark:text-green-400 font-bold'
 			: variant === 'error'
@@ -189,7 +178,7 @@ SPDX-License-Identifier: MIT
 	// Trend icon color classes - same logic as text
 	let trendIconClasses = $derived(
 		trendDirection === 'up'
-			? (variant === 'success' || variant === 'accent')
+			? variant === 'success' || variant === 'accent'
 				? 'text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]'
 				: 'text-green-700 dark:text-green-400'
 			: variant === 'error'
@@ -214,7 +203,7 @@ SPDX-License-Identifier: MIT
 			</div>
 		{:else}
 			<!-- Label with Icon -->
-			<div class="flex items-center justify-between mb-2">
+			<div class="mb-2 flex items-center justify-between">
 				<div class="flex items-center gap-2">
 					{#if icon}
 						<div class={iconWrapperClasses}>
@@ -226,11 +215,7 @@ SPDX-License-Identifier: MIT
 								stroke="currentColor"
 								stroke-width="2"
 							>
-								<path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									d={icon}
-								/>
+								<path stroke-linecap="round" stroke-linejoin="round" d={icon} />
 							</svg>
 						</div>
 					{/if}

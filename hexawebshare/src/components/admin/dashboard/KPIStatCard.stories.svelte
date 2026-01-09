@@ -211,4 +211,3 @@ SPDX-License-Identifier: MIT
 />
 
 <!-- Note: trendDirection control only works when trend prop has a value -->
-
