@@ -4,10 +4,13 @@ SPDX-License-Identifier: MIT
 -->
 
 <script lang="ts">
+	import { Text, Badge } from '$lib';
+
 	/**
 	 * ChartLegend Component
 	 * Displays a legend for chart visualizations with customizable items
 	 * Built with DaisyUI and Svelte 5 with full accessibility support
+	 * Uses core components: Text, Badge
 	 */
 
 	export interface LegendItem {
@@ -45,6 +48,11 @@ SPDX-License-Identifier: MIT
 		...props
 	}: Props = $props();
 
+	// Map size to Text component size
+	let textSize = $derived(
+		size === 'xs' ? 'xs' : size === 'sm' ? 'sm' : size === 'md' ? 'base' : 'lg'
+	);
+
 	// Derive container classes based on props
 	let containerClasses = $derived(
 		[
@@ -66,6 +74,7 @@ SPDX-License-Identifier: MIT
 	);
 
 	// Derive item classes based on size and interactive state
+	// Uses Button component's ghost variant classes for interactive mode
 	let itemClasses = $derived(
 		[
 			'flex',
@@ -74,9 +83,12 @@ SPDX-License-Identifier: MIT
 			size === 'sm' && 'gap-1.5',
 			size === 'md' && 'gap-2',
 			size === 'lg' && 'gap-2.5',
-			interactive &&
-				'cursor-pointer hover:opacity-80 transition-opacity focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-sm bg-transparent border-0 p-0',
-			'select-none'
+			interactive && 'btn btn-ghost btn-sm cursor-pointer',
+			!interactive && 'select-none',
+			interactive && size === 'xs' && 'btn-xs',
+			interactive && size === 'sm' && 'btn-sm',
+			interactive && size === 'md' && 'btn-md',
+			interactive && size === 'lg' && 'btn-lg'
 		]
 			.filter(Boolean)
 			.join(' ')
@@ -93,11 +105,6 @@ SPDX-License-Identifier: MIT
 					: 'w-4 h-4'
 	);
 
-	// Derive text size
-	let textSize = $derived(
-		size === 'xs' ? 'text-xs' : size === 'sm' ? 'text-sm' : size === 'md' ? 'text-base' : 'text-lg'
-	);
-
 	// Handle legend item click
 	function handleItemClick(item: LegendItem, index: number) {
 		if (interactive && !item.disabled) {
@@ -111,7 +118,10 @@ SPDX-License-Identifier: MIT
 
 	// Get item-specific classes
 	function getItemSpecificClasses(item: LegendItem): string {
-		return [itemClasses, item.disabled && 'opacity-50 cursor-not-allowed pointer-events-none']
+		return [
+			itemClasses,
+			item.disabled && 'opacity-50 cursor-not-allowed pointer-events-none'
+		]
 			.filter(Boolean)
 			.join(' ');
 	}
@@ -146,11 +156,15 @@ SPDX-License-Identifier: MIT
 					style="background-color: {item.color}"
 					aria-hidden="true"
 				></span>
-				<span class="font-medium {textSize}" aria-hidden="true">{item.label}</span>
+				<Text text={item.label} size={textSize} weight="medium" ariaHidden={true} />
 				{#if showValues && item.value !== undefined}
-					<span class="font-semibold {textSize} text-base-content/70 ml-1" aria-hidden="true"
-						>{item.value}</span
-					>
+					<Badge
+						label={String(item.value)}
+						size={size === 'xs' ? 'xs' : size === 'sm' ? 'sm' : size === 'md' ? 'md' : 'lg'}
+						variant="neutral"
+						class="ml-1"
+						ariaHidden={true}
+					/>
 				{/if}
 			</button>
 		{:else}
@@ -160,9 +174,14 @@ SPDX-License-Identifier: MIT
 					style="background-color: {item.color}"
 					aria-hidden="true"
 				></span>
-				<span class="font-medium {textSize}">{item.label}</span>
+				<Text text={item.label} size={textSize} weight="medium" />
 				{#if showValues && item.value !== undefined}
-					<span class="font-semibold {textSize} text-base-content/70 ml-1">{item.value}</span>
+					<Badge
+						label={String(item.value)}
+						size={size === 'xs' ? 'xs' : size === 'sm' ? 'sm' : size === 'md' ? 'md' : 'lg'}
+						variant="neutral"
+						class="ml-1"
+					/>
 				{/if}
 			</div>
 		{/if}
