@@ -50,9 +50,9 @@ SPDX-License-Identifier: MIT
 	}: Props = $props();
 
 	// Map size to Text component size
-	let textSize = $derived(
-		size === 'xs' ? 'xs' : size === 'sm' ? 'sm' : size === 'md' ? 'base' : 'lg'
-	);
+	let textSize = $derived.by((): 'xs' | 'sm' | 'base' | 'lg' => {
+		return size === 'xs' ? 'xs' : size === 'sm' ? 'sm' : size === 'md' ? 'base' : 'lg';
+	});
 
 	// Derive container classes based on props
 	let containerClasses = $derived(
