@@ -119,10 +119,7 @@ SPDX-License-Identifier: MIT
 
 	// Get item-specific classes
 	function getItemSpecificClasses(item: LegendItem): string {
-		return [
-			itemClasses,
-			item.disabled && 'opacity-50 cursor-not-allowed pointer-events-none'
-		]
+		return [itemClasses, item.disabled && 'opacity-50 cursor-not-allowed pointer-events-none']
 			.filter(Boolean)
 			.join(' ');
 	}
