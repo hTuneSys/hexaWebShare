@@ -4,7 +4,8 @@ SPDX-License-Identifier: MIT
 -->
 
 <script lang="ts">
-	import { Text, Badge } from '$lib';
+	import Text from '../../core/typography/Text.svelte';
+	import Badge from '../../core/media/Badge.svelte';
 
 	/**
 	 * ChartLegend Component
