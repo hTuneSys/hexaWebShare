@@ -70,7 +70,9 @@ SPDX-License-Identifier: MIT
 	});
 </script>
 
-<script>
+<script lang="ts">
+	import type { DetailItem, DetailAction } from './DetailDrawer.svelte';
+
 	let defaultOpen = $state(false);
 	let withDataOpen = $state(false);
 	let withActionsOpen = $state(false);
@@ -92,34 +94,34 @@ SPDX-License-Identifier: MIT
 		lastLogin: '2025-01-20 14:30:00'
 	};
 
-	const sampleDataArray = [
+	const sampleDataArray: DetailItem[] = [
 		{ key: 'id', label: 'User ID', value: '12345' },
 		{ key: 'name', label: 'Full Name', value: 'John Doe' },
 		{ key: 'email', label: 'Email Address', value: 'john.doe@example.com' },
-		{ key: 'role', label: 'Role', value: 'Administrator', valueVariant: 'primary' },
-		{ key: 'status', label: 'Status', value: 'Active', valueVariant: 'success' },
+		{ key: 'role', label: 'Role', value: 'Administrator', valueVariant: 'primary' as const },
+		{ key: 'status', label: 'Status', value: 'Active', valueVariant: 'success' as const },
 		{ key: 'createdAt', label: 'Created At', value: '2025-01-15' },
 		{ key: 'lastLogin', label: 'Last Login', value: '2025-01-20 14:30:00' }
 	];
 
-	const badgeData = [
+	const badgeData: DetailItem[] = [
 		{ key: 'id', label: 'Product ID', value: 'PROD-001' },
 		{ key: 'name', label: 'Product Name', value: 'Premium Widget' },
-		{ key: 'category', label: 'Category', value: 'Electronics', valueVariant: 'info' },
-		{ key: 'status', label: 'Status', value: 'In Stock', valueVariant: 'success' },
+		{ key: 'category', label: 'Category', value: 'Electronics', valueVariant: 'info' as const },
+		{ key: 'status', label: 'Status', value: 'In Stock', valueVariant: 'success' as const },
 		{ key: 'price', label: 'Price', value: '$99.99' },
-		{ key: 'discount', label: 'Discount', value: '20%', valueVariant: 'warning' },
-		{ key: 'rating', label: 'Rating', value: '4.5', valueVariant: 'primary' }
+		{ key: 'discount', label: 'Discount', value: '20%', valueVariant: 'warning' as const },
+		{ key: 'rating', label: 'Rating', value: '4.5', valueVariant: 'primary' as const }
 	];
 
-	const sampleActions = [
-		{ label: 'Edit', variant: 'primary', onclick: () => console.log('Edit clicked') },
-		{ label: 'Delete', variant: 'error', onclick: () => console.log('Delete clicked') }
+	const sampleActions: DetailAction[] = [
+		{ label: 'Edit', variant: 'primary' as const, onclick: () => console.log('Edit clicked') },
+		{ label: 'Delete', variant: 'error' as const, onclick: () => console.log('Delete clicked') }
 	];
 
-	const loadingActions = [
-		{ label: 'Save', variant: 'primary', loading: true, onclick: () => console.log('Save clicked') },
-		{ label: 'Cancel', variant: 'neutral', onclick: () => console.log('Cancel clicked') }
+	const loadingActions: DetailAction[] = [
+		{ label: 'Save', variant: 'primary' as const, loading: true, onclick: () => console.log('Save clicked') },
+		{ label: 'Cancel', variant: 'neutral' as const, onclick: () => console.log('Cancel clicked') }
 	];
 </script>
 
