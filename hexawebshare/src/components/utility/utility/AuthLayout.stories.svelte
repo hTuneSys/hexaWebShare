@@ -14,6 +14,7 @@ SPDX-License-Identifier: MIT
 	import DatePicker from '../../core/forms/DatePicker.svelte';
 	import Link from '../../core/typography/Link.svelte';
 	import Paragraph from '../../core/typography/Paragraph.svelte';
+	import Grid from '../../core/layout/Grid.svelte';
 
 	const { Story } = defineMeta({
 		title: 'Utility/Utility/AuthLayout',
@@ -140,8 +141,8 @@ SPDX-License-Identifier: MIT
 {/snippet}
 
 {#snippet socialOnlyForm()}
-	<div class="flex flex-col gap-4">
-		<button type="button" class="btn btn-ghost w-full">
+	<Grid columns={1} gap="sm">
+		<IconButton variant="ghost" ariaLabel="Continue with Google">
 			<svg class="mr-2 h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
 				<path
 					d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -161,16 +162,16 @@ SPDX-License-Identifier: MIT
 				/>
 			</svg>
 			<span>Continue with Google</span>
-		</button>
-		<button type="button" class="btn btn-ghost w-full">
+		</IconButton>
+		<IconButton variant="ghost" ariaLabel="Continue with Apple">
 			<svg class="mr-2 h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
 				<path
 					d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"
 				/>
 			</svg>
 			<span>Continue with Apple</span>
-		</button>
-		<button type="button" class="btn btn-ghost w-full">
+		</IconButton>
+		<IconButton variant="ghost" ariaLabel="Continue with Microsoft">
 			<svg class="mr-2 h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
 				<path d="M11.4 24H0V12.6h11.4V24z" fill="#00A4EF" />
 				<path d="M24 24H12.6V12.6H24V24z" fill="#FFB900" />
@@ -178,8 +179,8 @@ SPDX-License-Identifier: MIT
 				<path d="M24 11.4H12.6V0H24v11.4z" fill="#7FBA00" />
 			</svg>
 			<span>Continue with Microsoft</span>
-		</button>
-	</div>
+		</IconButton>
+	</Grid>
 {/snippet}
 
 {#snippet forgotPasswordForm()}
