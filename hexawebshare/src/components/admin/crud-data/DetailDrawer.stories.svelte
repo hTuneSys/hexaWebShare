@@ -120,7 +120,12 @@ SPDX-License-Identifier: MIT
 	];
 
 	const loadingActions: DetailAction[] = [
-		{ label: 'Save', variant: 'primary' as const, loading: true, onclick: () => console.log('Save clicked') },
+		{
+			label: 'Save',
+			variant: 'primary' as const,
+			loading: true,
+			onclick: () => console.log('Save clicked')
+		},
 		{ label: 'Cancel', variant: 'neutral' as const, onclick: () => console.log('Cancel clicked') }
 	];
 </script>
@@ -129,9 +134,11 @@ SPDX-License-Identifier: MIT
 <Story name="Default">
 	{#snippet children()}
 		<div class="bg-base-100 min-h-screen p-8">
-			<div class="flex flex-col items-center justify-center min-h-[400px]">
+			<div class="flex min-h-[400px] flex-col items-center justify-center">
 				<p class="mb-4 text-lg">Main content area</p>
-				<button class="btn btn-primary" onclick={() => (defaultOpen = true)}> Open Detail Drawer </button>
+				<button class="btn btn-primary" onclick={() => (defaultOpen = true)}>
+					Open Detail Drawer
+				</button>
 			</div>
 			<DetailDrawer bind:open={defaultOpen} title="Default Detail Drawer" />
 		</div>
@@ -142,9 +149,11 @@ SPDX-License-Identifier: MIT
 <Story name="With Data">
 	{#snippet children()}
 		<div class="bg-base-100 min-h-screen p-8">
-			<div class="flex flex-col items-center justify-center min-h-[400px]">
+			<div class="flex min-h-[400px] flex-col items-center justify-center">
 				<p class="mb-4 text-lg">Main content area</p>
-				<button class="btn btn-primary" onclick={() => (withDataOpen = true)}> Open Detail Drawer </button>
+				<button class="btn btn-primary" onclick={() => (withDataOpen = true)}>
+					Open Detail Drawer
+				</button>
 			</div>
 			<DetailDrawer bind:open={withDataOpen} title="User Details" data={sampleData} />
 		</div>
@@ -155,11 +164,18 @@ SPDX-License-Identifier: MIT
 <Story name="With Actions">
 	{#snippet children()}
 		<div class="bg-base-100 min-h-screen p-8">
-			<div class="flex flex-col items-center justify-center min-h-[400px]">
+			<div class="flex min-h-[400px] flex-col items-center justify-center">
 				<p class="mb-4 text-lg">Main content area</p>
-				<button class="btn btn-primary" onclick={() => (withActionsOpen = true)}> Open Detail Drawer </button>
+				<button class="btn btn-primary" onclick={() => (withActionsOpen = true)}>
+					Open Detail Drawer
+				</button>
 			</div>
-			<DetailDrawer bind:open={withActionsOpen} title="Edit Item" data={sampleDataArray} actions={sampleActions} />
+			<DetailDrawer
+				bind:open={withActionsOpen}
+				title="Edit Item"
+				data={sampleDataArray}
+				actions={sampleActions}
+			/>
 		</div>
 	{/snippet}
 </Story>
@@ -168,9 +184,11 @@ SPDX-License-Identifier: MIT
 <Story name="Left Side">
 	{#snippet children()}
 		<div class="bg-base-100 min-h-screen p-8">
-			<div class="flex flex-col items-center justify-center min-h-[400px]">
+			<div class="flex min-h-[400px] flex-col items-center justify-center">
 				<p class="mb-4 text-lg">Main content area</p>
-				<button class="btn btn-primary" onclick={() => (leftSideOpen = true)}> Open Detail Drawer </button>
+				<button class="btn btn-primary" onclick={() => (leftSideOpen = true)}>
+					Open Detail Drawer
+				</button>
 			</div>
 			<DetailDrawer bind:open={leftSideOpen} title="Settings" side="left" data={sampleData} />
 		</div>
@@ -181,9 +199,11 @@ SPDX-License-Identifier: MIT
 <Story name="Empty State">
 	{#snippet children()}
 		<div class="bg-base-100 min-h-screen p-8">
-			<div class="flex flex-col items-center justify-center min-h-[400px]">
+			<div class="flex min-h-[400px] flex-col items-center justify-center">
 				<p class="mb-4 text-lg">Main content area</p>
-				<button class="btn btn-primary" onclick={() => (emptyStateOpen = true)}> Open Detail Drawer </button>
+				<button class="btn btn-primary" onclick={() => (emptyStateOpen = true)}>
+					Open Detail Drawer
+				</button>
 			</div>
 			<DetailDrawer bind:open={emptyStateOpen} title="Empty Details" data={{}} />
 		</div>
@@ -194,9 +214,11 @@ SPDX-License-Identifier: MIT
 <Story name="With Badges">
 	{#snippet children()}
 		<div class="bg-base-100 min-h-screen p-8">
-			<div class="flex flex-col items-center justify-center min-h-[400px]">
+			<div class="flex min-h-[400px] flex-col items-center justify-center">
 				<p class="mb-4 text-lg">Main content area</p>
-				<button class="btn btn-primary" onclick={() => (withBadgesOpen = true)}> Open Detail Drawer </button>
+				<button class="btn btn-primary" onclick={() => (withBadgesOpen = true)}>
+					Open Detail Drawer
+				</button>
 			</div>
 			<DetailDrawer bind:open={withBadgesOpen} title="Product Details" data={badgeData} />
 		</div>
@@ -207,9 +229,11 @@ SPDX-License-Identifier: MIT
 <Story name="Without Title">
 	{#snippet children()}
 		<div class="bg-base-100 min-h-screen p-8">
-			<div class="flex flex-col items-center justify-center min-h-[400px]">
+			<div class="flex min-h-[400px] flex-col items-center justify-center">
 				<p class="mb-4 text-lg">Main content area</p>
-				<button class="btn btn-primary" onclick={() => (withoutTitleOpen = true)}> Open Detail Drawer </button>
+				<button class="btn btn-primary" onclick={() => (withoutTitleOpen = true)}>
+					Open Detail Drawer
+				</button>
 			</div>
 			<DetailDrawer bind:open={withoutTitleOpen} data={sampleData} showCloseButton={true} />
 		</div>
@@ -220,12 +244,21 @@ SPDX-License-Identifier: MIT
 <Story name="Without Close Button">
 	{#snippet children()}
 		<div class="bg-base-100 min-h-screen p-8">
-			<div class="flex flex-col items-center justify-center min-h-[400px]">
+			<div class="flex min-h-[400px] flex-col items-center justify-center">
 				<p class="mb-4 text-lg">Main content area</p>
-				<button class="btn btn-primary" onclick={() => (withoutCloseButtonOpen = true)}> Open Detail Drawer </button>
-				<button class="btn btn-secondary mt-2" onclick={() => (withoutCloseButtonOpen = false)}> Close Drawer </button>
+				<button class="btn btn-primary" onclick={() => (withoutCloseButtonOpen = true)}>
+					Open Detail Drawer
+				</button>
+				<button class="btn btn-secondary mt-2" onclick={() => (withoutCloseButtonOpen = false)}>
+					Close Drawer
+				</button>
 			</div>
-			<DetailDrawer bind:open={withoutCloseButtonOpen} title="Read Only Details" data={sampleData} showCloseButton={false} />
+			<DetailDrawer
+				bind:open={withoutCloseButtonOpen}
+				title="Read Only Details"
+				data={sampleData}
+				showCloseButton={false}
+			/>
 		</div>
 	{/snippet}
 </Story>
@@ -234,11 +267,19 @@ SPDX-License-Identifier: MIT
 <Story name="Full Featured">
 	{#snippet children()}
 		<div class="bg-base-100 min-h-screen p-8">
-			<div class="flex flex-col items-center justify-center min-h-[400px]">
+			<div class="flex min-h-[400px] flex-col items-center justify-center">
 				<p class="mb-4 text-lg">Main content area</p>
-				<button class="btn btn-primary" onclick={() => (fullFeaturedOpen = true)}> Open Detail Drawer </button>
+				<button class="btn btn-primary" onclick={() => (fullFeaturedOpen = true)}>
+					Open Detail Drawer
+				</button>
 			</div>
-			<DetailDrawer bind:open={fullFeaturedOpen} title="Complete Details" data={sampleDataArray} actions={sampleActions} side="right" />
+			<DetailDrawer
+				bind:open={fullFeaturedOpen}
+				title="Complete Details"
+				data={sampleDataArray}
+				actions={sampleActions}
+				side="right"
+			/>
 		</div>
 	{/snippet}
 </Story>
@@ -247,23 +288,47 @@ SPDX-License-Identifier: MIT
 <Story name="Loading Actions">
 	{#snippet children()}
 		<div class="bg-base-100 min-h-screen p-8">
-			<div class="flex flex-col items-center justify-center min-h-[400px]">
+			<div class="flex min-h-[400px] flex-col items-center justify-center">
 				<p class="mb-4 text-lg">Main content area</p>
-				<button class="btn btn-primary" onclick={() => (loadingActionsOpen = true)}> Open Detail Drawer </button>
+				<button class="btn btn-primary" onclick={() => (loadingActionsOpen = true)}>
+					Open Detail Drawer
+				</button>
 			</div>
-			<DetailDrawer bind:open={loadingActionsOpen} title="Saving Changes" data={sampleData} actions={loadingActions} />
+			<DetailDrawer
+				bind:open={loadingActionsOpen}
+				title="Saving Changes"
+				data={sampleData}
+				actions={loadingActions}
+			/>
 		</div>
 	{/snippet}
 </Story>
 
 <!-- Playground Story (Required - Must be last) -->
-<Story name="Playground" args={{ open: playgroundOpen, title: 'Interactive Detail Drawer', data: sampleDataArray, actions: sampleActions, side: 'right', overlay: true, closeOnBackdrop: true, showCloseButton: true, closeOnEscape: true }}>
+<Story
+	name="Playground"
+	args={{
+		open: playgroundOpen,
+		title: 'Interactive Detail Drawer',
+		data: sampleDataArray,
+		actions: sampleActions,
+		side: 'right',
+		overlay: true,
+		closeOnBackdrop: true,
+		showCloseButton: true,
+		closeOnEscape: true
+	}}
+>
 	{#snippet children()}
 		<div class="bg-base-100 min-h-screen p-8">
-			<div class="flex flex-col items-center justify-center min-h-[400px]">
+			<div class="flex min-h-[400px] flex-col items-center justify-center">
 				<p class="mb-4 text-lg">Main content area</p>
-				<p class="mb-4 text-sm text-base-content/70">Use Storybook controls to customize the drawer</p>
-				<button class="btn btn-primary" onclick={() => (playgroundOpen = true)}> Open Detail Drawer </button>
+				<p class="text-base-content/70 mb-4 text-sm">
+					Use Storybook controls to customize the drawer
+				</p>
+				<button class="btn btn-primary" onclick={() => (playgroundOpen = true)}>
+					Open Detail Drawer
+				</button>
 			</div>
 			<DetailDrawer
 				bind:open={playgroundOpen}
@@ -279,4 +344,3 @@ SPDX-License-Identifier: MIT
 		</div>
 	{/snippet}
 </Story>
-

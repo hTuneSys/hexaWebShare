@@ -26,7 +26,17 @@ SPDX-License-Identifier: MIT
 	 */
 	export interface DetailAction {
 		label: string;
-		variant?: 'primary' | 'secondary' | 'accent' | 'neutral' | 'info' | 'success' | 'warning' | 'error' | 'ghost' | 'link';
+		variant?:
+			| 'primary'
+			| 'secondary'
+			| 'accent'
+			| 'neutral'
+			| 'info'
+			| 'success'
+			| 'warning'
+			| 'error'
+			| 'ghost'
+			| 'link';
 		outline?: boolean;
 		disabled?: boolean;
 		loading?: boolean;
@@ -133,9 +143,7 @@ SPDX-License-Identifier: MIT
 	}
 
 	// Computed ARIA label
-	const computedAriaLabel = $derived(
-		ariaLabel || title || 'Detail drawer'
-	);
+	const computedAriaLabel = $derived(ariaLabel || title || 'Detail drawer');
 
 	// Normalize data to DetailItem array
 	const normalizedData = $derived.by(() => {
@@ -170,14 +178,14 @@ SPDX-License-Identifier: MIT
 
 <Drawer
 	{id}
-	bind:open={open}
+	bind:open
 	{side}
 	{overlay}
 	{closeOnBackdrop}
 	showCloseButton={false}
 	{closeOnEscape}
 	class={className}
-	contentClass={contentClass}
+	{contentClass}
 	ariaLabel={computedAriaLabel}
 	onclose={handleClose}
 	onopen={handleOpen}
@@ -222,19 +230,17 @@ SPDX-License-Identifier: MIT
 			{#if normalizedData.length > 0}
 				<div class="space-y-4">
 					{#each normalizedData as item (item.key)}
-						<div class="flex flex-col gap-2 pb-4 border-b border-base-300 last:border-b-0 last:pb-0">
+						<div
+							class="border-base-300 flex flex-col gap-2 border-b pb-4 last:border-b-0 last:pb-0"
+						>
 							<!-- Key/Label -->
-							<div class="text-sm font-semibold text-base-content/70">
+							<div class="text-base-content/70 text-sm font-semibold">
 								{item.label || item.key}
 							</div>
 							<!-- Value -->
-							<div class="text-base text-base-content">
+							<div class="text-base-content text-base">
 								{#if shouldShowAsBadge(item)}
-									<Badge
-										label={formatValue(item.value)}
-										variant={item.valueVariant}
-										size="md"
-									/>
+									<Badge label={formatValue(item.value)} variant={item.valueVariant} size="md" />
 								{:else}
 									<Text text={formatValue(item.value)} size="base" />
 								{/if}
@@ -245,15 +251,20 @@ SPDX-License-Identifier: MIT
 			{:else}
 				<div class="flex flex-col items-center justify-center py-12 text-center">
 					<Text text="No data available" size="lg" display="block" />
-					<Text text="There is no detail information to display." size="sm" display="block" class="mt-2 opacity-60" />
+					<Text
+						text="There is no detail information to display."
+						size="sm"
+						display="block"
+						class="mt-2 opacity-60"
+					/>
 				</div>
 			{/if}
 		</div>
 
 		<!-- Footer Section -->
 		{#if actions && actions.length > 0}
-			<div class="mt-6 pt-4 border-t border-base-300">
-				<div class="flex flex-wrap gap-2 justify-end">
+			<div class="border-base-300 mt-6 border-t pt-4">
+				<div class="flex flex-wrap justify-end gap-2">
 					{#each actions as action (action.label)}
 						<Button
 							label={action.label}
