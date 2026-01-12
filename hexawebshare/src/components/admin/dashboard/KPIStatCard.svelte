@@ -4,6 +4,14 @@ SPDX-License-Identifier: MIT
 -->
 
 <script lang="ts">
+	// Core component imports
+	import Card from '../../core/layout/Card.svelte';
+	import Spinner from '../../core/feedback/Spinner.svelte';
+	import Text from '../../core/typography/Text.svelte';
+	import Heading from '../../core/typography/Heading.svelte';
+	import Icon from '../../core/media/Icon.svelte';
+	import Badge from '../../core/media/Badge.svelte';
+
 	/**
 	 * Props interface for the KPIStatCard component
 	 */
@@ -75,203 +83,105 @@ SPDX-License-Identifier: MIT
 		loading = false,
 		disabled = false,
 		ariaLabel,
-		class: className = '',
-		...props
+		class: className = ''
 	}: Props = $props();
 
-	// Card classes with variant colors (static DaisyUI classes)
-	let cardClasses = $derived(
-		[
-			'card',
-			'shadow-md',
-			variant === 'primary' && 'bg-primary text-primary-content',
-			variant === 'secondary' && 'bg-secondary text-secondary-content',
-			variant === 'accent' && 'bg-accent text-accent-content',
-			variant === 'info' && 'bg-info text-info-content',
-			variant === 'success' && 'bg-success text-success-content',
-			variant === 'warning' && 'bg-warning text-warning-content',
-			variant === 'error' && 'bg-error text-error-content',
-			disabled && 'opacity-50 cursor-not-allowed pointer-events-none',
-			className
-		]
-			.filter(Boolean)
-			.join(' ')
-	);
-
-	// Card body classes with size variants
-	let bodyClasses = $derived(
-		['card-body', size === 'sm' && 'p-4', size === 'md' && 'p-6', size === 'lg' && 'p-8']
-			.filter(Boolean)
-			.join(' ')
-	);
-
-	// Label size classes
-	let labelClasses = $derived(
-		[
-			'font-medium opacity-70',
-			size === 'sm' && 'text-xs',
-			size === 'md' && 'text-sm',
-			size === 'lg' && 'text-base'
-		]
-			.filter(Boolean)
-			.join(' ')
-	);
-
-	// Value size classes
-	let valueClasses = $derived(
-		[
-			'font-bold',
-			size === 'sm' && 'text-2xl',
-			size === 'md' && 'text-3xl',
-			size === 'lg' && 'text-4xl'
-		]
-			.filter(Boolean)
-			.join(' ')
-	);
-
-	// Description size classes
-	let descriptionClasses = $derived(
-		[
-			'opacity-70',
-			size === 'sm' && 'text-xs',
-			size === 'md' && 'text-sm',
-			size === 'lg' && 'text-base'
-		]
-			.filter(Boolean)
-			.join(' ')
-	);
-
-	// Icon size classes
-	let iconSizeClasses = $derived(
-		[size === 'sm' && 'h-5 w-5', size === 'md' && 'h-6 w-6', size === 'lg' && 'h-8 w-8']
-			.filter(Boolean)
-			.join(' ')
-	);
-
-	// Icon wrapper classes (size + opacity)
-	let iconWrapperClasses = $derived([iconSizeClasses, 'opacity-80'].filter(Boolean).join(' '));
+	// Size-based padding classes for card body
+	let bodyPaddingClasses = $derived(size === 'sm' ? 'p-4' : size === 'md' ? 'p-6' : 'p-8');
 
 	// Loading container min-height based on size
 	let loadingMinHeight = $derived(
 		size === 'sm' ? 'min-h-[100px]' : size === 'md' ? 'min-h-[120px]' : 'min-h-[140px]'
 	);
 
-	// Loading spinner size based on component size
-	let loadingSpinnerSize = $derived(
-		size === 'sm' ? 'loading-sm' : size === 'md' ? 'loading-md' : 'loading-lg'
+	// Spinner size mapping
+	let spinnerSize = $derived<'sm' | 'md' | 'lg'>(
+		size === 'sm' ? 'sm' : size === 'md' ? 'md' : 'lg'
 	);
 
-	// Trend text color classes - always show green for up, red for down
-	// But use white on matching color backgrounds for visibility
-	// Up: green on green variants (success, accent) → white, otherwise green
-	// Down: red on red variant (error) → white, otherwise red
-	let trendTextClasses = $derived(
-		trendDirection === 'up'
-			? variant === 'success' || variant === 'accent'
-				? 'text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)] font-bold'
-				: 'text-green-700 dark:text-green-400 font-bold'
-			: variant === 'error'
-				? 'text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)] font-bold'
-				: 'text-red-700 dark:text-red-400 font-bold'
+	// Text size mapping for label
+	let labelSize = $derived<'xs' | 'sm' | 'base'>(
+		size === 'sm' ? 'xs' : size === 'md' ? 'sm' : 'base'
 	);
 
-	// Trend icon color classes - same logic as text
-	let trendIconClasses = $derived(
-		trendDirection === 'up'
-			? variant === 'success' || variant === 'accent'
-				? 'text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]'
-				: 'text-green-700 dark:text-green-400'
-			: variant === 'error'
-				? 'text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]'
-				: 'text-red-700 dark:text-red-400'
+	// Heading size mapping for value
+	let valueSize = $derived<'2xl' | '3xl' | '4xl'>(
+		size === 'sm' ? '2xl' : size === 'md' ? '3xl' : '4xl'
 	);
+
+	// Description size mapping
+	let descriptionSize = $derived<'xs' | 'sm' | 'base'>(
+		size === 'sm' ? 'xs' : size === 'md' ? 'sm' : 'base'
+	);
+
+	// Icon size mapping
+	let iconSize = $derived<'sm' | 'md' | 'lg'>(size === 'sm' ? 'sm' : size === 'md' ? 'md' : 'lg');
 </script>
 
-<div
-	class={cardClasses}
-	role="article"
-	aria-label={ariaLabel || label}
-	aria-disabled={disabled}
-	aria-busy={loading}
-	{...props}
+<Card
+	{variant}
+	shadow={true}
+	shadowSize="md"
+	{disabled}
+	ariaLabel={ariaLabel || label}
+	class={className}
 >
-	<div class={bodyClasses}>
-		{#if loading}
-			<div class="flex flex-col items-center justify-center {loadingMinHeight} gap-2">
-				<span class="loading loading-spinner {loadingSpinnerSize}"></span>
-				<p class="text-sm opacity-70">Loading...</p>
-			</div>
-		{:else}
-			<!-- Label with Icon -->
-			<div class="mb-2 flex items-center justify-between">
-				<div class="flex items-center gap-2">
-					{#if icon}
-						<div class={iconWrapperClasses}>
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								class={iconSizeClasses}
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke="currentColor"
-								stroke-width="2"
-							>
-								<path stroke-linecap="round" stroke-linejoin="round" d={icon} />
-							</svg>
-						</div>
-					{/if}
-					<h3 class={labelClasses}>{label}</h3>
+	{#snippet children()}
+		<div class={bodyPaddingClasses}>
+			{#if loading}
+				<!-- Loading State -->
+				<div class="flex flex-col items-center justify-center {loadingMinHeight} gap-2">
+					<Spinner size={spinnerSize} variant="neutral" />
+					<Text text="Loading..." size="sm" class="!text-current opacity-70" />
 				</div>
-				{#if trend !== undefined}
-					<div class="flex items-center gap-1">
-						{#if trendDirection === 'up'}
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								class="h-4 w-4 {trendIconClasses}"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke="currentColor"
-							>
-								<path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									stroke-width="2"
-									d="M13 7l5 5m0 0l-5 5m5-5H6"
-								/>
-							</svg>
-						{:else}
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								class="h-4 w-4 {trendIconClasses}"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke="currentColor"
-							>
-								<path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									stroke-width="2"
-									d="M13 17l5-5m0 0l-5-5m5 5H6"
-								/>
-							</svg>
+			{:else}
+				<!-- Label Row with Icon and Trend Badge -->
+				<div class="mb-2 flex items-center justify-between">
+					<div class="flex items-center gap-2">
+						{#if icon}
+							<Icon size={iconSize} class="!text-current opacity-80" ariaHidden={true}>
+								{#snippet children()}
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+									>
+										<path stroke-linecap="round" stroke-linejoin="round" d={icon} />
+									</svg>
+								{/snippet}
+							</Icon>
 						{/if}
-						<span class="text-xs font-semibold {trendTextClasses}">
-							{trendDirection === 'up' ? '+' : '-'}{trend}%
-						</span>
+						<Text text={label} size={labelSize} weight="medium" class="!text-current opacity-70" />
+					</div>
+					{#if trend !== undefined}
+						<Badge
+							label={`${trendDirection === 'up' ? '+' : '-'}${trend}%`}
+							variant={trendDirection === 'up' ? 'success' : 'error'}
+							size="sm"
+						/>
+					{/if}
+				</div>
+
+				<!-- Value -->
+				<div class="mb-1">
+					<Heading
+						text={String(value)}
+						level="h3"
+						size={valueSize}
+						weight="bold"
+						class="!text-current"
+					/>
+				</div>
+
+				<!-- Description -->
+				{#if description}
+					<div class="mt-1">
+						<Text text={description} size={descriptionSize} class="!text-current opacity-70" />
 					</div>
 				{/if}
-			</div>
-
-			<!-- Value -->
-			<div class="mb-1">
-				<p class={valueClasses}>{value}</p>
-			</div>
-
-			<!-- Description -->
-			{#if description}
-				<div class="mt-1">
-					<p class={descriptionClasses}>{description}</p>
-				</div>
 			{/if}
-		{/if}
-	</div>
-</div>
+		</div>
+	{/snippet}
+</Card>
