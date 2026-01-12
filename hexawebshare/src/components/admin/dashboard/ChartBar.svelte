@@ -4,6 +4,10 @@ SPDX-License-Identifier: MIT
 -->
 
 <script lang="ts">
+	import EmptyState from '../../core/data-display/EmptyState.svelte';
+	import Spinner from '../../core/feedback/Spinner.svelte';
+	import Text from '../../core/typography/Text.svelte';
+
 	/**
 	 * Props interface for the ChartBar component
 	 */
@@ -199,7 +203,7 @@ SPDX-License-Identifier: MIT
 	</div>
 	{#if loading}
 		<div class="flex items-center justify-center" style="height: {height};">
-			<span class="loading loading-spinner loading-lg"></span>
+			<Spinner size="lg" {variant} ariaLabel="Loading chart data" />
 		</div>
 	{:else if data && data.length > 0}
 		<div
@@ -232,33 +236,37 @@ SPDX-License-Identifier: MIT
 							tabindex={-1}
 						>
 							{#if showValues && item.value > 0}
-								<div
-									class="text-base-content absolute -top-6 left-1/2 -translate-x-1/2 transform text-xs whitespace-nowrap"
-									aria-label="Value: {item.value}"
-								>
-									{item.value}
-								</div>
+								<Text
+									text={String(item.value)}
+									size="xs"
+									class="absolute -top-6 left-1/2 -translate-x-1/2 transform whitespace-nowrap"
+									ariaLabel="Value: {item.value}"
+								/>
 							{/if}
 						</div>
 						{#if showLabels}
-							<div
-								class="text-base-content mt-2 w-full truncate text-center text-xs"
-								title={item.label}
-								aria-label="Label: {item.label}"
-							>
-								{item.label}
-							</div>
+							<Text
+								text={item.label}
+								size="xs"
+								display="block"
+								align="center"
+								truncate
+								class="mt-2 w-full"
+								ariaLabel="Label: {item.label}"
+							/>
 						{/if}
 					{:else}
 						<!-- Horizontal bars -->
 						{#if showLabels}
-							<div
-								class="text-base-content mr-2 min-w-[80px] truncate text-right text-xs"
-								title={item.label}
-								aria-label="Label: {item.label}"
-							>
-								{item.label}
-							</div>
+							<Text
+								text={item.label}
+								size="xs"
+								display="block"
+								align="right"
+								truncate
+								class="mr-2 min-w-[80px]"
+								ariaLabel="Label: {item.label}"
+							/>
 						{/if}
 						<div
 							class="bar {barColorClasses} focus:outline-primary relative flex-1 rounded-l transition-all duration-300 hover:opacity-80 focus:outline focus:outline-2 focus:outline-offset-2"
@@ -270,12 +278,12 @@ SPDX-License-Identifier: MIT
 							tabindex={-1}
 						>
 							{#if showValues && item.value > 0}
-								<div
-									class="text-base-content absolute top-1/2 left-full ml-2 -translate-y-1/2 transform text-xs whitespace-nowrap"
-									aria-label="Value: {item.value}"
-								>
-									{item.value}
-								</div>
+								<Text
+									text={String(item.value)}
+									size="xs"
+									class="absolute top-1/2 left-full ml-2 -translate-y-1/2 transform whitespace-nowrap"
+									ariaLabel="Value: {item.value}"
+								/>
 							{/if}
 						</div>
 					{/if}
@@ -283,14 +291,13 @@ SPDX-License-Identifier: MIT
 			{/each}
 		</div>
 	{:else}
-		<div
-			class="text-base-content/50 flex items-center justify-center"
-			style="height: {height};"
-			role="status"
-			aria-live="polite"
-			aria-label="No data available in chart"
-		>
-			<p>No data available</p>
+		<div class="flex items-center justify-center" style="height: {height};">
+			<EmptyState
+				title="No data available"
+				description="There is no data to display in this chart."
+				size="sm"
+				ariaLabel="No data available in chart"
+			/>
 		</div>
 	{/if}
 </div>

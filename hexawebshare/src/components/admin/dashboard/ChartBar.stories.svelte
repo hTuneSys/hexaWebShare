@@ -113,6 +113,18 @@ SPDX-License-Identifier: MIT
 
 <!-- Variant Stories -->
 <Story
+	name="Secondary Variant"
+	args={{
+		data: sampleData,
+		orientation: 'vertical',
+		variant: 'secondary',
+		height: '300px',
+		showLabels: true,
+		showValues: true
+	}}
+/>
+
+<Story
 	name="Success Variant"
 	args={{
 		data: sampleData,
@@ -148,18 +160,6 @@ SPDX-License-Identifier: MIT
 	}}
 />
 
-<Story
-	name="Info Variant"
-	args={{
-		data: sampleData,
-		orientation: 'vertical',
-		variant: 'info',
-		height: '300px',
-		showLabels: true,
-		showValues: true
-	}}
-/>
-
 <!-- Display Options -->
 <Story
 	name="Without Labels"
@@ -170,18 +170,6 @@ SPDX-License-Identifier: MIT
 		height: '300px',
 		showLabels: false,
 		showValues: true
-	}}
-/>
-
-<Story
-	name="Without Values"
-	args={{
-		data: sampleData,
-		orientation: 'vertical',
-		variant: 'primary',
-		height: '300px',
-		showLabels: true,
-		showValues: false
 	}}
 />
 
@@ -205,6 +193,18 @@ SPDX-License-Identifier: MIT
 		variant: 'primary',
 		height: '300px',
 		disabled: true,
+		showLabels: true,
+		showValues: true
+	}}
+/>
+
+<Story
+	name="Empty Data"
+	args={{
+		data: [],
+		orientation: 'vertical',
+		variant: 'primary',
+		height: '300px',
 		showLabels: true,
 		showValues: true
 	}}
