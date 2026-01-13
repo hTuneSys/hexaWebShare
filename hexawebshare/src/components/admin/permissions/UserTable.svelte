@@ -367,7 +367,7 @@ SPDX-License-Identifier: MIT
 							? `User ${user.name}, ${user.role}, ${user.status}. Press Enter or Space to select.`
 							: undefined}
 					>
-						<td class="min-w-[200px] max-w-[300px]">
+						<td class="max-w-[300px] min-w-[200px]">
 							<div class="flex items-center gap-3">
 								<Avatar
 									src={isValidAvatarUrl(user.avatar) ? user.avatar : undefined}
@@ -381,7 +381,7 @@ SPDX-License-Identifier: MIT
 									<span class="truncate font-medium">{user.name}</span>
 									{#if user.lastLogin}
 										<span
-											class="text-base-content/60 truncate text-xs hidden md:block"
+											class="text-base-content/60 hidden truncate text-xs md:block"
 											aria-label="Last login"
 										>
 											Last login: {typeof user.lastLogin === 'string'

@@ -129,7 +129,7 @@ SPDX-License-Identifier: MIT
 			name: 'Charlie Wilson',
 			email: 'charlie.wilson@example.com',
 			role: 'Viewer',
-			status: 'suspended',
+			status: 'suspended'
 			// avatar: undefined - will show placeholder with initials "CW"
 		},
 		{
