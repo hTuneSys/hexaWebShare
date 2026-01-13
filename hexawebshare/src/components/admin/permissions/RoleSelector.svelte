@@ -114,18 +114,20 @@ SPDX-License-Identifier: MIT
 
 	// Convert roles to options format for Select component
 	// RoleOption is compatible with SelectOption (description is ignored by Select)
-	let options = $derived<SelectOption[] | string[]>(
-		roles.map((role) => {
-			if (typeof role === 'string') {
-				return role;
-			}
-			// Convert RoleOption to SelectOption (description is not used by Select)
-			return {
-				value: role.value,
-				label: role.label,
-				disabled: role.disabled
-			};
-		})
+	let options = $derived(
+		roles.every((role) => typeof role === 'string')
+			? (roles as string[])
+			: roles.map((role) => {
+					if (typeof role === 'string') {
+						return role;
+					}
+					// Convert RoleOption to SelectOption (description is not used by Select)
+					return {
+						value: role.value,
+						label: role.label,
+						disabled: role.disabled
+					};
+				}) as SelectOption[]
 	);
 
 	// Disable select when loading
