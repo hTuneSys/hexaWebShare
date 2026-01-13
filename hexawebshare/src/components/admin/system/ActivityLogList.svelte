@@ -6,6 +6,7 @@ SPDX-License-Identifier: MIT
 <script lang="ts">
 	import EmptyState from '../../core/data-display/EmptyState.svelte';
 	import Avatar from '../../core/media/Avatar.svelte';
+	import StatusBadge from '../../core/data-display/StatusBadge.svelte';
 	import type { Snippet } from 'svelte';
 
 	/**
@@ -164,20 +165,6 @@ SPDX-License-Identifier: MIT
 		}
 	}
 
-	// Get badge classes from activity type (native DaisyUI badge)
-	function getBadgeClasses(type?: ActivityLogEntry['type']): string {
-		return [
-			'badge',
-			'badge-xs',
-			type === 'success' && 'badge-success',
-			type === 'warning' && 'badge-warning',
-			type === 'error' && 'badge-error',
-			(type === 'info' || !type) && 'badge-info'
-		]
-			.filter(Boolean)
-			.join(' ');
-	}
-
 	// Limit items if maxItems is set
 	let displayedItems = $derived(
 		maxItems > 0 && items.length > maxItems ? items.slice(0, maxItems) : items
@@ -231,7 +218,7 @@ SPDX-License-Identifier: MIT
 			title={emptyTitle}
 			description={emptyDescription}
 			variant="neutral"
-			size="md"
+			{size}
 			actions={emptyActions}
 		/>
 	{:else}
@@ -285,9 +272,12 @@ SPDX-License-Identifier: MIT
 							<div class="flex flex-wrap items-center gap-2">
 								<span class="text-base-content truncate font-medium">{entry.action}</span>
 								{#if showBadges && entry.type}
-									<span class={getBadgeClasses(entry.type)} aria-hidden="true">
-										{entry.type}
-									</span>
+									<StatusBadge
+										label={entry.type || 'info'}
+										variant={entry.type || 'info'}
+										size="xs"
+										ariaHidden={true}
+									/>
 								{/if}
 							</div>
 							{#if entry.description}
@@ -344,9 +334,12 @@ SPDX-License-Identifier: MIT
 							<div class="flex flex-wrap items-center gap-2">
 								<span class="text-base-content truncate font-medium">{entry.action}</span>
 								{#if showBadges && entry.type}
-									<span class={getBadgeClasses(entry.type)} aria-hidden="true">
-										{entry.type}
-									</span>
+									<StatusBadge
+										label={entry.type || 'info'}
+										variant={entry.type || 'info'}
+										size="xs"
+										ariaHidden={true}
+									/>
 								{/if}
 							</div>
 							{#if entry.description}
