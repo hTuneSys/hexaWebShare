@@ -105,19 +105,14 @@ SPDX-License-Identifier: MIT
 		class?: string;
 	}
 
-	const {
-		roles,
-		disabled = false,
-		loading = false,
-		...selectProps
-	}: Props = $props();
+	const { roles, disabled = false, loading = false, ...selectProps }: Props = $props();
 
 	// Convert roles to options format for Select component
 	// RoleOption is compatible with SelectOption (description is ignored by Select)
 	let options = $derived(
 		roles.every((role) => typeof role === 'string')
 			? (roles as string[])
-			: roles.map((role) => {
+			: (roles.map((role) => {
 					if (typeof role === 'string') {
 						return role;
 					}
@@ -127,11 +122,11 @@ SPDX-License-Identifier: MIT
 						label: role.label,
 						disabled: role.disabled
 					};
-				}) as SelectOption[]
+				}) as SelectOption[])
 	);
 
 	// Disable select when loading
 	let isDisabled = $derived(disabled || loading);
 </script>
 
-<Select options={options} disabled={isDisabled} loading={loading} {...selectProps} />
+<Select {options} disabled={isDisabled} {loading} {...selectProps} />
