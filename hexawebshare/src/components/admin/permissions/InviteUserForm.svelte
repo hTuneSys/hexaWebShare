@@ -13,6 +13,7 @@ SPDX-License-Identifier: MIT
 	import Card from '../../core/layout/Card.svelte';
 	import CardSection from '../../core/layout/CardSection.svelte';
 	import Heading from '../../core/typography/Heading.svelte';
+	import Badge from '../../core/media/Badge.svelte';
 
 	/**
 	 * Role option type
@@ -281,27 +282,7 @@ SPDX-License-Identifier: MIT
 	let formClasses = $derived(['w-full', className].filter(Boolean).join(' '));
 
 	// Generate unique ID for permissions field
-	let permissionsFieldId = $derived(`permissions-${Math.random().toString(36).substring(2, 11)}`);
-
-	// Badge classes
-	let badgeClasses = $derived(
-		[
-			'badge',
-			badgeVariant === 'primary' && 'badge-primary',
-			badgeVariant === 'secondary' && 'badge-secondary',
-			badgeVariant === 'accent' && 'badge-accent',
-			badgeVariant === 'neutral' && 'badge-neutral',
-			badgeVariant === 'info' && 'badge-info',
-			badgeVariant === 'success' && 'badge-success',
-			badgeVariant === 'warning' && 'badge-warning',
-			badgeVariant === 'error' && 'badge-error',
-			badgeVariant === 'ghost' && 'badge-ghost',
-			'badge-lg',
-			'gap-2'
-		]
-			.filter(Boolean)
-			.join(' ')
-	);
+	let permissionsFieldId = `permissions-${Math.random().toString(36).substring(2, 11)}`;
 
 	// Handle form submission
 	const handleSubmit = (event: SubmitEvent) => {
@@ -425,8 +406,8 @@ SPDX-License-Identifier: MIT
 						{#each selectedPermissions as permissionValue}
 							{@const permission = normalizedPermissions.find((p) => p.value === permissionValue)}
 							{#if permission}
-								<div class={badgeClasses}>
-									<span>{permission.label}</span>
+								<div class="flex items-center gap-2">
+									<Badge label={permission.label} variant={badgeVariant} size="lg" />
 									{#if !disabled && !loading}
 										<IconButton
 											variant="ghost"
