@@ -139,31 +139,6 @@ SPDX-License-Identifier: MIT
 	}}
 />
 
-<Story
-	name="With Help Text"
-	args={{
-		label: 'Assign Role',
-		placeholder: 'Select a role...',
-		roles: ['Admin', 'Editor', 'Viewer'],
-		helpText: 'Select the appropriate role for this user'
-	}}
-/>
-
-<Story
-	name="Multiple Roles Example"
-	args={{
-		label: 'User Role',
-		placeholder: 'Choose a role...',
-		roles: [
-			{ value: 'super-admin', label: 'Super Admin', description: 'Full system access' },
-			{ value: 'admin', label: 'Admin', description: 'Administrative access' },
-			{ value: 'editor', label: 'Editor', description: 'Content editing access' },
-			{ value: 'viewer', label: 'Viewer', description: 'Read-only access' },
-			{ value: 'guest', label: 'Guest', description: 'Limited access', disabled: true }
-		]
-	}}
-/>
-
 <!-- Interactive Playground (REQUIRED - must be last) -->
 <Story
 	name="Playground"
