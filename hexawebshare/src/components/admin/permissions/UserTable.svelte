@@ -5,6 +5,11 @@ SPDX-License-Identifier: MIT
 
 <script lang="ts">
 	import Avatar from '../../core/media/Avatar.svelte';
+	import Badge from '../../core/media/Badge.svelte';
+	import IconButton from '../../core/buttons/IconButton.svelte';
+	import Alert from '../../core/feedback/Alert.svelte';
+	import EmptyState from '../../core/data-display/EmptyState.svelte';
+	import Spinner from '../../core/feedback/Spinner.svelte';
 	import StatusBadge from '../../core/data-display/StatusBadge.svelte';
 
 	/**
@@ -94,6 +99,8 @@ SPDX-License-Identifier: MIT
 		bordered?: boolean;
 		/**
 		 * Make the table responsive with horizontal scroll
+		 * - true: Table maintains width, shows horizontal scroll on small screens (all columns visible)
+		 * - false: Table fits container, columns hide/show based on responsive classes (no scroll)
 		 * @default true
 		 */
 		responsive?: boolean;
@@ -134,7 +141,7 @@ SPDX-License-Identifier: MIT
 	}
 
 	const {
-		users,
+		users = [],
 		size = 'md',
 		zebra = false,
 		hover = true,
@@ -211,17 +218,30 @@ SPDX-License-Identifier: MIT
 	}
 
 	// Handle edit action
-	function handleEdit(user: User, index: number, event: MouseEvent) {
-		event.stopPropagation();
+	function handleEdit(user: User, index: number, event?: MouseEvent) {
+		if (event) {
+			event.stopPropagation();
+		}
 		if (disabled || loading) return;
 		onedit?.(user, index);
 	}
 
 	// Handle delete action
-	function handleDelete(user: User, index: number, event: MouseEvent) {
-		event.stopPropagation();
+	function handleDelete(user: User, index: number, event?: MouseEvent) {
+		if (event) {
+			event.stopPropagation();
+		}
 		if (disabled || loading) return;
 		ondelete?.(user, index);
+	}
+
+	// Wrapper functions for IconButton onclick (no event parameter)
+	function handleEditClick(user: User, index: number) {
+		handleEdit(user, index);
+	}
+
+	function handleDeleteClick(user: User, index: number) {
+		handleDelete(user, index);
 	}
 
 	// Get status badge variant based on user status
@@ -259,6 +279,17 @@ SPDX-License-Identifier: MIT
 		}
 		return name.substring(0, 2).toUpperCase();
 	}
+
+	// Check if avatar URL is valid
+	function isValidAvatarUrl(url: string | undefined): boolean {
+		if (!url || !url.trim()) return false;
+		try {
+			const parsedUrl = new URL(url);
+			return parsedUrl.protocol === 'http:' || parsedUrl.protocol === 'https:';
+		} catch {
+			return false;
+		}
+	}
 </script>
 
 <div class={wrapperClasses} {...props}>
@@ -267,7 +298,7 @@ SPDX-License-Identifier: MIT
 		aria-label={ariaLabel}
 		aria-busy={loading}
 		aria-disabled={disabled}
-		aria-rowcount={error ? 1 : users.length + 1}
+		aria-rowcount={error ? 1 : (users?.length ?? 0) + 1}
 		aria-live={error ? 'polite' : undefined}
 		role="table"
 	>
@@ -288,7 +319,7 @@ SPDX-License-Identifier: MIT
 				<tr role="row">
 					<td colspan={showActions ? 5 : 4} class="py-12 text-center" role="gridcell">
 						<div class="flex flex-col items-center justify-center gap-3">
-							<span class="loading loading-spinner loading-md" aria-hidden="true"></span>
+							<Spinner type="spinner" size="md" variant="primary" ariaLabel="Loading users table" />
 							<span class="text-base-content/60 text-sm">
 								<span class="sr-only">Loading users table</span>
 								<span aria-hidden="true">Loading users...</span>
@@ -300,84 +331,30 @@ SPDX-License-Identifier: MIT
 				<tr role="row">
 					<td colspan={showActions ? 5 : 4} class="py-12 text-center" role="gridcell">
 						<div class="flex flex-col items-center justify-center gap-3">
-							<div class="flex flex-col items-center gap-2">
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									width="48"
-									height="48"
-									viewBox="0 0 24 24"
-									fill="none"
-									stroke="currentColor"
-									stroke-width="2"
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									class="text-error"
-									aria-hidden="true"
-								>
-									<circle cx="12" cy="12" r="10"></circle>
-									<line x1="12" y1="8" x2="12" y2="12"></line>
-									<line x1="12" y1="16" x2="12.01" y2="16"></line>
-								</svg>
-								<div class="flex flex-col items-center gap-2">
-									<span class="text-error font-medium" role="alert" aria-live="polite">
-										{error}
-									</span>
-									{#if onretry}
-										<button
-											type="button"
-											class="btn btn-sm btn-outline btn-error mt-2"
-											onclick={() => onretry()}
-											aria-label="Retry loading users"
-										>
-											<svg
-												xmlns="http://www.w3.org/2000/svg"
-												width="16"
-												height="16"
-												viewBox="0 0 24 24"
-												fill="none"
-												stroke="currentColor"
-												stroke-width="2"
-												stroke-linecap="round"
-												stroke-linejoin="round"
-												aria-hidden="true"
-											>
-												<polyline points="23 4 23 10 17 10"></polyline>
-												<polyline points="1 20 1 14 7 14"></polyline>
-												<path
-													d="M3.51 9a9 9 0 0 1 14.85-3.7L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"
-												></path>
-											</svg>
-											Retry
-										</button>
-									{/if}
-								</div>
-							</div>
+							<Alert
+								variant="error"
+								size="md"
+								description={error}
+								actionLabel={onretry ? 'Retry' : undefined}
+								actionAriaLabel={onretry ? 'Retry loading users' : undefined}
+								onaction={onretry}
+								fullWidth={false}
+								withIcon={true}
+								ariaLabel="Error loading users"
+							/>
 						</div>
 					</td>
 				</tr>
-			{:else if users.length === 0}
+			{:else if !users || users.length === 0}
 				<tr role="row">
 					<td colspan={showActions ? 5 : 4} class="py-12 text-center" role="gridcell">
-						<div class="flex flex-col items-center justify-center gap-3">
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								width="48"
-								height="48"
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								stroke-width="2"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								class="text-base-content/40"
-								aria-hidden="true"
-							>
-								<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-								<circle cx="9" cy="7" r="4"></circle>
-								<line x1="23" y1="11" x2="17" y2="11"></line>
-							</svg>
-							<span class="text-base-content/60" role="status">{emptyMessage}</span>
-						</div>
+						<EmptyState
+							description={emptyMessage}
+							variant="neutral"
+							size="md"
+							fullWidth={false}
+							ariaLabel="Empty users table"
+						/>
 					</td>
 				</tr>
 			{:else}
@@ -393,21 +370,21 @@ SPDX-License-Identifier: MIT
 							? `User ${user.name}, ${user.role}, ${user.status}. Press Enter or Space to select.`
 							: undefined}
 					>
-						<td class="min-w-[200px]" role="gridcell">
+						<td class="min-w-[200px] max-w-[300px]" role="gridcell">
 							<div class="flex items-center gap-3">
 								<Avatar
-									src={user.avatar}
+									src={isValidAvatarUrl(user.avatar) ? user.avatar : undefined}
 									alt={user.name}
 									size="sm"
 									placeholder={getUserInitials(user.name)}
 									ariaLabel={`${user.name} avatar`}
 									ariaHidden={true}
 								/>
-								<div class="flex min-w-0 flex-col">
+								<div class="flex min-w-0 flex-1 flex-col">
 									<span class="truncate font-medium">{user.name}</span>
 									{#if user.lastLogin}
 										<span
-											class="text-base-content/60 hidden text-xs lg:inline"
+											class="text-base-content/60 truncate text-xs hidden md:block"
 											aria-label="Last login"
 										>
 											Last login: {typeof user.lastLogin === 'string'
@@ -434,22 +411,12 @@ SPDX-License-Identifier: MIT
 							</span>
 						</td>
 						<td class="hidden sm:table-cell" role="gridcell">
-							<span
-								class={[
-									'badge',
-									getRoleVariant(user.role) === 'primary' && 'badge-primary',
-									getRoleVariant(user.role) === 'secondary' && 'badge-secondary',
-									getRoleVariant(user.role) === 'accent' && 'badge-accent',
-									getRoleVariant(user.role) === 'neutral' && 'badge-neutral',
-									'badge-sm'
-								]
-									.filter(Boolean)
-									.join(' ')}
-								role="status"
-								aria-label={`User role: ${user.role}`}
-							>
-								{user.role}
-							</span>
+							<Badge
+								label={user.role}
+								variant={getRoleVariant(user.role)}
+								size="sm"
+								ariaLabel={`User role: ${user.role}`}
+							/>
 						</td>
 						<td role="gridcell">
 							<StatusBadge
@@ -467,13 +434,13 @@ SPDX-License-Identifier: MIT
 									aria-label="User actions"
 								>
 									{#if onedit}
-										<button
-											type="button"
-											class="btn btn-ghost btn-xs btn-circle hover:bg-base-200 focus:ring-primary transition-colors focus:ring-2 focus:ring-offset-2 focus:outline-none"
-											aria-label={`Edit user ${user.name}`}
-											onclick={(e) => handleEdit(user, index, e)}
+										<IconButton
+											variant="ghost"
+											size="xs"
+											circle={true}
+											ariaLabel={`Edit user ${user.name}`}
+											onclick={() => handleEditClick(user, index)}
 											disabled={disabled || loading}
-											aria-disabled={disabled || loading}
 										>
 											<svg
 												xmlns="http://www.w3.org/2000/svg"
@@ -490,16 +457,17 @@ SPDX-License-Identifier: MIT
 												<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
 												<path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
 											</svg>
-										</button>
+										</IconButton>
 									{/if}
 									{#if ondelete}
-										<button
-											type="button"
-											class="btn btn-ghost btn-xs btn-circle text-error hover:bg-error/10 focus:ring-error transition-colors focus:ring-2 focus:ring-offset-2 focus:outline-none"
-											aria-label={`Delete user ${user.name}`}
-											onclick={(e) => handleDelete(user, index, e)}
+										<IconButton
+											variant="ghost"
+											size="xs"
+											circle={true}
+											ariaLabel={`Delete user ${user.name}`}
+											onclick={() => handleDeleteClick(user, index)}
 											disabled={disabled || loading}
-											aria-disabled={disabled || loading}
+											class="text-error hover:bg-error/10"
 										>
 											<svg
 												xmlns="http://www.w3.org/2000/svg"
@@ -518,7 +486,7 @@ SPDX-License-Identifier: MIT
 													d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
 												></path>
 											</svg>
-										</button>
+										</IconButton>
 									{/if}
 								</div>
 							</td>

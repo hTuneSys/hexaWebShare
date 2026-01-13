@@ -12,6 +12,21 @@ SPDX-License-Identifier: MIT
 		title: 'Admin/Permissions/UserTable',
 		component: UserTable,
 		tags: ['autodocs'],
+		parameters: {
+			viewport: {
+				defaultViewport: 'desktop',
+				viewports: {
+					desktop: {
+						name: 'Desktop',
+						styles: {
+							width: '1280px',
+							height: '800px'
+						}
+					}
+				}
+			},
+			layout: 'fullscreen'
+		},
 		argTypes: {
 			size: {
 				control: { type: 'select' },
@@ -79,7 +94,7 @@ SPDX-License-Identifier: MIT
 			email: 'john.doe@example.com',
 			role: 'Admin',
 			status: 'active',
-			avatar: 'https://i.pravatar.cc/150?img=1',
+			// avatar: undefined - will show placeholder with initials "JD"
 			lastLogin: '2025-01-15'
 		},
 		{
@@ -88,7 +103,7 @@ SPDX-License-Identifier: MIT
 			email: 'jane.smith@example.com',
 			role: 'Editor',
 			status: 'active',
-			avatar: 'https://i.pravatar.cc/150?img=2',
+			// avatar: undefined - will show placeholder with initials "JS"
 			lastLogin: '2025-01-14'
 		},
 		{
@@ -97,7 +112,7 @@ SPDX-License-Identifier: MIT
 			email: 'bob.johnson@example.com',
 			role: 'Viewer',
 			status: 'inactive',
-			avatar: 'https://i.pravatar.cc/150?img=3',
+			// avatar: undefined - will show placeholder with initials "BJ"
 			lastLogin: '2025-01-10'
 		},
 		{
@@ -106,6 +121,7 @@ SPDX-License-Identifier: MIT
 			email: 'alice.brown@example.com',
 			role: 'Editor',
 			status: 'pending',
+			// avatar: undefined - will show placeholder with initials "AB"
 			lastLogin: '2025-01-12'
 		},
 		{
@@ -114,7 +130,7 @@ SPDX-License-Identifier: MIT
 			email: 'charlie.wilson@example.com',
 			role: 'Viewer',
 			status: 'suspended',
-			avatar: 'https://i.pravatar.cc/150?img=5'
+			// avatar: undefined - will show placeholder with initials "CW"
 		},
 		{
 			id: 6,
@@ -122,7 +138,7 @@ SPDX-License-Identifier: MIT
 			email: 'diana.prince@example.com',
 			role: 'Admin',
 			status: 'active',
-			avatar: 'https://i.pravatar.cc/150?img=6',
+			// avatar: undefined - will show placeholder with initials "DP"
 			lastLogin: '2025-01-15'
 		},
 		{
@@ -131,6 +147,7 @@ SPDX-License-Identifier: MIT
 			email: 'edward.norton@example.com',
 			role: 'Editor',
 			status: 'active',
+			// avatar: undefined - will show placeholder with initials "EN"
 			lastLogin: '2025-01-13'
 		},
 		{
@@ -139,7 +156,7 @@ SPDX-License-Identifier: MIT
 			email: 'fiona.apple@example.com',
 			role: 'Viewer',
 			status: 'inactive',
-			avatar: 'https://i.pravatar.cc/150?img=8',
+			// avatar: undefined - will show placeholder with initials "FA"
 			lastLogin: '2025-01-08'
 		}
 	];
@@ -153,6 +170,7 @@ SPDX-License-Identifier: MIT
 		size: 'md',
 		hover: true,
 		showActions: true,
+		responsive: false,
 		ariaLabel: 'Users table'
 	}}
 />
@@ -163,6 +181,7 @@ SPDX-License-Identifier: MIT
 	args={{
 		users: [],
 		loading: true,
+		responsive: false,
 		ariaLabel: 'Loading users table'
 	}}
 />
@@ -173,6 +192,7 @@ SPDX-License-Identifier: MIT
 	args={{
 		users: [],
 		emptyMessage: 'No users found',
+		responsive: false,
 		ariaLabel: 'Empty users table'
 	}}
 />
@@ -183,7 +203,9 @@ SPDX-License-Identifier: MIT
 	args={{
 		users: [],
 		error: 'Failed to load users. Please try again.',
-		ariaLabel: 'Users table with error'
+		responsive: false,
+		ariaLabel: 'Users table with error',
+		onretry: fn()
 	}}
 />
 
@@ -195,6 +217,7 @@ SPDX-License-Identifier: MIT
 		size: 'sm',
 		hover: true,
 		showActions: true,
+		responsive: false,
 		ariaLabel: 'Small users table'
 	}}
 />
@@ -206,6 +229,7 @@ SPDX-License-Identifier: MIT
 		size: 'lg',
 		hover: true,
 		showActions: true,
+		responsive: false,
 		ariaLabel: 'Large users table'
 	}}
 />
@@ -218,6 +242,7 @@ SPDX-License-Identifier: MIT
 		zebra: true,
 		hover: true,
 		showActions: true,
+		responsive: false,
 		ariaLabel: 'Zebra striped users table'
 	}}
 />
@@ -229,6 +254,7 @@ SPDX-License-Identifier: MIT
 		compact: true,
 		hover: true,
 		showActions: true,
+		responsive: false,
 		ariaLabel: 'Compact users table'
 	}}
 />
@@ -240,6 +266,7 @@ SPDX-License-Identifier: MIT
 		users: sampleUsers,
 		showActions: false,
 		hover: true,
+		responsive: false,
 		ariaLabel: 'Users table without action buttons'
 	}}
 />
@@ -252,6 +279,7 @@ SPDX-License-Identifier: MIT
 		disabled: true,
 		hover: true,
 		showActions: true,
+		responsive: false,
 		ariaLabel: 'Disabled users table'
 	}}
 />
@@ -268,7 +296,7 @@ SPDX-License-Identifier: MIT
 		loading: false,
 		disabled: false,
 		bordered: false,
-		responsive: true,
+		responsive: false,
 		showActions: true,
 		ariaLabel: 'Interactive users table playground',
 		emptyMessage: 'No users found'
