@@ -297,27 +297,25 @@ SPDX-License-Identifier: MIT
 		class={tableClasses}
 		aria-label={ariaLabel}
 		aria-busy={loading}
-		aria-disabled={disabled}
 		aria-rowcount={error ? 1 : (users?.length ?? 0) + 1}
 		aria-live={error ? 'polite' : undefined}
-		role="table"
 	>
 		<thead>
-			<tr role="row">
-				<th scope="col" class="min-w-[200px]" role="columnheader">Name</th>
-				<th scope="col" class="hidden md:table-cell" role="columnheader">Email</th>
-				<th scope="col" class="hidden sm:table-cell" role="columnheader">Role</th>
-				<th scope="col" role="columnheader">Status</th>
+			<tr>
+				<th scope="col" class="min-w-[200px]">Name</th>
+				<th scope="col" class="hidden md:table-cell">Email</th>
+				<th scope="col" class="hidden sm:table-cell">Role</th>
+				<th scope="col">Status</th>
 				{#if showActions}
-					<th scope="col" class="w-[100px] text-right" role="columnheader">Actions</th>
+					<th scope="col" class="w-[100px] text-right">Actions</th>
 				{/if}
 			</tr>
 		</thead>
 
 		<tbody>
 			{#if loading}
-				<tr role="row">
-					<td colspan={showActions ? 5 : 4} class="py-12 text-center" role="gridcell">
+				<tr>
+					<td colspan={showActions ? 5 : 4} class="py-12 text-center">
 						<div class="flex flex-col items-center justify-center gap-3">
 							<Spinner type="spinner" size="md" variant="primary" ariaLabel="Loading users table" />
 							<span class="text-base-content/60 text-sm">
@@ -328,8 +326,8 @@ SPDX-License-Identifier: MIT
 					</td>
 				</tr>
 			{:else if error}
-				<tr role="row">
-					<td colspan={showActions ? 5 : 4} class="py-12 text-center" role="gridcell">
+				<tr>
+					<td colspan={showActions ? 5 : 4} class="py-12 text-center">
 						<div class="flex flex-col items-center justify-center gap-3">
 							<Alert
 								variant="error"
@@ -346,8 +344,8 @@ SPDX-License-Identifier: MIT
 					</td>
 				</tr>
 			{:else if !users || users.length === 0}
-				<tr role="row">
-					<td colspan={showActions ? 5 : 4} class="py-12 text-center" role="gridcell">
+				<tr>
+					<td colspan={showActions ? 5 : 4} class="py-12 text-center">
 						<EmptyState
 							description={emptyMessage}
 							variant="neutral"
@@ -363,14 +361,13 @@ SPDX-License-Identifier: MIT
 						class={getRowClasses(index)}
 						onclick={() => handleRowClick(user, index)}
 						onkeydown={(e) => handleRowKeyDown(e, user, index)}
-						role="row"
 						aria-rowindex={index + 2}
 						tabindex={onuserclick && !disabled && !loading ? 0 : undefined}
 						aria-label={onuserclick
 							? `User ${user.name}, ${user.role}, ${user.status}. Press Enter or Space to select.`
 							: undefined}
 					>
-						<td class="min-w-[200px] max-w-[300px]" role="gridcell">
+						<td class="min-w-[200px] max-w-[300px]">
 							<div class="flex items-center gap-3">
 								<Avatar
 									src={isValidAvatarUrl(user.avatar) ? user.avatar : undefined}
@@ -402,7 +399,7 @@ SPDX-License-Identifier: MIT
 								</div>
 							</div>
 						</td>
-						<td class="hidden md:table-cell" role="gridcell">
+						<td class="hidden md:table-cell">
 							<span
 								class="text-base-content block max-w-[200px] truncate"
 								aria-label="Email address"
@@ -410,7 +407,7 @@ SPDX-License-Identifier: MIT
 								{user.email}
 							</span>
 						</td>
-						<td class="hidden sm:table-cell" role="gridcell">
+						<td class="hidden sm:table-cell">
 							<Badge
 								label={user.role}
 								variant={getRoleVariant(user.role)}
@@ -418,7 +415,7 @@ SPDX-License-Identifier: MIT
 								ariaLabel={`User role: ${user.role}`}
 							/>
 						</td>
-						<td role="gridcell">
+						<td>
 							<StatusBadge
 								label={user.status.charAt(0).toUpperCase() + user.status.slice(1)}
 								variant={getStatusVariant(user.status)}
@@ -427,7 +424,7 @@ SPDX-License-Identifier: MIT
 							/>
 						</td>
 						{#if showActions}
-							<td class="w-[100px] text-right" role="gridcell">
+							<td class="w-[100px] text-right">
 								<div
 									class="flex items-center justify-end gap-1 sm:gap-2"
 									role="group"
