@@ -4,6 +4,17 @@ SPDX-License-Identifier: MIT
 -->
 
 <script lang="ts">
+	import Card from '../../core/layout/Card.svelte';
+	import IconButton from '../../core/buttons/IconButton.svelte';
+	import Badge from '../../core/media/Badge.svelte';
+	import Dropdown from '../../core/overlay-navigation/Dropdown.svelte';
+	import type { DropdownItem } from '../../core/overlay-navigation/Dropdown.svelte';
+	import EmptyState from '../../core/data-display/EmptyState.svelte';
+	import Spinner from '../../core/feedback/Spinner.svelte';
+	import List from '../../core/data-display/List.svelte';
+	import ListItem from '../../core/data-display/ListItem.svelte';
+	import Heading from '../../core/typography/Heading.svelte';
+
 	/**
 	 * Notification item interface
 	 */
@@ -103,21 +114,6 @@ SPDX-License-Identifier: MIT
 			`${title}${unreadCount > 0 ? `, ${unreadCount} unread` : ', no unread notifications'}`
 	);
 
-	// Container classes
-	let containerClasses = $derived(
-		[
-			'card',
-			'bg-base-100',
-			'shadow-lg',
-			'w-full',
-			'max-w-md',
-			disabled && 'pointer-events-none opacity-50',
-			className
-		]
-			.filter(Boolean)
-			.join(' ')
-	);
-
 	// Get variant indicator classes
 	function getVariantClasses(variant: NotificationItem['variant']): string {
 		return [
@@ -131,26 +127,6 @@ SPDX-License-Identifier: MIT
 			variant === 'warning' && 'bg-warning',
 			variant === 'error' && 'bg-error',
 			!variant && 'bg-base-content/30'
-		]
-			.filter(Boolean)
-			.join(' ');
-	}
-
-	// Get notification item classes
-	function getItemClasses(read: boolean | undefined): string {
-		return [
-			'flex',
-			'w-full',
-			'items-start',
-			'gap-3',
-			'rounded-lg',
-			'p-3',
-			'transition-all',
-			'duration-200',
-			'focus-within:ring-2',
-			'focus-within:ring-primary/50',
-			!read && 'bg-base-200',
-			read && 'hover:bg-base-200/50'
 		]
 			.filter(Boolean)
 			.join(' ');
@@ -217,6 +193,25 @@ SPDX-License-Identifier: MIT
 		}
 	}
 
+	// Dropdown items for header actions
+	let dropdownItems = $derived<DropdownItem[]>([
+		...(unreadCount > 0
+			? [
+					{
+						id: 'mark-all-read',
+						label: 'Mark all as read',
+						onClick: handleMarkAllRead
+					}
+				]
+			: []),
+		{
+			id: 'clear-all',
+			label: 'Clear all',
+			onClick: handleClearAll,
+			divider: unreadCount > 0
+		}
+	]);
+
 	// Keyboard handler for notification items
 	function handleKeyDown(event: KeyboardEvent, notification: NotificationItem) {
 		if (disabled) return;
@@ -238,38 +233,94 @@ SPDX-License-Identifier: MIT
 	}
 </script>
 
-<div
-	class={containerClasses}
+<Card
+	shadowSize="lg"
+	{disabled}
+	ariaLabel={computedAriaLabel}
 	role="region"
-	aria-label={computedAriaLabel}
-	aria-busy={loading}
-	aria-disabled={disabled}
+	class="w-full max-w-md {className}"
 >
-	<div class="card-body p-0">
-		<!-- Header -->
-		<div class="border-base-200 flex items-center justify-between border-b px-4 py-3">
-			<h2 id="{componentId}-title" class="flex items-center gap-2 text-lg font-semibold">
-				{title}
-				{#if unreadCount > 0}
-					<span class="badge badge-primary badge-sm" aria-label="{unreadCount} unread">
-						{unreadCount}
-					</span>
-				{/if}
-			</h2>
+	{#snippet children()}
+		<div class="p-0">
+			<!-- Header -->
+			<div class="border-base-200 flex items-center justify-between border-b px-4 py-3">
+				<Heading
+					level="h2"
+					size="lg"
+					weight="semibold"
+					class="flex items-center gap-2"
+					{...{ id: `${componentId}-title` }}
+				>
+					{#snippet children()}
+						{title}
+						{#if unreadCount > 0}
+							<Badge
+								label={unreadCount.toString()}
+								variant="primary"
+								size="sm"
+								ariaLabel="{unreadCount} unread"
+							/>
+						{/if}
+					{/snippet}
+				</Heading>
 
-			<!-- Header Actions Dropdown -->
-			{#if notifications.length > 0 && !loading}
-				<div class="dropdown dropdown-end">
-					<button
-						type="button"
-						class="btn btn-ghost btn-sm btn-square"
-						aria-label="Notification options menu"
-						aria-haspopup="menu"
+				<!-- Header Actions Dropdown -->
+				{#if notifications.length > 0 && !loading}
+					<Dropdown
+						items={dropdownItems}
+						position="bottom"
+						align="end"
 						{disabled}
+						ariaLabel="Notification options menu"
 					>
+						{#snippet trigger()}
+							<IconButton
+								variant="ghost"
+								size="sm"
+								square={true}
+								ariaLabel="Notification options menu"
+								{disabled}
+							>
+								{#snippet children()}
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										class="h-5 w-5"
+										fill="none"
+										viewBox="0 0 24 24"
+										stroke="currentColor"
+										aria-hidden="true"
+									>
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
+										/>
+									</svg>
+								{/snippet}
+							</IconButton>
+						{/snippet}
+					</Dropdown>
+				{/if}
+			</div>
+
+			<!-- Notification List -->
+			{#if loading}
+				<div class="flex justify-center py-12" role="status" aria-label="Loading notifications">
+					<Spinner type="spinner" size="md" variant="primary" ariaLabel="Loading notifications" />
+				</div>
+			{:else if notifications.length === 0}
+				<EmptyState
+					title="No notifications"
+					description="You're all caught up!"
+					variant="neutral"
+					size="md"
+					ariaLabel="No notifications available"
+				>
+					{#snippet icon()}
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
-							class="h-5 w-5"
+							class="text-base-content/20 h-8 w-8"
 							fill="none"
 							viewBox="0 0 24 24"
 							stroke="currentColor"
@@ -278,192 +329,133 @@ SPDX-License-Identifier: MIT
 							<path
 								stroke-linecap="round"
 								stroke-linejoin="round"
-								stroke-width="2"
-								d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
+								stroke-width="1.5"
+								d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
 							/>
 						</svg>
-					</button>
-					<ul
-						class="dropdown-content menu bg-base-100 rounded-box z-10 w-52 p-2 shadow-lg"
-						role="menu"
-						aria-label="Notification actions"
+					{/snippet}
+				</EmptyState>
+			{:else}
+				<div
+					style="max-height: {maxHeight};"
+					class="overflow-y-auto"
+					aria-live="polite"
+					aria-relevant="additions removals"
+				>
+					<List
+						variant="hoverable"
+						size="md"
+						compact={true}
+						ariaLabelledby="{componentId}-title"
+						class="p-2"
 					>
-						{#if unreadCount > 0}
-							<li role="none">
-								<button type="button" onclick={handleMarkAllRead} role="menuitem">
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										class="h-4 w-4"
-										fill="none"
-										viewBox="0 0 24 24"
-										stroke="currentColor"
-										aria-hidden="true"
-									>
-										<path
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											stroke-width="2"
-											d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-										/>
-									</svg>
-									Mark all as read
-								</button>
-							</li>
-						{/if}
-						<li role="none">
-							<button type="button" onclick={handleClearAll} class="text-error" role="menuitem">
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									class="h-4 w-4"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke="currentColor"
-									aria-hidden="true"
+						{#snippet children()}
+							{#each notifications as notification (notification.id)}
+								{@const itemAriaLabel = `${getVariantLabel(notification.variant)}: ${notification.title}${notification.message ? `. ${notification.message}` : ''}${notification.timestamp ? `. ${formatTimestamp(notification.timestamp)}` : ''}${!notification.read ? '. Unread' : ''}`}
+								<ListItem
+									label={notification.title}
+									description={notification.message}
+									variant={notification.variant || 'neutral'}
+									size="sm"
+									active={!notification.read}
+									{disabled}
+									ariaLabel={itemAriaLabel}
+									class={!notification.read ? 'bg-base-200' : ''}
+									onkeydown={(e) => handleKeyDown(e, notification)}
 								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										stroke-width="2"
-										d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-									/>
-								</svg>
-								Clear all
-							</button>
-						</li>
-					</ul>
+									{#snippet leading()}
+										<span
+											class={getVariantClasses(notification.variant)}
+											aria-hidden="true"
+											role="presentation"
+										></span>
+									{/snippet}
+									{#snippet children()}
+										<div class="min-w-0 flex-1">
+											<div class="flex items-start justify-between gap-2">
+												<span class="text-sm" class:font-semibold={!notification.read}>
+													{notification.title}
+												</span>
+												{#if notification.timestamp}
+													<time
+														class="text-base-content/50 shrink-0 text-xs"
+														datetime={typeof notification.timestamp === 'string'
+															? notification.timestamp
+															: notification.timestamp.toISOString()}
+													>
+														{formatTimestamp(notification.timestamp)}
+													</time>
+												{/if}
+											</div>
+											{#if notification.message}
+												<span class="text-base-content/70 mt-0.5 block text-xs"
+													>{notification.message}</span
+												>
+											{/if}
+										</div>
+									{/snippet}
+									{#snippet trailing()}
+										<div class="flex shrink-0 gap-1" role="group" aria-label="Notification actions">
+											{#if !notification.read}
+												<IconButton
+													variant="ghost"
+													size="xs"
+													ariaLabel="Mark notification as read"
+													onclick={() => handleRead(notification.id)}
+													{disabled}
+												>
+													{#snippet children()}
+														<svg
+															xmlns="http://www.w3.org/2000/svg"
+															class="h-4 w-4"
+															fill="none"
+															viewBox="0 0 24 24"
+															stroke="currentColor"
+															aria-hidden="true"
+														>
+															<path
+																stroke-linecap="round"
+																stroke-linejoin="round"
+																stroke-width="2"
+																d="M5 13l4 4L19 7"
+															/>
+														</svg>
+													{/snippet}
+												</IconButton>
+											{/if}
+											<IconButton
+												variant="ghost"
+												size="xs"
+												ariaLabel="Delete notification"
+												onclick={() => handleDelete(notification.id)}
+												{disabled}
+											>
+												{#snippet children()}
+													<svg
+														xmlns="http://www.w3.org/2000/svg"
+														class="h-4 w-4"
+														fill="none"
+														viewBox="0 0 24 24"
+														stroke="currentColor"
+														aria-hidden="true"
+													>
+														<path
+															stroke-linecap="round"
+															stroke-linejoin="round"
+															stroke-width="2"
+															d="M6 18L18 6M6 6l12 12"
+														/>
+													</svg>
+												{/snippet}
+											</IconButton>
+										</div>
+									{/snippet}
+								</ListItem>
+							{/each}
+						{/snippet}
+					</List>
 				</div>
 			{/if}
 		</div>
-
-		<!-- Notification List -->
-		{#if loading}
-			<div class="flex justify-center py-12" role="status" aria-label="Loading notifications">
-				<span class="loading loading-spinner loading-md"></span>
-				<span class="sr-only">Loading notifications...</span>
-			</div>
-		{:else if notifications.length === 0}
-			<div class="flex flex-col items-center justify-center py-12 text-center" role="status">
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					class="text-base-content/20 mb-3 h-12 w-12"
-					fill="none"
-					viewBox="0 0 24 24"
-					stroke="currentColor"
-					aria-hidden="true"
-				>
-					<path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="1.5"
-						d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-					/>
-				</svg>
-				<p class="text-base-content/60">No notifications</p>
-				<p class="text-base-content/40 mt-1 text-xs">You're all caught up!</p>
-			</div>
-		{:else}
-			<ul
-				class="flex flex-col gap-0.5 overflow-y-auto p-2"
-				style="max-height: {maxHeight};"
-				role="list"
-				aria-labelledby="{componentId}-title"
-				aria-live="polite"
-				aria-relevant="additions removals"
-			>
-				{#each notifications as notification (notification.id)}
-					{@const itemAriaLabel = `${getVariantLabel(notification.variant)}: ${notification.title}${notification.message ? `. ${notification.message}` : ''}${notification.timestamp ? `. ${formatTimestamp(notification.timestamp)}` : ''}${!notification.read ? '. Unread' : ''}`}
-					<li
-						class={getItemClasses(notification.read)}
-						role="listitem"
-						tabindex="0"
-						aria-label={itemAriaLabel}
-						onkeydown={(e) => handleKeyDown(e, notification)}
-					>
-						<!-- Variant indicator -->
-						<span
-							class={getVariantClasses(notification.variant)}
-							aria-hidden="true"
-							role="presentation"
-						></span>
-
-						<!-- Content -->
-						<div class="min-w-0 flex-1">
-							<div class="flex items-start justify-between gap-2">
-								<p class="text-sm" class:font-semibold={!notification.read}>
-									{notification.title}
-								</p>
-								{#if notification.timestamp}
-									<time
-										class="text-base-content/50 shrink-0 text-xs"
-										datetime={typeof notification.timestamp === 'string'
-											? notification.timestamp
-											: notification.timestamp.toISOString()}
-									>
-										{formatTimestamp(notification.timestamp)}
-									</time>
-								{/if}
-							</div>
-							{#if notification.message}
-								<p class="text-base-content/70 mt-0.5 text-xs">{notification.message}</p>
-							{/if}
-						</div>
-
-						<!-- Actions -->
-						<div class="flex shrink-0 gap-1" role="group" aria-label="Notification actions">
-							{#if !notification.read}
-								<button
-									type="button"
-									class="btn btn-ghost btn-xs"
-									onclick={() => handleRead(notification.id)}
-									aria-label="Mark notification as read"
-									title="Mark as read"
-									{disabled}
-								>
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										class="h-4 w-4"
-										fill="none"
-										viewBox="0 0 24 24"
-										stroke="currentColor"
-										aria-hidden="true"
-									>
-										<path
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											stroke-width="2"
-											d="M5 13l4 4L19 7"
-										/>
-									</svg>
-								</button>
-							{/if}
-							<button
-								type="button"
-								class="btn btn-ghost btn-xs"
-								onclick={() => handleDelete(notification.id)}
-								aria-label="Delete notification"
-								title="Delete notification"
-								{disabled}
-							>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									class="h-4 w-4"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke="currentColor"
-									aria-hidden="true"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										stroke-width="2"
-										d="M6 18L18 6M6 6l12 12"
-									/>
-								</svg>
-							</button>
-						</div>
-					</li>
-				{/each}
-			</ul>
-		{/if}
-	</div>
-</div>
+	{/snippet}
+</Card>
