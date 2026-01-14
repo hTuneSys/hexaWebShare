@@ -193,6 +193,120 @@ added new feature                # Wrong tense (use imperative)
 
 ## 🎨 Code Style Guidelines
 
+### Component Composition & Reusability Principle
+
+**⚠️ CRITICAL RULE:** Always reuse existing library components instead of rewriting raw HTML/CSS.
+
+**Purpose:** This ensures that features added to base components automatically propagate throughout the entire system, eliminating duplicate code and maintaining consistency.
+
+#### Component Hierarchy
+
+hexaWebShare follows a **compositional architecture** with two component tiers:
+
+1. **Primitive Components** (Level 1) - Independent base components
+   - Located in: `core/buttons/`, `core/forms/`, `core/typography/`, `core/media/`
+   - Examples: Button, Input, Text, Icon, Badge
+   - These components have **no dependencies** on other library components
+   - They only use raw HTML and DaisyUI classes
+
+2. **Composite Components** (Level 2+) - Built from primitives
+   - Located in: `core/layout/`, `core/overlay-navigation/`, `core/data-display/`
+   - Examples: Menu, Modal, Sidebar, Table, Pagination
+   - These **MUST** use library components internally
+   - **NEVER** reimplement buttons, inputs, text, etc. with raw HTML
+
+#### Composition Rules
+
+```svelte
+<!-- ✅ CORRECT - Reusing library components -->
+<script lang="ts">
+  import Button from '$lib/components/core/buttons/Button.svelte';
+  import IconButton from '$lib/components/core/buttons/IconButton.svelte';
+  import Text from '$lib/components/core/typography/Text.svelte';
+  
+  interface Props {
+    title: string;
+    onClose?: () => void;
+  }
+  
+  const { title, onClose }: Props = $props();
+</script>
+
+<div class="modal">
+  <div class="modal-header">
+    <Text variant="h3">{title}</Text>
+    <IconButton icon="close" onclick={onClose} />
+  </div>
+  <div class="modal-body">
+    {@render children?.()}
+  </div>
+  <div class="modal-footer">
+    <Button variant="secondary" onclick={onClose}>Cancel</Button>
+    <Button variant="primary">Confirm</Button>
+  </div>
+</div>
+
+<!-- ❌ WRONG - Reimplementing with raw HTML -->
+<script lang="ts">
+  interface Props {
+    title: string;
+    onClose?: () => void;
+  }
+  
+  const { title, onClose }: Props = $props();
+</script>
+
+<div class="modal">
+  <div class="modal-header">
+    <h3>{title}</h3>
+    <button class="btn btn-circle" onclick={onClose}>✕</button>
+  </div>
+  <div class="modal-body">
+    {@render children?.()}
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-secondary" onclick={onClose}>Cancel</button>
+    <button class="btn btn-primary">Confirm</button>
+  </div>
+</div>
+```
+
+#### Why This Matters
+
+**Example Scenario:**
+If you add a `loading` state to the `Button` component, and all composite components use `<Button>` internally, every button across the library (Menu, Modal, Pagination, etc.) automatically gets the loading feature.
+
+**If you use raw HTML:**
+- You have to manually update every component
+- Features become inconsistent
+- Maintenance becomes a nightmare
+- Bugs multiply across the codebase
+
+#### Component Usage Guidelines
+
+| When Building | Must Use These Components |
+|---------------|---------------------------|
+| Menu, Dropdown, Navbar | Button, IconButton, Link, Text, Badge |
+| Modal, Dialog, Drawer | Button, IconButton, Text, Heading |
+| Table, DataGrid | Button, IconButton, Badge, StatusDot, Text |
+| Pagination | Button, IconButton, Text |
+| Form layouts | Input, Select, Checkbox, Button, Text |
+| Card layouts | Button, Badge, Heading, Text, Divider |
+
+#### Exceptions
+
+**Only use raw HTML when:**
+1. Building primitive (Level 1) components
+2. Creating wrapper/structural elements (containers, grids)
+3. The exact component doesn't exist yet (then create it as a primitive first)
+
+#### Before Implementation Checklist
+
+- [ ] Is this a composite component? (uses other UI elements)
+- [ ] Have I checked if primitives exist for buttons, inputs, text, icons?
+- [ ] Am I importing and using library components instead of raw HTML?
+- [ ] Will changes to primitive components propagate correctly?
+
 ### Svelte 5 Component Pattern
 
 ```svelte
@@ -478,6 +592,7 @@ Before creating a commit or PR, verify:
 - [ ] Commit message follows conventional format
 - [ ] TypeScript interfaces defined for all components
 - [ ] DaisyUI classes used correctly (static, not dynamic)
+- [ ] Composite components reuse library primitives (no raw HTML for buttons/inputs/text)
 - [ ] Storybook story created for new components
 - [ ] Story file has 5-10 variant stories (excluding Playground)
 - [ ] Playground story included as last story in Storybook file
@@ -511,8 +626,9 @@ AI agents should be familiar with these documents:
 2. **Follow Svelte 5 patterns** with runes ($props, $derived, $state)
 3. **Use TypeScript strictly** - no 'any' types
 4. **Apply DaisyUI classes statically** - no string interpolation
-5. **Create Storybook stories** for all components
-6. **Export components** in src/lib/index.ts
+5. **Reuse library components** - composite components must use primitives (Button, Input, Text, etc.)
+6. **Create Storybook stories** for all components
+7. **Export components** in src/lib/index.ts
 
 ### When Creating Commits
 
