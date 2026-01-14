@@ -6,6 +6,8 @@ SPDX-License-Identifier: MIT
 <script lang="ts">
 	import EmptyState from '../../core/data-display/EmptyState.svelte';
 	import Alert from '../../core/feedback/Alert.svelte';
+	import Avatar from '../../core/media/Avatar.svelte';
+	import StatusBadge from '../../core/data-display/StatusBadge.svelte';
 
 	/**
 	 * User information for audit trail entries
@@ -148,6 +150,59 @@ SPDX-License-Identifier: MIT
 		return actionMap[action] || action;
 	}
 
+	// Map component size to Avatar size
+	function getAvatarSize(): 'xs' | 'sm' | 'md' {
+		if (size === 'sm') return 'xs';
+		if (size === 'md') return 'sm';
+		return 'sm'; // lg -> sm (md would be too large)
+	}
+
+	// Map action to StatusBadge variant
+	function getActionVariant(
+		action: AuditTrailItem['action']
+	):
+		| 'primary'
+		| 'secondary'
+		| 'accent'
+		| 'neutral'
+		| 'info'
+		| 'success'
+		| 'warning'
+		| 'error'
+		| 'ghost' {
+		const variantMap: Record<
+			AuditTrailItem['action'],
+			| 'primary'
+			| 'secondary'
+			| 'accent'
+			| 'neutral'
+			| 'info'
+			| 'success'
+			| 'warning'
+			| 'error'
+			| 'ghost'
+		> = {
+			created: 'success',
+			updated: 'info',
+			deleted: 'error',
+			viewed: 'neutral',
+			exported: 'primary',
+			imported: 'secondary',
+			logged_in: 'success',
+			logged_out: 'neutral',
+			permission_changed: 'warning',
+			other: 'neutral'
+		};
+		return variantMap[action] || 'neutral';
+	}
+
+	// Map component size to StatusBadge size
+	function getBadgeSize(): 'xs' | 'sm' | 'md' | 'lg' {
+		if (size === 'sm') return 'xs';
+		if (size === 'md') return 'sm';
+		return 'sm'; // lg -> sm
+	}
+
 	// Handle item click
 	function handleItemClick(item: AuditTrailItem, index: number) {
 		if (onItemClick) {
@@ -244,18 +299,6 @@ SPDX-License-Identifier: MIT
 			.join(' ')
 	);
 
-	// Avatar size classes
-	let avatarClasses = $derived(
-		[
-			'rounded-full flex items-center justify-center',
-			size === 'sm' && 'w-8 h-8 text-xs',
-			size === 'md' && 'w-10 h-10 text-sm',
-			size === 'lg' && 'w-12 h-12 text-base'
-		]
-			.filter(Boolean)
-			.join(' ')
-	);
-
 	// Text size classes
 	let nameClasses = $derived(
 		[
@@ -316,7 +359,7 @@ SPDX-License-Identifier: MIT
 			<div role="listitem" class={itemClasses} aria-label="Loading audit trail entry">
 				<div class="flex items-start justify-between gap-4">
 					<div class="flex min-w-0 flex-1 items-center gap-3">
-						<div class={[avatarClasses, 'bg-base-300 skeleton'].filter(Boolean).join(' ')}></div>
+						<Avatar size={getAvatarSize()} shape="circle" loading={true} ariaHidden={true} />
 						<div class="min-w-0 flex-1 space-y-2">
 							<div class={[nameClasses, 'skeleton h-4 w-32'].filter(Boolean).join(' ')}></div>
 							<div class={[emailClasses, 'skeleton h-3 w-40'].filter(Boolean).join(' ')}></div>
@@ -380,23 +423,15 @@ SPDX-License-Identifier: MIT
 			>
 				<div class="flex items-start justify-between gap-4">
 					<div class="flex min-w-0 flex-1 items-center gap-3">
-						{#if item.user.avatar}
-							<img
-								src={item.user.avatar}
-								alt={`${item.user.name} avatar`}
-								class={avatarClasses}
-								aria-hidden="false"
-							/>
-						{:else}
-							<div
-								class={[avatarClasses, 'bg-base-300'].filter(Boolean).join(' ')}
-								aria-hidden="true"
-							>
-								<span class="font-semibold">
-									{item.user.name.charAt(0).toUpperCase()}
-								</span>
-							</div>
-						{/if}
+						<Avatar
+							src={item.user.avatar}
+							alt={`${item.user.name} avatar`}
+							size={getAvatarSize()}
+							shape="circle"
+							placeholder={item.user.name.charAt(0).toUpperCase()}
+							ariaLabel={`${item.user.name} avatar`}
+							ariaHidden={false}
+						/>
 						<div class="min-w-0 flex-1">
 							<div class={nameClasses}>{item.user.name}</div>
 							{#if item.user.email}
@@ -419,11 +454,21 @@ SPDX-License-Identifier: MIT
 						.filter(Boolean)
 						.join(' ')}
 				>
-					<div class={actionClasses}>
-						<span class="font-medium" aria-label="Action">{formatAction(item.action)}</span>
-						<span class="text-base-content/60" aria-label="Entity"> {item.entity}</span>
+					<div class="flex flex-wrap items-center gap-2">
+						<StatusBadge
+							label={formatAction(item.action)}
+							variant={getActionVariant(item.action)}
+							size={getBadgeSize()}
+							ariaLabel={`Action: ${formatAction(item.action)}`}
+						/>
+						<span
+							class={[actionClasses, 'text-base-content/60'].filter(Boolean).join(' ')}
+							aria-label="Entity"
+						>
+							{item.entity}
+						</span>
 						{#if item.entityId}
-							<span class="text-base-content/60" aria-label="Entity ID"> (#{item.entityId})</span>
+							<span class="text-base-content/60" aria-label="Entity ID">(#{item.entityId})</span>
 						{/if}
 					</div>
 					{#if item.details}

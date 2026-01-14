@@ -142,52 +142,6 @@ SPDX-License-Identifier: MIT
 		}
 	];
 
-	const itemsWithDetails = [
-		{
-			id: 1,
-			user: {
-				id: 1,
-				name: 'Emma Watson',
-				email: 'emma@example.com'
-			},
-			action: 'updated',
-			entity: 'Settings',
-			entityId: 1,
-			timestamp: '2025-01-15T12:00:00Z',
-			details: 'Changed notification preferences and email settings',
-			ipAddress: '192.168.1.106',
-			userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
-		},
-		{
-			id: 2,
-			user: {
-				id: 2,
-				name: 'Frank Miller',
-				email: 'frank@example.com'
-			},
-			action: 'permission_changed',
-			entity: 'User',
-			entityId: 50,
-			timestamp: '2025-01-15T11:30:00Z',
-			details: 'Updated user role from Member to Admin',
-			ipAddress: '192.168.1.107'
-		},
-		{
-			id: 3,
-			user: {
-				id: 3,
-				name: 'Grace Lee',
-				email: 'grace@example.com'
-			},
-			action: 'logged_in',
-			entity: 'System',
-			timestamp: '2025-01-15T11:00:00Z',
-			details: 'User logged in from new device',
-			ipAddress: '192.168.1.108',
-			userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)'
-		}
-	];
-
 	const differentActions = [
 		{
 			id: 1,
@@ -324,17 +278,12 @@ SPDX-License-Identifier: MIT
 <Story name="Default" args={{ items: defaultItems }} />
 
 <Story
-	name="With Avatars"
+	name="With User Avatars"
 	args={{ items: itemsWithAvatars, ariaLabel: 'Audit trail with user avatars' }}
 />
 
 <Story
-	name="With Details and IP"
-	args={{ items: itemsWithDetails, ariaLabel: 'Audit trail with detailed information' }}
-/>
-
-<Story
-	name="Different Actions"
+	name="All Action Types"
 	args={{ items: differentActions, ariaLabel: 'Audit trail showing various action types' }}
 />
 
