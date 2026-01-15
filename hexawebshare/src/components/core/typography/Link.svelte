@@ -82,6 +82,10 @@ SPDX-License-Identifier: MIT
 		 */
 		'aria-disabled'?: boolean;
 		/**
+		 * ARIA current attribute
+		 */
+		'aria-current'?: string | 'page' | 'step' | 'location' | 'date' | 'time' | boolean;
+		/**
 		 * ARIA label for accessibility
 		 */
 		ariaLabel?: string;
@@ -117,6 +121,7 @@ SPDX-License-Identifier: MIT
 		tabindex,
 		role,
 		'aria-disabled': ariaDisabled,
+		'aria-current': ariaCurrent,
 		ariaLabel,
 		title,
 		download,
@@ -207,6 +212,7 @@ SPDX-License-Identifier: MIT
 		role={role}
 		aria-label={ariaLabel}
 	aria-disabled={ariaDisabled !== undefined ? ariaDisabled : disabled}
+	aria-current={ariaCurrent}
 	{title}
 	download={download === true ? '' : download === false ? undefined : download}
 	tabindex={tabindex !== undefined ? tabindex : disabled ? -1 : 0}

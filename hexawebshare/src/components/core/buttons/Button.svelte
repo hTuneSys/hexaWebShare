@@ -34,6 +34,7 @@ SPDX-License-Identifier: MIT
 		tabindex?: number;
 		role?: string;
 		'aria-disabled'?: boolean;
+		'aria-current'?: string | 'page' | 'step' | 'location' | 'date' | 'time' | boolean;
 	}
 
 	const {
@@ -53,6 +54,7 @@ SPDX-License-Identifier: MIT
 		tabindex,
 		role,
 		'aria-disabled': ariaDisabled,
+		'aria-current': ariaCurrent,
 		...props
 	}: Props = $props();
 
@@ -86,7 +88,7 @@ SPDX-License-Identifier: MIT
 	);
 </script>
 
-<button type="button" id={id} class={buttonClasses} {disabled} tabindex={tabindex} role={role} aria-label={ariaLabel} aria-disabled={ariaDisabled !== undefined ? ariaDisabled : disabled} {...props}>
+<button type="button" id={id} class={buttonClasses} {disabled} tabindex={tabindex} role={role} aria-label={ariaLabel} aria-disabled={ariaDisabled !== undefined ? ariaDisabled : disabled} aria-current={ariaCurrent} {...props}>
 	{#if loading}
 		<span class="loading loading-spinner"></span>
 	{:else if children}
