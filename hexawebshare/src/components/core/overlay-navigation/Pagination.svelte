@@ -4,6 +4,18 @@ SPDX-License-Identifier: MIT
 -->
 
 <script lang="ts">
+	import Button from '../buttons/Button.svelte';
+	import IconButton from '../buttons/IconButton.svelte';
+	import Text from '../typography/Text.svelte';
+
+	/**
+	 * Option type for page size options
+	 */
+	export type PageSizeOption = {
+		value: number;
+		label?: string;
+	};
+
 	/**
 	 * Props interface for the Pagination component
 	 */
@@ -71,10 +83,10 @@ SPDX-License-Identifier: MIT
 		 */
 		showPageSize?: boolean;
 		/**
-		 * Available page size options
+		 * Available page size options - can be array of numbers or array of PageSizeOption objects
 		 * @default [10, 20, 50, 100]
 		 */
-		pageSizeOptions?: number[];
+		pageSizeOptions?: number[] | PageSizeOption[];
 		/**
 		 * Show total items count
 		 * @default false
@@ -187,35 +199,6 @@ SPDX-License-Identifier: MIT
 		return pages;
 	});
 
-	// Button classes using static DaisyUI classes
-	let buttonClasses = $derived(
-		[
-			'btn',
-			'join-item',
-			size === 'xs' && 'btn-xs',
-			size === 'sm' && 'btn-sm',
-			size === 'md' && 'btn-md',
-			size === 'lg' && 'btn-lg',
-			variant === 'primary' && 'btn-primary',
-			variant === 'secondary' && 'btn-secondary',
-			variant === 'accent' && 'btn-accent',
-			variant === 'neutral' && 'btn-neutral',
-			variant === 'info' && 'btn-info',
-			variant === 'success' && 'btn-success',
-			variant === 'warning' && 'btn-warning',
-			variant === 'error' && 'btn-error',
-			variant === 'ghost' && 'btn-ghost'
-		]
-			.filter(Boolean)
-			.join(' ')
-	);
-
-	// Active button classes
-	let activeButtonClasses = $derived([buttonClasses, 'btn-active'].filter(Boolean).join(' '));
-
-	// Disabled button classes
-	let disabledButtonClasses = $derived([buttonClasses, 'btn-disabled'].filter(Boolean).join(' '));
-
 	// Wrapper classes
 	let wrapperClasses = $derived(
 		['join', disabled && 'opacity-50 pointer-events-none', className].filter(Boolean).join(' ')
@@ -268,126 +251,115 @@ SPDX-License-Identifier: MIT
 	// Calculate start and end item numbers for display
 	let startItem = $derived(totalItems ? (safeCurrentPage - 1) * pageSize + 1 : undefined);
 	let endItem = $derived(totalItems ? Math.min(safeCurrentPage * pageSize, totalItems) : undefined);
+
+	// Normalize pageSizeOptions to PageSizeOption format
+	let normalizedPageSizeOptions = $derived(
+		pageSizeOptions.map((option) => {
+			if (typeof option === 'number') {
+				return { value: option, label: String(option) };
+			}
+			return { value: option.value, label: option.label ?? String(option.value) };
+		})
+	);
 </script>
 
 <nav aria-label={ariaLabel} class="flex flex-col gap-4" {...props}>
 	<div class="flex flex-wrap items-center justify-center gap-4">
 		{#if showTotal && totalItems !== undefined}
-			<div class="text-base-content/70 text-sm">
+			<Text size="sm" variant="muted">
 				Showing {startItem} to {endItem} of {totalItems} results
-			</div>
+			</Text>
 		{/if}
 
 		<div class={wrapperClasses}>
 			{#if showFirstLast}
-				<button
-					type="button"
-					class={safeCurrentPage === 1 ? disabledButtonClasses : buttonClasses}
+				<IconButton
+					{variant}
+					{size}
 					disabled={disabled || loading || safeCurrentPage === 1}
-					aria-label="Go to first page"
-					aria-disabled={safeCurrentPage === 1}
-					tabindex={safeCurrentPage === 1 ? -1 : 0}
+					loading={loading && safeCurrentPage === 1}
+					ariaLabel="Go to first page"
+					class="join-item"
 					onclick={() => handlePageChange(1)}
-					onkeydown={(e) => handleKeyDown(e, 'first')}
+					onkeydown={(e: KeyboardEvent) => handleKeyDown(e, 'first')}
 				>
-					{#if loading && safeCurrentPage === 1}
-						<span class="loading loading-spinner loading-xs" aria-hidden="true"></span>
-					{:else}
-						«
-					{/if}
+					«
 					<span class="sr-only">First page</span>
-				</button>
+				</IconButton>
 			{/if}
 
 			{#if showPrevNext}
-				<button
-					type="button"
-					class={safeCurrentPage === 1 ? disabledButtonClasses : buttonClasses}
+				<IconButton
+					{variant}
+					{size}
 					disabled={disabled || loading || safeCurrentPage === 1}
-					aria-label="Go to previous page"
-					aria-disabled={safeCurrentPage === 1}
-					tabindex={safeCurrentPage === 1 ? -1 : 0}
+					loading={loading && safeCurrentPage === 1}
+					ariaLabel="Go to previous page"
+					class="join-item"
 					onclick={() => handlePageChange(safeCurrentPage - 1)}
-					onkeydown={(e) => handleKeyDown(e, 'prev')}
+					onkeydown={(e: KeyboardEvent) => handleKeyDown(e, 'prev')}
 				>
-					{#if loading && safeCurrentPage === 1}
-						<span class="loading loading-spinner loading-xs" aria-hidden="true"></span>
-					{:else}
-						‹
-					{/if}
+					‹
 					<span class="sr-only">Previous page</span>
-				</button>
+				</IconButton>
 			{/if}
 
 			{#each visiblePages() as page}
 				{#if page === 'ellipsis'}
-					<button
-						type="button"
-						class={disabledButtonClasses}
-						disabled
-						aria-hidden="true"
-						tabindex={-1}
-					>
-						…
-					</button>
+					<Button
+						{variant}
+						{size}
+						label="…"
+						disabled={true}
+						ariaLabel="Ellipsis"
+						class="join-item"
+					/>
 				{:else}
-					<button
-						type="button"
-						class={page === safeCurrentPage ? activeButtonClasses : buttonClasses}
+					<Button
+						{variant}
+						{size}
+						label={String(page)}
 						disabled={disabled || loading}
-						aria-label="Go to page {page}"
+						loading={loading && page === safeCurrentPage}
+						ariaLabel="Go to page {page}"
 						aria-current={page === safeCurrentPage ? 'page' : undefined}
-						tabindex={disabled || loading ? -1 : 0}
+						class="join-item {page === safeCurrentPage ? 'btn-active' : ''}"
 						onclick={() => handlePageChange(page)}
-						onkeydown={(e) => handleKeyDown(e, page)}
-					>
-						{#if loading && page === safeCurrentPage}
-							<span class="loading loading-spinner loading-xs" aria-hidden="true"></span>
-						{:else}
-							{page}
-						{/if}
-					</button>
+						onkeydown={(e: KeyboardEvent) => handleKeyDown(e, page)}
+					/>
 				{/if}
 			{/each}
 
 			{#if showPrevNext}
-				<button
-					type="button"
-					class={safeCurrentPage === totalPages ? disabledButtonClasses : buttonClasses}
+				<IconButton
+					{variant}
+					{size}
 					disabled={disabled || loading || safeCurrentPage === totalPages}
-					aria-label="Go to next page"
-					aria-disabled={safeCurrentPage === totalPages}
-					tabindex={safeCurrentPage === totalPages ? -1 : 0}
+					loading={loading && safeCurrentPage === totalPages}
+					ariaLabel="Go to next page"
+					class="join-item"
 					onclick={() => handlePageChange(safeCurrentPage + 1)}
-					onkeydown={(e) => handleKeyDown(e, 'next')}
+					onkeydown={(e: KeyboardEvent) => handleKeyDown(e, 'next')}
 				>
-					{#if loading && safeCurrentPage === totalPages}
-						<span class="loading loading-spinner loading-xs" aria-hidden="true"></span>
-					{:else}
-						›
-					{/if}
+					›
 					<span class="sr-only">Next page</span>
-				</button>
+				</IconButton>
 			{/if}
 
 			{#if showFirstLast}
-				<button
-					type="button"
-					class={safeCurrentPage === totalPages ? disabledButtonClasses : buttonClasses}
+				<IconButton
+					{variant}
+					{size}
 					disabled={disabled || loading || safeCurrentPage === totalPages}
-					aria-label="Go to last page"
-					aria-disabled={safeCurrentPage === totalPages}
-					tabindex={safeCurrentPage === totalPages ? -1 : 0}
+					loading={loading && safeCurrentPage === totalPages}
+					ariaLabel="Go to last page"
+					class="join-item"
 					onclick={() => handlePageChange(totalPages)}
-					onkeydown={(e) => handleKeyDown(e, 'last')}
+					onkeydown={(e: KeyboardEvent) => handleKeyDown(e, 'last')}
 				>
-					{#if loading && safeCurrentPage === totalPages}
-						<span class="loading loading-spinner loading-xs" aria-hidden="true"></span>
-					{:else}
-						»
-					{/if}
+					»
 					<span class="sr-only">Last page</span>
-				</button>
+				</IconButton>
 			{/if}
 		</div>
 
@@ -405,8 +377,8 @@ SPDX-License-Identifier: MIT
 					}}
 					aria-label="Items per page"
 				>
-					{#each pageSizeOptions as option}
-						<option value={option}>{option}</option>
+					{#each normalizedPageSizeOptions as option}
+						<option value={option.value}>{option.label}</option>
 					{/each}
 				</select>
 			</div>
