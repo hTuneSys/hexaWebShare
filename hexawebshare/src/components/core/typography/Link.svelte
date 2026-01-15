@@ -84,7 +84,7 @@ SPDX-License-Identifier: MIT
 		/**
 		 * ARIA current attribute
 		 */
-		'aria-current'?: string | 'page' | 'step' | 'location' | 'date' | 'time' | boolean;
+		'aria-current'?: 'page' | 'step' | 'location' | 'date' | 'time' | boolean;
 		/**
 		 * ARIA label for accessibility
 		 */
@@ -101,6 +101,18 @@ SPDX-License-Identifier: MIT
 		 * Click event handler
 		 */
 		onclick?: (event: MouseEvent) => void;
+		/**
+		 * Keyboard event handler
+		 */
+		onkeydown?: (event: KeyboardEvent) => void;
+		/**
+		 * Focus event handler
+		 */
+		onfocus?: (event: FocusEvent) => void;
+		/**
+		 * Blur event handler
+		 */
+		onblur?: (event: FocusEvent) => void;
 	}
 
 	const {
@@ -126,6 +138,9 @@ SPDX-License-Identifier: MIT
 		title,
 		download,
 		onclick,
+		onkeydown,
+		onfocus,
+		onblur,
 		...props
 	}: Props = $props();
 
@@ -200,6 +215,10 @@ SPDX-License-Identifier: MIT
 		if (event.key === 'Enter' && onclick) {
 			onclick(event as any);
 		}
+		// Call custom onkeydown handler if provided
+		if (onkeydown) {
+			onkeydown(event);
+		}
 	}
 </script>
 
@@ -217,7 +236,9 @@ SPDX-License-Identifier: MIT
 	download={download === true ? '' : download === false ? undefined : download}
 	tabindex={tabindex !== undefined ? tabindex : disabled ? -1 : 0}
 	onclick={handleClick}
-	onkeydown={handleKeyDown}
+	onkeydown={onkeydown || handleKeyDown}
+	onfocus={onfocus}
+	onblur={onblur}
 	{...props}
 >
 	{#if children}

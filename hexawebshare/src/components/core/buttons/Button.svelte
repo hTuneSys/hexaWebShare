@@ -29,12 +29,15 @@ SPDX-License-Identifier: MIT
 		loading?: boolean;
 		ariaLabel?: string;
 		onclick?: () => void;
+		onkeydown?: (event: KeyboardEvent) => void;
+		onfocus?: (event: FocusEvent) => void;
+		onblur?: (event: FocusEvent) => void;
 		class?: string;
 		id?: string;
 		tabindex?: number;
 		role?: string;
 		'aria-disabled'?: boolean;
-		'aria-current'?: string | 'page' | 'step' | 'location' | 'date' | 'time' | boolean;
+		'aria-current'?: 'page' | 'step' | 'location' | 'date' | 'time' | boolean;
 	}
 
 	const {
@@ -49,6 +52,10 @@ SPDX-License-Identifier: MIT
 		disabled = false,
 		loading = false,
 		ariaLabel,
+		onclick,
+		onkeydown,
+		onfocus,
+		onblur,
 		class: className,
 		id,
 		tabindex,
@@ -88,7 +95,7 @@ SPDX-License-Identifier: MIT
 	);
 </script>
 
-<button type="button" id={id} class={buttonClasses} {disabled} tabindex={tabindex} role={role} aria-label={ariaLabel} aria-disabled={ariaDisabled !== undefined ? ariaDisabled : disabled} aria-current={ariaCurrent} {...props}>
+<button type="button" id={id} class={buttonClasses} {disabled} tabindex={tabindex} role={role} aria-label={ariaLabel} aria-disabled={ariaDisabled !== undefined ? ariaDisabled : disabled} aria-current={ariaCurrent} {onclick} {onkeydown} {onfocus} {onblur} {...props}>
 	{#if loading}
 		<span class="loading loading-spinner"></span>
 	{:else if children}
