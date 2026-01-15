@@ -78,6 +78,10 @@ SPDX-License-Identifier: MIT
 		 */
 		role?: string;
 		/**
+		 * ARIA disabled attribute
+		 */
+		'aria-disabled'?: boolean;
+		/**
 		 * ARIA label for accessibility
 		 */
 		ariaLabel?: string;
@@ -112,6 +116,7 @@ SPDX-License-Identifier: MIT
 		id,
 		tabindex,
 		role,
+		'aria-disabled': ariaDisabled,
 		ariaLabel,
 		title,
 		download,
@@ -201,7 +206,7 @@ SPDX-License-Identifier: MIT
 		id={id}
 		role={role}
 		aria-label={ariaLabel}
-	aria-disabled={disabled}
+	aria-disabled={ariaDisabled !== undefined ? ariaDisabled : disabled}
 	{title}
 	download={download === true ? '' : download === false ? undefined : download}
 	tabindex={tabindex !== undefined ? tabindex : disabled ? -1 : 0}
