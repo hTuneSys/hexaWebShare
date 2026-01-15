@@ -70,6 +70,10 @@ SPDX-License-Identifier: MIT
 		 */
 		id?: string;
 		/**
+		 * HTML tabindex attribute
+		 */
+		tabindex?: number;
+		/**
 		 * ARIA label for accessibility
 		 */
 		ariaLabel?: string;
@@ -102,6 +106,7 @@ SPDX-License-Identifier: MIT
 		external = false,
 		class: className = '',
 		id,
+		tabindex,
 		ariaLabel,
 		title,
 		download,
@@ -193,7 +198,7 @@ SPDX-License-Identifier: MIT
 	aria-disabled={disabled}
 	{title}
 	download={download === true ? '' : download === false ? undefined : download}
-	tabindex={disabled ? -1 : 0}
+	tabindex={tabindex !== undefined ? tabindex : disabled ? -1 : 0}
 	onclick={handleClick}
 	onkeydown={handleKeyDown}
 	{...props}

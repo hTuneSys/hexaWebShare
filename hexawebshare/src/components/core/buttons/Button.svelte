@@ -31,6 +31,7 @@ SPDX-License-Identifier: MIT
 		onclick?: () => void;
 		class?: string;
 		id?: string;
+		tabindex?: number;
 	}
 
 	const {
@@ -47,6 +48,7 @@ SPDX-License-Identifier: MIT
 		ariaLabel,
 		class: className,
 		id,
+		tabindex,
 		...props
 	}: Props = $props();
 
@@ -80,7 +82,7 @@ SPDX-License-Identifier: MIT
 	);
 </script>
 
-<button type="button" id={id} class={buttonClasses} {disabled} aria-label={ariaLabel} {...props}>
+<button type="button" id={id} class={buttonClasses} {disabled} tabindex={tabindex} aria-label={ariaLabel} {...props}>
 	{#if loading}
 		<span class="loading loading-spinner"></span>
 	{:else if children}
