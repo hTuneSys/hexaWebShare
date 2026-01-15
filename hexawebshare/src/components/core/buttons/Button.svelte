@@ -95,7 +95,22 @@ SPDX-License-Identifier: MIT
 	);
 </script>
 
-<button type="button" id={id} class={buttonClasses} {disabled} tabindex={tabindex} role={role} aria-label={ariaLabel} aria-disabled={ariaDisabled !== undefined ? ariaDisabled : disabled} aria-current={ariaCurrent} {onclick} {onkeydown} {onfocus} {onblur} {...props}>
+<button
+	type="button"
+	{id}
+	class={buttonClasses}
+	{disabled}
+	{tabindex}
+	{role}
+	aria-label={ariaLabel}
+	aria-disabled={ariaDisabled !== undefined ? ariaDisabled : disabled}
+	aria-current={ariaCurrent}
+	{onclick}
+	{onkeydown}
+	{onfocus}
+	{onblur}
+	{...props}
+>
 	{#if loading}
 		<span class="loading loading-spinner"></span>
 	{:else if children}

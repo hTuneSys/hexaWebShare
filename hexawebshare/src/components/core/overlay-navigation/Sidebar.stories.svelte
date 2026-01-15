@@ -66,31 +66,31 @@ SPDX-License-Identifier: MIT
 					defaultValue: { summary: "'default'" }
 				}
 			},
-			collapsed: { 
+			collapsed: {
 				control: 'boolean',
 				description: 'Whether the sidebar is collapsed'
 			},
-			collapsible: { 
+			collapsible: {
 				control: 'boolean',
 				description: 'Whether the sidebar can be collapsed'
 			},
-			sticky: { 
+			sticky: {
 				control: 'boolean',
 				description: 'Whether the sidebar is sticky'
 			},
-			disabled: { 
+			disabled: {
 				control: 'boolean',
 				description: 'Disable all sidebar items'
 			},
-			loading: { 
+			loading: {
 				control: 'boolean',
 				description: 'Whether the sidebar is in loading state'
 			},
-			title: { 
+			title: {
 				control: 'text',
 				description: 'Title displayed at the top of the sidebar'
 			},
-			subtitle: { 
+			subtitle: {
 				control: 'text',
 				description: 'Subtitle displayed below the title'
 			}

@@ -94,7 +94,14 @@ SPDX-License-Identifier: MIT
 	);
 </script>
 
-<button type="button" class={buttonClasses} {disabled} aria-label={ariaLabel} aria-expanded={ariaExpanded} {...props}>
+<button
+	type="button"
+	class={buttonClasses}
+	{disabled}
+	aria-label={ariaLabel}
+	aria-expanded={ariaExpanded}
+	{...props}
+>
 	{#if loading}
 		<span class="loading loading-spinner"></span>
 	{:else if children}

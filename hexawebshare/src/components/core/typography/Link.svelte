@@ -227,9 +227,9 @@ SPDX-License-Identifier: MIT
 	class={linkClasses}
 	{target}
 	rel={rel()}
-		id={id}
-		role={role}
-		aria-label={ariaLabel}
+	{id}
+	{role}
+	aria-label={ariaLabel}
 	aria-disabled={ariaDisabled !== undefined ? ariaDisabled : disabled}
 	aria-current={ariaCurrent}
 	{title}
@@ -237,8 +237,8 @@ SPDX-License-Identifier: MIT
 	tabindex={tabindex !== undefined ? tabindex : disabled ? -1 : 0}
 	onclick={handleClick}
 	onkeydown={onkeydown || handleKeyDown}
-	onfocus={onfocus}
-	onblur={onblur}
+	{onfocus}
+	{onblur}
 	{...props}
 >
 	{#if children}

@@ -182,7 +182,6 @@ SPDX-License-Identifier: MIT
 			.join(' ');
 	};
 
-
 	let {
 		items = [],
 		title,
@@ -437,7 +436,9 @@ SPDX-License-Identifier: MIT
 									{#snippet children()}
 										{#if item.icon}
 											<div
-												class="relative flex items-center justify-center {collapsed ? 'w-full' : ''}"
+												class="relative flex items-center justify-center {collapsed
+													? 'w-full'
+													: ''}"
 											>
 												<span class="text-xl" aria-hidden="true">{item.icon}</span>
 												{#if collapsed && item.badge !== undefined}
@@ -445,7 +446,7 @@ SPDX-License-Identifier: MIT
 														label=""
 														variant={item.badgeVariant || 'primary'}
 														size="xs"
-														class="absolute -top-1 -right-1 h-2.5 w-2.5 rounded-full border-2 border-base-200 p-0 min-w-0"
+														class="border-base-200 absolute -top-1 -right-1 h-2.5 w-2.5 min-w-0 rounded-full border-2 p-0"
 													/>
 												{/if}
 											</div>
@@ -456,7 +457,7 @@ SPDX-License-Identifier: MIT
 												<Badge
 													label={String(item.badge)}
 													variant={item.badgeVariant || 'primary'}
-													size={size}
+													{size}
 												/>
 											{/if}
 										{/if}
@@ -479,7 +480,9 @@ SPDX-License-Identifier: MIT
 									{#snippet children()}
 										{#if item.icon}
 											<div
-												class="relative flex items-center justify-center {collapsed ? 'w-full' : ''}"
+												class="relative flex items-center justify-center {collapsed
+													? 'w-full'
+													: ''}"
 											>
 												<span class="text-xl" aria-hidden="true">{item.icon}</span>
 												{#if collapsed && item.badge !== undefined}
@@ -487,18 +490,20 @@ SPDX-License-Identifier: MIT
 														label=""
 														variant={item.badgeVariant || 'primary'}
 														size="xs"
-														class="absolute -top-1 -right-1 h-2.5 w-2.5 rounded-full border-2 border-base-200 p-0 min-w-0"
+														class="border-base-200 absolute -top-1 -right-1 h-2.5 w-2.5 min-w-0 rounded-full border-2 p-0"
 													/>
 												{/if}
 											</div>
 										{/if}
 										{#if !collapsed}
-											<span class="inline-block min-w-0 flex-1 truncate text-left">{item.label}</span>
+											<span class="inline-block min-w-0 flex-1 truncate text-left"
+												>{item.label}</span
+											>
 											{#if item.badge !== undefined}
 												<Badge
 													label={String(item.badge)}
 													variant={item.badgeVariant || 'primary'}
-													size={size}
+													{size}
 												/>
 											{/if}
 										{/if}
