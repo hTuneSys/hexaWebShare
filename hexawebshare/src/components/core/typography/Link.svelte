@@ -74,6 +74,10 @@ SPDX-License-Identifier: MIT
 		 */
 		tabindex?: number;
 		/**
+		 * HTML role attribute
+		 */
+		role?: string;
+		/**
 		 * ARIA label for accessibility
 		 */
 		ariaLabel?: string;
@@ -107,6 +111,7 @@ SPDX-License-Identifier: MIT
 		class: className = '',
 		id,
 		tabindex,
+		role,
 		ariaLabel,
 		title,
 		download,
@@ -194,6 +199,7 @@ SPDX-License-Identifier: MIT
 	{target}
 	rel={rel()}
 		id={id}
+		role={role}
 		aria-label={ariaLabel}
 	aria-disabled={disabled}
 	{title}

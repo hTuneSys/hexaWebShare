@@ -32,6 +32,7 @@ SPDX-License-Identifier: MIT
 		class?: string;
 		id?: string;
 		tabindex?: number;
+		role?: string;
 	}
 
 	const {
@@ -49,6 +50,7 @@ SPDX-License-Identifier: MIT
 		class: className,
 		id,
 		tabindex,
+		role,
 		...props
 	}: Props = $props();
 
@@ -82,7 +84,7 @@ SPDX-License-Identifier: MIT
 	);
 </script>
 
-<button type="button" id={id} class={buttonClasses} {disabled} tabindex={tabindex} aria-label={ariaLabel} {...props}>
+<button type="button" id={id} class={buttonClasses} {disabled} tabindex={tabindex} role={role} aria-label={ariaLabel} {...props}>
 	{#if loading}
 		<span class="loading loading-spinner"></span>
 	{:else if children}
