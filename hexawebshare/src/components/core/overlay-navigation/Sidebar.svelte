@@ -5,6 +5,12 @@ SPDX-License-Identifier: MIT
 
 <script lang="ts">
 	import type { Snippet } from 'svelte';
+	import Button from '../buttons/Button.svelte';
+	import IconButton from '../buttons/IconButton.svelte';
+	import Link from '../typography/Link.svelte';
+	import Badge from '../media/Badge.svelte';
+	import Heading from '../typography/Heading.svelte';
+	import Text from '../typography/Text.svelte';
 
 	/**
 	 * Sidebar item interface for menu items
@@ -175,50 +181,6 @@ SPDX-License-Identifier: MIT
 			.filter(Boolean)
 			.join(' ');
 	};
-
-	/**
-	 * Helper function to calculate badge classes
-	 */
-	const getBadgeClasses = (item: SidebarItem, size: string) => {
-		const badgeSizeClasses = {
-			sm: 'badge-xs',
-			md: 'badge-sm',
-			lg: 'badge-md'
-		};
-
-		return [
-			'badge',
-			badgeSizeClasses[size as keyof typeof badgeSizeClasses] || 'badge-sm',
-			item.badgeVariant === 'primary' && 'badge-primary',
-			item.badgeVariant === 'secondary' && 'badge-secondary',
-			item.badgeVariant === 'accent' && 'badge-accent',
-			item.badgeVariant === 'info' && 'badge-info',
-			item.badgeVariant === 'success' && 'badge-success',
-			item.badgeVariant === 'warning' && 'badge-warning',
-			item.badgeVariant === 'error' && 'badge-error',
-			!item.badgeVariant && 'badge-primary'
-		]
-			.filter(Boolean)
-			.join(' ');
-	};
-
-	/**
-	 * Helper function to calculate badge dot classes for collapsed mode
-	 */
-	const getBadgeDotClasses = (item: SidebarItem) =>
-		[
-			'absolute -top-1 -right-1 h-2.5 w-2.5 rounded-full border-2 border-base-200',
-			item.badgeVariant === 'primary' && 'bg-primary',
-			item.badgeVariant === 'secondary' && 'bg-secondary',
-			item.badgeVariant === 'accent' && 'bg-accent',
-			item.badgeVariant === 'info' && 'bg-info',
-			item.badgeVariant === 'success' && 'bg-success',
-			item.badgeVariant === 'warning' && 'bg-warning',
-			item.badgeVariant === 'error' && 'bg-error',
-			!item.badgeVariant && 'bg-primary'
-		]
-			.filter(Boolean)
-			.join(' ');
 
 	let {
 		items = [],
@@ -402,36 +364,40 @@ SPDX-License-Identifier: MIT
 			{#if !collapsed && (title || subtitle)}
 				<div class="flex min-w-0 flex-1 flex-col overflow-hidden">
 					{#if title}
-						<h2 class="truncate text-lg leading-tight font-bold">{title}</h2>
+						<Heading level="h2" size="lg" weight="bold" truncate={true} text={title} />
 					{/if}
 					{#if subtitle}
-						<p class="text-base-content/70 truncate text-xs">{subtitle}</p>
+						<Text size="xs" variant="muted" truncate={true} text={subtitle} />
 					{/if}
 				</div>
 			{/if}
 			{#if collapsible}
-				<button
-					type="button"
-					class="btn btn-ghost btn-sm btn-square shrink-0 {collapsed ? '' : 'ml-auto'}"
-					onclick={toggleCollapse}
-					aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+				<IconButton
+					variant="ghost"
+					size="sm"
+					square={true}
+					class="shrink-0 {collapsed ? '' : 'ml-auto'}"
+					ariaLabel={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
 					aria-expanded={!collapsed}
+					onclick={toggleCollapse}
 				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						class="h-5 w-5 transition-transform {collapsed ? 'rotate-180' : ''}"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M11 19l-7-7 7-7m8 14l-7-7 7-7"
-						/>
-					</svg>
-				</button>
+					{#snippet children()}
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							class="h-5 w-5 transition-transform {collapsed ? 'rotate-180' : ''}"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke="currentColor"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M11 19l-7-7 7-7m8 14l-7-7 7-7"
+							/>
+						</svg>
+					{/snippet}
+				</IconButton>
 			{/if}
 		</div>
 	{/if}
@@ -454,7 +420,7 @@ SPDX-License-Identifier: MIT
 					{#if item.label || item.icon}
 						<li>
 							{#if item.href && !item.disabled}
-								<a
+								<Link
 									id="{sidebarId}-item-{index}"
 									href={item.href}
 									class={getItemClasses(item, index, focusedIndex, variant, size)}
@@ -463,59 +429,86 @@ SPDX-License-Identifier: MIT
 									aria-disabled={item.disabled}
 									aria-current={item.active ? 'page' : undefined}
 									onclick={() => handleItemClick(item, index)}
-									onkeydown={(e) => handleKeyDown(e, item, index)}
+									onkeydown={(e: KeyboardEvent) => handleKeyDown(e, item, index)}
 									onfocus={() => handleFocus(index)}
 									onblur={handleBlur}
 								>
-									{#if item.icon}
-										<div
-											class="relative flex items-center justify-center {collapsed ? 'w-full' : ''}"
-										>
-											<span class="text-xl" aria-hidden="true">{item.icon}</span>
-											{#if collapsed && item.badge !== undefined}
-												<span class={getBadgeDotClasses(item)}></span>
-											{/if}
-										</div>
-									{/if}
-									{#if !collapsed}
-										<span class="inline-block min-w-0 flex-1 truncate">{item.label}</span>
-										{#if item.badge !== undefined}
-											<span class={getBadgeClasses(item, size)}>{item.badge}</span>
+									{#snippet children()}
+										{#if item.icon}
+											<div
+												class="relative flex items-center justify-center {collapsed
+													? 'w-full'
+													: ''}"
+											>
+												<span class="text-xl" aria-hidden="true">{item.icon}</span>
+												{#if collapsed && item.badge !== undefined}
+													<Badge
+														label=""
+														variant={item.badgeVariant || 'primary'}
+														size="xs"
+														class="border-base-200 absolute -top-1 -right-1 h-2.5 w-2.5 min-w-0 rounded-full border-2 p-0"
+													/>
+												{/if}
+											</div>
 										{/if}
-									{/if}
-								</a>
+										{#if !collapsed}
+											<span class="inline-block min-w-0 flex-1 truncate">{item.label}</span>
+											{#if item.badge !== undefined}
+												<Badge
+													label={String(item.badge)}
+													variant={item.badgeVariant || 'primary'}
+													{size}
+												/>
+											{/if}
+										{/if}
+									{/snippet}
+								</Link>
 							{:else}
-								<button
-									type="button"
+								<Button
 									id="{sidebarId}-item-{index}"
 									class={getItemClasses(item, index, focusedIndex, variant, size)}
 									tabindex={item.disabled ? -1 : 0}
 									disabled={item.disabled || disabled}
 									role="menuitem"
 									aria-disabled={item.disabled || disabled}
-									aria-current={item.active ? 'true' : undefined}
+									aria-current={item.active ? 'page' : undefined}
 									onclick={() => handleItemClick(item, index)}
-									onkeydown={(e) => handleKeyDown(e, item, index)}
+									onkeydown={(e: KeyboardEvent) => handleKeyDown(e, item, index)}
 									onfocus={() => handleFocus(index)}
 									onblur={handleBlur}
 								>
-									{#if item.icon}
-										<div
-											class="relative flex items-center justify-center {collapsed ? 'w-full' : ''}"
-										>
-											<span class="text-xl" aria-hidden="true">{item.icon}</span>
-											{#if collapsed && item.badge !== undefined}
-												<span class={getBadgeDotClasses(item)}></span>
-											{/if}
-										</div>
-									{/if}
-									{#if !collapsed}
-										<span class="inline-block min-w-0 flex-1 truncate text-left">{item.label}</span>
-										{#if item.badge !== undefined}
-											<span class={getBadgeClasses(item, size)}>{item.badge}</span>
+									{#snippet children()}
+										{#if item.icon}
+											<div
+												class="relative flex items-center justify-center {collapsed
+													? 'w-full'
+													: ''}"
+											>
+												<span class="text-xl" aria-hidden="true">{item.icon}</span>
+												{#if collapsed && item.badge !== undefined}
+													<Badge
+														label=""
+														variant={item.badgeVariant || 'primary'}
+														size="xs"
+														class="border-base-200 absolute -top-1 -right-1 h-2.5 w-2.5 min-w-0 rounded-full border-2 p-0"
+													/>
+												{/if}
+											</div>
 										{/if}
-									{/if}
-								</button>
+										{#if !collapsed}
+											<span class="inline-block min-w-0 flex-1 truncate text-left"
+												>{item.label}</span
+											>
+											{#if item.badge !== undefined}
+												<Badge
+													label={String(item.badge)}
+													variant={item.badgeVariant || 'primary'}
+													{size}
+												/>
+											{/if}
+										{/if}
+									{/snippet}
+								</Button>
 							{/if}
 						</li>
 					{/if}
