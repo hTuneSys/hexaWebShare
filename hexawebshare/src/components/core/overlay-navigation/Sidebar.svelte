@@ -470,7 +470,7 @@ SPDX-License-Identifier: MIT
 									disabled={item.disabled || disabled}
 									role="menuitem"
 									aria-disabled={item.disabled || disabled}
-									aria-current={item.active ? 'true' : undefined}
+									aria-current={item.active ? 'page' : undefined}
 									onclick={() => handleItemClick(item, index)}
 									onkeydown={(e: KeyboardEvent) => handleKeyDown(e, item, index)}
 									onfocus={() => handleFocus(index)}
