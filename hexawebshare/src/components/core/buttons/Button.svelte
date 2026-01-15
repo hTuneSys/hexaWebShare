@@ -4,6 +4,8 @@ SPDX-License-Identifier: MIT
 -->
 
 <script lang="ts">
+	import type { Snippet } from 'svelte';
+
 	interface Props {
 		variant?:
 			| 'primary'
@@ -17,7 +19,8 @@ SPDX-License-Identifier: MIT
 			| 'ghost'
 			| 'link';
 		size?: 'xs' | 'sm' | 'md' | 'lg';
-		label: string;
+		label?: string;
+		children?: Snippet;
 		outline?: boolean;
 		wide?: boolean;
 		block?: boolean;
@@ -26,12 +29,15 @@ SPDX-License-Identifier: MIT
 		loading?: boolean;
 		ariaLabel?: string;
 		onclick?: () => void;
+		class?: string;
+		id?: string;
 	}
 
 	const {
 		variant = 'primary',
 		size = 'md',
 		label,
+		children,
 		outline = false,
 		wide = false,
 		block = false,
@@ -39,39 +45,47 @@ SPDX-License-Identifier: MIT
 		disabled = false,
 		loading = false,
 		ariaLabel,
+		class: className,
+		id,
 		...props
 	}: Props = $props();
 
 	let buttonClasses = $derived(
-		[
-			'btn',
-			variant === 'primary' && 'btn-primary',
-			variant === 'secondary' && 'btn-secondary',
-			variant === 'accent' && 'btn-accent',
-			variant === 'neutral' && 'btn-neutral',
-			variant === 'info' && 'btn-info',
-			variant === 'success' && 'btn-success',
-			variant === 'warning' && 'btn-warning',
-			variant === 'error' && 'btn-error',
-			variant === 'ghost' && 'btn-ghost',
-			variant === 'link' && 'btn-link',
-			size === 'xs' && 'btn-xs',
-			size === 'sm' && 'btn-sm',
-			size === 'md' && 'btn-md',
-			size === 'lg' && 'btn-lg',
-			outline && 'btn-outline',
-			wide && 'btn-wide',
-			block && 'btn-block',
-			glass && 'glass'
-		]
-			.filter(Boolean)
-			.join(' ')
+		// If custom class is provided, use it (for menu items and special cases)
+		className
+			? className
+			: [
+					'btn',
+					variant === 'primary' && 'btn-primary',
+					variant === 'secondary' && 'btn-secondary',
+					variant === 'accent' && 'btn-accent',
+					variant === 'neutral' && 'btn-neutral',
+					variant === 'info' && 'btn-info',
+					variant === 'success' && 'btn-success',
+					variant === 'warning' && 'btn-warning',
+					variant === 'error' && 'btn-error',
+					variant === 'ghost' && 'btn-ghost',
+					variant === 'link' && 'btn-link',
+					size === 'xs' && 'btn-xs',
+					size === 'sm' && 'btn-sm',
+					size === 'md' && 'btn-md',
+					size === 'lg' && 'btn-lg',
+					outline && 'btn-outline',
+					wide && 'btn-wide',
+					block && 'btn-block',
+					glass && 'glass'
+				]
+					.filter(Boolean)
+					.join(' ')
 	);
 </script>
 
-<button type="button" class={buttonClasses} {disabled} aria-label={ariaLabel} {...props}>
+<button type="button" id={id} class={buttonClasses} {disabled} aria-label={ariaLabel} {...props}>
 	{#if loading}
 		<span class="loading loading-spinner"></span>
+	{:else if children}
+		{@render children()}
+	{:else if label}
+		{label}
 	{/if}
-	{label}
 </button>

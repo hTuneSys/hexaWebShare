@@ -5,7 +5,7 @@ SPDX-License-Identifier: MIT
 
 <script lang="ts">
 	interface Props {
-		label: string;
+		label?: string;
 		variant?:
 			| 'primary'
 			| 'secondary'
@@ -25,7 +25,7 @@ SPDX-License-Identifier: MIT
 	}
 
 	const {
-		label,
+		label = '',
 		variant = 'neutral',
 		size = 'md',
 		outline = false,

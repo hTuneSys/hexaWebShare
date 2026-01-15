@@ -66,6 +66,10 @@ SPDX-License-Identifier: MIT
 		 */
 		class?: string;
 		/**
+		 * HTML id attribute
+		 */
+		id?: string;
+		/**
 		 * ARIA label for accessibility
 		 */
 		ariaLabel?: string;
@@ -97,6 +101,7 @@ SPDX-License-Identifier: MIT
 		fontWeight = 'normal',
 		external = false,
 		class: className = '',
+		id,
 		ariaLabel,
 		title,
 		download,
@@ -183,7 +188,8 @@ SPDX-License-Identifier: MIT
 	class={linkClasses}
 	{target}
 	rel={rel()}
-	aria-label={ariaLabel}
+		id={id}
+		aria-label={ariaLabel}
 	aria-disabled={disabled}
 	{title}
 	download={download === true ? '' : download === false ? undefined : download}
