@@ -90,7 +90,7 @@ SPDX-License-Identifier: MIT
 	aria-label={ariaLabel}
 	aria-disabled={ariaDisabled || disabled || undefined}
 	{tabindex}
-	onkeydown={onkeydown}
+	{onkeydown}
 	{...props}
 >
 	{#if loading}

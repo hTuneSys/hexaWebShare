@@ -207,32 +207,38 @@ SPDX-License-Identifier: MIT
 			{@const itemClasses = getItemClasses(item, index, isLast)}
 			{@const ariaAttrs = getItemAriaAttributes(item, index, isLast)}
 			<li class={itemClasses} {...ariaAttrs}>
-			{#if item.href && !item.disabled && !disabled && !loading && !isLast}
-				<Link
-					href={item.href}
-					class="breadcrumb-link"
-					size={size}
-					ariaLabel={item.label}
-					aria-disabled={item.disabled || disabled || false}
-					tabindex={item.disabled || disabled || loading ? -1 : 0}
-					disabled={item.disabled || disabled || loading}
-					onclick={(e) => {
-						if (item.onclick) {
-							e.preventDefault();
-							handleItemClick(item, index);
-						}
-					}}
-					onkeydown={(e: KeyboardEvent) => handleKeyDown(e, item, index)}
-				>
-					{#if item.icon}
-						<Text ariaHidden={true} class="breadcrumb-icon" text={item.icon} size={textSize} loading={loading} />
-					{/if}
-					<Text text={item.label} class="breadcrumb-label" size={textSize} loading={loading} />
-				</Link>
+				{#if item.href && !item.disabled && !disabled && !loading && !isLast}
+					<Link
+						href={item.href}
+						class="breadcrumb-link"
+						{size}
+						ariaLabel={item.label}
+						aria-disabled={item.disabled || disabled || false}
+						tabindex={item.disabled || disabled || loading ? -1 : 0}
+						disabled={item.disabled || disabled || loading}
+						onclick={(e) => {
+							if (item.onclick) {
+								e.preventDefault();
+								handleItemClick(item, index);
+							}
+						}}
+						onkeydown={(e: KeyboardEvent) => handleKeyDown(e, item, index)}
+					>
+						{#if item.icon}
+							<Text
+								ariaHidden={true}
+								class="breadcrumb-icon"
+								text={item.icon}
+								size={textSize}
+								{loading}
+							/>
+						{/if}
+						<Text text={item.label} class="breadcrumb-label" size={textSize} {loading} />
+					</Link>
 				{:else if item.onclick && !item.disabled && !disabled && !loading && !isLast}
 					<Button
 						variant="ghost"
-						size={size}
+						{size}
 						class="breadcrumb-button"
 						ariaLabel={item.label}
 						aria-disabled={item.disabled || disabled || false}
@@ -242,27 +248,39 @@ SPDX-License-Identifier: MIT
 						onkeydown={(e: KeyboardEvent) => handleKeyDown(e, item, index)}
 					>
 						{#if item.icon}
-							<Text ariaHidden={true} class="breadcrumb-icon" text={item.icon} size={textSize} loading={loading} />
+							<Text
+								ariaHidden={true}
+								class="breadcrumb-icon"
+								text={item.icon}
+								size={textSize}
+								{loading}
+							/>
 						{/if}
-						<Text text={item.label} class="breadcrumb-label" size={textSize} loading={loading} />
+						<Text text={item.label} class="breadcrumb-label" size={textSize} {loading} />
 					</Button>
 				{:else}
 					<Text
 						class="breadcrumb-text"
 						size={textSize}
-						loading={loading}
-						{...(isLast ? { 'aria-current': 'page' } : {})}
+						{loading}
+						{...isLast ? { 'aria-current': 'page' } : {}}
 					>
 						{#if item.icon}
-							<Text ariaHidden={true} class="breadcrumb-icon" text={item.icon} size={textSize} loading={loading} />
+							<Text
+								ariaHidden={true}
+								class="breadcrumb-icon"
+								text={item.icon}
+								size={textSize}
+								{loading}
+							/>
 						{/if}
-						<Text text={item.label} class="breadcrumb-label" size={textSize} loading={loading} />
+						<Text text={item.label} class="breadcrumb-label" size={textSize} {loading} />
 					</Text>
 				{/if}
 			</li>
 			{#if !isLast}
 				<li class="breadcrumb-separator" aria-hidden="true">
-					<Text text={separator} class="separator-text" size={textSize} loading={loading} />
+					<Text text={separator} class="separator-text" size={textSize} {loading} />
 				</li>
 			{/if}
 		{/each}
@@ -401,12 +419,7 @@ SPDX-License-Identifier: MIT
 		left: -100%;
 		width: 100%;
 		height: 100%;
-		background: linear-gradient(
-			90deg,
-			transparent 0%,
-			hsl(var(--b3) / 0.4) 50%,
-			transparent 100%
-		);
+		background: linear-gradient(90deg, transparent 0%, hsl(var(--b3) / 0.4) 50%, transparent 100%);
 		animation: shimmer 1.5s infinite;
 	}
 
