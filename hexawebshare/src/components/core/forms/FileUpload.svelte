@@ -4,6 +4,9 @@ SPDX-License-Identifier: MIT
 -->
 
 <script lang="ts">
+	import Button from '../buttons/Button.svelte';
+	import IconButton from '../buttons/IconButton.svelte';
+
 	/**
 	 * Props interface for the FileUpload component
 	 */
@@ -182,29 +185,6 @@ SPDX-License-Identifier: MIT
 			size === 'sm' && 'p-4',
 			size === 'md' && 'p-6',
 			size === 'lg' && 'p-8'
-		]
-			.filter(Boolean)
-			.join(' ')
-	);
-
-	// Button classes
-	let buttonClasses = $derived(
-		[
-			'btn',
-			'btn-sm',
-			variant === 'primary' && 'btn-primary',
-			variant === 'secondary' && 'btn-secondary',
-			variant === 'accent' && 'btn-accent',
-			variant === 'info' && 'btn-info',
-			variant === 'success' && 'btn-success',
-			variant === 'warning' && 'btn-warning',
-			variant === 'error' && 'btn-error',
-			!variant && 'btn-outline',
-			disabled && 'btn-disabled',
-			size === 'xs' && 'btn-xs',
-			size === 'sm' && 'btn-sm',
-			size === 'md' && 'btn-md',
-			size === 'lg' && 'btn-lg'
 		]
 			.filter(Boolean)
 			.join(' ')
@@ -442,16 +422,22 @@ SPDX-License-Identifier: MIT
 					{#if dragDrop}
 						Drag and drop files here, or
 					{/if}
-					<button
-						type="button"
-						class={buttonClasses}
+					<span
 						onclick={(e) => {
 							e.stopPropagation();
-							triggerFileInput();
 						}}
 					>
-						browse
-					</button>
+						<Button
+							label="browse"
+							variant={variant || undefined}
+							{size}
+							outline={!variant}
+							{disabled}
+							onclick={() => {
+								triggerFileInput();
+							}}
+						/>
+					</span>
 				</div>
 				{#if helpText && (!error || error === '')}
 					<p class="text-base-content/70 text-xs">{helpText}</p>
@@ -473,9 +459,7 @@ SPDX-License-Identifier: MIT
 					{selectedFiles.length} file{selectedFiles.length > 1 ? 's' : ''} selected
 				</span>
 				{#if multiple && selectedFiles.length > 1}
-					<button type="button" class="btn btn-ghost btn-xs" onclick={clearAll} {disabled}>
-						Clear all
-					</button>
+					<Button label="Clear all" variant="ghost" size="xs" {disabled} onclick={clearAll} />
 				{/if}
 			</div>
 			<div class="space-y-2">
@@ -487,29 +471,31 @@ SPDX-License-Identifier: MIT
 							<p class="text-base-content truncate text-sm font-medium">{file.name}</p>
 							<p class="text-base-content/70 text-xs">{formatFileSize(file.size)}</p>
 						</div>
-						<button
-							type="button"
-							class="btn btn-ghost btn-xs ml-2"
-							onclick={() => removeFile(index)}
-							{disabled}
-							aria-label="Remove file"
-						>
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								class="h-4 w-4"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke="currentColor"
-								aria-hidden="true"
+						<span class="ml-2">
+							<IconButton
+								variant="ghost"
+								size="xs"
+								ariaLabel="Remove file"
+								{disabled}
+								onclick={() => removeFile(index)}
 							>
-								<path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									stroke-width="2"
-									d="M6 18L18 6M6 6l12 12"
-								/>
-							</svg>
-						</button>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									class="h-4 w-4"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke="currentColor"
+									aria-hidden="true"
+								>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										stroke-width="2"
+										d="M6 18L18 6M6 6l12 12"
+									/>
+								</svg>
+							</IconButton>
+						</span>
 					</div>
 				{/each}
 			</div>
