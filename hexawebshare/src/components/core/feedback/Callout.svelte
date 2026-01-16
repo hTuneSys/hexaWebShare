@@ -5,6 +5,11 @@ SPDX-License-Identifier: MIT
 
 <script lang="ts">
 	import type { Snippet } from 'svelte';
+	import Button from '../buttons/Button.svelte';
+	import IconButton from '../buttons/IconButton.svelte';
+	import Heading from '../typography/Heading.svelte';
+	import MutedText from '../typography/MutedText.svelte';
+	import StatusDot from '../data-display/StatusDot.svelte';
 	import Spinner from './Spinner.svelte';
 
 	type Children = Snippet | { default?: Snippet };
@@ -149,27 +154,6 @@ SPDX-License-Identifier: MIT
 			.join(' ')
 	);
 
-	let indicatorClasses = $derived(
-		[
-			'h-2',
-			'w-2',
-			'rounded-full',
-			'mt-1.5',
-			'sm:mt-0',
-			'shrink-0',
-			variant === 'primary' && 'bg-primary',
-			variant === 'secondary' && 'bg-secondary',
-			variant === 'accent' && 'bg-accent',
-			variant === 'neutral' && 'bg-neutral',
-			variant === 'info' && 'bg-info',
-			variant === 'success' && 'bg-success',
-			variant === 'warning' && 'bg-warning',
-			variant === 'error' && 'bg-error'
-		]
-			.filter(Boolean)
-			.join(' ')
-	);
-
 	const handleClose = () => {
 		onclose?.();
 	};
@@ -187,31 +171,31 @@ SPDX-License-Identifier: MIT
 	{...props}
 >
 	{#if withIcon}
-		<span class={indicatorClasses} aria-hidden="true"></span>
+		<StatusDot {variant} size="sm" class="mt-1.5 sm:mt-0" ariaHidden={true} />
 	{/if}
 
 	<div class="flex min-w-0 flex-1 flex-col gap-1">
 		{#if title}
-			<div class="text-base leading-tight font-semibold">{title}</div>
+			<Heading level="h6" size="md" weight="semibold" class="leading-tight" text={title} />
 		{/if}
 
 		{#if message}
-			<p class="text-sm leading-snug break-words opacity-80">{message}</p>
+			<MutedText size="sm" leading="snug" class="break-words opacity-80" text={message} />
 		{/if}
 
 		{@render defaultSlot?.()}
 	</div>
 
 	{#if actionLabel}
-		<button
-			type="button"
-			class="btn btn-outline btn-sm shrink-0"
+		<Button
+			variant="ghost"
+			size="sm"
+			class="shrink-0"
 			onclick={handleAction}
-			aria-label={actionAriaLabel ?? actionLabel}
+			ariaLabel={actionAriaLabel ?? actionLabel}
 			disabled={disabled || loading}
-		>
-			{actionLabel}
-		</button>
+			label={actionLabel}
+		/>
 	{/if}
 
 	{#if loading}
@@ -225,15 +209,16 @@ SPDX-License-Identifier: MIT
 	{/if}
 
 	{#if closable}
-		<button
-			type="button"
-			class="btn btn-square btn-ghost btn-sm shrink-0"
+		<IconButton
+			variant="ghost"
+			size="sm"
+			square
+			class="shrink-0"
 			onclick={handleClose}
-			aria-label={dismissLabel}
-			title={dismissLabel}
+			ariaLabel={dismissLabel}
 			disabled={disabled || loading}
 		>
 			<span aria-hidden="true">×</span>
-		</button>
+		</IconButton>
 	{/if}
 </div>
