@@ -25,7 +25,13 @@ SPDX-License-Identifier: MIT
 		disabled?: boolean;
 		loading?: boolean;
 		ariaLabel?: string;
+		'aria-current'?: 'page' | 'step' | 'location' | 'date' | 'time' | boolean;
 		onclick?: () => void;
+		onkeydown?: (event: KeyboardEvent) => void;
+		/**
+		 * Additional CSS classes
+		 */
+		class?: string;
 	}
 
 	const {
@@ -39,6 +45,8 @@ SPDX-License-Identifier: MIT
 		disabled = false,
 		loading = false,
 		ariaLabel,
+		'aria-current': ariaCurrent,
+		class: className = '',
 		...props
 	}: Props = $props();
 
@@ -62,14 +70,22 @@ SPDX-License-Identifier: MIT
 			outline && 'btn-outline',
 			wide && 'btn-wide',
 			block && 'btn-block',
-			glass && 'glass'
+			glass && 'glass',
+			className
 		]
 			.filter(Boolean)
 			.join(' ')
 	);
 </script>
 
-<button type="button" class={buttonClasses} {disabled} aria-label={ariaLabel} {...props}>
+<button
+	type="button"
+	class={buttonClasses}
+	{disabled}
+	aria-label={ariaLabel}
+	aria-current={ariaCurrent}
+	{...props}
+>
 	{#if loading}
 		<span class="loading loading-spinner"></span>
 	{/if}
