@@ -42,6 +42,10 @@ SPDX-License-Identifier: MIT
 </script>
 
 <script lang="ts">
+	import Link from '../typography/Link.svelte';
+	import Button from '../buttons/Button.svelte';
+	import Text from '../typography/Text.svelte';
+
 	/**
 	 * Props interface for the Breadcrumbs component
 	 */
@@ -185,6 +189,9 @@ SPDX-License-Identifier: MIT
 	const isLastItem = (index: number): boolean => {
 		return index === items.length - 1;
 	};
+
+	// Map Breadcrumbs size to Text component size
+	const textSize = $derived(size === 'md' ? 'base' : size);
 </script>
 
 <nav
@@ -200,53 +207,62 @@ SPDX-License-Identifier: MIT
 			{@const itemClasses = getItemClasses(item, index, isLast)}
 			{@const ariaAttrs = getItemAriaAttributes(item, index, isLast)}
 			<li class={itemClasses} {...ariaAttrs}>
-				{#if item.href && !item.disabled && !disabled && !loading && !isLast}
-					<a
-						href={item.href}
-						class="breadcrumb-link"
-						aria-label={item.label}
-						aria-disabled={item.disabled || disabled || false}
-						tabindex={item.disabled || disabled || loading ? -1 : 0}
-						onclick={(e) => {
-							if (item.onclick) {
-								e.preventDefault();
-								handleItemClick(item, index);
-							}
-						}}
-						onkeydown={(e) => handleKeyDown(e, item, index)}
-					>
-						{#if item.icon}
-							<span class="breadcrumb-icon" aria-hidden="true">{item.icon}</span>
-						{/if}
-						<span class="breadcrumb-label">{item.label}</span>
-					</a>
+			{#if item.href && !item.disabled && !disabled && !loading && !isLast}
+				<Link
+					href={item.href}
+					class="breadcrumb-link"
+					size={textSize}
+					ariaLabel={item.label}
+					aria-disabled={item.disabled || disabled || false}
+					tabindex={item.disabled || disabled || loading ? -1 : 0}
+					disabled={item.disabled || disabled || loading}
+					onclick={(e) => {
+						if (item.onclick) {
+							e.preventDefault();
+							handleItemClick(item, index);
+						}
+					}}
+					onkeydown={(e) => handleKeyDown(e, item, index)}
+				>
+					{#if item.icon}
+						<Text ariaHidden={true} class="breadcrumb-icon" text={item.icon} size={textSize} loading={loading} />
+					{/if}
+					<Text text={item.label} class="breadcrumb-label" size={textSize} loading={loading} />
+				</Link>
 				{:else if item.onclick && !item.disabled && !disabled && !loading && !isLast}
-					<button
-						type="button"
+					<Button
+						variant="ghost"
+						size={size}
 						class="breadcrumb-button"
-						aria-label={item.label}
+						ariaLabel={item.label}
 						aria-disabled={item.disabled || disabled || false}
 						tabindex={item.disabled || disabled || loading ? -1 : 0}
+						disabled={item.disabled || disabled || loading}
 						onclick={() => handleItemClick(item, index)}
 						onkeydown={(e) => handleKeyDown(e, item, index)}
 					>
 						{#if item.icon}
-							<span class="breadcrumb-icon" aria-hidden="true">{item.icon}</span>
+							<Text ariaHidden={true} class="breadcrumb-icon" text={item.icon} size={textSize} loading={loading} />
 						{/if}
-						<span class="breadcrumb-label">{item.label}</span>
-					</button>
+						<Text text={item.label} class="breadcrumb-label" size={textSize} loading={loading} />
+					</Button>
 				{:else}
-					<span class="breadcrumb-text" aria-current={isLast ? 'page' : undefined}>
+					<Text
+						class="breadcrumb-text"
+						aria-current={isLast ? 'page' : undefined}
+						size={textSize}
+						loading={loading}
+					>
 						{#if item.icon}
-							<span class="breadcrumb-icon" aria-hidden="true">{item.icon}</span>
+							<Text ariaHidden={true} class="breadcrumb-icon" text={item.icon} size={textSize} loading={loading} />
 						{/if}
-						<span class="breadcrumb-label">{item.label}</span>
-					</span>
+						<Text text={item.label} class="breadcrumb-label" size={textSize} loading={loading} />
+					</Text>
 				{/if}
 			</li>
 			{#if !isLast}
 				<li class="breadcrumb-separator" aria-hidden="true">
-					<span class="separator-text">{separator}</span>
+					<Text text={separator} class="separator-text" size={textSize} loading={loading} />
 				</li>
 			{/if}
 		{/each}
@@ -354,6 +370,44 @@ SPDX-License-Identifier: MIT
 	.breadcrumb-item[aria-disabled='true'] {
 		cursor: not-allowed;
 		pointer-events: none;
+	}
+
+	/* Loading state shimmer animation */
+	@keyframes shimmer {
+		0% {
+			background-position: -1000px 0;
+		}
+		100% {
+			background-position: 1000px 0;
+		}
+	}
+
+	/* Enhanced loading animation for breadcrumb items */
+	.breadcrumb-label[aria-busy='true'],
+	.breadcrumb-icon[aria-busy='true'],
+	.breadcrumb-text[aria-busy='true'],
+	.separator-text[aria-busy='true'] {
+		position: relative;
+		overflow: hidden;
+	}
+
+	.breadcrumb-label[aria-busy='true']::after,
+	.breadcrumb-icon[aria-busy='true']::after,
+	.breadcrumb-text[aria-busy='true']::after,
+	.separator-text[aria-busy='true']::after {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: -100%;
+		width: 100%;
+		height: 100%;
+		background: linear-gradient(
+			90deg,
+			transparent 0%,
+			hsl(var(--b3) / 0.4) 50%,
+			transparent 100%
+		);
+		animation: shimmer 1.5s infinite;
 	}
 
 	@media (max-width: 640px) {

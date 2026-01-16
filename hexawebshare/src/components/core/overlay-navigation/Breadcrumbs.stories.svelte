@@ -193,4 +193,14 @@ SPDX-License-Identifier: MIT
 />
 
 <!-- Playground -->
-<Story name="Playground" args={{}} />
+<Story
+	name="Playground"
+	args={{
+		items: sampleItems,
+		separator: '/',
+		size: 'md',
+		variant: 'neutral',
+		disabled: false,
+		loading: false
+	}}
+/>
