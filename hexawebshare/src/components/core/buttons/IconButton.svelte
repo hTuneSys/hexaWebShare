@@ -18,6 +18,7 @@ SPDX-License-Identifier: MIT
 			| 'error'
 			| 'ghost'
 			| 'link';
+		title?: string;
 		size?: 'xs' | 'sm' | 'md' | 'lg';
 		circle?: boolean;
 		square?: boolean;

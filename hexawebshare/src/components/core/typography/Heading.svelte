@@ -19,6 +19,10 @@ SPDX-License-Identifier: MIT
 		 */
 		text?: string;
 		/**
+		 * Element ID
+		 */
+		id?: string;
+		/**
 		 * HTML heading level (h1, h2, h3, h4, h5, h6)
 		 * @default 'h2'
 		 */
