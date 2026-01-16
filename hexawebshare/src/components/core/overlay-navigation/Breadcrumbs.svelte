@@ -211,7 +211,7 @@ SPDX-License-Identifier: MIT
 				<Link
 					href={item.href}
 					class="breadcrumb-link"
-					size={textSize}
+					size={size}
 					ariaLabel={item.label}
 					aria-disabled={item.disabled || disabled || false}
 					tabindex={item.disabled || disabled || loading ? -1 : 0}
@@ -222,7 +222,7 @@ SPDX-License-Identifier: MIT
 							handleItemClick(item, index);
 						}
 					}}
-					onkeydown={(e) => handleKeyDown(e, item, index)}
+					onkeydown={(e: KeyboardEvent) => handleKeyDown(e, item, index)}
 				>
 					{#if item.icon}
 						<Text ariaHidden={true} class="breadcrumb-icon" text={item.icon} size={textSize} loading={loading} />
@@ -239,7 +239,7 @@ SPDX-License-Identifier: MIT
 						tabindex={item.disabled || disabled || loading ? -1 : 0}
 						disabled={item.disabled || disabled || loading}
 						onclick={() => handleItemClick(item, index)}
-						onkeydown={(e) => handleKeyDown(e, item, index)}
+						onkeydown={(e: KeyboardEvent) => handleKeyDown(e, item, index)}
 					>
 						{#if item.icon}
 							<Text ariaHidden={true} class="breadcrumb-icon" text={item.icon} size={textSize} loading={loading} />
@@ -249,9 +249,9 @@ SPDX-License-Identifier: MIT
 				{:else}
 					<Text
 						class="breadcrumb-text"
-						aria-current={isLast ? 'page' : undefined}
 						size={textSize}
 						loading={loading}
+						{...(isLast ? { 'aria-current': 'page' } : {})}
 					>
 						{#if item.icon}
 							<Text ariaHidden={true} class="breadcrumb-icon" text={item.icon} size={textSize} loading={loading} />

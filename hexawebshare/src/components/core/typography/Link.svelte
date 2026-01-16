@@ -70,6 +70,14 @@ SPDX-License-Identifier: MIT
 		 */
 		ariaLabel?: string;
 		/**
+		 * ARIA disabled attribute
+		 */
+		'aria-disabled'?: boolean;
+		/**
+		 * HTML tabindex attribute
+		 */
+		tabindex?: number;
+		/**
 		 * Title attribute for tooltip
 		 */
 		title?: string;
@@ -81,6 +89,10 @@ SPDX-License-Identifier: MIT
 		 * Click event handler
 		 */
 		onclick?: (event: MouseEvent) => void;
+		/**
+		 * Keyboard event handler
+		 */
+		onkeydown?: (event: KeyboardEvent) => void;
 	}
 
 	const {
@@ -98,9 +110,12 @@ SPDX-License-Identifier: MIT
 		external = false,
 		class: className = '',
 		ariaLabel,
+		'aria-disabled': ariaDisabled,
+		tabindex,
 		title,
 		download,
 		onclick,
+		onkeydown,
 		...props
 	}: Props = $props();
 
@@ -171,6 +186,10 @@ SPDX-License-Identifier: MIT
 			event.preventDefault();
 			return;
 		}
+		// Call custom onkeydown handler if provided
+		if (onkeydown) {
+			onkeydown(event);
+		}
 		// Allow Enter key to trigger click for accessibility
 		if (event.key === 'Enter' && onclick) {
 			onclick(event as any);
@@ -184,10 +203,10 @@ SPDX-License-Identifier: MIT
 	{target}
 	rel={rel()}
 	aria-label={ariaLabel}
-	aria-disabled={disabled}
+	aria-disabled={ariaDisabled || disabled || undefined}
 	{title}
 	download={download === true ? '' : download === false ? undefined : download}
-	tabindex={disabled ? -1 : 0}
+	tabindex={tabindex !== undefined ? tabindex : disabled ? -1 : 0}
 	onclick={handleClick}
 	onkeydown={handleKeyDown}
 	{...props}
