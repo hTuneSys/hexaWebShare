@@ -51,7 +51,7 @@
 		"@tailwindcss/forms": "^0.5.10",
 		"@tailwindcss/postcss": "4.1.17",
 		"@tailwindcss/typography": "^0.5.19",
-		"@types/node": "^22",
+		"@types/node": "^25",
 		"@vitest/browser-playwright": "^4.0.14",
 		"@vitest/coverage-v8": "^4.0.14",
 		"autoprefixer": "^10.4.22",
