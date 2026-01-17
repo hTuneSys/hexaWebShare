@@ -57,8 +57,7 @@ SPDX-License-Identifier: MIT
 		 */
 		closable?: boolean;
 		/**
-		 * Accessible label for the dismiss button
-		 * @default 'Dismiss alert'
+		 * Accessible label for the dismiss button (required if closable)
 		 */
 		dismissLabel?: string;
 		/**
@@ -79,6 +78,10 @@ SPDX-License-Identifier: MIT
 		 * @default false
 		 */
 		loading?: boolean;
+		/**
+		 * Accessible label for the loading spinner
+		 */
+		loadingLabel?: string;
 		/**
 		 * Disable interactions and lower opacity
 		 * @default false
@@ -123,11 +126,12 @@ SPDX-License-Identifier: MIT
 		size = 'md',
 		open,
 		closable = false,
-		dismissLabel = 'Dismiss alert',
+		dismissLabel,
 		actionLabel,
 		actionAriaLabel,
 		withIcon = true,
 		loading = false,
+		loadingLabel,
 		disabled = false,
 		fullWidth = true,
 		ariaLive,
@@ -155,9 +159,7 @@ SPDX-License-Identifier: MIT
 	const computedAriaLive = $derived(
 		ariaLive ?? (computedRole === 'alert' ? 'assertive' : 'polite')
 	);
-	const resolvedAriaLabel = $derived(
-		ariaLabel ?? (title || description ? undefined : 'Alert message')
-	);
+	const resolvedAriaLabel = $derived(ariaLabel ?? (title || description ? undefined : ariaLabel));
 	const describedBy = $derived(description || defaultSlot ? descriptionId : undefined);
 
 	const iconSymbols: Record<AlertVariant, string> = {
@@ -283,7 +285,7 @@ SPDX-License-Identifier: MIT
 				type="spinner"
 				size="sm"
 				variant={variant === 'neutral' ? 'primary' : variant}
-				ariaLabel="Loading alert"
+				ariaLabel={loadingLabel}
 			/>
 		{/if}
 
@@ -309,7 +311,21 @@ SPDX-License-Identifier: MIT
 				title={dismissLabel}
 				disabled={disabled || loading}
 			>
-				<span aria-hidden="true">x</span>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="16"
+					height="16"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					aria-hidden="true"
+				>
+					<line x1="18" y1="6" x2="6" y2="18" />
+					<line x1="6" y1="6" x2="18" y2="18" />
+				</svg>
 			</IconButton>
 		{/if}
 	</div>
