@@ -113,6 +113,10 @@ opacity-50 cursor-not-allowed
 		 */
 		ariaHidden?: boolean;
 		/**
+		 * HTML id attribute
+		 */
+		id?: string;
+		/**
 		 * Additional CSS classes
 		 */
 		class?: string;
@@ -139,6 +143,7 @@ opacity-50 cursor-not-allowed
 		strikethrough = false,
 		ariaLabel,
 		ariaHidden = false,
+		id,
 		class: className = '',
 		children,
 		...props
@@ -216,6 +221,7 @@ opacity-50 cursor-not-allowed
 </script>
 
 <span
+	{id}
 	class={textClasses}
 	aria-label={ariaLabel}
 	aria-hidden={isDecorative || undefined}
