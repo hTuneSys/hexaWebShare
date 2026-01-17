@@ -5,6 +5,7 @@ SPDX-License-Identifier: MIT
 
 <script lang="ts">
 	import type { Snippet } from 'svelte';
+	import Button from '../buttons/Button.svelte';
 
 	type Placement = 'top' | 'bottom' | 'left' | 'right';
 	type Align = 'start' | 'center' | 'end';
@@ -237,12 +238,6 @@ SPDX-License-Identifier: MIT
 		};
 	});
 
-	// Positioning classes for popover content (fallback for absolute positioning)
-	let contentPositionClasses = $derived.by(() => {
-		const base = ['z-50'];
-		return base.join(' ');
-	});
-
 	let popoverClasses = $derived(
 		['relative', 'inline-block', disabled && 'opacity-60 pointer-events-none', className]
 			.filter(Boolean)
@@ -253,6 +248,7 @@ SPDX-License-Identifier: MIT
 
 	let contentClasses = $derived(
 		[
+			'z-50',
 			'border',
 			'border-base-300',
 			'bg-base-100',
@@ -299,7 +295,7 @@ SPDX-License-Identifier: MIT
 		{#if trigger}
 			{@render trigger()}
 		{:else}
-			<button class="btn btn-primary" type="button">Toggle popover</button>
+			<Button variant="primary" label="Toggle popover" />
 		{/if}
 	</div>
 
@@ -307,7 +303,7 @@ SPDX-License-Identifier: MIT
 		<div
 			id={contentId}
 			bind:this={contentElement}
-			class={contentPositionClasses + ' ' + contentClasses}
+			class={contentClasses}
 			style={popoverStyle}
 			role="dialog"
 			aria-label={ariaLabel}
@@ -317,11 +313,6 @@ SPDX-License-Identifier: MIT
 		>
 			{#if children}
 				{@render children()}
-			{:else}
-				<div class="space-y-1">
-					<p class="font-semibold">Popover title</p>
-					<p class="text-base-content/80 text-sm">Add your popover content here.</p>
-				</div>
 			{/if}
 		</div>
 	{/if}
