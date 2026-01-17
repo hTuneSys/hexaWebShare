@@ -257,7 +257,6 @@ SPDX-License-Identifier: MIT
 		justify-content: center;
 	}
 
-
 	.step.step-disabled .step-icon {
 		opacity: 0.8;
 	}
