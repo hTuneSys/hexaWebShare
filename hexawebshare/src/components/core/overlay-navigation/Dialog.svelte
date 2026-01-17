@@ -5,6 +5,11 @@ SPDX-License-Identifier: MIT
 
 <script lang="ts">
 	import type { Snippet } from 'svelte';
+	import Button from '../buttons/Button.svelte';
+	import IconButton from '../buttons/IconButton.svelte';
+	import Form from '../forms/Form.svelte';
+	import Heading from '../typography/Heading.svelte';
+	import Text from '../typography/Text.svelte';
 
 	interface Props {
 		open: boolean;
@@ -108,26 +113,32 @@ SPDX-License-Identifier: MIT
 	>
 		<div class={modalBoxClasses}>
 			{#if closable}
-				<button
-					class="btn btn-circle btn-ghost btn-sm absolute top-2 right-2"
-					onclick={onClose}
-					aria-label="Close dialog"
-					type="button"
-				>
-					✕
-				</button>
+				<div class="absolute top-2 right-2">
+					<IconButton variant="ghost" size="sm" circle onclick={onClose} ariaLabel="Close dialog">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="16"
+							height="16"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+						>
+							<line x1="18" y1="6" x2="6" y2="18"></line>
+							<line x1="6" y1="6" x2="18" y2="18"></line>
+						</svg>
+					</IconButton>
+				</div>
 			{/if}
 
 			{#if title}
-				<h3 id={titleId} class="text-lg font-bold">
-					{title}
-				</h3>
+				<Heading id={titleId} level="h3" size="lg" weight="bold" text={title} />
 			{/if}
 
 			{#if description}
-				<p id={descriptionId} class="py-4">
-					{description}
-				</p>
+				<Text id={descriptionId} display="block" class="py-4" text={description} />
 			{/if}
 
 			{#if children}
@@ -136,9 +147,16 @@ SPDX-License-Identifier: MIT
 		</div>
 
 		{#if closeOnBackdropClick}
-			<form method="dialog" class="modal-backdrop">
-				<button type="button" onclick={onClose}>close</button>
-			</form>
+			<!-- Backdrop click area - hidden from screen readers as it's a duplicate close action -->
+			<Form method="dialog" class="modal-backdrop">
+				<Button
+					label=""
+					variant="ghost"
+					onclick={onClose}
+					ariaLabel="Close dialog"
+					class="!absolute !inset-0 !m-0 !h-full !min-h-0 !w-full !border-none !bg-transparent !p-0"
+				/>
+			</Form>
 		{/if}
 	</div>
 {/if}
