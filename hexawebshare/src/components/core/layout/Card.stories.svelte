@@ -24,25 +24,70 @@ SPDX-License-Identifier: MIT
 					'success',
 					'warning',
 					'error'
-				]
+				],
+				description: 'Color variant of the card (leave empty for default)'
 			},
 			shadowSize: {
 				control: { type: 'select' },
-				options: ['sm', 'md', 'lg', 'xl', '2xl']
+				options: ['sm', 'md', 'lg', 'xl', '2xl'],
+				description: 'Shadow size (only applies when shadow is true)'
 			},
-			bordered: { control: 'boolean' },
-			compact: { control: 'boolean' },
-			shadow: { control: 'boolean' },
-			side: { control: 'boolean' },
-			glass: { control: 'boolean' },
-			hoverable: { control: 'boolean' },
-			centered: { control: 'boolean' },
-			imageOverlay: { control: 'boolean' },
-			loading: { control: 'boolean' },
-			disabled: { control: 'boolean' },
-			title: { control: 'text' },
-			ariaLabel: { control: 'text' },
-			role: { control: 'text' }
+			bordered: {
+				control: 'boolean',
+				description: 'Add border to the card'
+			},
+			compact: {
+				control: 'boolean',
+				description: 'Compact card with reduced padding'
+			},
+			shadow: {
+				control: 'boolean',
+				description: 'Add shadow to the card'
+			},
+			side: {
+				control: 'boolean',
+				description: 'Side layout (figure on side instead of top)'
+			},
+			glass: {
+				control: 'boolean',
+				description: 'Make card glass/transparent effect'
+			},
+			hoverable: {
+				control: 'boolean',
+				description: 'Hoverable card with hover effects'
+			},
+			centered: {
+				control: 'boolean',
+				description: 'Center card body content'
+			},
+			imageOverlay: {
+				control: 'boolean',
+				description: 'Full image background'
+			},
+			loading: {
+				control: 'boolean',
+				description: 'Whether the card is in loading state'
+			},
+			disabled: {
+				control: 'boolean',
+				description: 'Whether the card is disabled'
+			},
+			title: {
+				control: 'text',
+				description: 'Card title text'
+			},
+			ariaLabel: {
+				control: 'text',
+				description: 'Accessible label for screen readers'
+			},
+			role: {
+				control: 'text',
+				description: 'ARIA role for the card'
+			},
+			class: {
+				control: 'text',
+				description: 'Additional CSS classes'
+			}
 		},
 		args: {
 			onclick: fn()
@@ -215,7 +260,6 @@ SPDX-License-Identifier: MIT
 	name="Playground"
 	args={{
 		title: 'Interactive Card',
-		variant: 'default',
 		shadowSize: 'md',
 		bordered: false,
 		compact: false,
@@ -227,6 +271,7 @@ SPDX-License-Identifier: MIT
 		imageOverlay: false,
 		loading: false,
 		disabled: false,
+		role: 'article',
 		onclick: fn()
 	}}
 />
