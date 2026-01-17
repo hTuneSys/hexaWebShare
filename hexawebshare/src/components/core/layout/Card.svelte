@@ -5,6 +5,8 @@ SPDX-License-Identifier: MIT
 
 <script lang="ts">
 	import type { Snippet } from 'svelte';
+	import Heading from '../typography/Heading.svelte';
+	import Text from '../typography/Text.svelte';
 
 	/**
 	 * Props interface for the Card component
@@ -194,7 +196,7 @@ SPDX-License-Identifier: MIT
 	{#if loading}
 		<div class="card-body items-center justify-center">
 			<span class="loading loading-spinner loading-lg"></span>
-			<p class="text-sm opacity-70">Loading...</p>
+			<Text size="sm" class="opacity-70" text="Loading..." />
 		</div>
 	{:else}
 		{#if figure}
@@ -205,7 +207,7 @@ SPDX-License-Identifier: MIT
 
 		<div class={bodyClasses}>
 			{#if title}
-				<h2 class="card-title">{title}</h2>
+				<Heading level="h2" class="card-title" text={title} />
 			{/if}
 
 			{#if children}
