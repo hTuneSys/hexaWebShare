@@ -47,6 +47,9 @@ SPDX-License-Identifier: MIT
 </script>
 
 <script lang="ts">
+	import Button from '../buttons/Button.svelte';
+	import Text from '../typography/Text.svelte';
+
 	/**
 	 * Props interface for the Steps component
 	 */
@@ -122,10 +125,8 @@ SPDX-License-Identifier: MIT
 		...props
 	}: Props = $props();
 
-	// Generate unique ID for accessibility
 	const stepsId = crypto.randomUUID?.() ?? `steps-${Math.random().toString(36).slice(2, 9)}`;
 
-	// Computed container classes
 	let containerClasses = $derived(
 		[
 			'steps',
@@ -143,20 +144,16 @@ SPDX-License-Identifier: MIT
 			.join(' ')
 	);
 
-	// Get step state
 	const getStepState = (item: StepItem, index: number): 'completed' | 'current' | 'pending' => {
 		if (item.completed) return 'completed';
 		if (item.current) return 'current';
-		// Auto-detect: if previous item is completed, this might be current
 		if (index > 0 && items[index - 1]?.completed && !item.completed && !item.current) {
-			// Check if this is the first non-completed step
 			const allPreviousCompleted = items.slice(0, index).every((i) => i.completed);
 			if (allPreviousCompleted) return 'current';
 		}
 		return 'pending';
 	};
 
-	// Get step classes based on variant and state
 	const getStepClasses = (item: StepItem, index: number): string => {
 		const isDisabled = item.disabled || disabled;
 		const state = getStepState(item, index);
@@ -185,23 +182,19 @@ SPDX-License-Identifier: MIT
 			.join(' ');
 	};
 
-	// Handle step click
 	const handleStepClick = (item: StepItem, index: number) => {
 		if (item.disabled || disabled || loading || !clickable) return;
 		item.onclick?.(item, index);
 	};
 
-	// Handle keyboard navigation
 	const handleKeyDown = (event: KeyboardEvent, item: StepItem, index: number) => {
 		if (item.disabled || disabled || loading || !clickable) return;
-
 		if (event.key === 'Enter' || event.key === ' ') {
 			event.preventDefault();
 			handleStepClick(item, index);
 		}
 	};
 
-	// Get ARIA attributes for step
 	const getStepAriaAttributes = (item: StepItem, index: number) => {
 		const isDisabled = item.disabled || disabled;
 		const state = getStepState(item, index);
@@ -228,83 +221,53 @@ SPDX-License-Identifier: MIT
 		{@const stepClasses = getStepClasses(item, index)}
 		{@const ariaAttrs = getStepAriaAttributes(item, index)}
 		<li class={stepClasses} data-content={item.icon ? item.icon : undefined} {...ariaAttrs}>
-			{#if clickable && !item.disabled && !disabled && !loading}
-				<button
-					type="button"
-					class="step-button"
-					onclick={() => handleStepClick(item, index)}
-					onkeydown={(e) => handleKeyDown(e, item, index)}
-					aria-label={item.description ? `${item.label}: ${item.description}` : item.label}
-					aria-current={stepState === 'current' ? 'step' : undefined}
-					aria-disabled={item.disabled || disabled || false}
-					tabindex={item.disabled || disabled || loading ? -1 : 0}
-				>
-					<div class="step-text">
-						<span class="step-label">{item.label}</span>
-						{#if item.description}
-							<span class="step-description">{item.description}</span>
-						{/if}
-					</div>
-				</button>
-			{:else}
-				<div class="step-text">
-					<span class="step-label">{item.label}</span>
-					{#if item.description}
-						<span class="step-description">{item.description}</span>
-					{/if}
-				</div>
-			{/if}
+			<div class="step-content">
+				{#if clickable && !item.disabled && !disabled && !loading}
+					<Button
+						variant="ghost"
+						label={item.label}
+						class="step-button"
+						onclick={() => handleStepClick(item, index)}
+						onkeydown={(e: KeyboardEvent) => handleKeyDown(e, item, index)}
+						ariaLabel={item.description ? `${item.label}: ${item.description}` : item.label}
+						aria-current={stepState === 'current' ? 'step' : undefined}
+						disabled={item.disabled || disabled}
+					/>
+				{:else}
+					<Text weight="medium" class="step-label">{item.label}</Text>
+				{/if}
+				{#if item.description}
+					<Text size="sm" class="step-description">{item.description}</Text>
+				{/if}
+			</div>
 		</li>
 	{/each}
 </ul>
 
 <style>
-	.step-text {
+	.step-content {
 		display: flex;
 		flex-direction: column;
+		align-items: center;
 		gap: 0.25rem;
 		margin-top: 0.5rem;
+		width: 100%;
 	}
 
 	.step-label {
-		font-weight: 500;
 		text-align: center;
 	}
 
 	.step-description {
-		font-size: 0.875rem;
-		opacity: 0.7;
 		text-align: center;
+		opacity: 0.7;
 	}
 
-	.step-button {
-		background: none;
-		border: none;
-		padding: 0;
-		margin: 0;
+	:global(.step-button) {
+		padding: 0.25rem 0.5rem !important;
+		min-height: auto !important;
+		height: auto !important;
 		width: 100%;
-		cursor: pointer;
-		color: inherit;
-		font: inherit;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-	}
-
-	.step-button:hover:not(:disabled):not([aria-disabled='true']) {
-		opacity: 0.8;
-	}
-
-	.step-button:focus {
-		outline: 2px solid currentColor;
-		outline-offset: 2px;
-		border-radius: 0.25rem;
-	}
-
-	.step-button:disabled,
-	.step-button[aria-disabled='true'] {
-		cursor: not-allowed;
-		opacity: 0.5;
 	}
 
 	.step[aria-disabled='true'] {
@@ -312,7 +275,6 @@ SPDX-License-Identifier: MIT
 		pointer-events: none;
 	}
 
-	/* Ensure icons in step circles are properly sized */
 	.step[data-content]::after {
 		font-size: 1.25rem;
 		line-height: 1;
@@ -321,10 +283,6 @@ SPDX-License-Identifier: MIT
 	@media (max-width: 640px) {
 		.steps {
 			font-size: 0.875rem;
-		}
-
-		.step-description {
-			font-size: 0.75rem;
 		}
 
 		.step[data-content]::after {
