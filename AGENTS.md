@@ -299,12 +299,182 @@ If you add a `loading` state to the `Button` component, and all composite compon
 1. Building primitive (Level 1) components
 2. Creating wrapper/structural elements (containers, grids)
 3. The exact component doesn't exist yet (then create it as a primitive first)
+4. Using form utilities (hidden inputs, fieldsets) for non-visual functionality
+
+#### Raw HTML Documentation Requirement
+
+**⚠️ MANDATORY RULE:** When raw HTML elements are used instead of library components, you **MUST** add an inline comment explaining why.
+
+**Format:**
+```svelte
+<!-- 
+  NOTE: Raw HTML [element] is intentional here.
+  Reason: [Specific justification]
+  [Additional context if needed]
+-->
+<element>...</element>
+```
+
+**Examples of valid justifications:**
+
+```svelte
+<!-- ✅ GOOD: Form utility -->
+<!-- 
+  NOTE: Raw HTML input is intentional here.
+  This hidden input is used solely for form submission and has no visual/interactive behavior.
+  Using the Input component would add unnecessary overhead (labels, validation, styling, etc.).
+  Component composition applies to user-facing elements, not form utilities.
+-->
+<input type="hidden" name="selected" value={value} />
+
+<!-- ✅ GOOD: Structural wrapper -->
+<!-- 
+  NOTE: Raw HTML div is intentional here.
+  This is a structural container with no semantic or interactive behavior.
+  No suitable library component exists for generic layout wrappers.
+-->
+<div class="flex gap-4">
+  <Button>Action</Button>
+</div>
+
+<!-- ✅ GOOD: Primitive component -->
+<!-- 
+  NOTE: Raw HTML button is intentional here.
+  Button is a Level 1 primitive component - the base for all button variants.
+  This component itself provides the abstraction that other components use.
+-->
+<button type="button" class={buttonClasses}>
+  {label}
+</button>
+
+<!-- ❌ BAD: No justification -->
+<button onclick={handleClick}>Click me</button>  <!-- Missing note! -->
+
+<!-- ❌ BAD: Invalid justification -->
+<!-- NOTE: Using raw button for simplicity -->
+<button>Click</button>  <!-- "Simplicity" is not valid - use Button component! -->
+```
+
+**Valid reasons for raw HTML:**
+- ✅ Form utilities (hidden inputs, fieldset, legend)
+- ✅ Structural/layout containers with no semantic meaning
+- ✅ Primitive (Level 1) components themselves
+- ✅ No suitable library component exists (then consider creating one)
+- ✅ Performance-critical rendering (with benchmarks)
+- ✅ Third-party library integration requirements
+
+**Invalid reasons:**
+- ❌ "Simpler" or "easier"
+- ❌ "Fewer lines of code"
+- ❌ "Don't need all the features"
+- ❌ Developer preference
+- ❌ Unaware of existing component
+
+#### Component Composition - STRICT ENFORCEMENT
+
+**⚠️ CRITICAL PRIORITY RULE:** Library components MUST be used unless TECHNICALLY IMPOSSIBLE.
+
+##### Decision Tree for Raw HTML vs Library Components
+
+Follow this decision process for EVERY HTML element:
+
+1. **Does a library component exist for this HTML element?**
+   - **NO** → Raw HTML is allowed. Document why no component exists.
+   - **YES** → You MUST use it. Proceed to step 2.
+
+2. **Does the library component support all required attributes/behavior?**
+   - **YES** → Use it immediately. No exceptions. STOP HERE.
+   - **NO** → Proceed to step 3.
+
+3. **Can the library component be extended/modified to support your needs?**
+   - **YES** → Modify the component first. Do NOT bypass it. STOP HERE.
+   - **NO** → Proceed to step 4.
+
+4. **Is there a TECHNICAL impossibility preventing library component use?**
+
+   **Valid Technical Impossibilities:**
+   - ✅ Component would break DaisyUI's CSS selectors (e.g., `.menu > li > :not(ul)` requiring specific structure)
+   - ✅ Component would break required DOM structure (e.g., form patterns for framework behavior)
+   - ✅ Component would break framework state management patterns (e.g., hidden checkbox for DaisyUI toggle)
+   - ✅ No library component exists and creating one is out of current scope
+   - ✅ Performance-critical path with benchmarks proving necessity
+
+   **Invalid "Impossibilities" (NEVER ACCEPTABLE):**
+   - ❌ "It's simpler/easier/shorter with raw HTML"
+   - ❌ "The component adds unwanted classes" → FIX THE COMPONENT (add unstyled/raw variant)
+   - ❌ "Layout becomes complex" → Use proper composition patterns
+   - ❌ "Raw HTML performs better" → Premature optimization without proof
+   - ❌ "I don't want to import another component" → Developer laziness
+   - ❌ "It works fine this way" → Not following architecture standards
+   - ❌ "Just for this one case" → No exceptions without technical proof
+
+   **Decision:**
+   - **YES** (Genuine technical impossibility) → Use raw HTML with detailed documentation
+   - **NO** → You MUST use the library component or extend it first
+
+##### Documentation Note Template for Technical Impossibilities
+
+When raw HTML is genuinely required, use this format:
+
+```svelte
+<!-- 
+  NOTE: Raw HTML [element] is used here instead of [Component].
+  TECHNICAL REASON: [Specific technical impossibility - be very detailed]
+  ATTEMPTED SOLUTIONS:
+  1. [What was tried with the library component]
+  2. [Why it failed technically - include error/behavior]
+  CONSEQUENCE: Using [Component] would cause [specific technical failure]
+  VALIDATION: [How this was verified/tested]
+-->
+<element>...</element>
+```
+
+##### Examples of Strict Enforcement
+
+```svelte
+<!-- ❌ WRONG: Invalid justification -->
+<!-- 
+  NOTE: Raw HTML button used here.
+  Reason: Button component adds .btn classes that conflict with menu styling.
+-->
+<button>Menu Item</button>
+
+<!-- ✅ CORRECT: Fix the component instead -->
+<Button variant="unstyled">Menu Item</Button>
+<!-- The Button component was extended to support variant="unstyled" -->
+
+<!-- ❌ WRONG: Bypassing for convenience -->
+<p>This is some text</p>
+
+<!-- ✅ CORRECT: Use library component -->
+<Text text="This is some text" />
+
+<!-- ❌ WRONG: Claiming impossibility without proof -->
+<!-- NOTE: Using raw button because Button component doesn't work here -->
+<button onclick={handler}>Click</button>
+
+<!-- ✅ CORRECT: Provide technical details -->
+<!-- 
+  NOTE: Raw HTML button is used here instead of Button component.
+  TECHNICAL REASON: DaisyUI's .menu requires direct child buttons without .btn class
+  ATTEMPTED SOLUTIONS:
+  1. Used <Button variant="primary"> - added .btn class breaking menu CSS cascade
+  2. Tried wrapper div - broke .menu > li > button selector specificity
+  CONSEQUENCE: Button component's .btn class triggers conflicting DaisyUI styles
+  VALIDATION: Tested with DaisyUI v4.x docs and CSS inspector
+  TODO: Add unstyled variant to Button component to resolve this properly
+-->
+<button>Menu Item</button>
+```
 
 #### Before Implementation Checklist
 
 - [ ] Is this a composite component? (uses other UI elements)
 - [ ] Have I checked if primitives exist for buttons, inputs, text, icons?
 - [ ] Am I importing and using library components instead of raw HTML?
+- [ ] If using raw HTML, have I followed the 4-step decision tree?
+- [ ] If using raw HTML, have I documented with the proper template?
+- [ ] Can I extend/modify the library component instead of bypassing it?
 - [ ] Will changes to primitive components propagate correctly?
 
 ### Svelte 5 Component Pattern
@@ -375,6 +545,154 @@ interface Props {
 // ❌ NEVER use 'any' type
 // ✅ Use proper type annotations
 ```
+
+### No Hardcoded Strings - Externalize All Text Content
+
+**⚠️ CRITICAL RULE:** Component implementations **MUST NOT** contain hardcoded/embedded strings. All user-facing text must be passed as props for localization and flexibility.
+
+**Purpose:** This ensures components are fully localizable (i18n-ready) and customizable without modifying the component source code.
+
+#### String Externalization Rules
+
+**❌ NEVER hardcode strings in component implementations:**
+- Button labels
+- Placeholder text
+- Error messages
+- Toast/notification messages
+- Dialog titles and descriptions
+- Empty state messages
+- Validation messages
+- Any user-facing text
+
+**✅ ALWAYS expose strings as props with reasonable defaults:**
+
+```svelte
+<!-- ✅ CORRECT - Text as props -->
+<script lang="ts">
+  interface Props {
+    title?: string;
+    description?: string;
+    confirmLabel?: string;
+    cancelLabel?: string;
+  }
+  
+  const { 
+    title = 'Confirm Action',           // Default value
+    description = 'Are you sure?',      // Default value
+    confirmLabel = 'Confirm',           // Default value
+    cancelLabel = 'Cancel'              // Default value
+  }: Props = $props();
+</script>
+
+<div class="modal">
+  <h3>{title}</h3>
+  <p>{description}</p>
+  <Button>{confirmLabel}</Button>
+  <Button>{cancelLabel}</Button>
+</div>
+
+<!-- ❌ WRONG - Hardcoded strings -->
+<script lang="ts">
+  interface Props {
+    // No text props defined
+  }
+</script>
+
+<div class="modal">
+  <h3>Confirm Action</h3>              <!-- Hardcoded -->
+  <p>Are you sure?</p>                 <!-- Hardcoded -->
+  <Button>Confirm</Button>              <!-- Hardcoded -->
+  <Button>Cancel</Button>               <!-- Hardcoded -->
+</div>
+```
+
+#### Component Implementation vs Storybook Stories
+
+| Context | Hardcoded Strings | Reasoning |
+|---------|------------------|-----------|
+| **Component Implementation** | ❌ NEVER | Must support localization and customization |
+| **Storybook Stories** | ✅ ALLOWED | Stories are examples/demos, not production code |
+| **Component Tests** | ✅ ALLOWED | Tests are not production code |
+| **Documentation** | ✅ ALLOWED | Docs show examples, not reusable code |
+
+#### Examples by Component Type
+
+**Modal/Dialog Components:**
+```svelte
+// ✅ CORRECT
+interface Props {
+  title?: string;
+  message?: string;
+  confirmText?: string;
+  cancelText?: string;
+  closeAriaLabel?: string;
+}
+```
+
+**Empty State Components:**
+```svelte
+// ✅ CORRECT
+interface Props {
+  title?: string;
+  description?: string;
+  actionLabel?: string;
+}
+```
+
+**Form Components:**
+```svelte
+// ✅ CORRECT
+interface Props {
+  label?: string;
+  placeholder?: string;
+  errorMessage?: string;
+  helperText?: string;
+}
+```
+
+**Pagination Components:**
+```svelte
+// ✅ CORRECT
+interface Props {
+  previousLabel?: string;
+  nextLabel?: string;
+  pageLabel?: string;
+  ofLabel?: string;
+}
+```
+
+#### Default Values Strategy
+
+- ✅ Provide sensible English defaults for developer experience
+- ✅ Make all text props optional with default values
+- ✅ Document all text props for i18n in component comments
+- ✅ Group related text props together in interface
+
+#### Accessibility (a11y) Text
+
+**Also externalize accessibility labels:**
+
+```svelte
+// ✅ CORRECT
+interface Props {
+  ariaLabel?: string;
+  ariaDescription?: string;
+  closeAriaLabel?: string;
+}
+
+const {
+  ariaLabel = 'Dialog',
+  closeAriaLabel = 'Close dialog'
+}: Props = $props();
+```
+
+#### Before Implementation Checklist
+
+- [ ] Have I identified all user-facing text in this component?
+- [ ] Are all text strings exposed as props?
+- [ ] Do all text props have reasonable English defaults?
+- [ ] Are accessibility labels also externalized?
+- [ ] Can this component be used in a non-English application?
 
 ### File Organization
 
@@ -593,6 +911,7 @@ Before creating a commit or PR, verify:
 - [ ] TypeScript interfaces defined for all components
 - [ ] DaisyUI classes used correctly (static, not dynamic)
 - [ ] Composite components reuse library primitives (no raw HTML for buttons/inputs/text)
+- [ ] No hardcoded strings in component implementations (all text as props)
 - [ ] Storybook story created for new components
 - [ ] Story file has 5-10 variant stories (excluding Playground)
 - [ ] Playground story included as last story in Storybook file
@@ -627,8 +946,9 @@ AI agents should be familiar with these documents:
 3. **Use TypeScript strictly** - no 'any' types
 4. **Apply DaisyUI classes statically** - no string interpolation
 5. **Reuse library components** - composite components must use primitives (Button, Input, Text, etc.)
-6. **Create Storybook stories** for all components
-7. **Export components** in src/lib/index.ts
+6. **Externalize all text content** - no hardcoded strings in components (expose as props)
+7. **Create Storybook stories** for all components
+8. **Export components** in src/lib/index.ts
 
 ### When Creating Commits
 
