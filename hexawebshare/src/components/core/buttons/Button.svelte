@@ -28,6 +28,7 @@ SPDX-License-Identifier: MIT
 		disabled?: boolean;
 		loading?: boolean;
 		ariaLabel?: string;
+		'aria-current'?: 'page' | 'step' | 'location' | 'date' | 'time' | boolean;
 		onclick?: () => void;
 		onkeydown?: (event: KeyboardEvent) => void;
 		class?: string;
@@ -95,6 +96,10 @@ SPDX-License-Identifier: MIT
 >
 	{#if loading}
 		<span class="loading loading-spinner"></span>
+	{:else if children}
+		{@render children()}
+	{:else if label}
+		{label}
 	{/if}
 	{#if children}
 		{@render children()}
