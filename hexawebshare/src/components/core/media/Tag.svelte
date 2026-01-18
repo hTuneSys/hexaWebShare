@@ -169,15 +169,7 @@ SPDX-License-Identifier: MIT
 
 	// Loading spinner size based on tag size
 	let spinnerSize = $derived<'xs' | 'sm' | 'md' | 'lg'>(
-		size === 'xs'
-			? 'xs'
-			: size === 'sm'
-				? 'sm'
-				: size === 'md'
-					? 'sm'
-					: size === 'lg'
-						? 'md'
-						: 'md'
+		size === 'xs' ? 'xs' : size === 'sm' ? 'sm' : size === 'md' ? 'sm' : size === 'lg' ? 'md' : 'md'
 	);
 
 	// Close button size based on tag size

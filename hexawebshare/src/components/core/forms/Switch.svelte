@@ -65,11 +65,11 @@ SPDX-License-Identifier: MIT
 		 * HTML value attribute for form submission
 		 */
 		value?: string;
-	/**
-	 * Accessible label for screen readers
-	 * @default 'Toggle switch'
-	 */
-	ariaLabel?: string;
+		/**
+		 * Accessible label for screen readers
+		 * @default 'Toggle switch'
+		 */
+		ariaLabel?: string;
 		/**
 		 * ARIA describedby attribute
 		 */
@@ -104,11 +104,11 @@ SPDX-License-Identifier: MIT
 		labelPosition = 'right',
 		helpText,
 		error,
-	id,
-	name,
-	value,
-	ariaLabel = 'Toggle switch',
-	ariaDescribedby,
+		id,
+		name,
+		value,
+		ariaLabel = 'Toggle switch',
+		ariaDescribedby,
 		loading = false,
 		requiredLabel = 'required',
 		onchange,

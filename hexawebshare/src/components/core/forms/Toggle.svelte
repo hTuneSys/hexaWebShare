@@ -122,7 +122,6 @@ SPDX-License-Identifier: MIT
 			.filter(Boolean)
 			.join(' ')
 	);
-
 </script>
 
 {#if label}

@@ -89,11 +89,11 @@ SPDX-License-Identifier: MIT
 		 * HTML name attribute for form submission
 		 */
 		name?: string;
-	/**
-	 * Accessible label for screen readers
-	 * @default 'Options'
-	 */
-	ariaLabel?: string;
+		/**
+		 * Accessible label for screen readers
+		 * @default 'Options'
+		 */
+		ariaLabel?: string;
 		/**
 		 * ARIA describedby attribute
 		 */
@@ -173,11 +173,11 @@ SPDX-License-Identifier: MIT
 		placeholder = 'Select options...',
 		label,
 		error,
-	helpText,
-	id,
-	name,
-	ariaLabel = 'Options',
-	ariaDescribedby,
+		helpText,
+		id,
+		name,
+		ariaLabel = 'Options',
+		ariaDescribedby,
 		loading = false,
 		searchable = false,
 		maxSelected,
@@ -592,7 +592,7 @@ SPDX-License-Identifier: MIT
 							class="hover:bg-base-300"
 							onclick={() => removeOption(option.value, new MouseEvent('click'))}
 							ariaLabel="Remove {option.label}"
-							disabled={disabled}
+							{disabled}
 						>
 							<Text text="×" variant="muted" />
 						</IconButton>
@@ -669,14 +669,14 @@ SPDX-License-Identifier: MIT
 
 		<!-- Dropdown -->
 		{#if isOpen}
-		<ul
-			bind:this={listboxRef}
-			id={listboxId}
-			role="listbox"
-			aria-multiselectable="true"
-			aria-label={label || ariaLabel}
-			class={dropdownClasses}
-		>
+			<ul
+				bind:this={listboxRef}
+				id={listboxId}
+				role="listbox"
+				aria-multiselectable="true"
+				aria-label={label || ariaLabel}
+				class={dropdownClasses}
+			>
 				{#if filteredOptions.length === 0}
 					<li class="px-4 py-2 text-center">
 						<Text text={noOptionsMessage} variant="muted" class="text-base-content/50" />

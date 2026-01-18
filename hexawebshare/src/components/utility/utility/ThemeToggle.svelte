@@ -416,14 +416,14 @@ SPDX-License-Identifier: MIT
 		<!-- FAB Mode -->
 		<div class="expandable-container {effectiveDirection}">
 			<IconButton
-				variant={variant}
-				size={size}
+				{variant}
+				{size}
 				circle={shape === 'circle'}
 				square={shape === 'square'}
 				onclick={toggleFab}
-				ariaLabel={ariaLabel}
-				loading={loading}
-				disabled={disabled}
+				{ariaLabel}
+				{loading}
+				{disabled}
 				class={customColor ? '' : ''}
 				style={customColor
 					? `background-color: ${customColor}; border-color: ${customColor}; color: white;`

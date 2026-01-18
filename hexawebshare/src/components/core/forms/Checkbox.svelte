@@ -90,7 +90,7 @@ SPDX-License-Identifier: MIT
 			{name}
 			{value}
 			{required}
-			tabindex={tabindex}
+			{tabindex}
 			aria-label={ariaLabel}
 			aria-describedby={ariaDescribedby}
 			{...props}
@@ -107,7 +107,7 @@ SPDX-License-Identifier: MIT
 		{name}
 		{value}
 		{required}
-		tabindex={tabindex}
+		{tabindex}
 		aria-label={ariaLabel || ariaLabelFallback}
 		aria-describedby={ariaDescribedby}
 		{...props}

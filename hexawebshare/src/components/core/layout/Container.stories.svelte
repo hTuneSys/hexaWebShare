@@ -164,9 +164,7 @@ SPDX-License-Identifier: MIT
 	{#snippet children()}
 		<div class="bg-base-100 rounded-lg p-6 shadow">
 			<h3 class="mb-2 text-xl font-bold">Fluid Container</h3>
-			<p class="text-base-content/70">
-				Fluid container (full width without max-width constraint)
-			</p>
+			<p class="text-base-content/70">Fluid container (full width without max-width constraint)</p>
 		</div>
 	{/snippet}
 </Story>

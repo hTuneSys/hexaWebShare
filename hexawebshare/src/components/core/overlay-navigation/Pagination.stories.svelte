@@ -48,13 +48,13 @@ SPDX-License-Identifier: MIT
 			maxVisiblePages: {
 				control: { type: 'number', min: 3, max: 15 }
 			},
-		showPageSize: { control: 'boolean' },
-		showTotal: { control: 'boolean' },
-		disabled: { control: 'boolean' },
-		loading: { control: 'boolean' },
-		ariaLabel: { control: 'text' },
-		itemsPerPageAriaLabel: { control: 'text' }
-	},
+			showPageSize: { control: 'boolean' },
+			showTotal: { control: 'boolean' },
+			disabled: { control: 'boolean' },
+			loading: { control: 'boolean' },
+			ariaLabel: { control: 'text' },
+			itemsPerPageAriaLabel: { control: 'text' }
+		},
 		args: {
 			onpagechange: fn(),
 			onpagesizechange: fn()

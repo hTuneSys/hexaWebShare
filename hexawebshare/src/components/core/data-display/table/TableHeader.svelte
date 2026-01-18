@@ -91,15 +91,13 @@ This component is internal to the Table module and should not be used directly.
 	});
 
 	// Get aria-sort value
-	let ariaSort = $derived(
-		(): 'ascending' | 'descending' | 'none' | undefined => {
-			if (!column.sortable) return undefined;
-			if (sortColumn !== column.key) return 'none';
-			if (sortDirection === 'asc') return 'ascending';
-			if (sortDirection === 'desc') return 'descending';
-			return 'none';
-		}
-	);
+	let ariaSort = $derived((): 'ascending' | 'descending' | 'none' | undefined => {
+		if (!column.sortable) return undefined;
+		if (sortColumn !== column.key) return 'none';
+		if (sortDirection === 'asc') return 'ascending';
+		if (sortDirection === 'desc') return 'descending';
+		return 'none';
+	});
 </script>
 
 <!-- 

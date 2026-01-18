@@ -16,7 +16,11 @@ export { default as ListItem } from '../components/core/data-display/ListItem.sv
 export { default as StatusBadge } from '../components/core/data-display/StatusBadge.svelte';
 export { default as StatusDot } from '../components/core/data-display/StatusDot.svelte';
 export { default as Table } from '../components/core/data-display/table/Table.svelte';
-export type { TableColumn, SortDirection, SortState } from '../components/core/data-display/table/Table.svelte';
+export type {
+	TableColumn,
+	SortDirection,
+	SortState
+} from '../components/core/data-display/table/Table.svelte';
 
 // Core / Feedback
 export { default as Alert } from '../components/core/feedback/Alert.svelte';

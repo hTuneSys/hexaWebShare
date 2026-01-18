@@ -294,7 +294,13 @@ A standalone list item component with rich features for building custom lists.
 		{...props}
 	>
 		{#if loading}
-			<Spinner size={spinnerSizeClass === 'loading-xs' ? 'xs' : spinnerSizeClass === 'loading-sm' ? 'sm' : 'md'} />
+			<Spinner
+				size={spinnerSizeClass === 'loading-xs'
+					? 'xs'
+					: spinnerSizeClass === 'loading-sm'
+						? 'sm'
+						: 'md'}
+			/>
 		{:else if leading}
 			<span class="flex-shrink-0" aria-hidden="true">
 				{@render leading()}
@@ -334,7 +340,13 @@ A standalone list item component with rich features for building custom lists.
 		{...props}
 	>
 		{#if loading}
-			<Spinner size={spinnerSizeClass === 'loading-xs' ? 'xs' : spinnerSizeClass === 'loading-sm' ? 'sm' : 'md'} />
+			<Spinner
+				size={spinnerSizeClass === 'loading-xs'
+					? 'xs'
+					: spinnerSizeClass === 'loading-sm'
+						? 'sm'
+						: 'md'}
+			/>
 		{:else if leading}
 			<span class="flex-shrink-0" aria-hidden="true">
 				{@render leading()}

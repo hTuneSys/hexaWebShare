@@ -192,7 +192,12 @@ SPDX-License-Identifier: MIT
 				<div class="card-body p-0">
 					<CardSection title="Section with Icon" description="This section displays an icon">
 						{#snippet icon()}
-							<svg class="text-primary h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<svg
+								class="text-primary h-6 w-6"
+								fill="none"
+								stroke="currentColor"
+								viewBox="0 0 24 24"
+							>
 								<path
 									stroke-linecap="round"
 									stroke-linejoin="round"
@@ -201,7 +206,10 @@ SPDX-License-Identifier: MIT
 								/>
 							</svg>
 						{/snippet}
-						<Text text="The icon is displayed before the title for visual emphasis." variant="muted" />
+						<Text
+							text="The icon is displayed before the title for visual emphasis."
+							variant="muted"
+						/>
 					</CardSection>
 				</div>
 			</div>
@@ -215,10 +223,7 @@ SPDX-License-Identifier: MIT
 		<div class="bg-base-300 min-h-[200px] p-6">
 			<div class="card bg-base-100 mx-auto max-w-2xl shadow-xl">
 				<div class="card-body p-0">
-					<CardSection
-						title="Section with Actions"
-						description="This section has action buttons"
-					>
+					<CardSection title="Section with Actions" description="This section has action buttons">
 						{#snippet headerActions()}
 							<Button variant="primary" size="sm" label="Action" />
 						{/snippet}

@@ -113,7 +113,12 @@ SPDX-License-Identifier: MIT
 	<div class="flex items-center gap-2">
 		<progress class={progressClasses} {value} {max}></progress>
 		{#if showLabel}
-			<Text text={`${Math.round(percentage)}%`} size="sm" weight="medium" class="min-w-[3rem] text-right" />
+			<Text
+				text={`${Math.round(percentage)}%`}
+				size="sm"
+				weight="medium"
+				class="min-w-[3rem] text-right"
+			/>
 		{/if}
 	</div>
 </div>

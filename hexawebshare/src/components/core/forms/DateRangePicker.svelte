@@ -219,7 +219,7 @@ SPDX-License-Identifier: MIT
 				required={required && !label}
 				ariaLabel={ariaLabel || `${startLabel} date picker`}
 				{ariaDescribedby}
-				requiredLabel={requiredLabel}
+				{requiredLabel}
 				onchange={handleStartDateChange}
 				oninput={handleStartDateInput}
 				{...props}
@@ -241,7 +241,7 @@ SPDX-License-Identifier: MIT
 				required={required && !label}
 				ariaLabel={ariaLabel || `${endLabel} date picker`}
 				{ariaDescribedby}
-				requiredLabel={requiredLabel}
+				{requiredLabel}
 				onchange={handleEndDateChange}
 				oninput={handleEndDateInput}
 				{...props}

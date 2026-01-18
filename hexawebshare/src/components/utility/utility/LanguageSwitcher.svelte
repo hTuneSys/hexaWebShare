@@ -94,11 +94,11 @@ SPDX-License-Identifier: MIT
 		 * @default 'Select Language'
 		 */
 		defaultLabel?: string;
-	/**
-	 * Accessible label for the language switcher
-	 * @default 'Language switcher'
-	 */
-	ariaLabel?: string;
+		/**
+		 * Accessible label for the language switcher
+		 * @default 'Language switcher'
+		 */
+		ariaLabel?: string;
 		/**
 		 * Callback when selected language changes
 		 */
@@ -120,11 +120,11 @@ SPDX-License-Identifier: MIT
 		disabled = false,
 		loading = false,
 		showCode = false,
-	showFlag = true,
-	customLabel,
-	defaultLabel = 'Select Language',
-	ariaLabel = 'Language switcher',
-	onChange,
+		showFlag = true,
+		customLabel,
+		defaultLabel = 'Select Language',
+		ariaLabel = 'Language switcher',
+		onChange,
 		class: className = '',
 		...props
 	}: Props = $props();

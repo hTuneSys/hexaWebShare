@@ -111,21 +111,21 @@ SPDX-License-Identifier: MIT
 		 * Maximum length of input value
 		 */
 		maxlength?: number;
-	/**
-	 * Accessible label for screen readers
-	 * @default 'Global search'
-	 */
-	ariaLabel?: string;
-	/**
-	 * ARIA label for search results list
-	 * @default 'Search results'
-	 */
-	searchResultsAriaLabel?: string;
-	/**
-	 * Aria label for the loading spinner
-	 * @default 'Searching'
-	 */
-	searchingAriaLabel?: string;
+		/**
+		 * Accessible label for screen readers
+		 * @default 'Global search'
+		 */
+		ariaLabel?: string;
+		/**
+		 * ARIA label for search results list
+		 * @default 'Search results'
+		 */
+		searchResultsAriaLabel?: string;
+		/**
+		 * Aria label for the loading spinner
+		 * @default 'Searching'
+		 */
+		searchingAriaLabel?: string;
 		/**
 		 * Aria label for the clear button
 		 * @default 'Clear search'
@@ -196,11 +196,11 @@ SPDX-License-Identifier: MIT
 		helpText,
 		id,
 		name,
-	maxlength,
-	ariaLabel = 'Global search',
-	searchResultsAriaLabel = 'Search results',
-	searchingAriaLabel = 'Searching',
-	clearAriaLabel = 'Clear search',
+		maxlength,
+		ariaLabel = 'Global search',
+		searchResultsAriaLabel = 'Search results',
+		searchingAriaLabel = 'Searching',
+		clearAriaLabel = 'Clear search',
 		noResultsLabel = 'No results found',
 		noResultsDescription = 'Try a different search term',
 		onsearch,
@@ -470,7 +470,7 @@ SPDX-License-Identifier: MIT
 			// Use modern API with fallback for broader browser support
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			const isMac =
-				((navigator as any).userAgentData?.platform === 'macOS') ||
+				(navigator as any).userAgentData?.platform === 'macOS' ||
 				/Mac|iPhone|iPad|iPod/.test(navigator.userAgent);
 			const modifierKey = isMac ? event.metaKey : event.ctrlKey;
 
@@ -562,9 +562,9 @@ SPDX-License-Identifier: MIT
 				<IconButton
 					variant="ghost"
 					circle
-					size={size}
+					{size}
 					onclick={handleClear}
-					disabled={disabled}
+					{disabled}
 					ariaLabel={clearAriaLabel}
 					class="h-auto min-h-0 p-0.5"
 				>
@@ -584,14 +584,14 @@ SPDX-License-Identifier: MIT
 
 		<!-- Search Results Dropdown -->
 		{#if showResults && isOpen && (value || results)}
-		<div
-			id={resultsId}
-			bind:this={resultsElement}
-			class={resultsClasses}
-			role="listbox"
-			aria-label={searchResultsAriaLabel}
-			onpointerdown={(e) => e.preventDefault()}
-		>
+			<div
+				id={resultsId}
+				bind:this={resultsElement}
+				class={resultsClasses}
+				role="listbox"
+				aria-label={searchResultsAriaLabel}
+				onpointerdown={(e) => e.preventDefault()}
+			>
 				{#if results}
 					{@render results()}
 				{:else}

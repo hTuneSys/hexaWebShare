@@ -291,16 +291,16 @@ SPDX-License-Identifier: MIT
 						onfocus={() => handleFocus(index)}
 						onblur={handleBlur}
 					>
-					{#if item.icon}
-						<span class="text-lg" aria-hidden="true">{item.icon}</span>
-					{/if}
-					<span class="flex flex-col">
-						<Text text={item.label} />
-						{#if item.description}
-							<Text text={item.description} size="xs" class="opacity-60" />
+						{#if item.icon}
+							<span class="text-lg" aria-hidden="true">{item.icon}</span>
 						{/if}
-					</span>
-				</a>
+						<span class="flex flex-col">
+							<Text text={item.label} />
+							{#if item.description}
+								<Text text={item.description} size="xs" class="opacity-60" />
+							{/if}
+						</span>
+					</a>
 				{:else}
 					<button
 						type="button"
@@ -314,16 +314,16 @@ SPDX-License-Identifier: MIT
 						onfocus={() => handleFocus(index)}
 						onblur={handleBlur}
 					>
-					{#if item.icon}
-						<span class="text-lg" aria-hidden="true">{item.icon}</span>
-					{/if}
-					<span class="flex flex-col">
-						<Text text={item.label} />
-						{#if item.description}
-							<Text text={item.description} size="xs" class="opacity-60" />
+						{#if item.icon}
+							<span class="text-lg" aria-hidden="true">{item.icon}</span>
 						{/if}
-					</span>
-				</button>
+						<span class="flex flex-col">
+							<Text text={item.label} />
+							{#if item.description}
+								<Text text={item.description} size="xs" class="opacity-60" />
+							{/if}
+						</span>
+					</button>
 				{/if}
 			</li>
 			{#if item.divider && index < items.length - 1}

@@ -213,7 +213,13 @@ SPDX-License-Identifier: MIT
 
 					<div class="flex-1">
 						{#if title}
-							<Text text={title} weight="semibold" size="lg" display="block" class="section-title" />
+							<Text
+								text={title}
+								weight="semibold"
+								size="lg"
+								display="block"
+								class="section-title"
+							/>
 						{/if}
 						{#if description}
 							<Text

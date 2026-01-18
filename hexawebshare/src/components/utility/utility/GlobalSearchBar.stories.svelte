@@ -96,31 +96,31 @@ SPDX-License-Identifier: MIT
 				control: { type: 'number', min: 1 },
 				description: 'Maximum length of input value'
 			},
-		ariaLabel: {
-			control: 'text',
-			description: 'Accessible label for screen readers'
+			ariaLabel: {
+				control: 'text',
+				description: 'Accessible label for screen readers'
+			},
+			searchResultsAriaLabel: {
+				control: 'text',
+				description: 'ARIA label for search results list'
+			},
+			searchingAriaLabel: {
+				control: 'text',
+				description: 'Aria label for the loading spinner'
+			},
+			clearAriaLabel: {
+				control: 'text',
+				description: 'Aria label for the clear button'
+			},
+			noResultsLabel: {
+				control: 'text',
+				description: 'Label text for no results state'
+			},
+			noResultsDescription: {
+				control: 'text',
+				description: 'Description text for no results state'
+			}
 		},
-		searchResultsAriaLabel: {
-			control: 'text',
-			description: 'ARIA label for search results list'
-		},
-		searchingAriaLabel: {
-			control: 'text',
-			description: 'Aria label for the loading spinner'
-		},
-		clearAriaLabel: {
-			control: 'text',
-			description: 'Aria label for the clear button'
-		},
-		noResultsLabel: {
-			control: 'text',
-			description: 'Label text for no results state'
-		},
-		noResultsDescription: {
-			control: 'text',
-			description: 'Description text for no results state'
-		}
-	},
 		args: {
 			onsearch: fn(),
 			onclear: fn(),

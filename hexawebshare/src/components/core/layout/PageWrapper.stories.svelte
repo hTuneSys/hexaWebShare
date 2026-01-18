@@ -127,11 +127,11 @@ SPDX-License-Identifier: MIT
 			{#snippet footer()}
 				<div class="text-base-content/60 flex items-center justify-between text-sm">
 					<p>© 2025 hexaTune LLC. All rights reserved.</p>
-				<div class="flex gap-4">
-					<a href="/privacy" class="link-hover link">Privacy</a>
-					<a href="/terms" class="link-hover link">Terms</a>
-					<a href="/contact" class="link-hover link">Contact</a>
-				</div>
+					<div class="flex gap-4">
+						<a href="/privacy" class="link-hover link">Privacy</a>
+						<a href="/terms" class="link-hover link">Terms</a>
+						<a href="/contact" class="link-hover link">Contact</a>
+					</div>
 				</div>
 			{/snippet}
 		</PageWrapper>
@@ -201,10 +201,10 @@ SPDX-License-Identifier: MIT
 		{#snippet footer()}
 			<div class="text-base-content/60 flex items-center justify-between text-sm">
 				<p>© 2025 hexaTune LLC</p>
-			<div class="flex gap-4">
-				<a href="/privacy" class="link-hover link">Privacy</a>
-				<a href="/terms" class="link-hover link">Terms</a>
-			</div>
+				<div class="flex gap-4">
+					<a href="/privacy" class="link-hover link">Privacy</a>
+					<a href="/terms" class="link-hover link">Terms</a>
+				</div>
 			</div>
 		{/snippet}
 	</PageWrapper>

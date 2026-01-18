@@ -65,21 +65,21 @@ SPDX-License-Identifier: MIT
 		 * ARIA label for accessibility
 		 */
 		ariaLabel?: string;
-	/**
-	 * Default ARIA label text if ariaLabel and title are not provided
-	 * @default 'Drawer'
-	 */
-	defaultAriaLabel?: string;
-	/**
-	 * ARIA label for the toggle checkbox
-	 * @default 'Toggle drawer'
-	 */
-	toggleAriaLabel?: string;
-	/**
-	 * ARIA label for close button/overlay
-	 * @default 'Close drawer'
-	 */
-	closeAriaLabel?: string;
+		/**
+		 * Default ARIA label text if ariaLabel and title are not provided
+		 * @default 'Drawer'
+		 */
+		defaultAriaLabel?: string;
+		/**
+		 * ARIA label for the toggle checkbox
+		 * @default 'Toggle drawer'
+		 */
+		toggleAriaLabel?: string;
+		/**
+		 * ARIA label for close button/overlay
+		 * @default 'Close drawer'
+		 */
+		closeAriaLabel?: string;
 		/**
 		 * Callback when drawer is closed
 		 */
@@ -103,12 +103,12 @@ SPDX-License-Identifier: MIT
 		closeOnEscape = true,
 		class: className = '',
 		sideClass = '',
-	contentClass = '',
-	ariaLabel,
-	defaultAriaLabel = 'Drawer',
-	toggleAriaLabel = 'Toggle drawer',
-	closeAriaLabel = 'Close drawer',
-	onclose,
+		contentClass = '',
+		ariaLabel,
+		defaultAriaLabel = 'Drawer',
+		toggleAriaLabel = 'Toggle drawer',
+		closeAriaLabel = 'Close drawer',
+		onclose,
 		onopen,
 		...props
 	}: Props = $props();

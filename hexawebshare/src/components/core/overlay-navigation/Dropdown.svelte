@@ -485,18 +485,18 @@ SPDX-License-Identifier: MIT
 								onfocus={() => handleItemFocus(index)}
 								onblur={handleItemBlur}
 							>
-							{#if item.icon}
-								<span class="text-lg" aria-hidden="true">{item.icon}</span>
-							{/if}
-							<span class="flex flex-col">
-								<Text text={item.label} />
-								{#if item.description}
-									<Text text={item.description} size="xs" class="opacity-60" />
+								{#if item.icon}
+									<span class="text-lg" aria-hidden="true">{item.icon}</span>
 								{/if}
-							</span>
-					</a>
-					{:else}
-						<!-- 
+								<span class="flex flex-col">
+									<Text text={item.label} />
+									{#if item.description}
+										<Text text={item.description} size="xs" class="opacity-60" />
+									{/if}
+								</span>
+							</a>
+						{:else}
+							<!-- 
 							NOTE: Raw HTML <button> is intentional here instead of Button component.
 							TECHNICAL REASON: 
 							1. WAI-ARIA menuitem pattern requires <button role="menuitem"> for dropdown items
@@ -505,7 +505,7 @@ SPDX-License-Identifier: MIT
 							CONSEQUENCE: Using Button component would break DaisyUI dropdown CSS and menuitem ARIA pattern
 							VALIDATION: WAI-ARIA Menu pattern + DaisyUI v4.x dropdown docs
 						-->
-						<button
+							<button
 								type="button"
 								id="{dropdownId}-item-{index}"
 								class="flex w-full items-center gap-2 text-left"
@@ -518,16 +518,16 @@ SPDX-License-Identifier: MIT
 								onfocus={() => handleItemFocus(index)}
 								onblur={handleItemBlur}
 							>
-							{#if item.icon}
-								<span class="text-lg" aria-hidden="true">{item.icon}</span>
-							{/if}
-							<span class="flex flex-col">
-								<Text text={item.label} />
-								{#if item.description}
-									<Text text={item.description} size="xs" class="opacity-60" />
+								{#if item.icon}
+									<span class="text-lg" aria-hidden="true">{item.icon}</span>
 								{/if}
-							</span>
-						</button>
+								<span class="flex flex-col">
+									<Text text={item.label} />
+									{#if item.description}
+										<Text text={item.description} size="xs" class="opacity-60" />
+									{/if}
+								</span>
+							</button>
 						{/if}
 					</li>
 					{#if item.divider && index < items.length - 1}

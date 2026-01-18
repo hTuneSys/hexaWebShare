@@ -36,11 +36,9 @@ This component is internal to the Table module and should not be used directly.
 	const { text, hidden = false }: Props = $props();
 
 	// Caption classes
-	let captionClasses = $derived(
-		hidden ? 'sr-only' : 'text-base-content/70 caption-top py-2'
-	);
+	let captionClasses = $derived(hidden ? 'sr-only' : 'text-base-content/70 caption-top py-2');
 </script>
 
 <caption class={captionClasses}>
-	<Text text={text} />
+	<Text {text} />
 </caption>
