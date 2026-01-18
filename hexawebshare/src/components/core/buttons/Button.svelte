@@ -4,6 +4,8 @@ SPDX-License-Identifier: MIT
 -->
 
 <script lang="ts">
+	import type { Snippet } from 'svelte';
+
 	interface Props {
 		variant?:
 			| 'primary'
@@ -17,7 +19,8 @@ SPDX-License-Identifier: MIT
 			| 'ghost'
 			| 'link';
 		size?: 'xs' | 'sm' | 'md' | 'lg';
-		label: string;
+		label?: string;
+		children?: Snippet;
 		outline?: boolean;
 		wide?: boolean;
 		block?: boolean;
@@ -38,6 +41,7 @@ SPDX-License-Identifier: MIT
 		variant = 'primary',
 		size = 'md',
 		label,
+		children,
 		outline = false,
 		wide = false,
 		block = false,
@@ -88,6 +92,9 @@ SPDX-License-Identifier: MIT
 >
 	{#if loading}
 		<span class="loading loading-spinner"></span>
+	{:else if children}
+		{@render children()}
+	{:else if label}
+		{label}
 	{/if}
-	{label}
 </button>
