@@ -5,6 +5,7 @@ SPDX-License-Identifier: MIT
 
 <script lang="ts">
 	import type { Snippet } from 'svelte';
+	import Spinner from '../feedback/Spinner.svelte';
 
 	interface Props {
 		variant?:
@@ -18,6 +19,7 @@ SPDX-License-Identifier: MIT
 			| 'error'
 			| 'ghost'
 			| 'link';
+		title?: string;
 		size?: 'xs' | 'sm' | 'md' | 'lg';
 		circle?: boolean;
 		square?: boolean;
@@ -52,6 +54,7 @@ SPDX-License-Identifier: MIT
 
 	const {
 		variant = 'primary',
+		title,
 		size = 'md',
 		circle = false,
 		square = false,
@@ -96,9 +99,9 @@ SPDX-License-Identifier: MIT
 	);
 </script>
 
-<button type="button" class={buttonClasses} {disabled} aria-label={ariaLabel} {...props}>
+<button type="button" class={buttonClasses} {disabled} aria-label={ariaLabel} {title} {...props}>
 	{#if loading}
-		<span class="loading loading-spinner"></span>
+		<Spinner type="spinner" {size} />
 	{:else if children}
 		{@render children()}
 	{:else}

@@ -6,6 +6,10 @@ SPDX-License-Identifier: MIT
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 	import Spinner from './Spinner.svelte';
+	import Button from '../buttons/Button.svelte';
+	import IconButton from '../buttons/IconButton.svelte';
+	import Heading from '../typography/Heading.svelte';
+	import MutedText from '../typography/MutedText.svelte';
 
 	type SlotContent = Snippet | { default?: Snippet };
 	type AlertVariant =
@@ -53,8 +57,7 @@ SPDX-License-Identifier: MIT
 		 */
 		closable?: boolean;
 		/**
-		 * Accessible label for the dismiss button
-		 * @default 'Dismiss alert'
+		 * Accessible label for the dismiss button (required if closable)
 		 */
 		dismissLabel?: string;
 		/**
@@ -75,6 +78,10 @@ SPDX-License-Identifier: MIT
 		 * @default false
 		 */
 		loading?: boolean;
+		/**
+		 * Accessible label for the loading spinner
+		 */
+		loadingLabel?: string;
 		/**
 		 * Disable interactions and lower opacity
 		 * @default false
@@ -119,11 +126,12 @@ SPDX-License-Identifier: MIT
 		size = 'md',
 		open,
 		closable = false,
-		dismissLabel = 'Dismiss alert',
+		dismissLabel,
 		actionLabel,
 		actionAriaLabel,
 		withIcon = true,
 		loading = false,
+		loadingLabel,
 		disabled = false,
 		fullWidth = true,
 		ariaLive,
@@ -151,9 +159,7 @@ SPDX-License-Identifier: MIT
 	const computedAriaLive = $derived(
 		ariaLive ?? (computedRole === 'alert' ? 'assertive' : 'polite')
 	);
-	const resolvedAriaLabel = $derived(
-		ariaLabel ?? (title || description ? undefined : 'Alert message')
-	);
+	const resolvedAriaLabel = $derived(ariaLabel ?? (title || description ? undefined : ariaLabel));
 	const describedBy = $derived(description || defaultSlot ? descriptionId : undefined);
 
 	const iconSymbols: Record<AlertVariant, string> = {
@@ -253,15 +259,15 @@ SPDX-License-Identifier: MIT
 
 		<div class="flex min-w-0 flex-1 flex-col gap-1">
 			{#if title}
-				<div id={titleId} class="text-base leading-tight font-semibold">
+				<Heading level="h4" text={title} class="text-base leading-tight font-semibold" id={titleId}>
 					{title}
-				</div>
+				</Heading>
 			{/if}
 
 			{#if description}
-				<p id={descriptionId} class="text-sm leading-snug break-words opacity-80">
+				<MutedText size="sm" class="leading-snug break-words opacity-80" id={descriptionId}>
 					{description}
-				</p>
+				</MutedText>
 			{/if}
 
 			{#if defaultSlot}
@@ -279,33 +285,48 @@ SPDX-License-Identifier: MIT
 				type="spinner"
 				size="sm"
 				variant={variant === 'neutral' ? 'primary' : variant}
-				ariaLabel="Loading alert"
+				ariaLabel={loadingLabel}
 			/>
 		{/if}
 
 		{#if actionLabel}
-			<button
-				type="button"
-				class="btn btn-outline btn-sm"
+			<Button
+				variant="ghost"
+				size="sm"
+				class="btn-outline"
 				onclick={handleAction}
-				aria-label={actionAriaLabel ?? actionLabel}
+				ariaLabel={actionAriaLabel ?? actionLabel}
 				disabled={disabled || loading}
-			>
-				{actionLabel}
-			</button>
+				label={actionLabel}
+			/>
 		{/if}
 
 		{#if closable}
-			<button
-				type="button"
-				class="btn btn-square btn-ghost btn-sm"
+			<IconButton
+				variant="ghost"
+				size="sm"
+				square
 				onclick={handleClose}
-				aria-label={dismissLabel}
+				ariaLabel={dismissLabel}
 				title={dismissLabel}
 				disabled={disabled || loading}
 			>
-				<span aria-hidden="true">x</span>
-			</button>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="16"
+					height="16"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					aria-hidden="true"
+				>
+					<line x1="18" y1="6" x2="6" y2="18" />
+					<line x1="6" y1="6" x2="18" y2="18" />
+				</svg>
+			</IconButton>
 		{/if}
 	</div>
 {/if}
