@@ -5,24 +5,14 @@ SPDX-License-Identifier: MIT
 
 <script module>
 	import { defineMeta } from '@storybook/addon-svelte-csf';
-	import ToggleButtonGroupWrapper from './ToggleButtonGroupWrapper.svelte';
+	import ToggleButton from './ToggleButton.svelte';
 	import { fn } from 'storybook/test';
 
 	const { Story } = defineMeta({
 		title: 'Core/Buttons/ToggleButton',
-		component: ToggleButtonGroupWrapper,
+		component: ToggleButton,
 		tags: ['autodocs'],
 		argTypes: {
-			orientation: {
-				control: { type: 'select' },
-				options: ['horizontal', 'vertical'],
-				description: 'Orientation of button group (only for Button Group story)'
-			},
-			gap: {
-				control: { type: 'select' },
-				options: ['xs', 'sm', 'md', 'lg'],
-				description: 'Gap between buttons in group (only for Button Group story)'
-			},
 			pressed: {
 				control: 'boolean',
 				description: 'Whether the button is pressed/active'
@@ -108,7 +98,7 @@ SPDX-License-Identifier: MIT
 </script>
 
 <script lang="ts">
-	// Empty script block for snippet support in stories
+	import ButtonGroup from './ButtonGroup.svelte';
 </script>
 
 <!-- Default -->
@@ -130,18 +120,17 @@ SPDX-License-Identifier: MIT
 />
 
 <!-- Button Group -->
-<Story
-	name="Button Group"
-	args={{
-		orientation: 'horizontal',
-		gap: 'sm',
-		buttons: [
-			{ label: 'Option 1', variant: 'primary', pressed: false },
-			{ label: 'Option 2', variant: 'primary', pressed: false },
-			{ label: 'Option 3', variant: 'primary', pressed: false }
-		]
-	}}
-/>
+<Story name="Button Group">
+	{#snippet children()}
+		<ButtonGroup orientation="horizontal" gap="sm">
+			{#snippet children()}
+				<ToggleButton label="Option 1" variant="primary" pressed={false} onclick={fn()} />
+				<ToggleButton label="Option 2" variant="primary" pressed={false} onclick={fn()} />
+				<ToggleButton label="Option 3" variant="primary" pressed={false} onclick={fn()} />
+			{/snippet}
+		</ButtonGroup>
+	{/snippet}
+</Story>
 
 <!-- With Icon -->
 <Story

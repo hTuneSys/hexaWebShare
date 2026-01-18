@@ -49,6 +49,11 @@ SPDX-License-Identifier: MIT
 		 */
 		ariaLabel?: string;
 		/**
+		 * Default accessible label when ariaLabel is not provided
+		 * @default 'Accordion'
+		 */
+		defaultAriaLabel?: string;
+		/**
 		 * Callback when an item is opened
 		 */
 		onItemOpen?: (index: number) => void;
@@ -67,6 +72,7 @@ SPDX-License-Identifier: MIT
 		children,
 		class: className = '',
 		ariaLabel,
+		defaultAriaLabel = 'Accordion',
 		onItemOpen,
 		onItemClose,
 		...props
@@ -137,7 +143,7 @@ SPDX-License-Identifier: MIT
 	);
 </script>
 
-<div class={accordionClasses} role="region" aria-label={ariaLabel || 'Accordion'} {...props}>
+<div class={accordionClasses} role="region" aria-label={ariaLabel || defaultAriaLabel} {...props}>
 	{#if children}
 		{@render children()}
 	{/if}

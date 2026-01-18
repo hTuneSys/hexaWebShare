@@ -5,6 +5,7 @@ SPDX-License-Identifier: MIT
 
 <script lang="ts">
 	import type { Snippet } from 'svelte';
+	import Button from './Button.svelte';
 
 	/**
 	 * Props interface for the ToggleButton component
@@ -123,35 +124,6 @@ SPDX-License-Identifier: MIT
 		...props
 	}: Props = $props();
 
-	// Button classes with static DaisyUI classes
-	let buttonClasses = $derived(
-		[
-			'btn',
-			variant === 'primary' && 'btn-primary',
-			variant === 'secondary' && 'btn-secondary',
-			variant === 'accent' && 'btn-accent',
-			variant === 'neutral' && 'btn-neutral',
-			variant === 'info' && 'btn-info',
-			variant === 'success' && 'btn-success',
-			variant === 'warning' && 'btn-warning',
-			variant === 'error' && 'btn-error',
-			variant === 'ghost' && 'btn-ghost',
-			variant === 'link' && 'btn-link',
-			size === 'xs' && 'btn-xs',
-			size === 'sm' && 'btn-sm',
-			size === 'md' && 'btn-md',
-			size === 'lg' && 'btn-lg',
-			outline && 'btn-outline',
-			wide && 'btn-wide',
-			block && 'btn-block',
-			glass && 'glass',
-			pressed && 'btn-active',
-			className
-		]
-			.filter(Boolean)
-			.join(' ')
-	);
-
 	// Handle button click/toggle
 	function handleClick() {
 		if (disabled || loading) return;
@@ -162,22 +134,25 @@ SPDX-License-Identifier: MIT
 	}
 </script>
 
-<button
-	type="button"
-	class={buttonClasses}
+<Button
+	{variant}
+	{size}
+	{label}
+	{outline}
+	{wide}
+	{block}
+	{glass}
 	{disabled}
+	{loading}
+	ariaLabel={ariaLabel || label}
 	aria-pressed={pressed}
-	aria-label={ariaLabel || label}
+	class="{pressed ? 'btn-active' : ''} {className}"
 	onclick={handleClick}
 	{...props}
 >
-	{#if loading}
-		<span class="loading loading-spinner"></span>
-	{:else if children}
+	{#if children}
 		{@render children()}
-	{:else if label}
-		{label}
-	{:else if defaultIconPoints}
+	{:else if !label && defaultIconPoints}
 		<!-- Default icon when no children and no label provided -->
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -193,4 +168,4 @@ SPDX-License-Identifier: MIT
 			<polygon points={defaultIconPoints} />
 		</svg>
 	{/if}
-</button>
+</Button>

@@ -10,11 +10,13 @@ export { default as ToggleButton } from '../components/core/buttons/ToggleButton
 
 // Core / Data Display
 export { default as EmptyState } from '../components/core/data-display/EmptyState.svelte';
+export { default as Label } from '../components/core/data-display/Label.svelte';
 export { default as List } from '../components/core/data-display/List.svelte';
 export { default as ListItem } from '../components/core/data-display/ListItem.svelte';
 export { default as StatusBadge } from '../components/core/data-display/StatusBadge.svelte';
 export { default as StatusDot } from '../components/core/data-display/StatusDot.svelte';
-export { default as Table } from '../components/core/data-display/Table.svelte';
+export { default as Table } from '../components/core/data-display/table/Table.svelte';
+export type { TableColumn, SortDirection, SortState } from '../components/core/data-display/table/Table.svelte';
 
 // Core / Feedback
 export { default as Alert } from '../components/core/feedback/Alert.svelte';

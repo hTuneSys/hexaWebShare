@@ -4,6 +4,9 @@ SPDX-License-Identifier: MIT
 -->
 
 <script lang="ts">
+	import Spinner from '../feedback/Spinner.svelte';
+	import Text from '../typography/Text.svelte';
+
 	/**
 	 * Marker type used to render tick marks below the slider.
 	 */
@@ -101,6 +104,11 @@ SPDX-License-Identifier: MIT
 		 */
 		ariaLabel?: string;
 		/**
+		 * Accessible label for required field indicator
+		 * @default 'required'
+		 */
+		requiredLabel?: string;
+		/**
 		 * Unique identifier for the input.
 		 */
 		id?: string;
@@ -139,6 +147,7 @@ SPDX-License-Identifier: MIT
 		marks = [],
 		markCount = 5,
 		ariaLabel = 'Slider',
+		requiredLabel = 'required',
 		id,
 		name,
 		onchange,
@@ -197,10 +206,6 @@ SPDX-License-Identifier: MIT
 		oninput?.(value);
 	}
 
-	function handleChange(event: Event) {
-		onchange?.(value);
-	}
-
 	function generateDefaultMarks(minValue: number, maxValue: number, count: number): SliderMark[] {
 		if (!Number.isFinite(minValue) || !Number.isFinite(maxValue) || minValue === maxValue) {
 			return [];
@@ -229,13 +234,13 @@ SPDX-License-Identifier: MIT
 	{#if label}
 		<label for={sliderId} class="label">
 			<span class="label-text flex items-center gap-1">
-				{label}
+				<Text text={label} />
 				{#if required}
-					<span class="text-error" aria-label="required">*</span>
+					<Text text="*" variant="error" ariaLabel={requiredLabel} />
 				{/if}
 			</span>
 			{#if showValue}
-				<span class="label-text-alt text-sm font-semibold">{valueLabel}</span>
+				<Text text={valueLabel} size="sm" class="label-text-alt font-semibold" />
 			{/if}
 		</label>
 	{/if}
@@ -259,16 +264,14 @@ SPDX-License-Identifier: MIT
 			{value}
 			{disabled}
 			oninput={handleInput}
-			onchange={handleChange}
+			onchange={() => onchange?.(value)}
 			{...props}
 		/>
 		{#if showValue && !label}
-			<span class="min-w-[3rem] text-right text-sm font-semibold">{valueLabel}</span>
+			<Text text={valueLabel} size="sm" class="min-w-[3rem] text-right font-semibold" />
 		{/if}
 		{#if loading}
-			<span
-				class="loading loading-spinner loading-sm text-primary absolute top-1/2 right-0 -translate-y-1/2"
-			></span>
+			<Spinner size="sm" variant="primary" class="absolute top-1/2 right-0 -translate-y-1/2" />
 		{/if}
 	</div>
 
@@ -279,23 +282,25 @@ SPDX-License-Identifier: MIT
 					class="absolute flex -translate-x-1/2 flex-col items-center gap-1"
 					style="left: {((mark.value - min) / (max - min)) * 100}%"
 				>
+					<!-- 
+						NOTE: Raw HTML span is intentional here.
+						This is a purely decorative visual element (a vertical tick mark line).
+						It has no text content and serves only as a structural/visual separator.
+					-->
 					<span class="bg-base-content/40 h-2 w-px"></span>
-					<span>{mark.label ?? mark.value}</span>
+					<Text text={String(mark.label ?? mark.value)} size="xs" />
 				</div>
 			{/each}
 		</div>
 	{/if}
 
 	{#if error && error !== ''}
-		<span
-			id={`${sliderId}-error`}
-			class="label-text-alt text-error"
-			role="alert"
-			aria-live="polite"
-		>
-			{error}
-		</span>
+		<div id={`${sliderId}-error`} role="alert" aria-live="polite">
+			<Text text={error} size="xs" variant="error" class="label-text-alt" />
+		</div>
 	{:else if helpText && helpText !== ''}
-		<span id={`${sliderId}-help`} class="label-text-alt text-base-content/70">{helpText}</span>
+		<div id={`${sliderId}-help`}>
+			<Text text={helpText} size="xs" variant="muted" class="label-text-alt" />
+		</div>
 	{/if}
 </div>

@@ -43,15 +43,6 @@ SPDX-License-Identifier: MIT
 		 */
 		disabled?: boolean;
 		/**
-		 * Make the icon clickable
-		 * @default false
-		 */
-		clickable?: boolean;
-		/**
-		 * Callback when icon is clicked (only works if clickable is true)
-		 */
-		onclick?: () => void;
-		/**
 		 * Accessible label for screen readers
 		 */
 		ariaLabel?: string;
@@ -76,8 +67,6 @@ SPDX-License-Identifier: MIT
 		size = 'md',
 		spin = false,
 		disabled = false,
-		clickable = false,
-		onclick,
 		ariaLabel,
 		ariaHidden = false,
 		children,
@@ -85,47 +74,50 @@ SPDX-License-Identifier: MIT
 		...props
 	}: Props = $props();
 
-	// Size class mapping
+	// Size class mapping using static Tailwind classes
 	let sizeClass = $derived(
 		size === 'xs'
-			? 'icon--xs'
+			? 'w-3 h-3'
 			: size === 'sm'
-				? 'icon--sm'
+				? 'w-4 h-4'
 				: size === 'md'
-					? 'icon--md'
+					? 'w-5 h-5'
 					: size === 'lg'
-						? 'icon--lg'
-						: 'icon--xl'
+						? 'w-6 h-6'
+						: 'w-8 h-8'
 	);
 
-	// Variant class mapping
+	// Variant class mapping using static DaisyUI/Tailwind color classes
 	let variantClass = $derived(
 		variant === 'primary'
-			? 'icon--primary'
+			? 'text-primary'
 			: variant === 'secondary'
-				? 'icon--secondary'
+				? 'text-secondary'
 				: variant === 'accent'
-					? 'icon--accent'
+					? 'text-accent'
 					: variant === 'neutral'
-						? 'icon--neutral'
+						? 'text-base-content'
 						: variant === 'info'
-							? 'icon--info'
+							? 'text-info'
 							: variant === 'success'
-								? 'icon--success'
+								? 'text-success'
 								: variant === 'warning'
-									? 'icon--warning'
-									: 'icon--error'
+									? 'text-warning'
+									: 'text-error'
 	);
 
-	// Combined classes
+	// Combined classes using Tailwind utilities
 	let iconClasses = $derived(
 		[
-			'icon',
+			'inline-flex',
+			'items-center',
+			'justify-center',
+			'shrink-0',
+			'leading-none',
 			sizeClass,
 			variantClass,
-			spin && 'icon--spin',
-			disabled && 'icon--disabled',
-			clickable && !disabled && 'icon--clickable',
+			spin && 'animate-spin',
+			disabled && 'opacity-50 cursor-not-allowed pointer-events-none',
 			className
 		]
 			.filter(Boolean)
@@ -134,23 +126,6 @@ SPDX-License-Identifier: MIT
 
 	// Accessibility: Determine if icon is decorative or semantic
 	let isDecorative = $derived(ariaHidden || !ariaLabel);
-
-	// Handle click event
-	function handleClick() {
-		if (clickable && !disabled && onclick) {
-			onclick();
-		}
-	}
-
-	// Handle keyboard navigation
-	function handleKeyDown(event: KeyboardEvent) {
-		if (disabled) return;
-
-		if (clickable && (event.key === 'Enter' || event.key === ' ')) {
-			event.preventDefault();
-			if (onclick) onclick();
-		}
-	}
 </script>
 
 <span
@@ -158,11 +133,8 @@ SPDX-License-Identifier: MIT
 	aria-label={ariaLabel}
 	aria-hidden={isDecorative}
 	aria-disabled={disabled}
-	role={clickable ? 'button' : isDecorative ? undefined : 'img'}
-	tabindex={clickable && !disabled ? 0 : undefined}
+	role={isDecorative ? undefined : 'img'}
 	data-icon={name}
-	onclick={handleClick}
-	onkeydown={handleKeyDown}
 	{...props}
 >
 	{#if children}
@@ -173,7 +145,7 @@ SPDX-License-Identifier: MIT
 			xmlns="http://www.w3.org/2000/svg"
 			viewBox="0 0 24 24"
 			fill="currentColor"
-			class="icon__svg"
+			class="block h-full w-full"
 		>
 			<path
 				d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
@@ -181,107 +153,3 @@ SPDX-License-Identifier: MIT
 		</svg>
 	{/if}
 </span>
-
-<style>
-	/* Base icon styles */
-	.icon {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		flex-shrink: 0;
-		line-height: 1;
-	}
-
-	/* SVG inside icon */
-	.icon :global(svg),
-	.icon__svg {
-		width: 100%;
-		height: 100%;
-		display: block;
-	}
-
-	/* Size variants */
-	.icon--xs {
-		width: 12px;
-		height: 12px;
-	}
-	.icon--sm {
-		width: 16px;
-		height: 16px;
-	}
-	.icon--md {
-		width: 20px;
-		height: 20px;
-	}
-	.icon--lg {
-		width: 24px;
-		height: 24px;
-	}
-	.icon--xl {
-		width: 32px;
-		height: 32px;
-	}
-
-	/* Color variants using DaisyUI CSS variables */
-	.icon--primary {
-		color: var(--color-primary, #570df8);
-	}
-	.icon--secondary {
-		color: var(--color-secondary, #f000b8);
-	}
-	.icon--accent {
-		color: var(--color-accent, #37cdbe);
-	}
-	.icon--neutral {
-		color: var(--color-base-content, #1f2937);
-	}
-	.icon--info {
-		color: var(--color-info, #3abff8);
-	}
-	.icon--success {
-		color: var(--color-success, #36d399);
-	}
-	.icon--warning {
-		color: var(--color-warning, #fbbd23);
-	}
-	.icon--error {
-		color: var(--color-error, #f87272);
-	}
-
-	/* Spin animation */
-	@keyframes icon-spin {
-		from {
-			transform: rotate(0deg);
-		}
-		to {
-			transform: rotate(360deg);
-		}
-	}
-
-	.icon--spin {
-		animation: icon-spin 1s linear infinite;
-	}
-
-	/* Disabled state */
-	.icon--disabled {
-		opacity: 0.5;
-		cursor: not-allowed;
-		pointer-events: none;
-	}
-
-	/* Clickable state */
-	.icon--clickable {
-		cursor: pointer;
-		transition: opacity 0.2s ease;
-	}
-
-	.icon--clickable:hover {
-		opacity: 0.7;
-	}
-
-	.icon--clickable:focus {
-		outline: 2px solid currentColor;
-		outline-offset: 2px;
-		border-radius: 2px;
-	}
-</style>

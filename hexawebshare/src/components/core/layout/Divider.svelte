@@ -5,6 +5,7 @@ SPDX-License-Identifier: MIT
 
 <script lang="ts">
 	import type { Snippet } from 'svelte';
+	import Text from '../typography/Text.svelte';
 
 	/**
 	 * Color variant for the divider
@@ -119,7 +120,7 @@ SPDX-License-Identifier: MIT
 >
 	{#if hasContent}
 		{#if label}
-			<span class="text-sm font-medium">{label}</span>
+			<Text text={label} size="sm" weight="medium" />
 		{:else if children}
 			{@render children()}
 		{/if}

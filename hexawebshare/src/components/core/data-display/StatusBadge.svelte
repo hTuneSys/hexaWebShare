@@ -4,6 +4,8 @@ SPDX-License-Identifier: MIT
 -->
 
 <script lang="ts">
+	import Spinner from '../feedback/Spinner.svelte';
+
 	/**
 	 * Props interface for the StatusBadge component
 	 */
@@ -125,7 +127,7 @@ SPDX-License-Identifier: MIT
 	{...props}
 >
 	{#if loading}
-		<span class="loading loading-spinner {spinnerSizeClass} mr-1" aria-hidden="true"></span>
+		<Spinner size={spinnerSizeClass === 'loading-xs' ? 'xs' : 'sm'} class="mr-1" />
 	{/if}
 	{label}
 </span>

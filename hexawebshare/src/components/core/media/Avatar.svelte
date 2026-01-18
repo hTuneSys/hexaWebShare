@@ -4,6 +4,8 @@ SPDX-License-Identifier: MIT
 -->
 
 <script lang="ts">
+	import Text from '../typography/Text.svelte';
+
 	interface Props {
 		/**
 		 * Image source URL
@@ -36,6 +38,11 @@ SPDX-License-Identifier: MIT
 		 */
 		placeholder?: string;
 		/**
+		 * Fallback character when no image, placeholder, or alt text is available
+		 * @default '?'
+		 */
+		fallbackChar?: string;
+		/**
 		 * ARIA label for screen readers
 		 * @default undefined (uses alt text)
 		 */
@@ -64,6 +71,7 @@ SPDX-License-Identifier: MIT
 		shape = 'circle',
 		status = null,
 		placeholder,
+		fallbackChar = '?',
 		ariaLabel,
 		ariaHidden = false,
 		loading = false,
@@ -124,18 +132,18 @@ SPDX-License-Identifier: MIT
 			.join(' ')
 	);
 
-	// Placeholder content wrapper classes
-	let placeholderContentClasses = $derived(
-		[
-			size === 'xs' && 'text-xs',
-			size === 'sm' && 'text-sm',
-			size === 'md' && 'text-xl',
-			size === 'lg' && 'text-3xl',
-			size === 'xl' && 'text-4xl'
-		]
-			.filter(Boolean)
-			.join(' ')
-	);
+	// Placeholder text size mapping
+	let placeholderSize = $derived(
+		size === 'xs'
+			? 'xs'
+			: size === 'sm'
+				? 'sm'
+				: size === 'md'
+					? 'xl'
+					: size === 'lg'
+						? '2xl'
+						: '2xl' // xl avatar
+	) as 'xs' | 'sm' | 'base' | 'lg' | 'xl' | '2xl';
 </script>
 
 <div
@@ -160,14 +168,15 @@ SPDX-License-Identifier: MIT
 			/>
 		{:else if !loading}
 			{#if placeholder}
-				<span class={placeholderContentClasses}>{placeholder}</span>
+				<Text size={placeholderSize}>{placeholder}</Text>
 			{:else}
 				<!-- Fallback: Show first letter of alt text -->
-				<span
-					class="bg-base-300 text-base-content flex h-full w-full items-center justify-center {placeholderContentClasses}"
+				<Text
+					size={placeholderSize}
+					class="bg-base-300 text-base-content flex h-full w-full items-center justify-center"
 				>
-					{alt.charAt(0).toUpperCase() || '?'}
-				</span>
+					{alt.charAt(0).toUpperCase() || fallbackChar}
+				</Text>
 			{/if}
 		{/if}
 	</div>

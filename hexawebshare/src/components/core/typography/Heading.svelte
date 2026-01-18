@@ -126,6 +126,10 @@ SPDX-License-Identifier: MIT
 		 */
 		class?: string;
 		/**
+		 * HTML id attribute
+		 */
+		id?: string;
+		/**
 		 * Click event handler
 		 */
 		onclick?: (event: MouseEvent) => void;
@@ -154,6 +158,7 @@ SPDX-License-Identifier: MIT
 		ariaLevel,
 		id,
 		class: className = '',
+		id,
 		onclick,
 		...props
 	}: Props = $props();

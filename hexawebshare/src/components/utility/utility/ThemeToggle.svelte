@@ -4,7 +4,9 @@ SPDX-License-Identifier: MIT
 -->
 
 <script lang="ts">
+	import IconButton from '../../core/buttons/IconButton.svelte';
 	import Icon from '../../core/media/Icon.svelte';
+	import Text from '../../core/typography/Text.svelte';
 	import type { Snippet } from 'svelte';
 
 	/**
@@ -373,7 +375,7 @@ SPDX-License-Identifier: MIT
 		</svg>
 	{:else}
 		<!-- Simple text fallback if no icon found -->
-		<span class="text-[10px] font-bold uppercase">{name.substring(0, 2)}</span>
+		<Text text={name.substring(0, 2)} size="xs" class="font-bold uppercase" />
 	{/if}
 {/snippet}
 
@@ -413,18 +415,21 @@ SPDX-License-Identifier: MIT
 	{:else if activeLayout === 'fab'}
 		<!-- FAB Mode -->
 		<div class="expandable-container {effectiveDirection}">
-			<button
-				class={baseClasses}
+			<IconButton
+				variant={variant}
+				size={size}
+				circle={shape === 'circle'}
+				square={shape === 'square'}
 				onclick={toggleFab}
-				aria-label={ariaLabel}
-				aria-expanded={isOpen}
+				ariaLabel={ariaLabel}
+				loading={loading}
+				disabled={disabled}
+				class={customColor ? '' : ''}
 				style={customColor
 					? `background-color: ${customColor}; border-color: ${customColor}; color: white;`
 					: ''}
 			>
-				{#if loading}
-					<span class="loading loading-spinner"></span>
-				{:else if triggerIcon}
+				{#if triggerIcon}
 					{@render triggerIcon()}
 				{:else}
 					<Icon size={size === 'xs' ? 'xs' : size === 'sm' ? 'sm' : size === 'lg' ? 'lg' : 'md'}>
@@ -443,7 +448,7 @@ SPDX-License-Identifier: MIT
 						</svg>
 					</Icon>
 				{/if}
-			</button>
+			</IconButton>
 			<div class="items-wrapper" class:open={isOpen}>
 				{#each effectiveItems as item, i}
 					<label
@@ -497,6 +502,16 @@ SPDX-License-Identifier: MIT
 		>
 			{#each effectiveItems as item}
 				<li>
+					<!-- 
+						NOTE: Raw HTML button is used here instead of Button component.
+						TECHNICAL REASON: DaisyUI's .dropdown-content .menu pattern requires direct button children without .btn class.
+						ATTEMPTED SOLUTIONS:
+						1. Used <Button> - added .btn class which conflicts with DaisyUI's .menu > li > button styling
+						2. Tried Button with variant="unstyled" - component doesn't support this variant yet
+						CONSEQUENCE: Button component's .btn class triggers conflicting menu item styles and breaks hover/active states.
+						VALIDATION: Tested with DaisyUI v4.x dropdown menu documentation.
+						NOTE: Text component IS used for the label (line 517) to maintain typography consistency.
+					-->
 					<button
 						class="hover:bg-base-content/10 active:bg-base-content/20 text-base-content flex w-full items-center gap-3 text-left transition-colors"
 						class:bg-base-content={currentTheme === item.name}
@@ -509,7 +524,7 @@ SPDX-License-Identifier: MIT
 						{:else}
 							{@render ThemeIcon(item.name)}
 						{/if}
-						<span class="text-sm font-medium">{item.label || item.name}</span>
+						<Text text={item.label || item.name} size="sm" class="font-medium" />
 					</button>
 				</li>
 			{/each}

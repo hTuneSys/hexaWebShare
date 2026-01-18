@@ -4,6 +4,11 @@ SPDX-License-Identifier: MIT
 -->
 
 <script lang="ts">
+	import IconButton from '../buttons/IconButton.svelte';
+	import Label from '../data-display/Label.svelte';
+	import Spinner from '../feedback/Spinner.svelte';
+	import Text from '../typography/Text.svelte';
+
 	/**
 	 * Props interface for the NumberInput component
 	 */
@@ -122,6 +127,26 @@ SPDX-License-Identifier: MIT
 		 * Additional CSS classes
 		 */
 		class?: string;
+		/**
+		 * Accessible label for decrease button
+		 * @default 'Decrease value'
+		 */
+		decreaseLabel?: string;
+		/**
+		 * Accessible label for increase button
+		 * @default 'Increase value'
+		 */
+		increaseLabel?: string;
+		/**
+		 * Accessible label for loading state
+		 * @default 'Loading'
+		 */
+		loadingLabel?: string;
+		/**
+		 * Accessible label for required indicator
+		 * @default 'required'
+		 */
+		requiredLabel?: string;
 	}
 
 	let {
@@ -146,6 +171,10 @@ SPDX-License-Identifier: MIT
 		showStepper = true,
 		allowDecimals = false,
 		decimalPlaces = 2,
+		decreaseLabel = 'Decrease value',
+		increaseLabel = 'Increase value',
+		loadingLabel = 'Loading',
+		requiredLabel = 'required',
 		onchange,
 		oninput,
 		onblur,
@@ -155,7 +184,7 @@ SPDX-License-Identifier: MIT
 	}: Props = $props();
 
 	// Generate unique ID if not provided
-	let fieldId = $derived(id || `number-input-${Math.random().toString(36).substr(2, 9)}`);
+	let fieldId = $derived(id || `number-input-${Math.random().toString(36).substring(2, 11)}`);
 	let labelForId = $derived(label ? fieldId : undefined);
 
 	// Check if value is at min/max bounds
@@ -200,38 +229,8 @@ SPDX-License-Identifier: MIT
 			.join(' ')
 	);
 
-	// Button classes based on size
-	let buttonClasses = $derived(
-		[
-			'btn',
-			'btn-square',
-			variant === 'primary' && 'btn-primary',
-			variant === 'secondary' && 'btn-secondary',
-			variant === 'accent' && 'btn-accent',
-			variant === 'info' && 'btn-info',
-			variant === 'success' && 'btn-success',
-			variant === 'warning' && 'btn-warning',
-			variant === 'error' && 'btn-error',
-			!variant && 'btn-ghost',
-			size === 'xs' && 'btn-xs',
-			size === 'sm' && 'btn-sm',
-			size === 'md' && 'btn-md',
-			size === 'lg' && 'btn-lg'
-		]
-			.filter(Boolean)
-			.join(' ')
-	);
-
-	// Loading spinner size classes
-	let loadingSizeClass = $derived(
-		size === 'xs'
-			? 'loading-xs'
-			: size === 'sm'
-				? 'loading-sm'
-				: size === 'lg'
-					? 'loading-lg'
-					: 'loading-md'
-	);
+	// Loading spinner size
+	let spinnerSize = $derived(size);
 
 	/**
 	 * Clamp value within min/max bounds
@@ -322,25 +321,18 @@ SPDX-License-Identifier: MIT
 
 <div class="form-control w-full">
 	{#if label}
-		<label for={labelForId} class={labelClasses}>
-			<span class="label-text">
-				{label}
-				{#if required}
-					<span class="text-error ml-1" aria-label="required">*</span>
-				{/if}
-			</span>
-		</label>
+		<Label text={label} for={labelForId} {required} {size} requiredAriaLabel={requiredLabel} />
 	{/if}
 
 	<div class="relative flex items-center gap-1">
 		{#if showStepper}
-			<button
-				type="button"
-				class={buttonClasses}
+			<IconButton
+				variant="ghost"
+				{size}
+				square
 				onclick={decrement}
 				disabled={disabled || readonly || loading || isAtMin}
-				aria-label="Decrease value"
-				tabindex={-1}
+				ariaLabel={decreaseLabel}
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -352,7 +344,7 @@ SPDX-License-Identifier: MIT
 				>
 					<path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4" />
 				</svg>
-			</button>
+			</IconButton>
 		{/if}
 
 		<div class="relative flex-1">
@@ -386,21 +378,24 @@ SPDX-License-Identifier: MIT
 				{...props}
 			/>
 			{#if loading}
-				<div class="absolute top-1/2 right-3 -translate-y-1/2" role="status" aria-label="Loading">
-					<span class="loading loading-spinner {loadingSizeClass} text-primary" aria-hidden="true"
-					></span>
+				<div
+					class="absolute top-1/2 right-3 -translate-y-1/2"
+					role="status"
+					aria-label={loadingLabel}
+				>
+					<Spinner size={spinnerSize} variant="primary" ariaLabel={loadingLabel} />
 				</div>
 			{/if}
 		</div>
 
 		{#if showStepper}
-			<button
-				type="button"
-				class={buttonClasses}
+			<IconButton
+				variant="ghost"
+				{size}
+				square
 				onclick={increment}
 				disabled={disabled || readonly || loading || isAtMax}
-				aria-label="Increase value"
-				tabindex={-1}
+				ariaLabel={increaseLabel}
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -412,33 +407,21 @@ SPDX-License-Identifier: MIT
 				>
 					<path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
 				</svg>
-			</button>
+			</IconButton>
 		{/if}
 	</div>
 
 	{#if error && error !== ''}
 		<div class={labelClasses}>
-			<span class="label-text-alt text-error" role="alert" aria-live="polite">{error}</span>
+			<div role="alert" aria-live="polite">
+				<Text text={error} size="xs" variant="error" class="label-text-alt" />
+			</div>
 		</div>
 	{/if}
 
 	{#if helpText && (!error || error === '')}
 		<div class={labelClasses}>
-			<span class="label-text-alt text-base-content/70">{helpText}</span>
+			<Text text={helpText} size="xs" variant="muted" class="label-text-alt" />
 		</div>
 	{/if}
 </div>
-
-<style>
-	/* Hide native number input spinners */
-	input[type='number']::-webkit-inner-spin-button,
-	input[type='number']::-webkit-outer-spin-button {
-		-webkit-appearance: none;
-		margin: 0;
-	}
-
-	input[type='number'] {
-		-moz-appearance: textfield;
-		appearance: textfield;
-	}
-</style>

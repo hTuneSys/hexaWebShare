@@ -4,6 +4,10 @@ SPDX-License-Identifier: MIT
 -->
 
 <script lang="ts">
+	import Label from '../data-display/Label.svelte';
+	import Text from '../typography/Text.svelte';
+	import DatePicker from './DatePicker.svelte';
+
 	/**
 	 * Props interface for the DateRangePicker component
 	 */
@@ -91,6 +95,11 @@ SPDX-License-Identifier: MIT
 		 */
 		ariaDescribedby?: string;
 		/**
+		 * Accessible label for required field indicator
+		 * @default 'required'
+		 */
+		requiredLabel?: string;
+		/**
 		 * Change event handler for start date
 		 */
 		onStartDateChange?: (event: Event) => void;
@@ -130,6 +139,7 @@ SPDX-License-Identifier: MIT
 		name,
 		ariaLabel,
 		ariaDescribedby,
+		requiredLabel = 'required',
 		onStartDateChange,
 		onEndDateChange,
 		onStartDateInput,
@@ -139,36 +149,11 @@ SPDX-License-Identifier: MIT
 	}: Props = $props();
 
 	// Generate unique IDs if not provided
-	let baseId = $derived(id || `daterangepicker-${Math.random().toString(36).substr(2, 9)}`);
+	let baseId = $derived(id || `daterangepicker-${Math.random().toString(36).substring(2, 11)}`);
 	let startDateId = $derived(`${baseId}-start`);
 	let endDateId = $derived(`${baseId}-end`);
-	let labelForStartId = $derived(startDateId);
-	let labelForEndId = $derived(endDateId);
 
-	// Input classes for both date inputs
-	let inputClasses = $derived(
-		[
-			'input',
-			'input-bordered',
-			variant === 'primary' && 'input-primary',
-			variant === 'secondary' && 'input-secondary',
-			variant === 'accent' && 'input-accent',
-			variant === 'neutral' && 'input-neutral',
-			variant === 'info' && 'input-info',
-			variant === 'success' && 'input-success',
-			variant === 'warning' && 'input-warning',
-			variant === 'error' && 'input-error',
-			size === 'xs' && 'input-xs',
-			size === 'sm' && 'input-sm',
-			size === 'md' && 'input-md',
-			size === 'lg' && 'input-lg',
-			className
-		]
-			.filter(Boolean)
-			.join(' ')
-	);
-
-	// Label classes
+	// Label classes for error/help text containers
 	let labelClasses = $derived(
 		[
 			'label',
@@ -215,42 +200,26 @@ SPDX-License-Identifier: MIT
 
 <div class="form-control w-full">
 	{#if label}
-		<label class={labelClasses}>
-			<span class="label-text">
-				{label}
-				{#if required}
-					<span class="text-error ml-1" aria-label="required">*</span>
-				{/if}
-			</span>
-		</label>
+		<Label text={label} {required} {size} requiredAriaLabel={requiredLabel} />
 	{/if}
 
 	<div class="flex flex-col gap-4 sm:flex-row">
 		<!-- Start Date Input -->
-		<div class="form-control flex-1">
-			<label for={labelForStartId} class={labelClasses}>
-				<span class="label-text">
-					{startLabel}
-					{#if required && !label}
-						<span class="text-error ml-1" aria-label="required">*</span>
-					{/if}
-				</span>
-			</label>
-
-			<input
-				type="date"
+		<div class="flex-1">
+			<DatePicker
 				id={startDateId}
 				name={name ? `${name}-start` : undefined}
-				class={inputClasses}
+				label={startLabel}
 				value={startDate}
 				{min}
 				{max}
+				{variant}
+				{size}
 				{disabled}
-				{required}
-				aria-label={ariaLabel || `${startLabel} date picker`}
-				aria-describedby={ariaDescribedby}
-				aria-invalid={error ? 'true' : 'false'}
-				aria-required={required ? 'true' : 'false'}
+				required={required && !label}
+				ariaLabel={ariaLabel || `${startLabel} date picker`}
+				{ariaDescribedby}
+				requiredLabel={requiredLabel}
 				onchange={handleStartDateChange}
 				oninput={handleStartDateInput}
 				{...props}
@@ -258,30 +227,21 @@ SPDX-License-Identifier: MIT
 		</div>
 
 		<!-- End Date Input -->
-		<div class="form-control flex-1">
-			<label for={labelForEndId} class={labelClasses}>
-				<span class="label-text">
-					{endLabel}
-					{#if required && !label}
-						<span class="text-error ml-1" aria-label="required">*</span>
-					{/if}
-				</span>
-			</label>
-
-			<input
-				type="date"
+		<div class="flex-1">
+			<DatePicker
 				id={endDateId}
 				name={name ? `${name}-end` : undefined}
-				class={inputClasses}
+				label={endLabel}
 				value={endDate}
 				min={endDateMin}
 				{max}
+				{variant}
+				{size}
 				{disabled}
-				{required}
-				aria-label={ariaLabel || `${endLabel} date picker`}
-				aria-describedby={ariaDescribedby}
-				aria-invalid={error ? 'true' : 'false'}
-				aria-required={required ? 'true' : 'false'}
+				required={required && !label}
+				ariaLabel={ariaLabel || `${endLabel} date picker`}
+				{ariaDescribedby}
+				requiredLabel={requiredLabel}
 				onchange={handleEndDateChange}
 				oninput={handleEndDateInput}
 				{...props}
@@ -290,14 +250,22 @@ SPDX-License-Identifier: MIT
 	</div>
 
 	{#if error && error !== ''}
-		<div class={labelClasses}>
-			<span class="label-text-alt text-error" role="alert" aria-live="polite">{error}</span>
+		<!-- 
+			NOTE: Raw HTML div element used for structural layout wrapper.
+			Contains error message displayed with Text component.
+		-->
+		<div class={labelClasses} role="alert" aria-live="polite">
+			<Text text={error} size="xs" variant="error" class="label-text-alt" />
 		</div>
 	{/if}
 
 	{#if helpText && (!error || error === '')}
+		<!-- 
+			NOTE: Raw HTML div element used for structural layout wrapper.
+			Contains help text displayed with Text component.
+		-->
 		<div class={labelClasses}>
-			<span class="label-text-alt text-base-content/70">{helpText}</span>
+			<Text text={helpText} size="xs" variant="muted" class="label-text-alt" />
 		</div>
 	{/if}
 </div>

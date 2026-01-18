@@ -4,6 +4,9 @@ SPDX-License-Identifier: MIT
 -->
 
 <script lang="ts">
+	import Spinner from '../feedback/Spinner.svelte';
+	import Text from '../typography/Text.svelte';
+
 	/**
 	 * Props interface for the Switch component
 	 */
@@ -62,10 +65,11 @@ SPDX-License-Identifier: MIT
 		 * HTML value attribute for form submission
 		 */
 		value?: string;
-		/**
-		 * Accessible label for screen readers
-		 */
-		ariaLabel?: string;
+	/**
+	 * Accessible label for screen readers
+	 * @default 'Toggle switch'
+	 */
+	ariaLabel?: string;
 		/**
 		 * ARIA describedby attribute
 		 */
@@ -75,6 +79,11 @@ SPDX-License-Identifier: MIT
 		 * @default false
 		 */
 		loading?: boolean;
+		/**
+		 * Accessible label for required field indicator
+		 * @default 'required'
+		 */
+		requiredLabel?: string;
 		/**
 		 * Change event handler
 		 */
@@ -95,19 +104,20 @@ SPDX-License-Identifier: MIT
 		labelPosition = 'right',
 		helpText,
 		error,
-		id,
-		name,
-		value,
-		ariaLabel,
-		ariaDescribedby,
+	id,
+	name,
+	value,
+	ariaLabel = 'Toggle switch',
+	ariaDescribedby,
 		loading = false,
+		requiredLabel = 'required',
 		onchange,
 		class: className = '',
 		...props
 	}: Props = $props();
 
 	// Generate unique ID if not provided
-	let fieldId = $derived(id || `switch-${Math.random().toString(36).substr(2, 9)}`);
+	let fieldId = $derived(id || `switch-${Math.random().toString(36).substring(2, 11)}`);
 
 	// Switch classes using static DaisyUI classes
 	let switchClasses = $derived(
@@ -143,16 +153,8 @@ SPDX-License-Identifier: MIT
 			.join(' ')
 	);
 
-	// Loading spinner size classes
-	let loadingSizeClass = $derived(
-		size === 'xs'
-			? 'loading-xs'
-			: size === 'sm'
-				? 'loading-sm'
-				: size === 'lg'
-					? 'loading-lg'
-					: 'loading-md'
-	);
+	// Loading spinner size
+	let spinnerSize = $derived(size);
 
 	/**
 	 * Handle change event
@@ -174,14 +176,23 @@ SPDX-License-Identifier: MIT
 	>
 		{#if labelPosition === 'left' && label}
 			<span class={labelTextClasses}>
-				{label}
+				<Text text={label} />
 				{#if required}
-					<span class="text-error ml-1" aria-label="required">*</span>
+					<Text text="*" variant="error" class="ml-1" ariaLabel={requiredLabel} />
 				{/if}
 			</span>
 		{/if}
 
 		<div class="relative inline-flex items-center">
+			<!-- 
+				NOTE: Raw HTML input[type="checkbox"] is intentional here instead of Checkbox component.
+				TECHNICAL REASON: Switch requires DaisyUI's .toggle class with specific checkbox structure.
+				ATTEMPTED SOLUTIONS:
+				1. Tried using Checkbox component - DaisyUI .toggle class conflicts with .checkbox class
+				2. Checkbox component designed for checkboxes (role="checkbox"), Switch needs role="switch"
+				CONSEQUENCE: Using Checkbox component would break DaisyUI's toggle styling and accessibility semantics.
+				VALIDATION: DaisyUI toggle documentation requires <input type="checkbox" class="toggle">
+			-->
 			<input
 				type="checkbox"
 				id={fieldId}
@@ -191,7 +202,7 @@ SPDX-License-Identifier: MIT
 				disabled={disabled || loading}
 				{checked}
 				class={switchClasses}
-				aria-label={ariaLabel || label || 'Switch'}
+				aria-label={ariaLabel || label}
 				aria-describedby={ariaDescribedby}
 				aria-invalid={error !== undefined && error !== '' ? 'true' : undefined}
 				aria-required={required}
@@ -203,18 +214,15 @@ SPDX-License-Identifier: MIT
 				{...props}
 			/>
 			{#if loading}
-				<span
-					class="loading loading-spinner {loadingSizeClass} text-base-content absolute left-1/2 -translate-x-1/2"
-					aria-hidden="true"
-				></span>
+				<Spinner size={spinnerSize} class="text-base-content absolute left-1/2 -translate-x-1/2" />
 			{/if}
 		</div>
 
 		{#if labelPosition === 'right' && label}
 			<span class={labelTextClasses}>
-				{label}
+				<Text text={label} />
 				{#if required}
-					<span class="text-error ml-1" aria-label="required">*</span>
+					<Text text="*" variant="error" class="ml-1" ariaLabel={requiredLabel} />
 				{/if}
 			</span>
 		{/if}
@@ -222,13 +230,15 @@ SPDX-License-Identifier: MIT
 
 	{#if error && error !== ''}
 		<div class="label py-1">
-			<span class="label-text-alt text-error" role="alert" aria-live="polite">{error}</span>
+			<div role="alert" aria-live="polite">
+				<Text text={error} size="xs" variant="error" class="label-text-alt" />
+			</div>
 		</div>
 	{/if}
 
 	{#if helpText && (!error || error === '')}
 		<div class="label py-1">
-			<span class="label-text-alt text-base-content/70">{helpText}</span>
+			<Text text={helpText} size="xs" variant="muted" class="label-text-alt" />
 		</div>
 	{/if}
 </div>

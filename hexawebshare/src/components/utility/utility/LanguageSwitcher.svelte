@@ -90,9 +90,15 @@ SPDX-License-Identifier: MIT
 		 */
 		customLabel?: string;
 		/**
-		 * Accessible label for the language switcher
+		 * Default label when no language is selected
+		 * @default 'Select Language'
 		 */
-		ariaLabel?: string;
+		defaultLabel?: string;
+	/**
+	 * Accessible label for the language switcher
+	 * @default 'Language switcher'
+	 */
+	ariaLabel?: string;
 		/**
 		 * Callback when selected language changes
 		 */
@@ -114,10 +120,11 @@ SPDX-License-Identifier: MIT
 		disabled = false,
 		loading = false,
 		showCode = false,
-		showFlag = true,
-		customLabel,
-		ariaLabel,
-		onChange,
+	showFlag = true,
+	customLabel,
+	defaultLabel = 'Select Language',
+	ariaLabel = 'Language switcher',
+	onChange,
 		class: className = '',
 		...props
 	}: Props = $props();
@@ -165,7 +172,7 @@ SPDX-License-Identifier: MIT
 	// Generate trigger label
 	let triggerLabel = $derived.by(() => {
 		if (customLabel) return customLabel;
-		if (!selectedLanguage) return 'Select Language';
+		if (!selectedLanguage) return defaultLabel;
 
 		let label = '';
 		if (showFlag && selectedLanguage.flag) {
@@ -189,11 +196,6 @@ SPDX-License-Identifier: MIT
 		}
 		onChange?.(languageCode, language);
 	}
-
-	// Handle open change (for accessibility)
-	function handleOpenChange(open: boolean) {
-		// Can be extended for analytics or other purposes
-	}
 </script>
 
 <Dropdown
@@ -205,10 +207,9 @@ SPDX-License-Identifier: MIT
 	{size}
 	{disabled}
 	{loading}
-	ariaLabel={ariaLabel || 'Language switcher'}
+	{ariaLabel}
 	closeOnSelect={true}
 	onItemClick={handleItemClick}
-	onOpenChange={handleOpenChange}
 	class={className}
 	{...props}
 />

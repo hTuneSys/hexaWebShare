@@ -125,6 +125,10 @@ opacity-50 cursor-not-allowed
 		 */
 		class?: string;
 		/**
+		 * HTML id attribute
+		 */
+		id?: string;
+		/**
 		 * Children snippet for complex content
 		 */
 		children?: Snippet;
@@ -150,6 +154,7 @@ opacity-50 cursor-not-allowed
 		ariaHidden = false,
 		id,
 		class: className = '',
+		id,
 		children,
 		...props
 	}: Props = $props();

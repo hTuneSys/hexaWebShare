@@ -6,6 +6,9 @@ SPDX-License-Identifier: MIT
 <script lang="ts">
 	import { onDestroy } from 'svelte';
 	import type { Snippet } from 'svelte';
+	import IconButton from '../../core/buttons/IconButton.svelte';
+	import Label from '../../core/data-display/Label.svelte';
+	import Text from '../../core/typography/Text.svelte';
 
 	/**
 	 * Props interface for the GlobalSearchBar component
@@ -108,10 +111,36 @@ SPDX-License-Identifier: MIT
 		 * Maximum length of input value
 		 */
 		maxlength?: number;
+	/**
+	 * Accessible label for screen readers
+	 * @default 'Global search'
+	 */
+	ariaLabel?: string;
+	/**
+	 * ARIA label for search results list
+	 * @default 'Search results'
+	 */
+	searchResultsAriaLabel?: string;
+	/**
+	 * Aria label for the loading spinner
+	 * @default 'Searching'
+	 */
+	searchingAriaLabel?: string;
 		/**
-		 * Accessible label for screen readers
+		 * Aria label for the clear button
+		 * @default 'Clear search'
 		 */
-		ariaLabel?: string;
+		clearAriaLabel?: string;
+		/**
+		 * Label text for no results state
+		 * @default 'No results found'
+		 */
+		noResultsLabel?: string;
+		/**
+		 * Description text for no results state
+		 * @default 'Try a different search term'
+		 */
+		noResultsDescription?: string;
 		/**
 		 * Search event handler (triggered on Enter or search button click)
 		 */
@@ -167,8 +196,13 @@ SPDX-License-Identifier: MIT
 		helpText,
 		id,
 		name,
-		maxlength,
-		ariaLabel,
+	maxlength,
+	ariaLabel = 'Global search',
+	searchResultsAriaLabel = 'Search results',
+	searchingAriaLabel = 'Searching',
+	clearAriaLabel = 'Clear search',
+		noResultsLabel = 'No results found',
+		noResultsDescription = 'Try a different search term',
 		onsearch,
 		onclear,
 		oninput,
@@ -433,7 +467,11 @@ SPDX-License-Identifier: MIT
 		if (!enableKeyboardShortcut || disabled) return;
 
 		function handleKeyboardShortcut(event: KeyboardEvent) {
-			const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+			// Use modern API with fallback for broader browser support
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			const isMac =
+				((navigator as any).userAgentData?.platform === 'macOS') ||
+				/Mac|iPhone|iPad|iPod/.test(navigator.userAgent);
 			const modifierKey = isMac ? event.metaKey : event.ctrlKey;
 
 			if (modifierKey && event.key.toLowerCase() === shortcutKey.toLowerCase()) {
@@ -461,9 +499,7 @@ SPDX-License-Identifier: MIT
 
 <div class="form-control w-full {className}" bind:this={searchContainer}>
 	{#if label}
-		<label for={labelForId} class={labelClasses}>
-			<span class="label-text">{label}</span>
-		</label>
+		<Label text={label} for={labelForId} {size} />
 	{/if}
 
 	<div class="relative">
@@ -499,7 +535,7 @@ SPDX-License-Identifier: MIT
 			{disabled}
 			{maxlength}
 			class={inputClasses}
-			aria-label={ariaLabel || label || 'Global search'}
+			aria-label={ariaLabel || label}
 			aria-invalid={error !== undefined && error !== '' ? 'true' : undefined}
 			aria-disabled={disabled}
 			aria-busy={loading}
@@ -520,15 +556,17 @@ SPDX-License-Identifier: MIT
 				<span
 					class="loading loading-spinner {loadingSizeClass} text-base-content/50"
 					role="status"
-					aria-label="Searching"
+					aria-label={searchingAriaLabel}
 				></span>
 			{:else if showClearButton && value}
-				<button
-					type="button"
-					class="btn btn-circle btn-ghost {clearButtonSizeClass} h-auto min-h-0 p-0.5"
+				<IconButton
+					variant="ghost"
+					circle
+					size={size}
 					onclick={handleClear}
-					{disabled}
-					aria-label="Clear search"
+					disabled={disabled}
+					ariaLabel={clearAriaLabel}
+					class="h-auto min-h-0 p-0.5"
 				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -540,26 +578,26 @@ SPDX-License-Identifier: MIT
 					>
 						<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
 					</svg>
-				</button>
+				</IconButton>
 			{/if}
 		</div>
 
 		<!-- Search Results Dropdown -->
 		{#if showResults && isOpen && (value || results)}
-			<div
-				id={resultsId}
-				bind:this={resultsElement}
-				class={resultsClasses}
-				role="listbox"
-				aria-label="Search results"
-				onpointerdown={(e) => e.preventDefault()}
-			>
+		<div
+			id={resultsId}
+			bind:this={resultsElement}
+			class={resultsClasses}
+			role="listbox"
+			aria-label={searchResultsAriaLabel}
+			onpointerdown={(e) => e.preventDefault()}
+		>
 				{#if results}
 					{@render results()}
 				{:else}
 					<div class="text-base-content/60 p-4 text-center">
-						<p class="text-sm">No results found</p>
-						<p class="mt-1 text-xs">Try a different search term</p>
+						<Text text={noResultsLabel} size="sm" display="block" />
+						<Text text={noResultsDescription} size="xs" display="block" class="mt-1" />
 					</div>
 				{/if}
 			</div>
@@ -568,13 +606,15 @@ SPDX-License-Identifier: MIT
 
 	{#if error && error !== ''}
 		<div class={labelClasses}>
-			<span class="label-text-alt text-error" role="alert" aria-live="polite">{error}</span>
+			<span class="label-text-alt" role="alert" aria-live="polite">
+				<Text text={error} size="xs" class="text-error" />
+			</span>
 		</div>
 	{/if}
 
 	{#if helpText && (!error || error === '')}
 		<div class={labelClasses}>
-			<span class="label-text-alt text-base-content/70">{helpText}</span>
+			<Text text={helpText} size="xs" class="text-base-content/70" />
 		</div>
 	{/if}
 </div>

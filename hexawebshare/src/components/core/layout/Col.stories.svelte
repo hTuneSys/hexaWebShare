@@ -5,11 +5,11 @@ SPDX-License-Identifier: MIT
 
 <script module>
 	import { defineMeta } from '@storybook/addon-svelte-csf';
-	import ColWrapper from './ColWrapper.svelte';
+	import Col from './Col.svelte';
 
 	const { Story } = defineMeta({
 		title: 'Core/Layout/Col',
-		component: ColWrapper,
+		component: Col,
 		tags: ['autodocs'],
 		argTypes: {
 			span: {
@@ -73,65 +73,25 @@ SPDX-License-Identifier: MIT
 </script>
 
 <!-- Default (span-6) -->
-<Story
-	name="Default"
-	args={{
-		span: '6'
-	}}
-/>
+<Story name="Default" args={{ span: '6' }} />
 
 <!-- Full Width (span-12) -->
-<Story
-	name="Full Width"
-	args={{
-		span: '12'
-	}}
-/>
+<Story name="Full Width" args={{ span: '12' }} />
 
 <!-- Quarter Width (span-3) -->
-<Story
-	name="Quarter Width"
-	args={{
-		span: '3'
-	}}
-/>
+<Story name="Quarter Width" args={{ span: '3' }} />
 
 <!-- One Third (span-4) -->
-<Story
-	name="One Third"
-	args={{
-		span: '4'
-	}}
-/>
+<Story name="One Third" args={{ span: '4' }} />
 
 <!-- With Offset (start-5) -->
-<Story
-	name="With Offset"
-	args={{
-		span: '4',
-		start: '5'
-	}}
-/>
+<Story name="With Offset" args={{ span: '4', start: '5' }} />
 
 <!-- Responsive -->
-<Story
-	name="Responsive"
-	args={{
-		span: '12',
-		sm: '6',
-		md: '4',
-		lg: '3'
-	}}
-/>
+<Story name="Responsive" args={{ span: '12', sm: '6', md: '4', lg: '3' }} />
 
 <!-- Centered (start-4, span-6) -->
-<Story
-	name="Centered"
-	args={{
-		span: '6',
-		start: '4'
-	}}
-/>
+<Story name="Centered" args={{ span: '6', start: '4' }} />
 
 <!-- Playground -->
-<Story name="Playground" args={{}} />
+<Story name="Playground" args={{ span: 'auto' }} />

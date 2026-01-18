@@ -5,6 +5,8 @@ SPDX-License-Identifier: MIT
 
 <script lang="ts">
 	import type { Snippet } from 'svelte';
+	import IconButton from '../buttons/IconButton.svelte';
+	import Spinner from '../feedback/Spinner.svelte';
 
 	/**
 	 * Props interface for the Tag component
@@ -68,6 +70,16 @@ SPDX-License-Identifier: MIT
 		 */
 		onRemove?: () => void;
 		/**
+		 * Label for remove button (for accessibility)
+		 * @default 'Remove tag'
+		 */
+		removeLabel?: string;
+		/**
+		 * Icon for remove button
+		 * @default '✕'
+		 */
+		removeIcon?: string;
+		/**
 		 * Make the tag clickable
 		 * @default false
 		 */
@@ -106,6 +118,8 @@ SPDX-License-Identifier: MIT
 		loading = false,
 		removable = false,
 		onRemove,
+		removeLabel = 'Remove tag',
+		removeIcon = '✕',
 		clickable = false,
 		onclick,
 		icon,
@@ -154,16 +168,16 @@ SPDX-License-Identifier: MIT
 	let isDecorative = $derived(ariaHidden || (!ariaLabel && true));
 
 	// Loading spinner size based on tag size
-	let spinnerSizeClass = $derived(
+	let spinnerSize = $derived<'xs' | 'sm' | 'md' | 'lg'>(
 		size === 'xs'
-			? 'loading-xs'
+			? 'xs'
 			: size === 'sm'
-				? 'loading-sm'
+				? 'sm'
 				: size === 'md'
-					? 'loading-sm'
+					? 'sm'
 					: size === 'lg'
-						? 'loading-md'
-						: 'loading-md'
+						? 'md'
+						: 'md'
 	);
 
 	// Close button size based on tag size
@@ -187,8 +201,7 @@ SPDX-License-Identifier: MIT
 	}
 
 	// Handle remove button click - hides the tag
-	function handleRemove(event: MouseEvent) {
-		event.stopPropagation();
+	function handleRemove() {
 		if (!disabled) {
 			isVisible = false;
 			if (onRemove) onRemove();
@@ -207,37 +220,72 @@ SPDX-License-Identifier: MIT
 </script>
 
 {#if isVisible}
-	<span
-		class={tagClasses}
-		aria-label={ariaLabel}
-		aria-hidden={isDecorative}
-		aria-disabled={disabled}
-		aria-busy={loading}
-		role={clickable ? 'button' : isDecorative ? undefined : 'status'}
-		tabindex={clickable && !disabled ? 0 : undefined}
-		onclick={handleClick}
-		onkeydown={handleKeyDown}
-		{...props}
-	>
-		{#if loading}
-			<span class="loading loading-spinner {spinnerSizeClass}" aria-hidden="true"></span>
-		{/if}
-		{#if icon}
-			<span class="inline-flex items-center" aria-hidden="true">
-				{@render icon()}
-			</span>
-		{/if}
-		{label}
-		{#if removable}
-			<button
-				type="button"
-				class="-mr-1 ml-1 inline-flex items-center justify-center rounded-full p-0.5 opacity-70 transition-all hover:bg-current/20 hover:opacity-100 focus:outline-none {closeBtnSizeClass}"
-				onclick={handleRemove}
-				aria-label="Remove tag"
-				{disabled}
-			>
-				✕
-			</button>
-		{/if}
-	</span>
+	{#if clickable}
+		<!-- Clickable tag uses button element for semantic HTML and accessibility -->
+		<button
+			type="button"
+			class={tagClasses}
+			aria-label={ariaLabel}
+			aria-busy={loading}
+			{disabled}
+			onclick={handleClick}
+			onkeydown={handleKeyDown}
+			{...props}
+		>
+			{#if loading}
+				<Spinner size={spinnerSize} />
+			{/if}
+			{#if icon}
+				<span class="inline-flex items-center" aria-hidden="true">
+					{@render icon()}
+				</span>
+			{/if}
+			{label}
+			{#if removable}
+				<IconButton
+					size="xs"
+					variant="ghost"
+					class="-mr-1 ml-1 opacity-70 transition-all hover:bg-current/20 hover:opacity-100 {closeBtnSizeClass}"
+					onclick={handleRemove}
+					ariaLabel={removeLabel}
+					{disabled}
+				>
+					{removeIcon}
+				</IconButton>
+			{/if}
+		</button>
+	{:else}
+		<!-- Non-clickable tag uses span element -->
+		<span
+			class={tagClasses}
+			aria-label={ariaLabel}
+			aria-hidden={isDecorative}
+			aria-disabled={disabled}
+			aria-busy={loading}
+			role={isDecorative ? undefined : 'status'}
+			{...props}
+		>
+			{#if loading}
+				<Spinner size={spinnerSize} />
+			{/if}
+			{#if icon}
+				<span class="inline-flex items-center" aria-hidden="true">
+					{@render icon()}
+				</span>
+			{/if}
+			{label}
+			{#if removable}
+				<IconButton
+					size="xs"
+					variant="ghost"
+					class="-mr-1 ml-1 opacity-70 transition-all hover:bg-current/20 hover:opacity-100 {closeBtnSizeClass}"
+					onclick={handleRemove}
+					ariaLabel={removeLabel}
+					{disabled}
+				>
+					{removeIcon}
+				</IconButton>
+			{/if}
+		</span>
+	{/if}
 {/if}

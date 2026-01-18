@@ -12,6 +12,7 @@ SPDX-License-Identifier: MIT
 	import MutedText from '../../core/typography/MutedText.svelte';
 	import Text from '../../core/typography/Text.svelte';
 	import ButtonGroup from '../../core/buttons/ButtonGroup.svelte';
+	import Label from '../../core/data-display/Label.svelte';
 
 	/**
 	 * Permission option type
@@ -87,10 +88,45 @@ SPDX-License-Identifier: MIT
 		 */
 		showSelectAll?: boolean;
 		/**
+		 * Label for the "Select All" button
+		 * @default 'Select All'
+		 */
+		selectAllLabel?: string;
+		/**
+		 * Label for the "Deselect All" button
+		 * @default 'Deselect All'
+		 */
+		deselectAllLabel?: string;
+		/**
 		 * Whether the component is in loading state
 		 * @default false
 		 */
 		loading?: boolean;
+		/**
+		 * Label shown during loading state
+		 * @default 'Loading permissions'
+		 */
+		loadingLabel?: string;
+		/**
+		 * ARIA label for button group container
+		 * @default 'Permission selection actions'
+		 */
+		buttonGroupAriaLabel?: string;
+		/**
+		 * ARIA label for "Select All" button
+		 * @default 'Select all permissions'
+		 */
+		selectAllAriaLabel?: string;
+		/**
+		 * ARIA label for "Deselect All" button
+		 * @default 'Deselect all permissions'
+		 */
+		deselectAllAriaLabel?: string;
+		/**
+		 * Fallback ARIA label when no label or ariaLabel is provided
+		 * @default 'Permission selector'
+		 */
+		defaultAriaLabel?: string;
 		/**
 		 * HTML id attribute
 		 */
@@ -127,7 +163,14 @@ SPDX-License-Identifier: MIT
 		helpText,
 		showGroups = true,
 		showSelectAll = true,
+		selectAllLabel = 'Select All',
+		deselectAllLabel = 'Deselect All',
 		loading = false,
+		loadingLabel = 'Loading permissions',
+		buttonGroupAriaLabel = 'Permission selection actions',
+		selectAllAriaLabel = 'Select all permissions',
+		deselectAllAriaLabel = 'Deselect all permissions',
+		defaultAriaLabel = 'Permission selector',
 		id,
 		ariaLabel,
 		ariaDescribedby,
@@ -248,7 +291,7 @@ SPDX-License-Identifier: MIT
 	// Container classes
 	let containerClasses = $derived(['form-control', 'w-full', className].filter(Boolean).join(' '));
 
-	// Label classes
+	// Label classes for error and help text sections
 	let labelClasses = $derived(
 		[
 			'label',
@@ -264,34 +307,27 @@ SPDX-License-Identifier: MIT
 
 <div class={containerClasses} id={fieldId} {...props}>
 	{#if label}
-		<label class={labelClasses} for={fieldId}>
-			<span class="label-text">
-				{label}
-				{#if required}
-					<Text text="*" variant="error" size="sm" class="ml-1" ariaLabel="required" />
-				{/if}
-			</span>
-		</label>
+		<Label text={label} for={fieldId} {required} {size} />
 	{/if}
 
 	{#if showSelectAll && usePermissions && availableValues.length > 0}
 		<div class="mb-4">
-			<ButtonGroup orientation="horizontal" gap="sm" ariaLabel="Permission selection actions">
+			<ButtonGroup orientation="horizontal" gap="sm" ariaLabel={buttonGroupAriaLabel}>
 				{#snippet children()}
 					<Button
 						variant="ghost"
 						size="sm"
-						label="Select All"
+						label={selectAllLabel}
 						disabled={disabled || loading || allSelected}
-						ariaLabel="Select all permissions"
+						ariaLabel={selectAllAriaLabel}
 						onclick={handleSelectAll}
 					/>
 					<Button
 						variant="ghost"
 						size="sm"
-						label="Deselect All"
+						label={deselectAllLabel}
 						disabled={disabled || loading || selectedValues.length === 0}
-						ariaLabel="Deselect all permissions"
+						ariaLabel={deselectAllAriaLabel}
 						onclick={handleDeselectAll}
 					/>
 				{/snippet}
@@ -303,7 +339,7 @@ SPDX-License-Identifier: MIT
 		<div class="flex items-center justify-center py-8">
 			<Loader
 				status="loading"
-				label="Loading permissions"
+				label={loadingLabel}
 				variant="primary"
 				type="spinner"
 				size="md"
@@ -315,7 +351,7 @@ SPDX-License-Identifier: MIT
 		<div
 			class="space-y-4"
 			role="group"
-			aria-label={ariaLabel || label || 'Permission selector'}
+			aria-label={ariaLabel || label || defaultAriaLabel}
 			aria-describedby={ariaDescribedby}
 			aria-disabled={disabled}
 		>
@@ -326,7 +362,7 @@ SPDX-License-Identifier: MIT
 		<div
 			class="space-y-4"
 			role="group"
-			aria-label={ariaLabel || label || 'Permission selector'}
+			aria-label={ariaLabel || label || defaultAriaLabel}
 			aria-describedby={ariaDescribedby}
 			aria-disabled={disabled}
 		>
@@ -368,8 +404,8 @@ SPDX-License-Identifier: MIT
 	{/if}
 
 	{#if error && error !== ''}
-		<div class={labelClasses}>
-			<span class="label-text-alt text-error text-sm" role="alert" aria-live="polite">{error}</span>
+		<div class={labelClasses} role="alert" aria-live="polite">
+			<Text text={error} variant="error" size="sm" class="label-text-alt" />
 		</div>
 	{/if}
 

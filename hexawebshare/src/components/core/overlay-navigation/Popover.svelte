@@ -35,6 +35,11 @@ SPDX-License-Identifier: MIT
 		ariaLabel?: string;
 		ariaDescribedBy?: string;
 		triggerAriaLabel?: string;
+		/**
+		 * Default trigger button label (used when trigger snippet not provided)
+		 * @default 'Toggle popover'
+		 */
+		defaultTriggerLabel?: string;
 		class?: string;
 		triggerClass?: string;
 		contentClass?: string;
@@ -56,6 +61,7 @@ SPDX-License-Identifier: MIT
 		ariaLabel,
 		ariaDescribedBy,
 		triggerAriaLabel,
+		defaultTriggerLabel = 'Toggle popover',
 		class: className = '',
 		triggerClass = '',
 		contentClass = '',
@@ -295,7 +301,7 @@ SPDX-License-Identifier: MIT
 		{#if trigger}
 			{@render trigger()}
 		{:else}
-			<Button variant="primary" label="Toggle popover" />
+			<Button variant="primary" label={defaultTriggerLabel} />
 		{/if}
 	</div>
 

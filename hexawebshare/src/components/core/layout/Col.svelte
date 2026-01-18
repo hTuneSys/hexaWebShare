@@ -104,10 +104,15 @@ SPDX-License-Identifier: MIT
 		align?: 'auto' | 'start' | 'center' | 'end' | 'stretch';
 
 		/**
-		 * Additional CSS classes
+		 * Additional CSS classes to apply to the column
 		 * @default ''
 		 */
 		class?: string;
+		/**
+		 * Accessible label for the column region
+		 * @default 'Grid column'
+		 */
+		ariaLabel?: string;
 	}
 
 	let {
@@ -120,6 +125,7 @@ SPDX-License-Identifier: MIT
 		xl,
 		order,
 		align,
+		ariaLabel = 'Grid column',
 		class: className = '',
 		...props
 	}: Props = $props();
@@ -372,6 +378,6 @@ SPDX-License-Identifier: MIT
 	);
 </script>
 
-<div class={colClasses} role="region" aria-label="Grid column" {...props}>
+<div class={colClasses} role="region" aria-label={ariaLabel} {...props}>
 	{@render children?.()}
 </div>

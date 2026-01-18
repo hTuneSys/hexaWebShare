@@ -6,11 +6,10 @@ SPDX-License-Identifier: MIT
 <script module>
 	import { defineMeta } from '@storybook/addon-svelte-csf';
 	import PageWrapper from './PageWrapper.svelte';
-	import PageWrapperWrapper from './PageWrapperWrapper.svelte';
 
 	const { Story } = defineMeta({
 		title: 'Core/Layout/PageWrapper',
-		component: PageWrapperWrapper,
+		component: PageWrapper,
 		tags: ['autodocs'],
 		argTypes: {
 			variant: {
@@ -46,9 +45,7 @@ SPDX-License-Identifier: MIT
 			minHeight: {
 				control: { type: 'select' },
 				options: ['none', 'screen', 'auto']
-			},
-			showHeader: { control: 'boolean' },
-			showFooter: { control: 'boolean' }
+			}
 		},
 		args: {
 			variant: 'default',
@@ -58,9 +55,7 @@ SPDX-License-Identifier: MIT
 			loading: false,
 			disabled: false,
 			background: true,
-			minHeight: 'screen',
-			showHeader: true,
-			showFooter: true
+			minHeight: 'screen'
 		}
 	});
 </script>
@@ -76,11 +71,72 @@ SPDX-License-Identifier: MIT
 		loading: false,
 		disabled: false,
 		background: true,
-		minHeight: 'screen',
-		showHeader: true,
-		showFooter: true
+		minHeight: 'screen'
 	}}
-/>
+>
+	{#snippet children()}
+		<PageWrapper
+			variant="default"
+			maxWidth="full"
+			padding="md"
+			centered={false}
+			loading={false}
+			disabled={false}
+			background={true}
+			minHeight="screen"
+		>
+			{#snippet header()}
+				<div class="flex items-center justify-between">
+					<div>
+						<h1 class="text-3xl font-bold">Page Title</h1>
+						<p class="text-base-content/70 mt-2">
+							This is a page header with title and description.
+						</p>
+					</div>
+					<div class="flex gap-2">
+						<button class="btn btn-primary btn-sm">Action</button>
+						<button class="btn btn-ghost btn-sm">Secondary</button>
+					</div>
+				</div>
+			{/snippet}
+
+			{#snippet children()}
+				<div class="space-y-6">
+					<div class="card bg-base-200 shadow-sm">
+						<div class="card-body">
+							<h2 class="card-title">Content Section 1</h2>
+							<p>
+								This is the main content area. You can add any content here including cards, forms,
+								tables, and other components.
+							</p>
+						</div>
+					</div>
+
+					<div class="card bg-base-200 shadow-sm">
+						<div class="card-body">
+							<h2 class="card-title">Content Section 2</h2>
+							<p>
+								The PageWrapper component provides consistent layout structure with header, content,
+								and footer sections.
+							</p>
+						</div>
+					</div>
+				</div>
+			{/snippet}
+
+			{#snippet footer()}
+				<div class="text-base-content/60 flex items-center justify-between text-sm">
+					<p>© 2025 hexaTune LLC. All rights reserved.</p>
+				<div class="flex gap-4">
+					<a href="/privacy" class="link-hover link">Privacy</a>
+					<a href="/terms" class="link-hover link">Terms</a>
+					<a href="/contact" class="link-hover link">Contact</a>
+				</div>
+				</div>
+			{/snippet}
+		</PageWrapper>
+	{/snippet}
+</Story>
 
 <!-- Basic PageWrapper -->
 <Story name="Basic">
@@ -145,10 +201,10 @@ SPDX-License-Identifier: MIT
 		{#snippet footer()}
 			<div class="text-base-content/60 flex items-center justify-between text-sm">
 				<p>© 2025 hexaTune LLC</p>
-				<div class="flex gap-4">
-					<a href="#" class="link-hover link">Privacy</a>
-					<a href="#" class="link-hover link">Terms</a>
-				</div>
+			<div class="flex gap-4">
+				<a href="/privacy" class="link-hover link">Privacy</a>
+				<a href="/terms" class="link-hover link">Terms</a>
+			</div>
 			</div>
 		{/snippet}
 	</PageWrapper>

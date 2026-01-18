@@ -5,6 +5,7 @@ SPDX-License-Identifier: MIT
 
 <script lang="ts">
 	import type { Snippet } from 'svelte';
+	import Spinner from '../feedback/Spinner.svelte';
 
 	/**
 	 * Props interface for the Grid component
@@ -62,6 +63,16 @@ SPDX-License-Identifier: MIT
 		 */
 		ariaLabel?: string;
 		/**
+		 * Default accessible label when ariaLabel is not provided
+		 * @default 'Grid layout'
+		 */
+		defaultAriaLabel?: string;
+		/**
+		 * Accessible label for loading state
+		 * @default 'Loading grid content'
+		 */
+		loadingLabel?: string;
+		/**
 		 * Additional CSS classes
 		 */
 		class?: string;
@@ -77,6 +88,8 @@ SPDX-License-Identifier: MIT
 		disabled = false,
 		background = false,
 		ariaLabel,
+		defaultAriaLabel = 'Grid layout',
+		loadingLabel = 'Loading grid content',
 		class: className = '',
 		...props
 	}: Props = $props();
@@ -197,7 +210,7 @@ SPDX-License-Identifier: MIT
 <div
 	class={gridClasses}
 	role="grid"
-	aria-label={ariaLabel || 'Grid layout'}
+	aria-label={ariaLabel || defaultAriaLabel}
 	aria-busy={loading}
 	aria-disabled={disabled}
 	aria-live={loading ? 'polite' : undefined}
@@ -208,9 +221,9 @@ SPDX-License-Identifier: MIT
 			class="col-span-full flex min-h-[50vh] items-center justify-center"
 			role="status"
 			aria-live="polite"
-			aria-label="Loading grid content"
+			aria-label={loadingLabel}
 		>
-			<span class="loading loading-spinner loading-lg text-primary" aria-hidden="true"></span>
+			<Spinner size="lg" variant="primary" />
 		</div>
 	{:else}
 		{@render children()}

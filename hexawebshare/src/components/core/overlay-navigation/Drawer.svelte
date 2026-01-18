@@ -5,6 +5,8 @@ SPDX-License-Identifier: MIT
 
 <script lang="ts">
 	import type { Snippet } from 'svelte';
+	import IconButton from '../buttons/IconButton.svelte';
+	import Heading from '../typography/Heading.svelte';
 
 	interface Props {
 		/**
@@ -63,6 +65,21 @@ SPDX-License-Identifier: MIT
 		 * ARIA label for accessibility
 		 */
 		ariaLabel?: string;
+	/**
+	 * Default ARIA label text if ariaLabel and title are not provided
+	 * @default 'Drawer'
+	 */
+	defaultAriaLabel?: string;
+	/**
+	 * ARIA label for the toggle checkbox
+	 * @default 'Toggle drawer'
+	 */
+	toggleAriaLabel?: string;
+	/**
+	 * ARIA label for close button/overlay
+	 * @default 'Close drawer'
+	 */
+	closeAriaLabel?: string;
 		/**
 		 * Callback when drawer is closed
 		 */
@@ -86,9 +103,12 @@ SPDX-License-Identifier: MIT
 		closeOnEscape = true,
 		class: className = '',
 		sideClass = '',
-		contentClass = '',
-		ariaLabel,
-		onclose,
+	contentClass = '',
+	ariaLabel,
+	defaultAriaLabel = 'Drawer',
+	toggleAriaLabel = 'Toggle drawer',
+	closeAriaLabel = 'Close drawer',
+	onclose,
 		onopen,
 		...props
 	}: Props = $props();
@@ -154,6 +174,14 @@ SPDX-License-Identifier: MIT
 		}
 	}
 
+	// Handle backdrop keyboard interaction (for accessibility)
+	function handleBackdropKeydown(event: KeyboardEvent) {
+		if (closeOnBackdrop && (event.key === 'Enter' || event.key === ' ')) {
+			event.preventDefault();
+			open = false;
+		}
+	}
+
 	// Handle escape key
 	function handleKeyDown(event: KeyboardEvent) {
 		if (closeOnEscape && event.key === 'Escape' && open) {
@@ -179,13 +207,19 @@ SPDX-License-Identifier: MIT
 </script>
 
 <div class={drawerClasses} {...props}>
-	<!-- Hidden checkbox for DaisyUI drawer state -->
+	<!-- 
+		NOTE: Raw HTML input (checkbox) is intentional here.
+		Reason: This is a core part of DaisyUI's drawer component architecture.
+		DaisyUI uses a hidden checkbox as a state control mechanism for the drawer (open/closed).
+		The checkbox's checked state is linked to CSS :checked selectors that control drawer visibility.
+		This is a structural/utility element (not user-facing) and cannot be replaced with a library component.
+	-->
 	<input
 		type="checkbox"
 		id={toggleId}
 		class="drawer-toggle"
 		checked={open}
-		aria-label={ariaLabel || 'Toggle drawer'}
+		aria-label={ariaLabel || toggleAriaLabel}
 	/>
 
 	<!-- Main content area -->
@@ -199,12 +233,27 @@ SPDX-License-Identifier: MIT
 	<div class={drawerSideClasses}>
 		<!-- Backdrop overlay -->
 		{#if overlay}
-			<label
-				for={toggleId}
-				class="drawer-overlay"
-				onclick={handleBackdropClick}
-				aria-label="Close drawer"
-			></label>
+			<!-- 
+				NOTE: Raw HTML label is intentional here.
+				TECHNICAL REASON: DaisyUI drawer architecture requires label linked to hidden checkbox.
+				The label with 'for' attribute controls drawer state via CSS :checked selectors.
+				Backdrop interactions are handled by a separate button overlay for accessibility.
+			-->
+			<label for={toggleId} class="drawer-overlay" aria-hidden="true"></label>
+			<!-- 
+				Interactive backdrop overlay for accessibility.
+				This button provides proper keyboard navigation and screen reader support.
+			-->
+			{#if closeOnBackdrop}
+				<button
+					type="button"
+					class="absolute inset-0 z-10 cursor-default"
+					onclick={handleBackdropClick}
+					onkeydown={handleBackdropKeydown}
+					aria-label={closeAriaLabel}
+					tabindex="0"
+				></button>
+			{/if}
 		{/if}
 
 		<!-- Drawer content -->
@@ -212,19 +261,21 @@ SPDX-License-Identifier: MIT
 			class={drawerContentClasses}
 			role="dialog"
 			aria-modal="true"
-			aria-label={ariaLabel || title || 'Drawer'}
+			aria-label={ariaLabel || title || defaultAriaLabel}
 		>
 			<!-- Header with title and close button -->
 			{#if title || showCloseButton}
 				<div class="mb-4 flex items-center justify-between">
 					{#if title}
-						<h2 class="text-xl font-bold">{title}</h2>
+						<Heading level="h2" text={title} class="text-xl font-bold" />
 					{/if}
 					{#if showCloseButton}
-						<button
-							class="btn btn-circle btn-ghost btn-sm"
+						<IconButton
+							variant="ghost"
+							circle
+							size="sm"
 							onclick={handleClose}
-							aria-label="Close drawer"
+							ariaLabel={closeAriaLabel}
 						>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -240,7 +291,7 @@ SPDX-License-Identifier: MIT
 									d="M6 18L18 6M6 6l12 12"
 								/>
 							</svg>
-						</button>
+						</IconButton>
 					{/if}
 				</div>
 			{/if}

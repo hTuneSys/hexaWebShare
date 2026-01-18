@@ -7,12 +7,11 @@ SPDX-License-Identifier: MIT
 	import { defineMeta } from '@storybook/addon-svelte-csf';
 	import Accordion from './Accordion.svelte';
 	import AccordionItem from './AccordionItem.svelte';
-	import AccordionWrapper from './AccordionWrapper.svelte';
 	import { fn } from 'storybook/test';
 
 	const { Story } = defineMeta({
 		title: 'Core/Overlay Navigation/Accordion',
-		component: AccordionWrapper,
+		component: Accordion,
 		tags: ['autodocs'],
 		argTypes: {
 			multiple: { control: 'boolean' },
@@ -108,15 +107,22 @@ SPDX-License-Identifier: MIT
 </Story>
 
 <!-- Multiple Open -->
-<Story
-	name="Multiple Open"
-	args={{
-		multiple: true,
-		variant: 'default',
-		size: 'md',
-		disabled: false
-	}}
-/>
+<Story name="Multiple Open">
+	<Accordion multiple={true}>
+		<AccordionItem title="Frequently Asked Questions" index={0}>
+			<div class="space-y-4">
+				<h4 class="font-semibold">Question 1</h4>
+				<p>Multiple items can be open at the same time when multiple prop is true.</p>
+			</div>
+		</AccordionItem>
+		<AccordionItem title="Product Information" index={1}>
+			<p>Product details and specifications can be viewed simultaneously.</p>
+		</AccordionItem>
+		<AccordionItem title="Additional Details" index={2}>
+			<p>All three items can be expanded at once with the multiple prop.</p>
+		</AccordionItem>
+	</Accordion>
+</Story>
 
 <!-- Disabled State -->
 <Story name="Disabled">
@@ -131,4 +137,26 @@ SPDX-License-Identifier: MIT
 </Story>
 
 <!-- Playground -->
-<Story name="Playground" args={{}} />
+<Story
+	name="Playground"
+	args={{
+		variant: 'default',
+		size: 'md',
+		multiple: false,
+		disabled: false
+	}}
+>
+	{#snippet children()}
+		<Accordion variant="default" size="md" multiple={false} disabled={false}>
+			<AccordionItem title="Interactive Item 1" index={0}>
+				<p>Use the Storybook controls to experiment with different props.</p>
+			</AccordionItem>
+			<AccordionItem title="Interactive Item 2" index={1}>
+				<p>Try changing the variant, size, and other properties.</p>
+			</AccordionItem>
+			<AccordionItem title="Interactive Item 3" index={2}>
+				<p>See how the accordion responds to different configurations.</p>
+			</AccordionItem>
+		</Accordion>
+	{/snippet}
+</Story>

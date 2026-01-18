@@ -4,6 +4,10 @@ SPDX-License-Identifier: MIT
 -->
 
 <script lang="ts">
+	import Label from '../data-display/Label.svelte';
+	import Spinner from '../feedback/Spinner.svelte';
+	import Text from '../typography/Text.svelte';
+
 	/**
 	 * Props interface for the Input component
 	 */
@@ -104,6 +108,16 @@ SPDX-License-Identifier: MIT
 		 */
 		loading?: boolean;
 		/**
+		 * Accessible label for required field indicator
+		 * @default 'required'
+		 */
+		requiredLabel?: string;
+		/**
+		 * Accessible label for loading state
+		 * @default 'Loading'
+		 */
+		loadingLabel?: string;
+		/**
 		 * Change event handler
 		 */
 		onchange?: (event: Event) => void;
@@ -145,6 +159,8 @@ SPDX-License-Identifier: MIT
 		ariaLabel,
 		ariaDescribedby,
 		loading = false,
+		requiredLabel = 'required',
+		loadingLabel = 'Loading',
 		class: className = '',
 		...props
 	}: Props = $props();
@@ -189,28 +205,13 @@ SPDX-License-Identifier: MIT
 			.join(' ')
 	);
 
-	// Loading spinner size classes
-	let loadingSizeClass = $derived(
-		size === 'xs'
-			? 'loading-xs'
-			: size === 'sm'
-				? 'loading-sm'
-				: size === 'lg'
-					? 'loading-lg'
-					: 'loading-md'
-	);
+	// Loading spinner size
+	let spinnerSize = $derived(size);
 </script>
 
 <div class="form-control w-full">
 	{#if label}
-		<label for={labelForId} class={labelClasses}>
-			<span class="label-text">
-				{label}
-				{#if required}
-					<span class="text-error ml-1" aria-label="required">*</span>
-				{/if}
-			</span>
-		</label>
+		<Label text={label} for={labelForId} {required} {size} requiredAriaLabel={requiredLabel} />
 	{/if}
 
 	<div class="relative">
@@ -236,22 +237,27 @@ SPDX-License-Identifier: MIT
 			{...props}
 		/>
 		{#if loading}
-			<div class="absolute top-1/2 right-3 -translate-y-1/2" role="status" aria-label="Loading">
-				<span class="loading loading-spinner {loadingSizeClass} text-primary" aria-hidden="true"
-				></span>
+			<div
+				class="absolute top-1/2 right-3 -translate-y-1/2"
+				role="status"
+				aria-label={loadingLabel}
+			>
+				<Spinner size={spinnerSize} variant="primary" ariaLabel={loadingLabel} />
 			</div>
 		{/if}
 	</div>
 
 	{#if error && error !== ''}
 		<div class={labelClasses}>
-			<span class="label-text-alt text-error" role="alert" aria-live="polite">{error}</span>
+			<div role="alert" aria-live="polite">
+				<Text text={error} size="xs" variant="error" class="label-text-alt" />
+			</div>
 		</div>
 	{/if}
 
 	{#if helpText && (!error || error === '')}
 		<div class={labelClasses}>
-			<span class="label-text-alt text-base-content/70">{helpText}</span>
+			<Text text={helpText} size="xs" variant="muted" class="label-text-alt" />
 		</div>
 	{/if}
 </div>

@@ -5,6 +5,7 @@ SPDX-License-Identifier: MIT
 
 <script lang="ts">
 	import type { Snippet } from 'svelte';
+	import Text from '../typography/Text.svelte';
 
 	/**
 	 * Tab item interface
@@ -315,6 +316,14 @@ SPDX-License-Identifier: MIT
 		id={tablistId}
 		{...props}
 	>
+		<!-- 
+			NOTE: Raw HTML <button> elements are intentional here.
+			TECHNICAL REASON: WAI-ARIA tabs pattern requires <button role="tab"> elements.
+			DaisyUI's .tabs pattern requires specific DOM structure without .btn classes.
+			CONSEQUENCE: Using Button component would add .btn classes breaking tab styling.
+			TEXT CONTENT: All text content uses Text component for consistency ✅
+			VALIDATION: WAI-ARIA Authoring Practices Guide for Tabs pattern + DaisyUI tabs docs
+		-->
 		{#each tabs as tab, index}
 			{@const isActive = tab.value === activeValue}
 			{@const tabId = `${tablistId}-tab-${tab.value}`}
@@ -339,7 +348,7 @@ SPDX-License-Identifier: MIT
 						{@render tab.icon()}
 					</span>
 				{/if}
-				{tab.label}
+				<Text text={tab.label} display="inline-block" />
 			</button>
 		{/each}
 	</div>

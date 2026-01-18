@@ -5,8 +5,9 @@ SPDX-License-Identifier: MIT
 
 <script lang="ts">
 	import type { Snippet } from 'svelte';
-	import Table, { type TableColumn } from '../../core/data-display/Table.svelte';
+	import Table, { type TableColumn } from '../../core/data-display/table/Table.svelte';
 	import Loader from '../../core/feedback/Loader.svelte';
+	import Text from '../../core/typography/Text.svelte';
 
 	/**
 	 * Key-value pair data structure
@@ -88,6 +89,31 @@ SPDX-License-Identifier: MIT
 		 */
 		emptyMessage?: string;
 		/**
+		 * Text to display for null/undefined values
+		 * @default '—'
+		 */
+		nullValueText?: string;
+		/**
+		 * Text to display for boolean true values
+		 * @default 'Yes'
+		 */
+		trueValueText?: string;
+		/**
+		 * Text to display for boolean false values
+		 * @default 'No'
+		 */
+		falseValueText?: string;
+		/**
+		 * Label shown during loading state
+		 * @default 'Loading data'
+		 */
+		loadingLabel?: string;
+		/**
+		 * Description shown during loading state
+		 * @default 'Fetching key-value pairs'
+		 */
+		loadingDescription?: string;
+		/**
 		 * Key label prefix (e.g., "Field:")
 		 */
 		keyPrefix?: string;
@@ -124,6 +150,11 @@ SPDX-License-Identifier: MIT
 		loading = false,
 		showEmptyState = true,
 		emptyMessage = 'No data available',
+		nullValueText = '—',
+		trueValueText = 'Yes',
+		falseValueText = 'No',
+		loadingLabel = 'Loading data',
+		loadingDescription = 'Fetching key-value pairs',
 		keyPrefix = '',
 		keySuffix = ':',
 		ariaLabel,
@@ -175,10 +206,10 @@ SPDX-License-Identifier: MIT
 	// Format value for display
 	function formatValue(value: string | number | boolean | null | undefined): string {
 		if (value === null || value === undefined) {
-			return '—';
+			return nullValueText;
 		}
 		if (typeof value === 'boolean') {
-			return value ? 'Yes' : 'No';
+			return value ? trueValueText : falseValueText;
 		}
 		return String(value);
 	}
@@ -301,31 +332,29 @@ SPDX-License-Identifier: MIT
 			<div class="flex w-full justify-center py-6">
 				<Loader
 					size={size === 'lg' ? 'lg' : size === 'sm' ? 'sm' : 'md'}
-					label="Loading data"
-					description="Fetching key-value pairs"
+					label={loadingLabel}
+					description={loadingDescription}
 					fullWidth
 				/>
 			</div>
 		{:else if items.length === 0 && showEmptyState}
 			<!-- Empty state -->
-			<div class="text-base-content/50 flex items-center justify-center py-8">
-				<span class="text-sm">{emptyMessage}</span>
+			<div class="flex items-center justify-center py-8">
+				<Text text={emptyMessage} size="sm" class="text-base-content/50" />
 			</div>
 		{:else}
 			<!-- Vertical, Horizontal, or Compact variants -->
 			{#each items as item, index (item.id ?? index)}
 				<div class={itemWrapperClasses} class:opacity-60={item.disabled || disabled}>
-					<div class={keyCellClasses}>
-						{keyPrefix}{item.key}{keySuffix}
-					</div>
+					<Text text="{keyPrefix}{item.key}{keySuffix}" class={keyCellClasses} />
 					<div class={valueCellClasses}>
 						{#if item.valueSlot}
 							{@render item.valueSlot()}
 						{:else}
-							{formatValue(item.value)}
+							<Text text={formatValue(item.value)} />
 						{/if}
 						{#if item.description}
-							<div class={descriptionClasses}>{item.description}</div>
+							<Text text={item.description} class={descriptionClasses} />
 						{/if}
 					</div>
 				</div>

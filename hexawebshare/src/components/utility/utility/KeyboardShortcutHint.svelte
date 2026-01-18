@@ -49,6 +49,11 @@ SPDX-License-Identifier: MIT
 		 */
 		separator?: string;
 		/**
+		 * Separator between key groups (when multiple shortcuts)
+		 * @default 'or'
+		 */
+		groupSeparator?: string;
+		/**
 		 * Whether the hint is disabled
 		 * @default false
 		 */
@@ -71,6 +76,7 @@ SPDX-License-Identifier: MIT
 		outline = false,
 		soft = false,
 		separator = '+',
+		groupSeparator = 'or',
 		disabled = false,
 		ariaLabel,
 		class: className = '',
@@ -184,7 +190,7 @@ SPDX-License-Identifier: MIT
 <span class={badgeClasses} aria-label={generatedAriaLabel()} role="status" {...props}>
 	{#each normalizedKeys() as keyGroup, groupIndex}
 		{#if groupIndex > 0}
-			<span class={separatorClasses} aria-hidden="true"> or </span>
+			<span class={separatorClasses} aria-hidden="true"> {groupSeparator} </span>
 		{/if}
 		{#each keyGroup as key, keyIndex}
 			{#if keyIndex > 0}

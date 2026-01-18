@@ -4,6 +4,10 @@ SPDX-License-Identifier: MIT
 -->
 
 <script lang="ts">
+	import Label from '../data-display/Label.svelte';
+	import Text from '../typography/Text.svelte';
+	import Spinner from '../feedback/Spinner.svelte';
+
 	/**
 	 * Option type for radio options
 	 */
@@ -79,6 +83,16 @@ SPDX-License-Identifier: MIT
 		 */
 		ariaDescribedby?: string;
 		/**
+		 * Accessible label for required field indicator
+		 * @default 'required'
+		 */
+		requiredLabel?: string;
+		/**
+		 * Accessible label for loading state
+		 * @default 'Loading'
+		 */
+		loadingLabel?: string;
+		/**
 		 * Change event handler
 		 */
 		onchange?: (event: Event) => void;
@@ -103,13 +117,15 @@ SPDX-License-Identifier: MIT
 		id,
 		ariaLabel,
 		ariaDescribedby,
+		requiredLabel = 'required',
+		loadingLabel = 'Loading',
 		onchange,
 		class: className = '',
 		...props
 	}: Props = $props();
 
 	// Generate unique ID if not provided
-	let groupId = $derived(id || `radio-group-${Math.random().toString(36).substr(2, 9)}`);
+	let groupId = $derived(id || `radio-group-${Math.random().toString(36).substring(2, 11)}`);
 	let labelId = $derived(`${groupId}-label`);
 	let errorId = $derived(`${groupId}-error`);
 	let helpTextId = $derived(`${groupId}-help`);
@@ -157,16 +173,8 @@ SPDX-License-Identifier: MIT
 			.join(' ') || undefined
 	);
 
-	// Loading spinner size classes
-	let loadingSizeClass = $derived(
-		size === 'xs'
-			? 'loading-xs'
-			: size === 'sm'
-				? 'loading-sm'
-				: size === 'lg'
-					? 'loading-lg'
-					: 'loading-md'
-	);
+	// Loading spinner size
+	let spinnerSize = $derived(size);
 
 	// Check if radio group should be disabled (either disabled prop or loading)
 	let isDisabled = $derived(disabled || loading);
@@ -174,14 +182,7 @@ SPDX-License-Identifier: MIT
 
 <div class="form-control w-full {className}">
 	{#if label}
-		<label id={labelId} class="label">
-			<span class="label-text">
-				{label}
-				{#if required}
-					<span class="text-error ml-1" aria-label="required">*</span>
-				{/if}
-			</span>
-		</label>
+		<Label text={label} id={labelId} {required} {size} requiredAriaLabel={requiredLabel} />
 	{/if}
 
 	<div
@@ -198,14 +199,19 @@ SPDX-License-Identifier: MIT
 			<div
 				class="bg-base-100/80 absolute top-0 left-0 z-10 flex h-full w-full items-center justify-center rounded-lg"
 				role="status"
-				aria-label="Loading"
+				aria-label={loadingLabel}
 			>
-				<span class="loading loading-spinner {loadingSizeClass} text-primary" aria-hidden="true"
-				></span>
+				<Spinner size={spinnerSize} variant="primary" ariaLabel={loadingLabel} />
 			</div>
 		{/if}
 		{#each normalizedOptions as option, index (option.value)}
 			{@const optionId = `${groupId}-option-${index}`}
+			<!-- 
+				NOTE: Raw HTML label element used here.
+				REASON: Native HTML <label> required for form semantics and click-to-focus behavior.
+				The label wraps the radio input and clicking the label selects the radio.
+				Text component properly used for the label text content.
+			-->
 			<label for={optionId} class="label cursor-pointer justify-start gap-4 pr-6">
 				<input
 					id={optionId}
@@ -218,24 +224,28 @@ SPDX-License-Identifier: MIT
 					{onchange}
 					{...props}
 				/>
-				<span class="label-text">{option.label}</span>
+				<Text text={option.label} size="sm" class="label-text" />
 			</label>
 		{/each}
 	</div>
 
 	{#if hasError}
-		<div id={errorId} class="label">
-			<span class="label-text-alt text-error" role="alert" aria-live="polite">
-				{error}
-			</span>
+		<!-- 
+			NOTE: Raw HTML div element used for structural layout wrapper.
+			Contains error message displayed with Text component.
+		-->
+		<div id={errorId} class="label" role="alert" aria-live="polite">
+			<Text text={error} size="xs" variant="error" class="label-text-alt" />
 		</div>
 	{/if}
 
 	{#if helpText && !hasError}
+		<!-- 
+			NOTE: Raw HTML div element used for structural layout wrapper.
+			Contains help text displayed with Text component.
+		-->
 		<div id={helpTextId} class="label">
-			<span class="label-text-alt text-base-content/70">
-				{helpText}
-			</span>
+			<Text text={helpText} size="xs" variant="muted" class="label-text-alt" />
 		</div>
 	{/if}
 </div>

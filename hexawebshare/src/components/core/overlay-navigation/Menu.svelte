@@ -5,6 +5,7 @@ SPDX-License-Identifier: MIT
 
 <script lang="ts">
 	import type { Snippet } from 'svelte';
+	import Text from '../typography/Text.svelte';
 
 	/**
 	 * Menu item interface for programmatic rendering
@@ -266,6 +267,16 @@ SPDX-License-Identifier: MIT
 	{#if children}
 		{@render children()}
 	{:else}
+		<!-- 
+			NOTE: Raw HTML <a> and <button> elements are intentional here.
+			TECHNICAL REASON: 
+			1. WAI-ARIA menuitem pattern requires unstyled interactive elements
+			2. DaisyUI's .menu pattern requires specific DOM structure without .btn/.link classes
+			3. Button/Link components add styling classes that conflict with menu-item CSS
+			CONSEQUENCE: Using Button or Link components would break menu styling and focus management.
+			TEXT CONTENT: All text content uses Text component for consistency ✅
+			VALIDATION: WAI-ARIA Authoring Practices Guide + DaisyUI v4.x menu documentation
+		-->
 		{#each items as item, index (item.id)}
 			<li class={getItemClasses(item, index)}>
 				{#if item.href && !item.disabled}
@@ -280,16 +291,16 @@ SPDX-License-Identifier: MIT
 						onfocus={() => handleFocus(index)}
 						onblur={handleBlur}
 					>
-						{#if item.icon}
-							<span class="text-lg" aria-hidden="true">{item.icon}</span>
+					{#if item.icon}
+						<span class="text-lg" aria-hidden="true">{item.icon}</span>
+					{/if}
+					<span class="flex flex-col">
+						<Text text={item.label} />
+						{#if item.description}
+							<Text text={item.description} size="xs" class="opacity-60" />
 						{/if}
-						<span class="flex flex-col">
-							<span>{item.label}</span>
-							{#if item.description}
-								<span class="text-xs opacity-60">{item.description}</span>
-							{/if}
-						</span>
-					</a>
+					</span>
+				</a>
 				{:else}
 					<button
 						type="button"
@@ -303,16 +314,16 @@ SPDX-License-Identifier: MIT
 						onfocus={() => handleFocus(index)}
 						onblur={handleBlur}
 					>
-						{#if item.icon}
-							<span class="text-lg" aria-hidden="true">{item.icon}</span>
+					{#if item.icon}
+						<span class="text-lg" aria-hidden="true">{item.icon}</span>
+					{/if}
+					<span class="flex flex-col">
+						<Text text={item.label} />
+						{#if item.description}
+							<Text text={item.description} size="xs" class="opacity-60" />
 						{/if}
-						<span class="flex flex-col">
-							<span>{item.label}</span>
-							{#if item.description}
-								<span class="text-xs opacity-60">{item.description}</span>
-							{/if}
-						</span>
-					</button>
+					</span>
+				</button>
 				{/if}
 			</li>
 			{#if item.divider && index < items.length - 1}
