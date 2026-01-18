@@ -90,14 +90,6 @@ SPDX-License-Identifier: MIT
 		 */
 		ariaLabel?: string;
 		/**
-		 * ARIA disabled attribute
-		 */
-		'aria-disabled'?: boolean;
-		/**
-		 * HTML tabindex attribute
-		 */
-		tabindex?: number;
-		/**
 		 * Title attribute for tooltip
 		 */
 		title?: string;
@@ -143,8 +135,6 @@ SPDX-License-Identifier: MIT
 		'aria-disabled': ariaDisabled,
 		'aria-current': ariaCurrent,
 		ariaLabel,
-		'aria-disabled': ariaDisabled,
-		tabindex,
 		title,
 		download,
 		onclick,

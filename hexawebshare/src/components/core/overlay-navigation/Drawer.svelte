@@ -5,6 +5,8 @@ SPDX-License-Identifier: MIT
 
 <script lang="ts">
 	import type { Snippet } from 'svelte';
+	import IconButton from '../buttons/IconButton.svelte';
+	import Heading from '../typography/Heading.svelte';
 
 	interface Props {
 		/**
@@ -48,6 +50,11 @@ SPDX-License-Identifier: MIT
 		 */
 		closeOnEscape?: boolean;
 		/**
+		 * Whether the drawer opens on hover (mouse enter) and closes on mouse leave
+		 * @default false
+		 */
+		hoverable?: boolean;
+		/**
 		 * Custom class for drawer container
 		 */
 		class?: string;
@@ -59,6 +66,11 @@ SPDX-License-Identifier: MIT
 		 * Custom class for drawer content area
 		 */
 		contentClass?: string;
+		/**
+		 * Whether to use menu styling (adds menu class and removes default padding)
+		 * @default true
+		 */
+		menuStyle?: boolean;
 		/**
 		 * ARIA label for accessibility
 		 */
@@ -84,9 +96,11 @@ SPDX-License-Identifier: MIT
 		closeOnBackdrop = true,
 		showCloseButton = true,
 		closeOnEscape = true,
+		hoverable = false,
 		class: className = '',
 		sideClass = '',
 		contentClass = '',
+		menuStyle = true,
 		ariaLabel,
 		onclose,
 		onopen,
@@ -130,7 +144,7 @@ SPDX-License-Identifier: MIT
 	// Drawer content classes (the actual drawer panel)
 	let drawerContentClasses = $derived(
 		[
-			'menu',
+			menuStyle && 'menu',
 			'bg-base-200',
 			'text-base-content',
 			'min-h-full',
@@ -147,10 +161,15 @@ SPDX-License-Identifier: MIT
 			.join(' ')
 	);
 
-	// Handle backdrop click
-	function handleBackdropClick() {
-		if (closeOnBackdrop) {
-			open = false;
+	// Handle checkbox change (for backdrop click control)
+	function handleCheckboxChange(event: Event) {
+		const target = event.target as HTMLInputElement;
+		if (!target.checked && !closeOnBackdrop) {
+			// If closeOnBackdrop is false, prevent closing by checking it again
+			target.checked = true;
+			open = true;
+		} else {
+			open = target.checked;
 		}
 	}
 
@@ -167,7 +186,21 @@ SPDX-License-Identifier: MIT
 		open = false;
 	}
 
-	// Add/remove escape key listener
+	// Handle mouse enter (for hover mode)
+	function handleMouseEnter() {
+		if (hoverable) {
+			open = true;
+		}
+	}
+
+	// Handle mouse leave (for hover mode)
+	function handleMouseLeave() {
+		if (hoverable) {
+			open = false;
+		}
+	}
+
+	// Add remove escape key listener
 	$effect(() => {
 		if (open && closeOnEscape) {
 			window.addEventListener('keydown', handleKeyDown);
@@ -178,7 +211,12 @@ SPDX-License-Identifier: MIT
 	});
 </script>
 
-<div class={drawerClasses} {...props}>
+<div
+	class={drawerClasses}
+	onmouseenter={hoverable ? handleMouseEnter : undefined}
+	onmouseleave={hoverable ? handleMouseLeave : undefined}
+	{...props}
+>
 	<!-- Hidden checkbox for DaisyUI drawer state -->
 	<input
 		type="checkbox"
@@ -186,6 +224,7 @@ SPDX-License-Identifier: MIT
 		class="drawer-toggle"
 		checked={open}
 		aria-label={ariaLabel || 'Toggle drawer'}
+		onchange={handleCheckboxChange}
 	/>
 
 	<!-- Main content area -->
@@ -199,12 +238,7 @@ SPDX-License-Identifier: MIT
 	<div class={drawerSideClasses}>
 		<!-- Backdrop overlay -->
 		{#if overlay}
-			<label
-				for={toggleId}
-				class="drawer-overlay"
-				onclick={handleBackdropClick}
-				aria-label="Close drawer"
-			></label>
+			<label for={toggleId} class="drawer-overlay" aria-label="Close drawer"></label>
 		{/if}
 
 		<!-- Drawer content -->
@@ -218,13 +252,15 @@ SPDX-License-Identifier: MIT
 			{#if title || showCloseButton}
 				<div class="mb-4 flex items-center justify-between">
 					{#if title}
-						<h2 class="text-xl font-bold">{title}</h2>
+						<Heading level="h2" size="xl" weight="bold" text={title} />
 					{/if}
 					{#if showCloseButton}
-						<button
-							class="btn btn-circle btn-ghost btn-sm"
+						<IconButton
+							variant="ghost"
+							size="sm"
+							circle={true}
 							onclick={handleClose}
-							aria-label="Close drawer"
+							ariaLabel="Close drawer"
 						>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -240,7 +276,7 @@ SPDX-License-Identifier: MIT
 									d="M6 18L18 6M6 6l12 12"
 								/>
 							</svg>
-						</button>
+						</IconButton>
 					{/if}
 				</div>
 			{/if}

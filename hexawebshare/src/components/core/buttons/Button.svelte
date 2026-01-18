@@ -38,7 +38,6 @@ SPDX-License-Identifier: MIT
 		tabindex?: number;
 		role?: string;
 		'aria-disabled'?: boolean;
-		'aria-current'?: 'page' | 'step' | 'location' | 'date' | 'time' | boolean;
 	}
 
 	const {

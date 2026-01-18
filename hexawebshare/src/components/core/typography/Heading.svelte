@@ -23,10 +23,6 @@ SPDX-License-Identifier: MIT
 		 */
 		text?: string;
 		/**
-		 * Element ID
-		 */
-		id?: string;
-		/**
 		 * HTML heading level (h1, h2, h3, h4, h5, h6)
 		 * @default 'h2'
 		 */
@@ -118,10 +114,6 @@ SPDX-License-Identifier: MIT
 		 */
 		ariaLevel?: number;
 		/**
-		 * HTML id attribute
-		 */
-		id?: string;
-		/**
 		 * Additional CSS classes
 		 */
 		class?: string;
@@ -152,7 +144,6 @@ SPDX-License-Identifier: MIT
 		withMargin = false,
 		ariaLabel,
 		ariaLevel,
-		id,
 		class: className = '',
 		onclick,
 		...props

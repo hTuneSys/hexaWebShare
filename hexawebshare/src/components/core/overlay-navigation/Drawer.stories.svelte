@@ -43,6 +43,14 @@ SPDX-License-Identifier: MIT
 				control: 'boolean',
 				description: 'Whether to allow closing with Escape key'
 			},
+			hoverable: {
+				control: 'boolean',
+				description: 'Whether the drawer opens on hover (mouse enter) and closes on mouse leave'
+			},
+			menuStyle: {
+				control: 'boolean',
+				description: 'Whether to use menu styling (adds menu class)'
+			},
 			ariaLabel: {
 				control: 'text',
 				description: 'ARIA label for accessibility'
