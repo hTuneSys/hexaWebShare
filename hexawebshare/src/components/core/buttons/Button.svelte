@@ -31,10 +31,9 @@ SPDX-License-Identifier: MIT
 		'aria-current'?: 'page' | 'step' | 'location' | 'date' | 'time' | boolean;
 		onclick?: () => void;
 		onkeydown?: (event: KeyboardEvent) => void;
-		/**
-		 * Additional CSS classes
-		 */
 		class?: string;
+		tabindex?: number;
+		'aria-disabled'?: boolean;
 	}
 
 	const {
@@ -49,36 +48,39 @@ SPDX-License-Identifier: MIT
 		disabled = false,
 		loading = false,
 		ariaLabel,
-		'aria-current': ariaCurrent,
+		onkeydown,
 		class: className = '',
+		tabindex,
+		'aria-disabled': ariaDisabled,
 		...props
 	}: Props = $props();
 
 	let buttonClasses = $derived(
-		[
-			'btn',
-			variant === 'primary' && 'btn-primary',
-			variant === 'secondary' && 'btn-secondary',
-			variant === 'accent' && 'btn-accent',
-			variant === 'neutral' && 'btn-neutral',
-			variant === 'info' && 'btn-info',
-			variant === 'success' && 'btn-success',
-			variant === 'warning' && 'btn-warning',
-			variant === 'error' && 'btn-error',
-			variant === 'ghost' && 'btn-ghost',
-			variant === 'link' && 'btn-link',
-			size === 'xs' && 'btn-xs',
-			size === 'sm' && 'btn-sm',
-			size === 'md' && 'btn-md',
-			size === 'lg' && 'btn-lg',
-			outline && 'btn-outline',
-			wide && 'btn-wide',
-			block && 'btn-block',
-			glass && 'glass',
-			className
-		]
-			.filter(Boolean)
-			.join(' ')
+		className
+			? className
+			: [
+					'btn',
+					variant === 'primary' && 'btn-primary',
+					variant === 'secondary' && 'btn-secondary',
+					variant === 'accent' && 'btn-accent',
+					variant === 'neutral' && 'btn-neutral',
+					variant === 'info' && 'btn-info',
+					variant === 'success' && 'btn-success',
+					variant === 'warning' && 'btn-warning',
+					variant === 'error' && 'btn-error',
+					variant === 'ghost' && 'btn-ghost',
+					variant === 'link' && 'btn-link',
+					size === 'xs' && 'btn-xs',
+					size === 'sm' && 'btn-sm',
+					size === 'md' && 'btn-md',
+					size === 'lg' && 'btn-lg',
+					outline && 'btn-outline',
+					wide && 'btn-wide',
+					block && 'btn-block',
+					glass && 'glass'
+				]
+					.filter(Boolean)
+					.join(' ')
 	);
 </script>
 
@@ -87,12 +89,19 @@ SPDX-License-Identifier: MIT
 	class={buttonClasses}
 	{disabled}
 	aria-label={ariaLabel}
-	aria-current={ariaCurrent}
+	aria-disabled={ariaDisabled || disabled || undefined}
+	{tabindex}
+	{onkeydown}
 	{...props}
 >
 	{#if loading}
 		<span class="loading loading-spinner"></span>
 	{:else if children}
+		{@render children()}
+	{:else if label}
+		{label}
+	{/if}
+	{#if children}
 		{@render children()}
 	{:else if label}
 		{label}
