@@ -110,6 +110,10 @@ SPDX-License-Identifier: MIT
 		 */
 		ariaLevel?: number;
 		/**
+		 * HTML id attribute
+		 */
+		id?: string;
+		/**
 		 * Additional CSS classes
 		 */
 		class?: string;
@@ -139,6 +143,7 @@ SPDX-License-Identifier: MIT
 		withMargin = false,
 		ariaLabel,
 		ariaLevel,
+		id,
 		class: className = '',
 		onclick,
 		...props
@@ -348,6 +353,7 @@ SPDX-License-Identifier: MIT
 
 {#if level === 'h1'}
 	<h1
+		{id}
 		class={headingClasses}
 		aria-label={ariaLabel}
 		aria-level={ariaLevel}
@@ -362,6 +368,7 @@ SPDX-License-Identifier: MIT
 	</h1>
 {:else if level === 'h2'}
 	<h2
+		{id}
 		class={headingClasses}
 		aria-label={ariaLabel}
 		aria-level={ariaLevel}
@@ -376,6 +383,7 @@ SPDX-License-Identifier: MIT
 	</h2>
 {:else if level === 'h3'}
 	<h3
+		{id}
 		class={headingClasses}
 		aria-label={ariaLabel}
 		aria-level={ariaLevel}
@@ -390,6 +398,7 @@ SPDX-License-Identifier: MIT
 	</h3>
 {:else if level === 'h4'}
 	<h4
+		{id}
 		class={headingClasses}
 		aria-label={ariaLabel}
 		aria-level={ariaLevel}
@@ -404,6 +413,7 @@ SPDX-License-Identifier: MIT
 	</h4>
 {:else if level === 'h5'}
 	<h5
+		{id}
 		class={headingClasses}
 		aria-label={ariaLabel}
 		aria-level={ariaLevel}
@@ -418,6 +428,7 @@ SPDX-License-Identifier: MIT
 	</h5>
 {:else if level === 'h6'}
 	<h6
+		{id}
 		class={headingClasses}
 		aria-label={ariaLabel}
 		aria-level={ariaLevel}
