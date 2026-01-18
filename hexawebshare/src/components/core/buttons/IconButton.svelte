@@ -32,16 +32,15 @@ SPDX-License-Identifier: MIT
 		onclick?: () => void;
 		onkeydown?: (event: KeyboardEvent) => void;
 		children?: Snippet;
-		class?: string;
-		/**
-		 * Additional CSS classes
-		 */
-		class?: string;
 		/**
 		 * Additional CSS classes
 		 * @default ''
 		 */
 		class?: string;
+		/**
+		 * Inline CSS style attribute
+		 */
+		style?: string;
 		/**
 		 * Default icon polygon points (used when no children provided)
 		 * @default '12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'
@@ -76,7 +75,6 @@ SPDX-License-Identifier: MIT
 		defaultIconPoints = '12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2',
 		defaultIconWidth = '20',
 		defaultIconHeight = '20',
-		class: className = '',
 		...props
 	}: Props = $props();
 

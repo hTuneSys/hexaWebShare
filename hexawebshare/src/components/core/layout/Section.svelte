@@ -197,7 +197,7 @@ SPDX-License-Identifier: MIT
 	{#if title || description || icon || headerActions || collapsible}
 		{#if collapsible}
 			<Button
-				variant="unstyled"
+				variant="ghost"
 				class="{headerClasses} w-full border-0 bg-transparent p-0 text-left"
 				onclick={toggleCollapsed}
 				onkeydown={handleKeyDown}

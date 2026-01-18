@@ -29,6 +29,9 @@ SPDX-License-Identifier: MIT
 		loading?: boolean;
 		ariaLabel?: string;
 		'aria-current'?: 'page' | 'step' | 'location' | 'date' | 'time' | boolean;
+		'aria-checked'?: boolean | 'true' | 'false' | 'mixed';
+		'aria-pressed'?: boolean | 'true' | 'false' | 'mixed';
+		'aria-expanded'?: boolean;
 		onclick?: () => void;
 		onkeydown?: (event: KeyboardEvent) => void;
 		onfocus?: (event: FocusEvent) => void;
@@ -38,7 +41,6 @@ SPDX-License-Identifier: MIT
 		tabindex?: number;
 		role?: string;
 		'aria-disabled'?: boolean;
-		'aria-current'?: 'page' | 'step' | 'location' | 'date' | 'time' | boolean;
 	}
 
 	const {
