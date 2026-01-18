@@ -4,6 +4,8 @@ SPDX-License-Identifier: MIT
 -->
 
 <script lang="ts">
+	import Text from '../typography/Text.svelte';
+
 	/**
 	 * Props interface for the ProgressBar component
 	 */
@@ -104,10 +106,19 @@ SPDX-License-Identifier: MIT
 	aria-valuemax={max}
 	{...props}
 >
+	<!-- 
+		NOTE: Raw HTML div element used for structural layout.
+		This flexbox container aligns the progress bar and label (no semantic meaning).
+	-->
 	<div class="flex items-center gap-2">
 		<progress class={progressClasses} {value} {max}></progress>
 		{#if showLabel}
-			<span class="min-w-[3rem] text-right text-sm font-medium">{Math.round(percentage)}%</span>
+			<Text
+				text={`${Math.round(percentage)}%`}
+				size="sm"
+				weight="medium"
+				class="min-w-[3rem] text-right"
+			/>
 		{/if}
 	</div>
 </div>

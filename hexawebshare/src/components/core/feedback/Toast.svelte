@@ -5,6 +5,10 @@ SPDX-License-Identifier: MIT
 
 <script lang="ts">
 	import { onDestroy } from 'svelte';
+	import Button from '../buttons/Button.svelte';
+	import IconButton from '../buttons/IconButton.svelte';
+	import Text from '../typography/Text.svelte';
+	import Spinner from './Spinner.svelte';
 
 	type ToastVariant = 'info' | 'success' | 'warning' | 'error' | 'neutral';
 	type ToastPosition =
@@ -243,32 +247,30 @@ SPDX-License-Identifier: MIT
 				{/if}
 
 				{#if loading}
-					<span class="loading loading-spinner loading-sm text-current" aria-hidden="true"></span>
+					<Spinner type="spinner" size="sm" class="text-current" ariaLabel="Loading" />
 				{/if}
 
 				<div class="flex-1 space-y-1">
 					{#if title}
-						<p class="leading-tight font-semibold">{title}</p>
+						<Text display="block" weight="semibold" leading="tight" text={title} />
 					{/if}
-					<p class="text-sm leading-snug">{message}</p>
+					<Text display="block" size="sm" leading="snug" text={message} />
 				</div>
 
 				{#if actionLabel}
-					<button type="button" class="btn btn-ghost btn-sm" onclick={handleAction} {disabled}>
-						{actionLabel}
-					</button>
+					<Button variant="ghost" size="sm" label={actionLabel} onclick={handleAction} {disabled} />
 				{/if}
 
 				{#if closable}
-					<button
-						type="button"
-						class="btn btn-square btn-ghost btn-sm"
-						aria-label="Close notification"
+					<IconButton
+						variant="ghost"
+						size="sm"
+						square
+						ariaLabel="Close notification"
 						onclick={handleDismiss}
 						{disabled}
-					>
-						<span aria-hidden="true">&times;</span>
-					</button>
+						defaultIconPoints="18 6 6 18 M 6 6 18 18"
+					/>
 				{/if}
 			</div>
 		</div>

@@ -44,10 +44,6 @@ SPDX-License-Identifier: MIT
 				control: 'boolean',
 				description: 'Whether the icon is disabled (reduced opacity)'
 			},
-			clickable: {
-				control: 'boolean',
-				description: 'Make the icon clickable with hover effects'
-			},
 			ariaLabel: {
 				control: 'text',
 				description: 'Accessible label for screen readers'
@@ -63,9 +59,7 @@ SPDX-License-Identifier: MIT
 			variant: 'primary',
 			spin: false,
 			disabled: false,
-			clickable: false,
-			ariaHidden: true,
-			onclick: fn()
+			ariaHidden: true
 		}
 	});
 </script>
@@ -92,10 +86,6 @@ SPDX-License-Identifier: MIT
 	name="Disabled State"
 	args={{ name: 'star', size: 'xl', variant: 'primary', disabled: true }}
 />
-<Story
-	name="Clickable State"
-	args={{ name: 'star', size: 'xl', variant: 'primary', clickable: true }}
-/>
 
 <!-- Playground -->
 <Story
@@ -106,7 +96,6 @@ SPDX-License-Identifier: MIT
 		variant: 'primary',
 		spin: false,
 		disabled: false,
-		clickable: false,
 		ariaLabel: 'Interactive icon',
 		ariaHidden: false
 	}}

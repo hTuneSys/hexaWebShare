@@ -4,6 +4,8 @@ SPDX-License-Identifier: MIT
 -->
 
 <script lang="ts">
+	import Text from '../typography/Text.svelte';
+
 	type LoaderType = 'spinner' | 'dots' | 'ring' | 'bars' | 'ball';
 	type LoaderSize = 'xs' | 'sm' | 'md' | 'lg';
 	type LoaderStatus = 'loading' | 'success' | 'warning' | 'error';
@@ -40,6 +42,14 @@ SPDX-License-Identifier: MIT
 		ariaLive?: 'polite' | 'assertive';
 		/** Custom ARIA label */
 		ariaLabel?: string;
+		/** Text label for loading status @default 'Loading' */
+		loadingLabel?: string;
+		/** Text label for success status @default 'Completed' */
+		successLabel?: string;
+		/** Text label for warning status @default 'Please wait' */
+		warningLabel?: string;
+		/** Text label for error status @default 'Error' */
+		errorLabel?: string;
 		/** Additional classes for the wrapper */
 		class?: string;
 	}
@@ -56,6 +66,10 @@ SPDX-License-Identifier: MIT
 		disabled = false,
 		ariaLive,
 		ariaLabel,
+		loadingLabel = 'Loading',
+		successLabel = 'Completed',
+		warningLabel = 'Please wait',
+		errorLabel = 'Error',
 		class: className = '',
 		...props
 	}: Props = $props();
@@ -67,12 +81,12 @@ SPDX-License-Identifier: MIT
 		error: 'error'
 	};
 
-	const statusLabelMap: Record<LoaderStatus, string> = {
-		loading: 'Loading',
-		success: 'Completed',
-		warning: 'Please wait',
-		error: 'Error'
-	};
+	let statusLabelMap = $derived({
+		loading: loadingLabel,
+		success: successLabel,
+		warning: warningLabel,
+		error: errorLabel
+	});
 
 	let labelText = $derived(providedLabel ?? statusLabelMap[status]);
 	let liveSetting = $derived(ariaLive ?? (status === 'error' ? 'assertive' : 'polite'));
@@ -128,12 +142,20 @@ SPDX-License-Identifier: MIT
 	aria-label={ariaLabel ?? labelText}
 	{...props}
 >
+	<!-- 
+		NOTE: Raw HTML span element used for structural decoration.
+		This is a DaisyUI loading indicator (aria-hidden), purely visual with no text content.
+	-->
 	<span class={indicatorClasses} aria-hidden="true"></span>
 
+	<!-- 
+		NOTE: Raw HTML div element used for structural layout.
+		This container groups label and description text (no semantic meaning).
+	-->
 	<div class="space-y-1">
-		<p class="leading-tight font-semibold">{labelText}</p>
+		<Text text={labelText} weight="semibold" class="leading-tight" />
 		{#if description}
-			<p class="text-base-content/80 text-sm">{description}</p>
+			<Text text={description} size="sm" class="text-base-content/80" />
 		{/if}
 	</div>
 </div>

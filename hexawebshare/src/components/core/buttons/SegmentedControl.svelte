@@ -4,6 +4,8 @@ SPDX-License-Identifier: MIT
 -->
 
 <script lang="ts">
+	import Button from './Button.svelte';
+
 	interface SegmentOption {
 		value: string | number;
 		label: string;
@@ -49,29 +51,30 @@ SPDX-License-Identifier: MIT
 		const firstEnabledIndex = options.findIndex((opt) => !opt.disabled);
 		return firstEnabledIndex !== -1 ? firstEnabledIndex : 0;
 	});
-
-	// Explicit static DaisyUI classes mapping
-	let sizeClass = $derived(
-		size === 'xs' ? 'btn-xs' : size === 'sm' ? 'btn-sm' : size === 'lg' ? 'btn-lg' : '' // md is default
-	);
 </script>
 
 <div class="join {className}" role="radiogroup" {...props}>
 	{#if name}
+		<!-- 
+			NOTE: Raw HTML input is intentional here.
+			This hidden input is used solely for form submission and has no visual/interactive behavior.
+			Using the Input component would add unnecessary overhead (labels, validation, styling, etc.).
+			Component composition applies to user-facing elements, not form utilities.
+		-->
 		<input type="hidden" {name} {value} />
 	{/if}
 	{#each options as option, index}
-		<button
-			type="button"
+		<Button
+			label={option.label}
+			{size}
+			variant={value === option.value ? 'primary' : undefined}
+			disabled={disabled || option.disabled}
+			onclick={() => handleClick(option.value)}
+			class="join-item {value === option.value ? 'btn-active' : ''}"
 			role="radio"
 			aria-checked={value === option.value}
 			aria-disabled={disabled || option.disabled}
 			tabindex={disabled || option.disabled ? -1 : index === focusableIndex ? 0 : -1}
-			class="btn join-item {sizeClass} {value === option.value ? 'btn-primary btn-active' : ''}"
-			disabled={disabled || option.disabled}
-			onclick={() => handleClick(option.value)}
-		>
-			{option.label}
-		</button>
+		/>
 	{/each}
 </div>

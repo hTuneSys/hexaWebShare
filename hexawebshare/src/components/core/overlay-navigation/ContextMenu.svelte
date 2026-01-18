@@ -4,6 +4,8 @@ SPDX-License-Identifier: MIT
 -->
 
 <script lang="ts">
+	import Text from '../typography/Text.svelte';
+
 	/**
 	 * Menu item interface for ContextMenu
 	 */
@@ -129,14 +131,6 @@ SPDX-License-Identifier: MIT
 			.filter(Boolean)
 			.join(' ');
 	};
-
-	// Derived position styles for menu
-	let menuPosition = $derived({
-		left: `${x}px`,
-		top: `${y}px`,
-		position: 'fixed' as const,
-		zIndex: 1000
-	});
 
 	// Calculate if menu would overflow viewport (for future auto-positioning)
 	let menuStyle = $derived(
@@ -292,6 +286,22 @@ SPDX-License-Identifier: MIT
 		{...props}
 	>
 		{#each items as item, index}
+			<!-- 
+				NOTE: Raw HTML <button> is intentional here instead of Button component.
+				TECHNICAL REASON: 
+				1. WAI-ARIA menuitem pattern requires <button role="menuitem"> for proper semantics
+				2. DaisyUI's .menu pattern requires unstyled button elements (no .btn classes)
+				3. Button component adds .btn classes that conflict with menu-item styling
+				ATTEMPTED SOLUTIONS:
+				1. Used Button component - added .btn classes breaking menu hover/focus states
+				2. Tried Button with variant="ghost" - still adds .btn base classes
+				CONSEQUENCE: Using Button component would break:
+				- DaisyUI menu CSS cascade (.menu > button selectors)
+				- Custom menu-item classes (hover:bg-base-200 wouldn't work)
+				- ARIA menuitem keyboard navigation patterns
+				VALIDATION: WAI-ARIA Authoring Practices Guide (Menu pattern) + DaisyUI v4.x menu docs
+				TODO: Consider adding 'unstyled' or 'raw' variant to Button component for this use case
+			-->
 			<button
 				type="button"
 				class={getMenuItemClasses(item, index)}
@@ -301,7 +311,7 @@ SPDX-License-Identifier: MIT
 				tabindex={item.disabled ? -1 : focusedIndex === index ? 0 : -1}
 				onclick={() => handleItemClick(item)}
 			>
-				{item.label}
+				<Text text={item.label} />
 			</button>
 			{#if item.divider && index < items.length - 1}
 				<div class="divider my-1" role="separator" aria-orientation="horizontal"></div>

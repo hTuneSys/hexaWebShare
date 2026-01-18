@@ -4,6 +4,8 @@ SPDX-License-Identifier: MIT
 -->
 
 <script lang="ts">
+	import Text from '../typography/Text.svelte';
+
 	/**
 	 * Props interface for the Toggle component
 	 */
@@ -54,6 +56,16 @@ SPDX-License-Identifier: MIT
 		 */
 		ariaDescribedby?: string;
 		/**
+		 * Accessible label for toggle when no label is provided
+		 * @default 'Toggle'
+		 */
+		toggleAriaLabel?: string;
+		/**
+		 * Accessible label for required field indicator
+		 * @default 'required'
+		 */
+		requiredLabel?: string;
+		/**
 		 * Change event handler
 		 */
 		onchange?: (event: Event) => void;
@@ -70,11 +82,11 @@ SPDX-License-Identifier: MIT
 		required = false,
 		ariaLabel,
 		ariaDescribedby,
+		toggleAriaLabel = 'Toggle',
+		requiredLabel = 'required',
 		onchange,
 		...props
 	}: Props = $props();
-
-	let toggleElement = $state<HTMLInputElement | null>(null);
 
 	// Internal state for checked value
 	let checked = $state(checkedProp);
@@ -86,9 +98,8 @@ SPDX-License-Identifier: MIT
 
 	// Handle change event
 	function handleChange(event: Event) {
-		if (toggleElement) {
-			checked = toggleElement.checked;
-		}
+		const target = event.target as HTMLInputElement;
+		checked = target.checked;
 		onchange?.(event);
 	}
 
@@ -111,23 +122,17 @@ SPDX-License-Identifier: MIT
 			.filter(Boolean)
 			.join(' ')
 	);
-
-	// Force update classes when variant or size changes (for Storybook reactivity)
-	$effect(() => {
-		if (toggleElement) {
-			// Access variant and size to track changes
-			const currentVariant = variant;
-			const currentSize = size;
-			// Force class update by reassigning
-			toggleElement.className = toggleClasses;
-		}
-	});
 </script>
 
 {#if label}
+	<!-- 
+		NOTE: Raw HTML label element used here.
+		REASON: Native HTML <label> required for form semantics and click-to-focus behavior.
+		The label wraps the toggle input and clicking the label toggles the switch.
+		Text component properly used for the label text content.
+	-->
 	<label class="label cursor-pointer justify-start gap-2">
 		<input
-			bind:this={toggleElement}
 			type="checkbox"
 			class={toggleClasses}
 			{checked}
@@ -140,11 +145,10 @@ SPDX-License-Identifier: MIT
 			onchange={handleChange}
 			{...props}
 		/>
-		<span class="label-text">{label}</span>
+		<Text text={label} size="sm" class="label-text" />
 	</label>
 {:else}
 	<input
-		bind:this={toggleElement}
 		type="checkbox"
 		class={toggleClasses}
 		{checked}
@@ -152,7 +156,7 @@ SPDX-License-Identifier: MIT
 		{name}
 		{value}
 		{required}
-		aria-label={ariaLabel || 'Toggle'}
+		aria-label={ariaLabel || toggleAriaLabel}
 		aria-describedby={ariaDescribedby}
 		onchange={handleChange}
 		{...props}

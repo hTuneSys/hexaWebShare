@@ -3,8 +3,64 @@ SPDX-FileCopyrightText: 2025 hexaTune LLC
 SPDX-License-Identifier: MIT
 -->
 
+<!--
+@component ListItem
+
+A standalone list item component with rich features for building custom lists.
+
+**Features:**
+- Multiple size variants (sm, md, lg)
+- Color variants for active/selected states
+- Loading state with skeleton placeholders
+- Disabled state
+- Hoverable styling
+- Link support (href prop)
+- Keyboard navigation
+- Leading/trailing content slots (icons, badges, actions)
+- Full content customization via children snippet
+
+**Relationship with List component:**
+- ListItem is a standalone component, can be used independently or within List
+- When used within List's children snippet, provides full customization
+- List component's items array mode handles basic cases internally
+- Use ListItem for advanced scenarios requiring custom rendering logic
+
+**Example - Standalone:**
+```svelte
+<ListItem 
+  label="Settings" 
+  description="Manage your preferences"
+  active 
+  variant="primary"
+  leading={settingsIconSnippet}
+/>
+```
+
+**Example - Within List:**
+```svelte
+<List>
+  <li><ListItem label="Item 1" /></li>
+  <li><ListItem label="Item 2" active /></li>
+</List>
+```
+
+**Example - With snippets:**
+```svelte
+<ListItem label="User Profile">
+  {#snippet leading()}
+    <Avatar src="/user.jpg" size="sm" />
+  {/snippet}
+  {#snippet trailing()}
+    <Badge label="Pro" variant="success" />
+  {/snippet}
+</ListItem>
+```
+-->
+
 <script lang="ts">
 	import type { Snippet } from 'svelte';
+	import Spinner from '../feedback/Spinner.svelte';
+	import Text from '../typography/Text.svelte';
 
 	/**
 	 * Props interface for the ListItem component
@@ -158,17 +214,22 @@ SPDX-License-Identifier: MIT
 			.join(' ')
 	);
 
-	// Text content classes
-	let labelClasses = $derived(
-		['font-medium truncate', loading && 'skeleton w-32 h-4', disabled && 'text-base-content/50']
+	// Text styling for labels
+	let labelExtraClasses = $derived(
+		[
+			'truncate',
+			loading && 'skeleton w-32 h-4',
+			disabled && 'text-base-content/50',
+			active && 'font-semibold'
+		]
 			.filter(Boolean)
 			.join(' ')
 	);
 
-	let descriptionClasses = $derived(
+	let descriptionExtraClasses = $derived(
 		[
-			'text-sm truncate',
-			active ? 'opacity-80' : 'text-base-content/70',
+			'truncate',
+			active ? 'opacity-80' : 'opacity-70',
 			loading && 'skeleton w-48 h-3 mt-1',
 			disabled && 'text-base-content/40'
 		]
@@ -209,6 +270,17 @@ SPDX-License-Identifier: MIT
 	}
 </script>
 
+<!-- 
+	NOTE: Raw HTML span elements are used in this component for structural layout.
+	REASON: These spans are pure flexbox containers with no semantic meaning.
+	TECHNICAL JUSTIFICATION:
+	- flex-shrink-0: Prevents icon/avatar/badge from being compressed in flex layout
+	- min-w-0 flex-1: Enables text truncation (without min-w-0, flex items don't shrink below content size)
+	- All structural spans are marked with aria-hidden="true" to indicate they're decorative
+	NO LIBRARY COMPONENT EXISTS: No generic container component for flexbox wrappers
+	VALIDATION: This is a standard CSS flexbox pattern for truncating text in flex containers
+-->
+
 {#if href && !disabled}
 	<!-- Link variant -->
 	<a
@@ -222,7 +294,13 @@ SPDX-License-Identifier: MIT
 		{...props}
 	>
 		{#if loading}
-			<span class="loading loading-spinner {spinnerSizeClass}" aria-hidden="true"></span>
+			<Spinner
+				size={spinnerSizeClass === 'loading-xs'
+					? 'xs'
+					: spinnerSizeClass === 'loading-sm'
+						? 'sm'
+						: 'md'}
+			/>
 		{:else if leading}
 			<span class="flex-shrink-0" aria-hidden="true">
 				{@render leading()}
@@ -233,9 +311,9 @@ SPDX-License-Identifier: MIT
 			{#if children}
 				{@render children()}
 			{:else}
-				<span class={labelClasses}>{label}</span>
+				<Text text={label} weight="medium" class={labelExtraClasses} />
 				{#if description}
-					<span class={descriptionClasses}>{description}</span>
+					<Text text={description} size="sm" class={descriptionExtraClasses} />
 				{/if}
 			{/if}
 		</span>
@@ -262,7 +340,13 @@ SPDX-License-Identifier: MIT
 		{...props}
 	>
 		{#if loading}
-			<span class="loading loading-spinner {spinnerSizeClass}" aria-hidden="true"></span>
+			<Spinner
+				size={spinnerSizeClass === 'loading-xs'
+					? 'xs'
+					: spinnerSizeClass === 'loading-sm'
+						? 'sm'
+						: 'md'}
+			/>
 		{:else if leading}
 			<span class="flex-shrink-0" aria-hidden="true">
 				{@render leading()}
@@ -273,9 +357,9 @@ SPDX-License-Identifier: MIT
 			{#if children}
 				{@render children()}
 			{:else}
-				<span class={labelClasses}>{label}</span>
+				<Text text={label} weight="medium" class={labelExtraClasses} />
 				{#if description}
-					<span class={descriptionClasses}>{description}</span>
+					<Text text={description} size="sm" class={descriptionExtraClasses} />
 				{/if}
 			{/if}
 		</span>

@@ -4,6 +4,8 @@ SPDX-License-Identifier: MIT
 -->
 
 <script lang="ts">
+	import Text from '../typography/Text.svelte';
+
 	interface Props {
 		variant?: 'primary' | 'secondary' | 'accent' | 'success' | 'warning' | 'info' | 'error';
 		size?: 'xs' | 'sm' | 'md' | 'lg';
@@ -15,8 +17,12 @@ SPDX-License-Identifier: MIT
 		value?: string;
 		required?: boolean;
 		ariaLabel?: string;
+		ariaLabelFallback?: string;
 		ariaDescribedby?: string;
+		tabindex?: number;
+		class?: string;
 		onchange?: (event: Event) => void;
+		onclick?: (event: MouseEvent) => void;
 	}
 
 	const {
@@ -30,7 +36,10 @@ SPDX-License-Identifier: MIT
 		value,
 		required = false,
 		ariaLabel,
+		ariaLabelFallback = 'Checkbox',
 		ariaDescribedby,
+		tabindex,
+		class: className = '',
 		...props
 	}: Props = $props();
 
@@ -49,7 +58,8 @@ SPDX-License-Identifier: MIT
 			size === 'xs' && 'checkbox-xs',
 			size === 'sm' && 'checkbox-sm',
 			size === 'md' && 'checkbox-md',
-			size === 'lg' && 'checkbox-lg'
+			size === 'lg' && 'checkbox-lg',
+			className
 		]
 			.filter(Boolean)
 			.join(' ')
@@ -64,6 +74,12 @@ SPDX-License-Identifier: MIT
 </script>
 
 {#if label}
+	<!-- 
+		NOTE: Raw HTML label element used here.
+		REASON: Native HTML <label> required for form semantics and click-to-focus behavior.
+		The label wraps the checkbox input and clicking the label toggles the checkbox.
+		Text component properly used for the label text content.
+	-->
 	<label class="label cursor-pointer justify-start gap-2">
 		<input
 			bind:this={checkboxElement}
@@ -74,11 +90,12 @@ SPDX-License-Identifier: MIT
 			{name}
 			{value}
 			{required}
+			{tabindex}
 			aria-label={ariaLabel}
 			aria-describedby={ariaDescribedby}
 			{...props}
 		/>
-		<span class="label-text">{label}</span>
+		<Text text={label} size="sm" class="label-text" />
 	</label>
 {:else}
 	<input
@@ -90,7 +107,8 @@ SPDX-License-Identifier: MIT
 		{name}
 		{value}
 		{required}
-		aria-label={ariaLabel || 'Checkbox'}
+		{tabindex}
+		aria-label={ariaLabel || ariaLabelFallback}
 		aria-describedby={ariaDescribedby}
 		{...props}
 	/>

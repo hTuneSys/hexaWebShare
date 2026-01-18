@@ -5,11 +5,11 @@ SPDX-License-Identifier: MIT
 
 <script module>
 	import { defineMeta } from '@storybook/addon-svelte-csf';
-	import ContainerWrapper from './ContainerWrapper.svelte';
+	import Container from './Container.svelte';
 
 	const { Story } = defineMeta({
 		title: 'Core/Layout/Container',
-		component: ContainerWrapper,
+		component: Container,
 		tags: ['autodocs'],
 		argTypes: {
 			maxWidth: {
@@ -49,21 +49,39 @@ SPDX-License-Identifier: MIT
 		padding: 'md',
 		centered: true,
 		fluid: false,
-		responsive: true,
-		content: 'This is a default container with medium padding and large max-width.'
+		responsive: true
 	}}
-/>
+>
+	{#snippet children()}
+		<div class="bg-base-100 rounded-lg p-6 shadow">
+			<h3 class="mb-2 text-xl font-bold">Container Content</h3>
+			<p class="text-base-content/70 mb-4">
+				This is a default container with medium padding and large max-width.
+			</p>
+			<div class="mt-4 flex gap-2">
+				<button class="btn btn-primary btn-sm">Action</button>
+				<button class="btn btn-secondary btn-sm">Secondary</button>
+			</div>
+		</div>
+	{/snippet}
+</Story>
 
 <!-- Max Width Variants -->
 <Story
-	name="Max Width Variants"
+	name="Max Width MD"
 	args={{
 		maxWidth: 'md',
 		padding: 'md',
-		centered: true,
-		content: 'Container with max-width: md (28rem / 448px)'
+		centered: true
 	}}
-/>
+>
+	{#snippet children()}
+		<div class="bg-base-100 rounded-lg p-6 shadow">
+			<h3 class="mb-2 text-xl font-bold">Medium Width Container</h3>
+			<p class="text-base-content/70">Container with max-width: md (28rem / 448px)</p>
+		</div>
+	{/snippet}
+</Story>
 
 <!-- Full Width -->
 <Story
@@ -71,21 +89,33 @@ SPDX-License-Identifier: MIT
 	args={{
 		maxWidth: 'full',
 		padding: 'md',
-		centered: true,
-		content: 'Container with max-width: full (100% of parent)'
+		centered: true
 	}}
-/>
+>
+	{#snippet children()}
+		<div class="bg-base-100 rounded-lg p-6 shadow">
+			<h3 class="mb-2 text-xl font-bold">Full Width Container</h3>
+			<p class="text-base-content/70">Container with max-width: full (100% of parent)</p>
+		</div>
+	{/snippet}
+</Story>
 
 <!-- Padding Variants -->
 <Story
-	name="Padding Variants"
+	name="Large Padding"
 	args={{
 		maxWidth: 'lg',
 		padding: 'lg',
-		centered: true,
-		content: 'Container with large padding (px-8 py-6)'
+		centered: true
 	}}
-/>
+>
+	{#snippet children()}
+		<div class="bg-base-100 rounded-lg p-6 shadow">
+			<h3 class="mb-2 text-xl font-bold">Large Padding</h3>
+			<p class="text-base-content/70">Container with large padding (px-8 py-6)</p>
+		</div>
+	{/snippet}
+</Story>
 
 <!-- No Padding -->
 <Story
@@ -93,21 +123,33 @@ SPDX-License-Identifier: MIT
 	args={{
 		maxWidth: 'lg',
 		padding: 'none',
-		centered: true,
-		content: 'Container with no padding'
+		centered: true
 	}}
-/>
+>
+	{#snippet children()}
+		<div class="bg-base-100 rounded-lg p-6 shadow">
+			<h3 class="mb-2 text-xl font-bold">No Padding Container</h3>
+			<p class="text-base-content/70">Container with no padding</p>
+		</div>
+	{/snippet}
+</Story>
 
-<!-- Layout Variants -->
+<!-- Not Centered -->
 <Story
 	name="Not Centered"
 	args={{
 		maxWidth: 'lg',
 		padding: 'md',
-		centered: false,
-		content: 'Container without centering (no mx-auto)'
+		centered: false
 	}}
-/>
+>
+	{#snippet children()}
+		<div class="bg-base-100 rounded-lg p-6 shadow">
+			<h3 class="mb-2 text-xl font-bold">Not Centered</h3>
+			<p class="text-base-content/70">Container without centering (no mx-auto)</p>
+		</div>
+	{/snippet}
+</Story>
 
 <!-- Fluid -->
 <Story
@@ -116,10 +158,16 @@ SPDX-License-Identifier: MIT
 		maxWidth: 'lg',
 		padding: 'md',
 		centered: false,
-		fluid: true,
-		content: 'Fluid container (full width without max-width constraint)'
+		fluid: true
 	}}
-/>
+>
+	{#snippet children()}
+		<div class="bg-base-100 rounded-lg p-6 shadow">
+			<h3 class="mb-2 text-xl font-bold">Fluid Container</h3>
+			<p class="text-base-content/70">Fluid container (full width without max-width constraint)</p>
+		</div>
+	{/snippet}
+</Story>
 
 <!-- With Custom Background -->
 <Story
@@ -128,23 +176,46 @@ SPDX-License-Identifier: MIT
 		maxWidth: 'lg',
 		padding: 'lg',
 		centered: true,
-		className: 'bg-base-200 rounded-lg shadow-lg',
-		content: 'Container with custom background, rounded corners, and shadow'
+		className: 'bg-base-200 rounded-lg shadow-lg'
 	}}
-/>
+>
+	{#snippet children()}
+		<div class="p-6">
+			<h3 class="mb-2 text-xl font-bold">Custom Background</h3>
+			<p class="text-base-content/70">
+				Container with custom background, rounded corners, and shadow
+			</p>
+		</div>
+	{/snippet}
+</Story>
 
-<!-- Full Page Layout -->
+<!-- Nested Containers -->
 <Story
-	name="Full Page Layout"
+	name="Nested Containers"
 	args={{
-		maxWidth: '7xl',
-		padding: 'xl',
-		centered: true,
-		responsive: true,
-		className: 'min-h-screen bg-base-200',
-		content: 'Full page layout container with minimum screen height'
+		maxWidth: 'lg',
+		padding: 'md',
+		centered: true
 	}}
-/>
+>
+	{#snippet children()}
+		<div class="bg-base-100 rounded-lg p-6 shadow">
+			<h3 class="mb-2 text-xl font-bold">Outer Container</h3>
+			<p class="text-base-content/70 mb-4">This container has a nested container inside.</p>
+
+			<Container maxWidth="md" padding="md" centered={true}>
+				{#snippet children()}
+					<div class="bg-base-200 rounded p-4">
+						<h4 class="mb-2 text-lg font-semibold">Nested Container</h4>
+						<p class="text-base-content/60 text-sm">
+							This is a nested container inside the outer container.
+						</p>
+					</div>
+				{/snippet}
+			</Container>
+		</div>
+	{/snippet}
+</Story>
 
 <!-- Playground -->
 <Story
@@ -154,7 +225,17 @@ SPDX-License-Identifier: MIT
 		padding: 'md',
 		centered: true,
 		fluid: false,
-		responsive: true,
-		content: 'Interactive container - use controls to customize'
+		responsive: true
 	}}
-/>
+>
+	{#snippet children()}
+		<div class="bg-base-100 rounded-lg p-6 shadow">
+			<h3 class="mb-2 text-xl font-bold">Interactive Container</h3>
+			<p class="text-base-content/70 mb-4">Use controls to customize this container.</p>
+			<div class="mt-4 flex gap-2">
+				<button class="btn btn-primary btn-sm">Primary Action</button>
+				<button class="btn btn-secondary btn-sm">Secondary</button>
+			</div>
+		</div>
+	{/snippet}
+</Story>

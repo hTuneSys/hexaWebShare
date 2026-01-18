@@ -5,6 +5,10 @@ SPDX-License-Identifier: MIT
 
 <script lang="ts">
 	import type { Snippet } from 'svelte';
+	import Badge from '../media/Badge.svelte';
+	import Text from '../typography/Text.svelte';
+	import Link from '../typography/Link.svelte';
+	import Button from '../buttons/Button.svelte';
 
 	/**
 	 * List item data structure for programmatic rendering
@@ -134,23 +138,6 @@ SPDX-License-Identifier: MIT
 			.filter(Boolean)
 			.join(' ');
 
-	// Get badge classes based on variant
-	const getBadgeClasses = (badgeVariant?: ListItemData['badgeVariant']) =>
-		[
-			'badge',
-			'badge-sm',
-			badgeVariant === 'primary' && 'badge-primary',
-			badgeVariant === 'secondary' && 'badge-secondary',
-			badgeVariant === 'accent' && 'badge-accent',
-			badgeVariant === 'info' && 'badge-info',
-			badgeVariant === 'success' && 'badge-success',
-			badgeVariant === 'warning' && 'badge-warning',
-			badgeVariant === 'error' && 'badge-error',
-			!badgeVariant && 'badge-neutral'
-		]
-			.filter(Boolean)
-			.join(' ');
-
 	// Handle item click
 	const handleItemClick = (item: ListItemData, index: number) => {
 		if (item.disabled || disabled) return;
@@ -245,60 +232,66 @@ SPDX-License-Identifier: MIT
 			{#each items as item, index (item.id)}
 				<li class={getItemClasses(item, index)}>
 					{#if item.href && !item.disabled}
-						<a
-							id="{listId}-item-{index}"
+						<Link
 							href={item.href}
 							class="flex items-center justify-between gap-2"
-							tabindex={item.disabled ? -1 : 0}
-							aria-disabled={item.disabled}
+							disabled={item.disabled}
+							ariaLabel={item.label}
 							onclick={() => handleItemClick(item, index)}
-							onkeydown={(e) => handleKeyDown(e, item, index)}
-							onfocus={() => handleFocus(index)}
-							onblur={handleBlur}
+							{...{
+								id: `${listId}-item-${index}`,
+								tabindex: item.disabled ? -1 : 0,
+								onkeydown: (e: KeyboardEvent) => handleKeyDown(e, item, index),
+								onfocus: () => handleFocus(index),
+								onblur: handleBlur
+							}}
 						>
 							<span class="flex items-center gap-2">
 								{#if item.icon}
 									<span class="text-lg" aria-hidden="true">{item.icon}</span>
 								{/if}
 								<span class="flex flex-col">
-									<span>{item.label}</span>
+									<Text text={item.label} />
 									{#if item.description}
-										<span class="text-xs opacity-60">{item.description}</span>
+										<Text text={item.description} size="xs" variant="muted" />
 									{/if}
 								</span>
 							</span>
 							{#if item.badge}
-								<span class={getBadgeClasses(item.badgeVariant)}>{item.badge}</span>
+								<Badge label={item.badge} variant={item.badgeVariant ?? 'neutral'} size="sm" />
 							{/if}
-						</a>
+						</Link>
 					{:else}
-						<button
-							type="button"
-							id="{listId}-item-{index}"
-							class="flex w-full items-center justify-between gap-2 text-left"
-							tabindex={item.disabled ? -1 : 0}
+						<Button
+							variant="ghost"
 							disabled={item.disabled || disabled}
-							aria-disabled={item.disabled || disabled}
+							ariaLabel={item.label}
 							onclick={() => handleItemClick(item, index)}
 							onkeydown={(e) => handleKeyDown(e, item, index)}
-							onfocus={() => handleFocus(index)}
-							onblur={handleBlur}
+							class="flex w-full items-center justify-between gap-2 text-left"
+							{...{
+								id: `${listId}-item-${index}`,
+								tabindex: item.disabled ? -1 : 0,
+								'aria-disabled': item.disabled || disabled,
+								onfocus: () => handleFocus(index),
+								onblur: handleBlur
+							}}
 						>
 							<span class="flex items-center gap-2">
 								{#if item.icon}
 									<span class="text-lg" aria-hidden="true">{item.icon}</span>
 								{/if}
 								<span class="flex flex-col">
-									<span>{item.label}</span>
+									<Text text={item.label} />
 									{#if item.description}
-										<span class="text-xs opacity-60">{item.description}</span>
+										<Text text={item.description} size="xs" variant="muted" />
 									{/if}
 								</span>
 							</span>
 							{#if item.badge}
-								<span class={getBadgeClasses(item.badgeVariant)}>{item.badge}</span>
+								<Badge label={item.badge} variant={item.badgeVariant ?? 'neutral'} size="sm" />
 							{/if}
-						</button>
+						</Button>
 					{/if}
 				</li>
 			{/each}
@@ -320,60 +313,66 @@ SPDX-License-Identifier: MIT
 			{#each items as item, index (item.id)}
 				<li class={getItemClasses(item, index)}>
 					{#if item.href && !item.disabled}
-						<a
-							id="{listId}-item-{index}"
+						<Link
 							href={item.href}
 							class="flex items-center justify-between gap-2"
-							tabindex={item.disabled ? -1 : 0}
-							aria-disabled={item.disabled}
+							disabled={item.disabled}
+							ariaLabel={item.label}
 							onclick={() => handleItemClick(item, index)}
-							onkeydown={(e) => handleKeyDown(e, item, index)}
-							onfocus={() => handleFocus(index)}
-							onblur={handleBlur}
+							{...{
+								id: `${listId}-item-${index}`,
+								tabindex: item.disabled ? -1 : 0,
+								onkeydown: (e: KeyboardEvent) => handleKeyDown(e, item, index),
+								onfocus: () => handleFocus(index),
+								onblur: handleBlur
+							}}
 						>
 							<span class="flex items-center gap-2">
 								{#if item.icon}
 									<span class="text-lg" aria-hidden="true">{item.icon}</span>
 								{/if}
 								<span class="flex flex-col">
-									<span>{item.label}</span>
+									<Text text={item.label} />
 									{#if item.description}
-										<span class="text-xs opacity-60">{item.description}</span>
+										<Text text={item.description} size="xs" variant="muted" />
 									{/if}
 								</span>
 							</span>
 							{#if item.badge}
-								<span class={getBadgeClasses(item.badgeVariant)}>{item.badge}</span>
+								<Badge label={item.badge} variant={item.badgeVariant ?? 'neutral'} size="sm" />
 							{/if}
-						</a>
+						</Link>
 					{:else}
-						<button
-							type="button"
-							id="{listId}-item-{index}"
-							class="flex w-full items-center justify-between gap-2 text-left"
-							tabindex={item.disabled ? -1 : 0}
+						<Button
+							variant="ghost"
 							disabled={item.disabled || disabled}
-							aria-disabled={item.disabled || disabled}
+							ariaLabel={item.label}
 							onclick={() => handleItemClick(item, index)}
 							onkeydown={(e) => handleKeyDown(e, item, index)}
-							onfocus={() => handleFocus(index)}
-							onblur={handleBlur}
+							class="flex w-full items-center justify-between gap-2 text-left"
+							{...{
+								id: `${listId}-item-${index}`,
+								tabindex: item.disabled ? -1 : 0,
+								'aria-disabled': item.disabled || disabled,
+								onfocus: () => handleFocus(index),
+								onblur: handleBlur
+							}}
 						>
 							<span class="flex items-center gap-2">
 								{#if item.icon}
 									<span class="text-lg" aria-hidden="true">{item.icon}</span>
 								{/if}
 								<span class="flex flex-col">
-									<span>{item.label}</span>
+									<Text text={item.label} />
 									{#if item.description}
-										<span class="text-xs opacity-60">{item.description}</span>
+										<Text text={item.description} size="xs" variant="muted" />
 									{/if}
 								</span>
 							</span>
 							{#if item.badge}
-								<span class={getBadgeClasses(item.badgeVariant)}>{item.badge}</span>
+								<Badge label={item.badge} variant={item.badgeVariant ?? 'neutral'} size="sm" />
 							{/if}
-						</button>
+						</Button>
 					{/if}
 				</li>
 			{/each}

@@ -27,6 +27,10 @@ opacity-50 cursor-not-allowed
 	 */
 	interface Props {
 		/**
+		 * HTML id attribute for the text element
+		 */
+		id?: string;
+		/**
 		 * Text content (alternative to children snippet)
 		 */
 		text?: string;
@@ -123,6 +127,7 @@ opacity-50 cursor-not-allowed
 	}
 
 	const {
+		id,
 		text,
 		display = 'inline',
 		size = 'base',
@@ -216,6 +221,7 @@ opacity-50 cursor-not-allowed
 </script>
 
 <span
+	{id}
 	class={textClasses}
 	aria-label={ariaLabel}
 	aria-hidden={isDecorative || undefined}

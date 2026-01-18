@@ -3,8 +3,52 @@ SPDX-FileCopyrightText: 2025 hexaTune LLC
 SPDX-License-Identifier: MIT
 -->
 
+<!--
+@component Table
+
+A comprehensive table component with sorting, selection, and customization options.
+
+**Features:**
+- Sortable columns with keyboard support
+- Row selection
+- Responsive design
+- Loading and empty states
+- Custom rendering via snippets
+- Built with modular helper components
+
+**Component Architecture:**
+- Table.svelte: Main orchestrator component
+- TableCaption.svelte: Caption rendering (uses Text component)
+- TableHeader.svelte: Column headers (uses Text + Icon components)
+- TableRow.svelte: Row rendering (uses TableCell components)
+- TableCell.svelte: Cell content (uses Text component)
+- TableFooter.svelte: Footer wrapper
+
+All helper components use library primitives (Text, Icon, EmptyState, Spinner) for consistency.
+
+**Example:**
+```svelte
+<Table
+  columns={[
+    { key: 'name', label: 'Name', sortable: true },
+    { key: 'email', label: 'Email', sortable: true }
+  ]}
+  data={users}
+  zebra
+  hover
+/>
+```
+-->
+
 <script lang="ts">
 	import type { Snippet } from 'svelte';
+	import Spinner from '../../feedback/Spinner.svelte';
+	import Text from '../../typography/Text.svelte';
+	import EmptyState from '../EmptyState.svelte';
+	import TableCaption from './TableCaption.svelte';
+	import TableHeader from './TableHeader.svelte';
+	import TableRow from './TableRow.svelte';
+	import TableFooter from './TableFooter.svelte';
 
 	/**
 	 * Column definition for the Table component
@@ -157,10 +201,25 @@ SPDX-License-Identifier: MIT
 		 */
 		ariaLabel?: string;
 		/**
+		 * Use EmptyState component for empty state instead of plain text
+		 * @default false
+		 */
+		useEmptyStateComponent?: boolean;
+		/**
+		 * Custom empty state title (for EmptyState component)
+		 * @default 'No Data'
+		 */
+		emptyStateTitle?: string;
+		/**
 		 * Custom empty state message
 		 * @default 'No data available'
 		 */
 		emptyMessage?: string;
+		/**
+		 * Loading state aria label for screen readers
+		 * @default 'Loading table data'
+		 */
+		loadingAriaLabel?: string;
 		/**
 		 * Additional CSS classes
 		 */
@@ -209,7 +268,10 @@ SPDX-License-Identifier: MIT
 		caption,
 		captionHidden = false,
 		ariaLabel,
+		useEmptyStateComponent = false,
+		emptyStateTitle = 'No Data',
 		emptyMessage = 'No data available',
+		loadingAriaLabel = 'Loading table data',
 		class: className = '',
 		header,
 		row,
@@ -249,34 +311,6 @@ SPDX-License-Identifier: MIT
 			.filter(Boolean)
 			.join(' ')
 	);
-
-	// Row classes with hover effect
-	let getRowClasses = (index: number): string => {
-		return [
-			hover && 'hover',
-			selectable && 'cursor-pointer',
-			selectedRows.includes(index) && 'bg-base-200'
-		]
-			.filter(Boolean)
-			.join(' ');
-	};
-
-	// Get cell alignment class
-	let getAlignmentClass = (align: 'left' | 'center' | 'right' | undefined): string => {
-		if (align === 'center') return 'text-center';
-		if (align === 'right') return 'text-right';
-		return 'text-left';
-	};
-
-	// Get cell value from row using column key
-	let getCellValue = (row: Record<string, unknown>, column: TableColumn): string => {
-		if (column.render) {
-			return column.render(row, data.indexOf(row));
-		}
-		const value = row[column.key];
-		if (value === null || value === undefined) return '';
-		return String(value);
-	};
 
 	// Handle sort click
 	function handleSortClick(column: TableColumn): void {
@@ -337,38 +371,20 @@ SPDX-License-Identifier: MIT
 		}
 	}
 
-	// Get sort icon for column
-	let getSortIcon = (column: TableColumn): string => {
-		if (!column.sortable) return '';
-		if (currentSortState.column !== column.key) return '↕';
-		if (currentSortState.direction === 'asc') return '↑';
-		if (currentSortState.direction === 'desc') return '↓';
-		return '↕';
-	};
-
-	// Get aria-sort value for column
-	let getAriaSort = (column: TableColumn): 'ascending' | 'descending' | 'none' | undefined => {
-		if (!column.sortable) return undefined;
-		if (currentSortState.column !== column.key) return 'none';
-		if (currentSortState.direction === 'asc') return 'ascending';
-		if (currentSortState.direction === 'desc') return 'descending';
-		return 'none';
-	};
-
 	// Check if table is empty
 	let isEmpty = $derived(data.length === 0);
 
-	// Loading spinner size based on table size
-	let spinnerSizeClass = $derived(
-		size === 'xs'
-			? 'loading-xs'
-			: size === 'sm'
-				? 'loading-sm'
-				: size === 'md'
-					? 'loading-md'
-					: 'loading-lg'
+	// Map table size to spinner size
+	let spinnerSize = $derived<'xs' | 'sm' | 'md' | 'lg'>(
+		size === 'xs' ? 'xs' : size === 'sm' ? 'sm' : size === 'lg' ? 'lg' : 'md'
 	);
 </script>
+
+<!-- 
+  NOTE: Raw HTML div and table elements are structural.
+  REASON: Required for DaisyUI table patterns and responsive scrolling.
+  All content (text, icons, etc.) uses library components via helpers.
+-->
 
 <div class={wrapperClasses} {...props}>
 	<table
@@ -379,9 +395,7 @@ SPDX-License-Identifier: MIT
 		role="grid"
 	>
 		{#if caption}
-			<caption class={captionHidden ? 'sr-only' : 'text-base-content/70 caption-top py-2'}>
-				{caption}
-			</caption>
+			<TableCaption text={caption} hidden={captionHidden} />
 		{/if}
 
 		<thead>
@@ -390,32 +404,14 @@ SPDX-License-Identifier: MIT
 			{:else}
 				<tr>
 					{#each columns as column (column.key)}
-						<th
-							class={[
-								getAlignmentClass(column.align),
-								column.hideOnMobile && 'hidden sm:table-cell',
-								column.sortable && 'cursor-pointer select-none',
-								bordered && 'border-base-300 border'
-							]
-								.filter(Boolean)
-								.join(' ')}
-							style={column.width ? `width: ${column.width}` : undefined}
-							scope="col"
-							aria-sort={getAriaSort(column)}
-							tabindex={column.sortable ? 0 : undefined}
-							role={column.sortable ? 'columnheader button' : 'columnheader'}
-							onclick={() => handleSortClick(column)}
-							onkeydown={(e) => handleSortKeyDown(e, column)}
-						>
-							<span class="inline-flex items-center gap-1">
-								{column.label}
-								{#if column.sortable}
-									<span class="text-base-content/50" aria-hidden="true">
-										{getSortIcon(column)}
-									</span>
-								{/if}
-							</span>
-						</th>
+						<TableHeader
+							{column}
+							sortColumn={currentSortState.column}
+							sortDirection={currentSortState.direction}
+							{bordered}
+							onsortclick={() => handleSortClick(column)}
+							onsortkeydown={(e) => handleSortKeyDown(e, column)}
+						/>
 					{/each}
 				</tr>
 			{/if}
@@ -428,18 +424,23 @@ SPDX-License-Identifier: MIT
 				{:else}
 					<tr>
 						<td colspan={columns.length} class="py-8 text-center">
-							<span class="loading loading-spinner {spinnerSizeClass}" aria-hidden="true"></span>
-							<span class="sr-only">Loading table data...</span>
+							<Spinner size={spinnerSize} ariaLabel={loadingAriaLabel} />
 						</td>
 					</tr>
 				{/if}
 			{:else if isEmpty}
 				{#if empty}
 					{@render empty()}
+				{:else if useEmptyStateComponent}
+					<tr>
+						<td colspan={columns.length} class="py-8">
+							<EmptyState title={emptyStateTitle} description={emptyMessage} />
+						</td>
+					</tr>
 				{:else}
 					<tr>
-						<td colspan={columns.length} class="text-base-content/70 py-8 text-center">
-							{emptyMessage}
+						<td colspan={columns.length} class="py-8 text-center">
+							<Text text={emptyMessage} class="text-base-content/70" />
 						</td>
 					</tr>
 				{/if}
@@ -448,37 +449,22 @@ SPDX-License-Identifier: MIT
 					{#if row}
 						{@render row({ row: rowData, index, columns })}
 					{:else}
-						<tr
-							class={getRowClasses(index)}
-							tabindex={selectable || onrowclick ? 0 : undefined}
-							role={selectable ? 'row' : undefined}
-							aria-selected={selectable ? selectedRows.includes(index) : undefined}
+						<TableRow
+							row={rowData}
+							{index}
+							{columns}
+							{hover}
+							{selectable}
+							selected={selectedRows.includes(index)}
+							{bordered}
 							onclick={() => handleRowClick(rowData, index)}
 							onkeydown={(e) => handleRowKeyDown(e, rowData, index)}
-						>
-							{#each columns as column (column.key)}
-								<td
-									class={[
-										getAlignmentClass(column.align),
-										column.hideOnMobile && 'hidden sm:table-cell',
-										bordered && 'border-base-300 border'
-									]
-										.filter(Boolean)
-										.join(' ')}
-								>
-									{getCellValue(rowData, column)}
-								</td>
-							{/each}
-						</tr>
+						/>
 					{/if}
 				{/each}
 			{/if}
 		</tbody>
 
-		{#if footer}
-			<tfoot>
-				{@render footer()}
-			</tfoot>
-		{/if}
+		<TableFooter>{footer}</TableFooter>
 	</table>
 </div>

@@ -4,6 +4,9 @@ SPDX-License-Identifier: MIT
 -->
 
 <script lang="ts">
+	import Label from '../data-display/Label.svelte';
+	import Text from '../typography/Text.svelte';
+
 	/**
 	 * Props interface for the TimePicker component
 	 */
@@ -85,6 +88,16 @@ SPDX-License-Identifier: MIT
 		 */
 		ariaDescribedby?: string;
 		/**
+		 * Accessible label for required field indicator
+		 * @default 'required'
+		 */
+		requiredLabel?: string;
+		/**
+		 * Accessible label for time picker when no label is provided
+		 * @default 'Time picker'
+		 */
+		timePickerAriaLabel?: string;
+		/**
 		 * Change event handler
 		 */
 		onchange?: (event: Event) => void;
@@ -115,6 +128,8 @@ SPDX-License-Identifier: MIT
 		name,
 		ariaLabel,
 		ariaDescribedby,
+		requiredLabel = 'required',
+		timePickerAriaLabel = 'Time picker',
 		onchange,
 		oninput,
 		class: className = '',
@@ -122,7 +137,7 @@ SPDX-License-Identifier: MIT
 	}: Props = $props();
 
 	// Generate unique ID if not provided
-	let fieldId = $derived(id || `timepicker-${Math.random().toString(36).substr(2, 9)}`);
+	let fieldId = $derived(id || `timepicker-${Math.random().toString(36).substring(2, 11)}`);
 	let labelForId = $derived(fieldId);
 
 	// Input classes
@@ -178,14 +193,7 @@ SPDX-License-Identifier: MIT
 
 <div class="form-control w-full">
 	{#if label}
-		<label for={labelForId} class={labelClasses}>
-			<span class="label-text">
-				{label}
-				{#if required}
-					<span class="text-error ml-1" aria-label="required">*</span>
-				{/if}
-			</span>
-		</label>
+		<Label text={label} for={labelForId} {required} {size} requiredAriaLabel={requiredLabel} />
 	{/if}
 
 	<input
@@ -199,7 +207,7 @@ SPDX-License-Identifier: MIT
 		{step}
 		{disabled}
 		{required}
-		aria-label={ariaLabel || label || 'Time picker'}
+		aria-label={ariaLabel || label || timePickerAriaLabel}
 		aria-describedby={ariaDescribedby}
 		aria-invalid={error ? 'true' : 'false'}
 		aria-required={required ? 'true' : 'false'}
@@ -210,13 +218,15 @@ SPDX-License-Identifier: MIT
 
 	{#if error && error !== ''}
 		<div class={labelClasses}>
-			<span class="label-text-alt text-error" role="alert" aria-live="polite">{error}</span>
+			<div role="alert" aria-live="polite">
+				<Text text={error} size="xs" variant="error" class="label-text-alt" />
+			</div>
 		</div>
 	{/if}
 
 	{#if helpText && (!error || error === '')}
 		<div class={labelClasses}>
-			<span class="label-text-alt text-base-content/70">{helpText}</span>
+			<Text text={helpText} size="xs" variant="muted" class="label-text-alt" />
 		</div>
 	{/if}
 </div>

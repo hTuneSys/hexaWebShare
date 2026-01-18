@@ -4,6 +4,9 @@ SPDX-License-Identifier: MIT
 -->
 
 <script lang="ts">
+	import Label from '../data-display/Label.svelte';
+	import Text from '../typography/Text.svelte';
+
 	/**
 	 * Props interface for the DatePicker component
 	 */
@@ -81,6 +84,16 @@ SPDX-License-Identifier: MIT
 		 */
 		ariaDescribedby?: string;
 		/**
+		 * Accessible label for required field indicator
+		 * @default 'required'
+		 */
+		requiredLabel?: string;
+		/**
+		 * Accessible label for date picker when no label is provided
+		 * @default 'Date picker'
+		 */
+		datePickerAriaLabel?: string;
+		/**
 		 * Change event handler
 		 */
 		onchange?: (event: Event) => void;
@@ -110,6 +123,8 @@ SPDX-License-Identifier: MIT
 		name,
 		ariaLabel,
 		ariaDescribedby,
+		requiredLabel = 'required',
+		datePickerAriaLabel = 'Date picker',
 		onchange,
 		oninput,
 		class: className = '',
@@ -173,14 +188,7 @@ SPDX-License-Identifier: MIT
 
 <div class="form-control w-full">
 	{#if label}
-		<label for={labelForId} class={labelClasses}>
-			<span class="label-text">
-				{label}
-				{#if required}
-					<span class="text-error ml-1" aria-label="required">*</span>
-				{/if}
-			</span>
-		</label>
+		<Label text={label} for={labelForId} {required} {size} requiredAriaLabel={requiredLabel} />
 	{/if}
 
 	<input
@@ -193,7 +201,7 @@ SPDX-License-Identifier: MIT
 		{max}
 		{disabled}
 		{required}
-		aria-label={ariaLabel || label || 'Date picker'}
+		aria-label={ariaLabel || label || datePickerAriaLabel}
 		aria-describedby={ariaDescribedby}
 		aria-invalid={error ? 'true' : 'false'}
 		aria-required={required ? 'true' : 'false'}
@@ -203,14 +211,22 @@ SPDX-License-Identifier: MIT
 	/>
 
 	{#if error && error !== ''}
-		<div class={labelClasses}>
-			<span class="label-text-alt text-error" role="alert" aria-live="polite">{error}</span>
+		<!-- 
+			NOTE: Raw HTML div element used for structural layout wrapper.
+			Contains error message displayed with Text component.
+		-->
+		<div class={labelClasses} role="alert" aria-live="polite">
+			<Text text={error} size="xs" variant="error" class="label-text-alt" />
 		</div>
 	{/if}
 
 	{#if helpText && (!error || error === '')}
+		<!-- 
+			NOTE: Raw HTML div element used for structural layout wrapper.
+			Contains help text displayed with Text component.
+		-->
 		<div class={labelClasses}>
-			<span class="label-text-alt text-base-content/70">{helpText}</span>
+			<Text text={helpText} size="xs" variant="muted" class="label-text-alt" />
 		</div>
 	{/if}
 </div>

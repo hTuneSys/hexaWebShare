@@ -5,6 +5,10 @@ SPDX-License-Identifier: MIT
 
 <script lang="ts">
 	import type { Snippet } from 'svelte';
+	import Button from '../buttons/Button.svelte';
+	import Spinner from '../feedback/Spinner.svelte';
+	import Text from '../typography/Text.svelte';
+	import Heading from '../typography/Heading.svelte';
 
 	/**
 	 * Props interface for the Section component
@@ -76,6 +80,11 @@ SPDX-License-Identifier: MIT
 		 */
 		children?: Snippet;
 		/**
+		 * Accessible label for loading state
+		 * @default 'Loading content'
+		 */
+		loadingLabel?: string;
+		/**
 		 * Additional CSS classes
 		 */
 		class?: string;
@@ -96,6 +105,7 @@ SPDX-License-Identifier: MIT
 		icon,
 		headerActions,
 		children,
+		loadingLabel = 'Loading content',
 		class: className = '',
 		...props
 	}: Props = $props();
@@ -186,8 +196,8 @@ SPDX-License-Identifier: MIT
 >
 	{#if title || description || icon || headerActions || collapsible}
 		{#if collapsible}
-			<button
-				type="button"
+			<Button
+				variant="ghost"
 				class="{headerClasses} w-full border-0 bg-transparent p-0 text-left"
 				onclick={toggleCollapsed}
 				onkeydown={handleKeyDown}
@@ -203,14 +213,22 @@ SPDX-License-Identifier: MIT
 
 					<div class="flex-1">
 						{#if title}
-							<span class="section-title text-base-content block text-lg font-semibold">
-								{title}
-							</span>
+							<Text
+								text={title}
+								weight="semibold"
+								size="lg"
+								display="block"
+								class="section-title"
+							/>
 						{/if}
 						{#if description}
-							<span class="section-description text-base-content/70 mt-1 block text-sm">
-								{description}
-							</span>
+							<Text
+								text={description}
+								size="sm"
+								variant="muted"
+								display="block"
+								class="section-description mt-1"
+							/>
 						{/if}
 					</div>
 				</div>
@@ -231,7 +249,7 @@ SPDX-License-Identifier: MIT
 						/>
 					</svg>
 				</div>
-			</button>
+			</Button>
 		{:else}
 			<div class={headerClasses}>
 				<div class="flex flex-1 items-start gap-3">
@@ -243,14 +261,16 @@ SPDX-License-Identifier: MIT
 
 					<div class="flex-1">
 						{#if title}
-							<h2 class="section-title text-base-content text-lg font-semibold">
-								{title}
-							</h2>
+							<Heading level="h2" text={title} size="lg" weight="semibold" class="section-title" />
 						{/if}
 						{#if description}
-							<p class="section-description text-base-content/70 mt-1 text-sm">
-								{description}
-							</p>
+							<Text
+								text={description}
+								size="sm"
+								variant="muted"
+								display="block"
+								class="section-description mt-1"
+							/>
 						{/if}
 					</div>
 				</div>
@@ -268,8 +288,8 @@ SPDX-License-Identifier: MIT
 
 	<div class={contentClasses}>
 		{#if loading}
-			<div class="flex items-center justify-center py-8" aria-label="Loading content">
-				<span class="loading loading-spinner loading-md"></span>
+			<div class="flex items-center justify-center py-8" aria-label={loadingLabel}>
+				<Spinner size="md" />
 			</div>
 		{:else if children}
 			{@render children()}

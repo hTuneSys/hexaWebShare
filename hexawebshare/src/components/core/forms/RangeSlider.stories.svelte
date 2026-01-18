@@ -74,7 +74,12 @@ SPDX-License-Identifier: MIT
 				control: { type: 'number' },
 				description: 'Number of auto-generated marks'
 			},
-			ariaLabel: { control: 'text', description: 'Accessible label for screen readers' }
+			ariaLabel: { control: 'text', description: 'Accessible label for screen readers' },
+			minAriaLabel: {
+				control: 'text',
+				description: 'Accessible label for minimum value input'
+			},
+			maxAriaLabel: { control: 'text', description: 'Accessible label for maximum value input' }
 		},
 		args: {
 			minValue: 20,
@@ -93,7 +98,9 @@ SPDX-License-Identifier: MIT
 			disabled: false,
 			marks: [],
 			markCount: 5,
-			ariaLabel: 'Range slider'
+			ariaLabel: 'Range slider',
+			minAriaLabel: 'minimum value',
+			maxAriaLabel: 'maximum value'
 		}
 	});
 </script>
@@ -178,6 +185,8 @@ SPDX-License-Identifier: MIT
 		disabled: false,
 		marks: [],
 		markCount: 5,
-		ariaLabel: 'Range slider'
+		ariaLabel: 'Range slider',
+		minAriaLabel: 'minimum value',
+		maxAriaLabel: 'maximum value'
 	}}
 />

@@ -5,6 +5,11 @@ SPDX-License-Identifier: MIT
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 	import Spinner from './Spinner.svelte';
+	import Button from '../buttons/Button.svelte';
+	import IconButton from '../buttons/IconButton.svelte';
+	import Heading from '../typography/Heading.svelte';
+	import MutedText from '../typography/MutedText.svelte';
+	import StatusDot from '../data-display/StatusDot.svelte';
 
 	type Children = Snippet | { default?: Snippet };
 
@@ -160,26 +165,6 @@ SPDX-License-Identifier: MIT
 			.join(' ')
 	);
 
-	let indicatorClasses = $derived(
-		[
-			'h-2',
-			'w-2',
-			'rounded-full',
-			'mt-1.5',
-			'sm:mt-0',
-			variant === 'primary' && 'bg-primary',
-			variant === 'secondary' && 'bg-secondary',
-			variant === 'accent' && 'bg-accent',
-			variant === 'neutral' && 'bg-neutral',
-			variant === 'info' && 'bg-info',
-			variant === 'success' && 'bg-success',
-			variant === 'warning' && 'bg-warning',
-			variant === 'error' && 'bg-error'
-		]
-			.filter(Boolean)
-			.join(' ')
-	);
-
 	const handleClose = () => {
 		if (!isControlled) {
 			isVisible = false;
@@ -201,16 +186,16 @@ SPDX-License-Identifier: MIT
 		{...props}
 	>
 		{#if withIcon}
-			<span class={indicatorClasses} aria-hidden="true"></span>
+			<StatusDot {variant} size="sm" ariaHidden class="mt-1.5 sm:mt-0" />
 		{/if}
 
 		<div class="flex min-w-0 flex-1 flex-col gap-1">
 			{#if title}
-				<div class="text-base leading-tight font-semibold">{title}</div>
+				<Heading level="h6" text={title} weight="semibold" class="leading-tight" />
 			{/if}
 
 			{#if message}
-				<p class="text-sm leading-snug break-words opacity-80">{message}</p>
+				<MutedText text={message} size="sm" class="leading-snug break-words" />
 			{/if}
 
 			{@render defaultSlot?.()}
@@ -226,28 +211,27 @@ SPDX-License-Identifier: MIT
 		{/if}
 
 		{#if actionLabel}
-			<button
-				type="button"
-				class="btn btn-outline btn-sm"
+			<Button
+				variant="ghost"
+				size="sm"
+				label={actionLabel}
 				onclick={handleAction}
-				aria-label={actionAriaLabel ?? actionLabel}
+				ariaLabel={actionAriaLabel ?? actionLabel}
 				disabled={disabled || loading}
-			>
-				{actionLabel}
-			</button>
+			/>
 		{/if}
 
 		{#if closable}
-			<button
-				type="button"
-				class="btn btn-square btn-ghost btn-sm"
+			<IconButton
+				variant="ghost"
+				size="sm"
+				square
 				onclick={handleClose}
-				aria-label={dismissLabel}
-				title={dismissLabel}
+				ariaLabel={dismissLabel}
 				disabled={disabled || loading}
 			>
-				<span aria-hidden="true">×</span>
-			</button>
+				×
+			</IconButton>
 		{/if}
 	</div>
 {/if}

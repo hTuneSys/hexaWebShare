@@ -5,6 +5,8 @@ SPDX-License-Identifier: MIT
 
 <script lang="ts">
 	import type { Snippet } from 'svelte';
+	import Spinner from '../feedback/Spinner.svelte';
+	import Text from '../typography/Text.svelte';
 
 	/**
 	 * Dropdown item interface for programmatic rendering
@@ -434,7 +436,7 @@ SPDX-License-Identifier: MIT
 		onkeydown={handleSummaryKeydown}
 	>
 		{#if loading}
-			<span class="loading loading-spinner loading-sm" aria-hidden="true"></span>
+			<Spinner size="sm" />
 		{/if}
 		{#if trigger}
 			{@render trigger()}
@@ -464,7 +466,7 @@ SPDX-License-Identifier: MIT
 			{@render children()}
 		{:else if loading}
 			<div class="flex items-center justify-center p-4">
-				<span class="loading loading-spinner loading-md text-primary" aria-label="Loading"></span>
+				<Spinner size="md" variant="primary" ariaLabel="Loading" />
 			</div>
 		{:else}
 			<ul>
@@ -487,13 +489,22 @@ SPDX-License-Identifier: MIT
 									<span class="text-lg" aria-hidden="true">{item.icon}</span>
 								{/if}
 								<span class="flex flex-col">
-									<span>{item.label}</span>
+									<Text text={item.label} />
 									{#if item.description}
-										<span class="text-xs opacity-60">{item.description}</span>
+										<Text text={item.description} size="xs" class="opacity-60" />
 									{/if}
 								</span>
 							</a>
 						{:else}
+							<!-- 
+							NOTE: Raw HTML <button> is intentional here instead of Button component.
+							TECHNICAL REASON: 
+							1. WAI-ARIA menuitem pattern requires <button role="menuitem"> for dropdown items
+							2. DaisyUI's dropdown-content pattern expects unstyled buttons (no .btn classes)
+							3. Button component adds .btn classes that conflict with dropdown styling
+							CONSEQUENCE: Using Button component would break DaisyUI dropdown CSS and menuitem ARIA pattern
+							VALIDATION: WAI-ARIA Menu pattern + DaisyUI v4.x dropdown docs
+						-->
 							<button
 								type="button"
 								id="{dropdownId}-item-{index}"
@@ -511,9 +522,9 @@ SPDX-License-Identifier: MIT
 									<span class="text-lg" aria-hidden="true">{item.icon}</span>
 								{/if}
 								<span class="flex flex-col">
-									<span>{item.label}</span>
+									<Text text={item.label} />
 									{#if item.description}
-										<span class="text-xs opacity-60">{item.description}</span>
+										<Text text={item.description} size="xs" class="opacity-60" />
 									{/if}
 								</span>
 							</button>

@@ -51,7 +51,9 @@ SPDX-License-Identifier: MIT
 			showPageSize: { control: 'boolean' },
 			showTotal: { control: 'boolean' },
 			disabled: { control: 'boolean' },
-			loading: { control: 'boolean' }
+			loading: { control: 'boolean' },
+			ariaLabel: { control: 'text' },
+			itemsPerPageAriaLabel: { control: 'text' }
 		},
 		args: {
 			onpagechange: fn(),
@@ -103,6 +105,8 @@ SPDX-License-Identifier: MIT
 		showTotal: true,
 		totalItems: 200,
 		pageSize: 10,
-		showPageSize: true
+		showPageSize: true,
+		ariaLabel: 'Pagination navigation',
+		itemsPerPageAriaLabel: 'Items per page'
 	}}
 />

@@ -5,6 +5,10 @@ SPDX-License-Identifier: MIT
 
 <script lang="ts">
 	import { onDestroy } from 'svelte';
+	import IconButton from '../buttons/IconButton.svelte';
+	import Label from '../data-display/Label.svelte';
+	import Spinner from '../feedback/Spinner.svelte';
+	import Text from '../typography/Text.svelte';
 
 	/**
 	 * Props interface for the SearchInput component
@@ -110,6 +114,21 @@ SPDX-License-Identifier: MIT
 		 * Additional CSS classes
 		 */
 		class?: string;
+		/**
+		 * Accessible label for search input when no label is provided
+		 * @default 'Search'
+		 */
+		searchAriaLabel?: string;
+		/**
+		 * Accessible label for loading/searching state
+		 * @default 'Searching'
+		 */
+		searchingLabel?: string;
+		/**
+		 * Accessible label for clear button
+		 * @default 'Clear search'
+		 */
+		clearLabel?: string;
 	}
 
 	let {
@@ -129,6 +148,9 @@ SPDX-License-Identifier: MIT
 		name,
 		maxlength,
 		ariaLabel,
+		searchAriaLabel = 'Search',
+		searchingLabel = 'Searching',
+		clearLabel = 'Clear search',
 		onsearch,
 		onclear,
 		oninput,
@@ -204,21 +226,8 @@ SPDX-License-Identifier: MIT
 		size === 'xs' ? 'right-2' : size === 'sm' ? 'right-2.5' : size === 'lg' ? 'right-4' : 'right-3'
 	);
 
-	// Loading spinner size classes
-	let loadingSizeClass = $derived(
-		size === 'xs'
-			? 'loading-xs'
-			: size === 'sm'
-				? 'loading-sm'
-				: size === 'lg'
-					? 'loading-lg'
-					: 'loading-md'
-	);
-
-	// Clear button size classes
-	let clearButtonSizeClass = $derived(
-		size === 'xs' ? 'btn-xs' : size === 'sm' ? 'btn-sm' : size === 'lg' ? 'btn-lg' : 'btn-md'
-	);
+	// Loading spinner size
+	let spinnerSize = $derived(size);
 
 	/**
 	 * Handle search action
@@ -277,9 +286,7 @@ SPDX-License-Identifier: MIT
 
 <div class="form-control w-full {className}">
 	{#if label}
-		<label for={labelForId} class={labelClasses}>
-			<span class="label-text">{label}</span>
-		</label>
+		<Label text={label} for={labelForId} {size} />
 	{/if}
 
 	<div class="relative">
@@ -314,7 +321,7 @@ SPDX-License-Identifier: MIT
 			{disabled}
 			{maxlength}
 			class={inputClasses}
-			aria-label={ariaLabel || label || 'Search'}
+			aria-label={ariaLabel || label || searchAriaLabel}
 			aria-invalid={error !== undefined && error !== '' ? 'true' : undefined}
 			aria-disabled={disabled}
 			aria-busy={loading}
@@ -328,18 +335,16 @@ SPDX-License-Identifier: MIT
 		<!-- Clear Button or Loading Spinner -->
 		<div class="absolute top-1/2 -translate-y-1/2 {iconRightClass}">
 			{#if loading}
-				<span
-					class="loading loading-spinner {loadingSizeClass} text-base-content/50"
-					role="status"
-					aria-label="Searching"
-				></span>
+				<Spinner size={spinnerSize} class="text-base-content/50" ariaLabel={searchingLabel} />
 			{:else if showClearButton && value}
-				<button
-					type="button"
-					class="btn btn-circle btn-ghost {clearButtonSizeClass} h-auto min-h-0 p-0.5"
+				<IconButton
+					variant="ghost"
+					circle
+					{size}
 					onclick={handleClear}
 					{disabled}
-					aria-label="Clear search"
+					ariaLabel={clearLabel}
+					class="h-auto min-h-0 p-0.5"
 				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -351,20 +356,22 @@ SPDX-License-Identifier: MIT
 					>
 						<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
 					</svg>
-				</button>
+				</IconButton>
 			{/if}
 		</div>
 	</div>
 
 	{#if error && error !== ''}
 		<div class={labelClasses}>
-			<span class="label-text-alt text-error" role="alert" aria-live="polite">{error}</span>
+			<div role="alert" aria-live="polite">
+				<Text text={error} size="xs" variant="error" class="label-text-alt" />
+			</div>
 		</div>
 	{/if}
 
 	{#if helpText && (!error || error === '')}
 		<div class={labelClasses}>
-			<span class="label-text-alt text-base-content/70">{helpText}</span>
+			<Text text={helpText} size="xs" variant="muted" class="label-text-alt" />
 		</div>
 	{/if}
 </div>

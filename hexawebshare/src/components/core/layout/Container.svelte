@@ -27,6 +27,11 @@ SPDX-License-Identifier: MIT
 		fluid?: boolean;
 		responsive?: boolean;
 		className?: string;
+		/**
+		 * Accessible label for the container region
+		 * @default 'Content container'
+		 */
+		ariaLabel?: string;
 	}
 
 	const {
@@ -36,6 +41,7 @@ SPDX-License-Identifier: MIT
 		centered = true,
 		fluid = false,
 		responsive = true,
+		ariaLabel = 'Content container',
 		className = '',
 		...props
 	}: Props = $props();
@@ -77,6 +83,6 @@ SPDX-License-Identifier: MIT
 	);
 </script>
 
-<div class={containerClasses} role="region" aria-label="Content container" {...props}>
+<div class={containerClasses} role="region" aria-label={ariaLabel} {...props}>
 	{@render children()}
 </div>

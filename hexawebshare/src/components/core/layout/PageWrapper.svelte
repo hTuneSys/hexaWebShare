@@ -5,6 +5,7 @@ SPDX-License-Identifier: MIT
 
 <script lang="ts">
 	import type { Snippet } from 'svelte';
+	import Spinner from '../feedback/Spinner.svelte';
 
 	/**
 	 * Props interface for the PageWrapper component
@@ -81,6 +82,11 @@ SPDX-License-Identifier: MIT
 		 */
 		ariaLabel?: string;
 		/**
+		 * Default accessible label when ariaLabel is not provided
+		 * @default 'Page wrapper'
+		 */
+		defaultAriaLabel?: string;
+		/**
 		 * Additional CSS classes
 		 */
 		class?: string;
@@ -99,6 +105,7 @@ SPDX-License-Identifier: MIT
 		background = true,
 		minHeight = 'screen',
 		ariaLabel,
+		defaultAriaLabel = 'Page wrapper',
 		class: className = '',
 		...props
 	}: Props = $props();
@@ -188,7 +195,7 @@ SPDX-License-Identifier: MIT
 <div
 	class={pageClasses}
 	role="main"
-	aria-label={ariaLabel || 'Page wrapper'}
+	aria-label={ariaLabel || defaultAriaLabel}
 	aria-busy={loading}
 	{...props}
 >
@@ -200,7 +207,7 @@ SPDX-License-Identifier: MIT
 
 	{#if loading}
 		<div class="flex min-h-[50vh] items-center justify-center">
-			<span class="loading loading-spinner loading-lg text-primary"></span>
+			<Spinner size="lg" variant="primary" />
 		</div>
 	{:else if children}
 		<main class={contentClasses}>

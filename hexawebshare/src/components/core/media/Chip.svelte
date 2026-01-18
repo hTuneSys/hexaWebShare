@@ -4,6 +4,8 @@ SPDX-License-Identifier: MIT
 -->
 
 <script lang="ts">
+	import IconButton from '../buttons/IconButton.svelte';
+
 	interface Props {
 		label: string;
 		variant?:
@@ -20,6 +22,8 @@ SPDX-License-Identifier: MIT
 		outline?: boolean;
 		closable?: boolean;
 		onClose?: () => void;
+		closeLabel?: string;
+		closeIcon?: string;
 		ariaLabel?: string;
 		ariaHidden?: boolean;
 		disabled?: boolean;
@@ -33,6 +37,8 @@ SPDX-License-Identifier: MIT
 		outline = false,
 		closable = false,
 		onClose,
+		closeLabel = 'Remove chip',
+		closeIcon = '✕',
 		ariaLabel,
 		ariaHidden = false,
 		disabled = false,
@@ -78,14 +84,15 @@ SPDX-License-Identifier: MIT
 >
 	{label}
 	{#if closable && onClose}
-		<button
-			type="button"
-			class="btn btn-ghost btn-xs ml-1 h-auto min-h-0 p-0.5"
+		<IconButton
+			size="xs"
+			variant="ghost"
+			class="ml-1 h-auto min-h-0 p-0.5"
 			onclick={onClose}
-			aria-label="Remove chip"
+			ariaLabel={closeLabel}
 			{disabled}
 		>
-			✕
-		</button>
+			{closeIcon}
+		</IconButton>
 	{/if}
 </span>

@@ -4,6 +4,9 @@ SPDX-License-Identifier: MIT
 -->
 
 <script lang="ts">
+	import Spinner from '../feedback/Spinner.svelte';
+	import Text from '../typography/Text.svelte';
+
 	/**
 	 * Marker type used to render tick marks below the slider.
 	 */
@@ -106,6 +109,21 @@ SPDX-License-Identifier: MIT
 		 */
 		ariaLabel?: string;
 		/**
+		 * Accessible label for minimum value input
+		 * @default 'minimum value'
+		 */
+		minAriaLabel?: string;
+		/**
+		 * Accessible label for maximum value input
+		 * @default 'maximum value'
+		 */
+		maxAriaLabel?: string;
+		/**
+		 * Accessible label for required field indicator
+		 * @default 'required'
+		 */
+		requiredLabel?: string;
+		/**
 		 * Unique identifier for the input container.
 		 */
 		id?: string;
@@ -145,6 +163,9 @@ SPDX-License-Identifier: MIT
 		marks = [],
 		markCount = 5,
 		ariaLabel = 'Range slider',
+		minAriaLabel = 'minimum value',
+		maxAriaLabel = 'maximum value',
+		requiredLabel = 'required',
 		id,
 		name,
 		onchange,
@@ -264,25 +285,23 @@ SPDX-License-Identifier: MIT
 	let derivedMarks = $derived(
 		marks && marks.length > 0 ? marks : generateDefaultMarks(min, max, markCount)
 	);
-
-	// Calculate the percentage positions for visual styling
-	let minPercent = $derived(((minValue - min) / (max - min)) * 100);
-	let maxPercent = $derived(((maxValue - min) / (max - min)) * 100);
 </script>
 
 <div class="form-control w-full gap-2">
 	{#if label}
 		<label for={sliderId} class="label">
 			<span class="label-text flex items-center gap-1">
-				{label}
+				<Text text={label} />
 				{#if required}
-					<span class="text-error" aria-label="required">*</span>
+					<Text text="*" variant="error" ariaLabel={requiredLabel} />
 				{/if}
 			</span>
 			{#if showValues}
-				<span class="label-text-alt text-sm font-semibold">
-					{minValueLabel} - {maxValueLabel}
-				</span>
+				<Text
+					text={`${minValueLabel} - ${maxValueLabel}`}
+					size="sm"
+					class="label-text-alt font-semibold"
+				/>
 			{/if}
 		</label>
 	{/if}
@@ -298,7 +317,7 @@ SPDX-License-Identifier: MIT
 				{max}
 				{step}
 				name={name ? `${name}-min` : undefined}
-				aria-label={`${ariaLabel} minimum value`}
+				aria-label={`${ariaLabel} ${minAriaLabel}`}
 				aria-valuemin={min}
 				aria-valuemax={max}
 				aria-valuenow={minValue}
@@ -320,7 +339,7 @@ SPDX-License-Identifier: MIT
 				{max}
 				{step}
 				name={name ? `${name}-max` : undefined}
-				aria-label={`${ariaLabel} maximum value`}
+				aria-label={`${ariaLabel} ${maxAriaLabel}`}
 				aria-valuemin={min}
 				aria-valuemax={max}
 				aria-valuenow={maxValue}
@@ -336,15 +355,13 @@ SPDX-License-Identifier: MIT
 		</div>
 		{#if showValues && !label}
 			<div class="flex min-w-[6rem] items-center justify-end gap-2 text-sm font-semibold">
-				<span>{minValueLabel}</span>
-				<span>-</span>
-				<span>{maxValueLabel}</span>
+				<Text text={minValueLabel} size="sm" />
+				<Text text="-" size="sm" />
+				<Text text={maxValueLabel} size="sm" />
 			</div>
 		{/if}
 		{#if loading}
-			<span
-				class="loading loading-spinner loading-sm text-primary absolute top-1/2 right-0 -translate-y-1/2"
-			></span>
+			<Spinner size="sm" variant="primary" class="absolute top-1/2 right-0 -translate-y-1/2" />
 		{/if}
 	</div>
 
@@ -355,64 +372,25 @@ SPDX-License-Identifier: MIT
 					class="absolute flex -translate-x-1/2 flex-col items-center gap-1"
 					style="left: {((mark.value - min) / (max - min)) * 100}%"
 				>
+					<!-- 
+						NOTE: Raw HTML span is intentional here.
+						This is a purely decorative visual element (a vertical tick mark line).
+						It has no text content and serves only as a structural/visual separator.
+					-->
 					<span class="bg-base-content/40 h-2 w-px"></span>
-					<span>{mark.label ?? mark.value}</span>
+					<Text text={String(mark.label ?? mark.value)} size="xs" />
 				</div>
 			{/each}
 		</div>
 	{/if}
 
 	{#if error && error !== ''}
-		<span
-			id={`${sliderId}-error`}
-			class="label-text-alt text-error"
-			role="alert"
-			aria-live="polite"
-		>
-			{error}
-		</span>
+		<div id={`${sliderId}-error`} role="alert" aria-live="polite">
+			<Text text={error} size="xs" variant="error" class="label-text-alt" />
+		</div>
 	{:else if helpText && helpText !== ''}
-		<span id={`${sliderId}-help`} class="label-text-alt text-base-content/70">{helpText}</span>
+		<div id={`${sliderId}-help`}>
+			<Text text={helpText} size="xs" variant="muted" class="label-text-alt" />
+		</div>
 	{/if}
 </div>
-
-<style>
-	/* Style the range inputs to work together as a dual-range slider */
-	:global(.range-slider-container) {
-		position: relative;
-		height: 1.5rem;
-	}
-
-	/* Ensure both range inputs are positioned absolutely and overlap */
-	:global(.range-slider-container input[type='range']) {
-		position: absolute;
-		width: 100%;
-		pointer-events: auto;
-		background: transparent;
-		-webkit-appearance: none;
-		appearance: none;
-	}
-
-	/* Make the first input (min) appear above the second (max) */
-	:global(.range-slider-container input[type='range']:first-of-type) {
-		z-index: 2;
-	}
-
-	:global(.range-slider-container input[type='range']:last-of-type) {
-		z-index: 1;
-	}
-
-	/* Style the thumb for both inputs */
-	:global(.range-slider-container input[type='range']::-webkit-slider-thumb) {
-		-webkit-appearance: none;
-		appearance: none;
-		pointer-events: all;
-		cursor: pointer;
-	}
-
-	:global(.range-slider-container input[type='range']::-moz-range-thumb) {
-		pointer-events: all;
-		cursor: pointer;
-		border: none;
-	}
-</style>

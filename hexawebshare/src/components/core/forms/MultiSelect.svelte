@@ -4,6 +4,12 @@ SPDX-License-Identifier: MIT
 -->
 
 <script lang="ts">
+	import Label from '../data-display/Label.svelte';
+	import Spinner from '../feedback/Spinner.svelte';
+	import IconButton from '../buttons/IconButton.svelte';
+	import Text from '../typography/Text.svelte';
+	import Checkbox from './Checkbox.svelte';
+
 	/**
 	 * Option type for multiselect options
 	 */
@@ -85,6 +91,7 @@ SPDX-License-Identifier: MIT
 		name?: string;
 		/**
 		 * Accessible label for screen readers
+		 * @default 'Options'
 		 */
 		ariaLabel?: string;
 		/**
@@ -110,6 +117,31 @@ SPDX-License-Identifier: MIT
 		 * @default true
 		 */
 		clearable?: boolean;
+		/**
+		 * Label for required field indicator
+		 * @default 'required'
+		 */
+		requiredLabel?: string;
+		/**
+		 * Label for remove option button (for accessibility)
+		 * @default 'Remove'
+		 */
+		removeLabel?: string;
+		/**
+		 * Label for clear all button (for accessibility)
+		 * @default 'Clear all selections'
+		 */
+		clearAllLabel?: string;
+		/**
+		 * Message shown when no options match search
+		 * @default 'No options found'
+		 */
+		noOptionsMessage?: string;
+		/**
+		 * Placeholder text for search input when dropdown is open
+		 * @default 'Search...'
+		 */
+		searchPlaceholder?: string;
 		/**
 		 * Change event handler - receives array of selected values
 		 */
@@ -144,12 +176,17 @@ SPDX-License-Identifier: MIT
 		helpText,
 		id,
 		name,
-		ariaLabel,
+		ariaLabel = 'Options',
 		ariaDescribedby,
 		loading = false,
 		searchable = false,
 		maxSelected,
 		clearable = true,
+		requiredLabel = 'required',
+		removeLabel = 'Remove',
+		clearAllLabel = 'Clear all selections',
+		noOptionsMessage = 'No options found',
+		searchPlaceholder = 'Search...',
 		onchange,
 		onblur,
 		onfocus,
@@ -179,7 +216,7 @@ SPDX-License-Identifier: MIT
 	});
 
 	// Generate unique ID if not provided
-	let fieldId = $derived(id || `multiselect-${Math.random().toString(36).substr(2, 9)}`);
+	let fieldId = $derived(id || `multiselect-${Math.random().toString(36).substring(2, 11)}`);
 	let listboxId = $derived(`${fieldId}-listbox`);
 
 	// Normalize options to MultiSelectOption format
@@ -338,16 +375,8 @@ SPDX-License-Identifier: MIT
 			.join(' ')
 	);
 
-	// Loading spinner size classes
-	let loadingSizeClass = $derived(
-		size === 'xs'
-			? 'loading-xs'
-			: size === 'sm'
-				? 'loading-sm'
-				: size === 'lg'
-					? 'loading-lg'
-					: 'loading-md'
-	);
+	// Loading spinner size
+	let spinnerSize = $derived(size);
 
 	// Update value (handles both controlled and uncontrolled modes)
 	function updateValue(newValue: string[]) {
@@ -521,14 +550,7 @@ SPDX-License-Identifier: MIT
 
 <div class="form-control {widthClasses} {alignClasses}">
 	{#if label}
-		<label for={fieldId} class={labelClasses}>
-			<span class="label-text">
-				{label}
-				{#if required}
-					<span class="text-error ml-1" aria-label="required">*</span>
-				{/if}
-			</span>
-		</label>
+		<Label text={label} for={fieldId} {required} {size} requiredAriaLabel={requiredLabel} />
 	{/if}
 
 	<div class={containerClasses} bind:this={containerRef}>
@@ -561,58 +583,58 @@ SPDX-License-Identifier: MIT
 			<!-- Selected tags -->
 			{#each selectedOptions as option (option.value)}
 				<span class={tagClasses}>
-					{option.label}
+					<Text text={option.label} />
 					{#if !disabled && !loading}
-						<button
-							type="button"
-							class="btn btn-ghost btn-xs h-auto min-h-0 p-0"
-							aria-label="Remove {option.label}"
-							onclick={(e) => removeOption(option.value, e)}
+						<IconButton
+							variant="ghost"
+							circle
+							size="xs"
+							class="hover:bg-base-300"
+							onclick={() => removeOption(option.value, new MouseEvent('click'))}
+							ariaLabel="Remove {option.label}"
+							{disabled}
 						>
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								class="h-3 w-3"
-								viewBox="0 0 20 20"
-								fill="currentColor"
-							>
-								<path
-									fill-rule="evenodd"
-									d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-									clip-rule="evenodd"
-								/>
-							</svg>
-						</button>
+							<Text text="×" variant="muted" />
+						</IconButton>
 					{/if}
 				</span>
 			{/each}
 
 			<!-- Search input or placeholder -->
 			{#if searchable && isOpen}
+				<!-- 
+					NOTE: Raw HTML input is intentional here.
+					Reason: This is an inline search filter within the multi-select dropdown.
+					It requires highly specific styling (borderless, transparent background, flex-1 layout)
+					to blend seamlessly with the selected tags in the same container.
+					Using the Input component would add unwanted wrapper elements, labels, and styling
+					that conflict with the compact inline search functionality.
+				-->
 				<input
 					bind:this={searchInputRef}
 					type="text"
 					class="min-w-16 flex-1 border-none bg-transparent outline-none focus:ring-0"
-					placeholder={selectedOptions.length === 0 ? placeholder : 'Search...'}
+					placeholder={selectedOptions.length === 0 ? placeholder : searchPlaceholder}
 					bind:value={searchQuery}
 					onclick={(e) => e.stopPropagation()}
 					onkeydown={handleKeydown}
 				/>
 			{:else if selectedOptions.length === 0}
-				<span class="text-base-content/50">{placeholder}</span>
+				<Text text={placeholder} variant="muted" class="text-base-content/50" />
 			{/if}
 
 			<!-- Right side controls -->
 			<div class="ml-auto flex items-center gap-1">
 				{#if loading}
-					<span class="loading loading-spinner {loadingSizeClass} text-primary" aria-hidden="true"
-					></span>
+					<Spinner size={spinnerSize} variant="primary" />
 				{:else}
 					{#if clearable && currentValue.length > 0 && !disabled}
-						<button
-							type="button"
-							class="btn btn-ghost btn-xs h-auto min-h-0 p-0"
-							aria-label="Clear all selections"
-							onclick={clearAll}
+						<IconButton
+							variant="ghost"
+							size="xs"
+							class="h-auto min-h-0 p-0"
+							ariaLabel={clearAllLabel}
+							onclick={() => clearAll(new MouseEvent('click'))}
 						>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -626,7 +648,7 @@ SPDX-License-Identifier: MIT
 									clip-rule="evenodd"
 								/>
 							</svg>
-						</button>
+						</IconButton>
 					{/if}
 					<!-- Dropdown arrow -->
 					<svg
@@ -652,11 +674,13 @@ SPDX-License-Identifier: MIT
 				id={listboxId}
 				role="listbox"
 				aria-multiselectable="true"
-				aria-label={label || ariaLabel || 'Options'}
+				aria-label={label || ariaLabel}
 				class={dropdownClasses}
 			>
 				{#if filteredOptions.length === 0}
-					<li class="text-base-content/50 px-4 py-2 text-center">No options found</li>
+					<li class="px-4 py-2 text-center">
+						<Text text={noOptionsMessage} variant="muted" class="text-base-content/50" />
+					</li>
 				{:else}
 					{#each filteredOptions as option, index (option.value)}
 						{@const isSelected = currentValue.includes(option.value)}
@@ -675,29 +699,16 @@ SPDX-License-Identifier: MIT
 							onclick={() => !isDisabled && toggleOption(option.value)}
 							onmouseenter={() => (focusedIndex = index)}
 						>
-							<input
-								type="checkbox"
-								class={[
-									'checkbox',
-									'checkbox-sm',
-									variant === 'primary' && 'checkbox-primary',
-									variant === 'secondary' && 'checkbox-secondary',
-									variant === 'accent' && 'checkbox-accent',
-									variant === 'success' && 'checkbox-success',
-									variant === 'warning' && 'checkbox-warning',
-									variant === 'info' && 'checkbox-info',
-									variant === 'error' && 'checkbox-error',
-									!variant && 'checkbox-primary'
-								]
-									.filter(Boolean)
-									.join(' ')}
+							<Checkbox
+								{variant}
+								size="sm"
 								checked={isSelected}
 								disabled={isDisabled}
 								tabindex={-1}
 								onclick={(e) => e.stopPropagation()}
 								onchange={() => !isDisabled && toggleOption(option.value)}
 							/>
-							<span class="flex-1">{option.label}</span>
+							<Text text={option.label} class="flex-1" />
 							{#if isSelected}
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
@@ -721,13 +732,15 @@ SPDX-License-Identifier: MIT
 
 	{#if error && error !== ''}
 		<div class={labelClasses}>
-			<span class="label-text-alt text-error" role="alert" aria-live="polite">{error}</span>
+			<div role="alert" aria-live="polite">
+				<Text text={error} size="xs" variant="error" class="label-text-alt" />
+			</div>
 		</div>
 	{/if}
 
 	{#if helpText && (!error || error === '')}
 		<div class={labelClasses}>
-			<span class="label-text-alt text-base-content/70">{helpText}</span>
+			<Text text={helpText} size="xs" variant="muted" class="label-text-alt" />
 		</div>
 	{/if}
 </div>

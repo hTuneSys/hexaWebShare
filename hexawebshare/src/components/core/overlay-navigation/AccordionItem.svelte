@@ -6,6 +6,7 @@ SPDX-License-Identifier: MIT
 <script lang="ts">
 	import { getContext } from 'svelte';
 	import type { Snippet } from 'svelte';
+	import Text from '../typography/Text.svelte';
 
 	/**
 	 * Props interface for the AccordionItem component
@@ -24,11 +25,6 @@ SPDX-License-Identifier: MIT
 		 */
 		icon?: Snippet;
 		/**
-		 * Whether this item is initially open
-		 * @default false
-		 */
-		defaultOpen?: boolean;
-		/**
 		 * Unique index for this item (auto-generated if not provided)
 		 */
 		index?: number;
@@ -46,7 +42,6 @@ SPDX-License-Identifier: MIT
 		title,
 		children,
 		icon,
-		defaultOpen = false,
 		index,
 		class: className = '',
 		ariaLabel,
@@ -72,7 +67,7 @@ SPDX-License-Identifier: MIT
 	);
 
 	// Local state for standalone usage (when not in Accordion context)
-	let localOpen = $state(defaultOpen);
+	let localOpen = $state(false);
 
 	// Get open state from context or use local state - make it reactive
 	let isOpen = $derived.by(() => {
@@ -165,6 +160,15 @@ SPDX-License-Identifier: MIT
 </script>
 
 <div class={collapseClasses} {...props}>
+	<!-- 
+		NOTE: Raw HTML input and div elements are intentional here.
+		TECHNICAL REASON: DaisyUI's collapse component requires specific DOM structure:
+		- Hidden checkbox input for state management (DaisyUI pattern)
+		- .collapse-title div with role="button" for the clickable header
+		- .collapse-content div for the expandable content
+		CONSEQUENCE: Using library Button component would break DaisyUI's CSS selectors and collapse behavior
+		VALIDATION: DaisyUI v4.x collapse component documentation
+	-->
 	<input
 		bind:this={checkboxElement}
 		type="checkbox"
@@ -187,7 +191,7 @@ SPDX-License-Identifier: MIT
 				{@render icon()}
 			</span>
 		{/if}
-		<span>{title}</span>
+		<Text text={title} />
 	</div>
 	<div class={contentClasses} id={contentId} role="region" aria-labelledby={itemId}>
 		{#if children}
