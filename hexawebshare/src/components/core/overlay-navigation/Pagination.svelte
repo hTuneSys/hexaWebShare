@@ -4,6 +4,19 @@ SPDX-License-Identifier: MIT
 -->
 
 <script lang="ts">
+	import Button from '../buttons/Button.svelte';
+	import IconButton from '../buttons/IconButton.svelte';
+	import Text from '../typography/Text.svelte';
+	import Select from '../forms/Select.svelte';
+
+	/**
+	 * Option type for page size options
+	 */
+	export type PageSizeOption = {
+		value: number;
+		label?: string;
+	};
+
 	/**
 	 * Props interface for the Pagination component
 	 */
@@ -71,10 +84,10 @@ SPDX-License-Identifier: MIT
 		 */
 		showPageSize?: boolean;
 		/**
-		 * Available page size options
+		 * Available page size options - can be array of numbers or array of PageSizeOption objects
 		 * @default [10, 20, 50, 100]
 		 */
-		pageSizeOptions?: number[];
+		pageSizeOptions?: number[] | PageSizeOption[];
 		/**
 		 * Show total items count
 		 * @default false
@@ -103,6 +116,63 @@ SPDX-License-Identifier: MIT
 		 */
 		ariaLabel?: string;
 		/**
+		 * Custom label for first page button (sr-only text)
+		 * @default 'First page'
+		 */
+		firstPageLabel?: string;
+		/**
+		 * Custom label for previous page button (sr-only text)
+		 * @default 'Previous page'
+		 */
+		prevPageLabel?: string;
+		/**
+		 * Custom label for next page button (sr-only text)
+		 * @default 'Next page'
+		 */
+		nextPageLabel?: string;
+		/**
+		 * Custom label for last page button (sr-only text)
+		 * @default 'Last page'
+		 */
+		lastPageLabel?: string;
+		/**
+		 * Custom format string for total items display
+		 * Use {start}, {end}, and {total} as placeholders
+		 * @default 'Showing {start} to {end} of {total} results'
+		 */
+		totalItemsFormat?: string;
+		/**
+		 * Custom label for items per page selector
+		 * @default 'Items per page:'
+		 */
+		itemsPerPageLabel?: string;
+		/**
+		 * Custom aria-label for first page button
+		 * @default 'Go to first page'
+		 */
+		firstPageAriaLabel?: string;
+		/**
+		 * Custom aria-label for previous page button
+		 * @default 'Go to previous page'
+		 */
+		prevPageAriaLabel?: string;
+		/**
+		 * Custom aria-label for next page button
+		 * @default 'Go to next page'
+		 */
+		nextPageAriaLabel?: string;
+		/**
+		 * Custom aria-label for last page button
+		 * @default 'Go to last page'
+		 */
+		lastPageAriaLabel?: string;
+		/**
+		 * Custom format string for page number button aria-label
+		 * Use {page} as placeholder
+		 * @default 'Go to page {page}'
+		 */
+		pageAriaLabelFormat?: string;
+		/**
 		 * Additional CSS classes
 		 */
 		class?: string;
@@ -127,13 +197,23 @@ SPDX-License-Identifier: MIT
 		onpagechange,
 		onpagesizechange,
 		ariaLabel = 'Pagination navigation',
+		firstPageLabel = 'First page',
+		prevPageLabel = 'Previous page',
+		nextPageLabel = 'Next page',
+		lastPageLabel = 'Last page',
+		totalItemsFormat = 'Showing {start} to {end} of {total} results',
+		itemsPerPageLabel = 'Items per page:',
+		firstPageAriaLabel = 'Go to first page',
+		prevPageAriaLabel = 'Go to previous page',
+		nextPageAriaLabel = 'Go to next page',
+		lastPageAriaLabel = 'Go to last page',
+		pageAriaLabelFormat = 'Go to page {page}',
 		class: className = '',
 		...props
 	}: Props = $props();
 
 	// Generate unique IDs to avoid collisions when multiple paginations are on the same page
 	const paginationId = $derived(id ?? `pagination-${crypto.randomUUID()}`);
-	const pageSizeSelectId = $derived(`${paginationId}-pagesize`);
 
 	// Calculate total pages from totalItems if provided
 	let totalPages = $derived(
@@ -149,6 +229,9 @@ SPDX-License-Identifier: MIT
 
 	// Calculate visible page numbers
 	let visiblePages = $derived(() => {
+		if (totalPages <= 0) {
+			return [];
+		}
 		if (totalPages <= maxVisiblePages) {
 			// Show all pages if total is less than max
 			return Array.from({ length: totalPages }, (_, i) => i + 1);
@@ -186,35 +269,6 @@ SPDX-License-Identifier: MIT
 
 		return pages;
 	});
-
-	// Button classes using static DaisyUI classes
-	let buttonClasses = $derived(
-		[
-			'btn',
-			'join-item',
-			size === 'xs' && 'btn-xs',
-			size === 'sm' && 'btn-sm',
-			size === 'md' && 'btn-md',
-			size === 'lg' && 'btn-lg',
-			variant === 'primary' && 'btn-primary',
-			variant === 'secondary' && 'btn-secondary',
-			variant === 'accent' && 'btn-accent',
-			variant === 'neutral' && 'btn-neutral',
-			variant === 'info' && 'btn-info',
-			variant === 'success' && 'btn-success',
-			variant === 'warning' && 'btn-warning',
-			variant === 'error' && 'btn-error',
-			variant === 'ghost' && 'btn-ghost'
-		]
-			.filter(Boolean)
-			.join(' ')
-	);
-
-	// Active button classes
-	let activeButtonClasses = $derived([buttonClasses, 'btn-active'].filter(Boolean).join(' '));
-
-	// Disabled button classes
-	let disabledButtonClasses = $derived([buttonClasses, 'btn-disabled'].filter(Boolean).join(' '));
 
 	// Wrapper classes
 	let wrapperClasses = $derived(
@@ -268,147 +322,159 @@ SPDX-License-Identifier: MIT
 	// Calculate start and end item numbers for display
 	let startItem = $derived(totalItems ? (safeCurrentPage - 1) * pageSize + 1 : undefined);
 	let endItem = $derived(totalItems ? Math.min(safeCurrentPage * pageSize, totalItems) : undefined);
+
+	// Format total items text
+	let totalItemsText = $derived(
+		startItem !== undefined && endItem !== undefined && totalItems !== undefined
+			? totalItemsFormat
+					.replace('{start}', String(startItem))
+					.replace('{end}', String(endItem))
+					.replace('{total}', String(totalItems))
+			: ''
+	);
+
+	// Map Pagination size to Text component size
+	let textSize = $derived<'xs' | 'sm' | 'base' | 'lg' | 'xl' | '2xl'>(
+		size === 'xs' ? 'xs' : size === 'sm' ? 'sm' : size === 'md' ? 'sm' : 'sm'
+	);
+
+	// Normalize pageSizeOptions to PageSizeOption format
+	let normalizedPageSizeOptions = $derived(
+		pageSizeOptions.map((option) => {
+			if (typeof option === 'number') {
+				return { value: option, label: String(option) };
+			}
+			return { value: option.value, label: option.label ?? String(option.value) };
+		})
+	);
+
+	// Convert pageSizeOptions to Select component format (string values)
+	let selectOptions = $derived(
+		normalizedPageSizeOptions.map((option) => ({
+			value: String(option.value),
+			label: option.label
+		}))
+	);
 </script>
 
 <nav aria-label={ariaLabel} class="flex flex-col gap-4" {...props}>
 	<div class="flex flex-wrap items-center justify-center gap-4">
 		{#if showTotal && totalItems !== undefined}
-			<div class="text-base-content/70 text-sm">
-				Showing {startItem} to {endItem} of {totalItems} results
-			</div>
+			<Text size={textSize} variant="muted">
+				{totalItemsText}
+			</Text>
 		{/if}
 
 		<div class={wrapperClasses}>
 			{#if showFirstLast}
-				<button
-					type="button"
-					class={safeCurrentPage === 1 ? disabledButtonClasses : buttonClasses}
+				<IconButton
+					{variant}
+					{size}
 					disabled={disabled || loading || safeCurrentPage === 1}
-					aria-label="Go to first page"
-					aria-disabled={safeCurrentPage === 1}
-					tabindex={safeCurrentPage === 1 ? -1 : 0}
+					loading={loading && safeCurrentPage === 1}
+					ariaLabel={firstPageAriaLabel}
+					class="join-item"
 					onclick={() => handlePageChange(1)}
-					onkeydown={(e) => handleKeyDown(e, 'first')}
+					onkeydown={(e: KeyboardEvent) => handleKeyDown(e, 'first')}
 				>
-					{#if loading && safeCurrentPage === 1}
-						<span class="loading loading-spinner loading-xs" aria-hidden="true"></span>
-					{:else}
-						«
-					{/if}
-					<span class="sr-only">First page</span>
-				</button>
+					«
+					<Text class="sr-only">{firstPageLabel}</Text>
+				</IconButton>
 			{/if}
 
 			{#if showPrevNext}
-				<button
-					type="button"
-					class={safeCurrentPage === 1 ? disabledButtonClasses : buttonClasses}
+				<IconButton
+					{variant}
+					{size}
 					disabled={disabled || loading || safeCurrentPage === 1}
-					aria-label="Go to previous page"
-					aria-disabled={safeCurrentPage === 1}
-					tabindex={safeCurrentPage === 1 ? -1 : 0}
+					loading={loading && safeCurrentPage === 1}
+					ariaLabel={prevPageAriaLabel}
+					class="join-item"
 					onclick={() => handlePageChange(safeCurrentPage - 1)}
-					onkeydown={(e) => handleKeyDown(e, 'prev')}
+					onkeydown={(e: KeyboardEvent) => handleKeyDown(e, 'prev')}
 				>
-					{#if loading && safeCurrentPage === 1}
-						<span class="loading loading-spinner loading-xs" aria-hidden="true"></span>
-					{:else}
-						‹
-					{/if}
-					<span class="sr-only">Previous page</span>
-				</button>
+					‹
+					<Text class="sr-only">{prevPageLabel}</Text>
+				</IconButton>
 			{/if}
 
 			{#each visiblePages() as page}
 				{#if page === 'ellipsis'}
-					<button
-						type="button"
-						class={disabledButtonClasses}
-						disabled
-						aria-hidden="true"
-						tabindex={-1}
-					>
-						…
-					</button>
+					<Button
+						{variant}
+						{size}
+						label="…"
+						disabled={true}
+						ariaLabel="Ellipsis"
+						class="join-item"
+					/>
 				{:else}
-					<button
-						type="button"
-						class={page === safeCurrentPage ? activeButtonClasses : buttonClasses}
-						disabled={disabled || loading}
-						aria-label="Go to page {page}"
+					<Button
+						{variant}
+						{size}
+						label={String(page)}
+						disabled={disabled || loading || page > totalPages}
+						loading={loading && page === safeCurrentPage}
+						ariaLabel={pageAriaLabelFormat.replace('{page}', String(page))}
 						aria-current={page === safeCurrentPage ? 'page' : undefined}
-						tabindex={disabled || loading ? -1 : 0}
+						class="join-item {page === safeCurrentPage ? 'btn-active' : ''}"
 						onclick={() => handlePageChange(page)}
-						onkeydown={(e) => handleKeyDown(e, page)}
-					>
-						{#if loading && page === safeCurrentPage}
-							<span class="loading loading-spinner loading-xs" aria-hidden="true"></span>
-						{:else}
-							{page}
-						{/if}
-					</button>
+						onkeydown={(e: KeyboardEvent) => handleKeyDown(e, page)}
+					/>
 				{/if}
 			{/each}
 
 			{#if showPrevNext}
-				<button
-					type="button"
-					class={safeCurrentPage === totalPages ? disabledButtonClasses : buttonClasses}
+				<IconButton
+					{variant}
+					{size}
 					disabled={disabled || loading || safeCurrentPage === totalPages}
-					aria-label="Go to next page"
-					aria-disabled={safeCurrentPage === totalPages}
-					tabindex={safeCurrentPage === totalPages ? -1 : 0}
+					loading={loading && safeCurrentPage === totalPages}
+					ariaLabel={nextPageAriaLabel}
+					class="join-item"
 					onclick={() => handlePageChange(safeCurrentPage + 1)}
-					onkeydown={(e) => handleKeyDown(e, 'next')}
+					onkeydown={(e: KeyboardEvent) => handleKeyDown(e, 'next')}
 				>
-					{#if loading && safeCurrentPage === totalPages}
-						<span class="loading loading-spinner loading-xs" aria-hidden="true"></span>
-					{:else}
-						›
-					{/if}
-					<span class="sr-only">Next page</span>
-				</button>
+					›
+					<Text class="sr-only">{nextPageLabel}</Text>
+				</IconButton>
 			{/if}
 
 			{#if showFirstLast}
-				<button
-					type="button"
-					class={safeCurrentPage === totalPages ? disabledButtonClasses : buttonClasses}
+				<IconButton
+					{variant}
+					{size}
 					disabled={disabled || loading || safeCurrentPage === totalPages}
-					aria-label="Go to last page"
-					aria-disabled={safeCurrentPage === totalPages}
-					tabindex={safeCurrentPage === totalPages ? -1 : 0}
+					loading={loading && safeCurrentPage === totalPages}
+					ariaLabel={lastPageAriaLabel}
+					class="join-item"
 					onclick={() => handlePageChange(totalPages)}
-					onkeydown={(e) => handleKeyDown(e, 'last')}
+					onkeydown={(e: KeyboardEvent) => handleKeyDown(e, 'last')}
 				>
-					{#if loading && safeCurrentPage === totalPages}
-						<span class="loading loading-spinner loading-xs" aria-hidden="true"></span>
-					{:else}
-						»
-					{/if}
-					<span class="sr-only">Last page</span>
-				</button>
+					»
+					<Text class="sr-only">{lastPageLabel}</Text>
+				</IconButton>
 			{/if}
 		</div>
 
 		{#if showPageSize}
 			<div class="flex items-center gap-2">
-				<label for={pageSizeSelectId} class="text-base-content/70 text-sm"> Items per page: </label>
-				<select
-					id={pageSizeSelectId}
-					class="select select-bordered select-sm"
-					disabled={disabled || loading}
-					value={pageSize}
-					onchange={(e) => {
-						const newSize = Number.parseInt((e.target as HTMLSelectElement).value, 10);
-						handlePageSizeChange(newSize);
-					}}
-					aria-label="Items per page"
-				>
-					{#each pageSizeOptions as option}
-						<option value={option}>{option}</option>
-					{/each}
-				</select>
+				<Text size={textSize} variant="muted">{itemsPerPageLabel}</Text>
+				<div class="w-auto">
+					<!-- Wrapper genişliğini sınırla -->
+					<Select
+						value={String(pageSize)}
+						options={selectOptions}
+						{size}
+						disabled={disabled || loading}
+						ariaLabel="Items per page"
+						class="w-auto min-w-[80px]"
+						onchange={(e) => {
+							const newSize = Number.parseInt((e.target as HTMLSelectElement).value, 10);
+							handlePageSizeChange(newSize);
+						}}
+					/>
+				</div>
 			</div>
 		{/if}
 	</div>

@@ -5,6 +5,10 @@ SPDX-License-Identifier: MIT
 
 <script lang="ts">
 	import type { Snippet } from 'svelte';
+	import IconButton from '../buttons/IconButton.svelte';
+	import Heading from '../typography/Heading.svelte';
+	import Icon from '../media/Icon.svelte';
+	import Text from '../typography/Text.svelte';
 
 	interface Props {
 		open?: boolean;
@@ -83,12 +87,27 @@ SPDX-License-Identifier: MIT
 		{#if title || onclose}
 			<div class="mb-4 flex items-center justify-between">
 				{#if title}
-					<h3 id={titleId} class="text-lg font-bold">{title}</h3>
+					<Heading level="h3" size="lg" weight="bold" ariaLabel={title}>
+						<span id={titleId}>{title}</span>
+					</Heading>
 				{/if}
 				{#if onclose}
-					<button class="btn btn-circle btn-ghost btn-sm" onclick={onclose} aria-label="Close modal"
-						>✕</button
-					>
+					<IconButton variant="ghost" size="sm" circle ariaLabel="Close modal" onclick={onclose}>
+						<Icon name="close" size="sm" ariaHidden>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+							>
+								<line x1="18" y1="6" x2="6" y2="18" />
+								<line x1="6" y1="6" x2="18" y2="18" />
+							</svg>
+						</Icon>
+					</IconButton>
 				{/if}
 			</div>
 		{/if}
@@ -103,8 +122,13 @@ SPDX-License-Identifier: MIT
 
 	<!-- Step 10: Backdrop -->
 	{#if closeOnBackdrop}
-		<form method="dialog" class="modal-backdrop">
-			<button onclick={onclose} aria-label="Close modal by clicking backdrop">close</button>
-		</form>
+		<!-- Backdrop button for closing modal when clicking outside -->
+		<IconButton
+			class="modal-backdrop btn-ghost! h-auto! min-h-0! rounded-none! p-0!"
+			ariaLabel="Close modal by clicking backdrop"
+			onclick={onclose}
+		>
+			<Text ariaHidden class="sr-only">close</Text>
+		</IconButton>
 	{/if}
 </dialog>

@@ -28,6 +28,7 @@ SPDX-License-Identifier: MIT
 		disabled?: boolean;
 		loading?: boolean;
 		ariaLabel?: string;
+		'aria-current'?: 'page' | 'step' | 'location' | 'date' | 'time' | boolean;
 		onclick?: () => void;
 		onkeydown?: (event: KeyboardEvent) => void;
 		onfocus?: (event: FocusEvent) => void;

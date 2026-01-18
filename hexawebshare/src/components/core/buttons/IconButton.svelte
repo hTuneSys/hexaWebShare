@@ -5,6 +5,7 @@ SPDX-License-Identifier: MIT
 
 <script lang="ts">
 	import type { Snippet } from 'svelte';
+	import Spinner from '../feedback/Spinner.svelte';
 
 	interface Props {
 		variant?:
@@ -18,6 +19,7 @@ SPDX-License-Identifier: MIT
 			| 'error'
 			| 'ghost'
 			| 'link';
+		title?: string;
 		size?: 'xs' | 'sm' | 'md' | 'lg';
 		circle?: boolean;
 		square?: boolean;
@@ -28,7 +30,12 @@ SPDX-License-Identifier: MIT
 		ariaLabel?: string;
 		'aria-expanded'?: boolean;
 		onclick?: () => void;
+		onkeydown?: (event: KeyboardEvent) => void;
 		children?: Snippet;
+		class?: string;
+		/**
+		 * Additional CSS classes
+		 */
 		class?: string;
 		/**
 		 * Default icon polygon points (used when no children provided)
@@ -49,6 +56,7 @@ SPDX-License-Identifier: MIT
 
 	const {
 		variant = 'primary',
+		title,
 		size = 'md',
 		circle = false,
 		square = false,
@@ -63,6 +71,7 @@ SPDX-License-Identifier: MIT
 		defaultIconPoints = '12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2',
 		defaultIconWidth = '20',
 		defaultIconHeight = '20',
+		class: className = '',
 		...props
 	}: Props = $props();
 
@@ -87,7 +96,8 @@ SPDX-License-Identifier: MIT
 			circle && 'btn-circle',
 			square && 'btn-square',
 			outline && 'btn-outline',
-			glass && 'glass'
+			glass && 'glass',
+			className
 		]
 			.filter(Boolean)
 			.join(' ')
@@ -103,7 +113,7 @@ SPDX-License-Identifier: MIT
 	{...props}
 >
 	{#if loading}
-		<span class="loading loading-spinner"></span>
+		<Spinner type="spinner" {size} />
 	{:else if children}
 		{@render children()}
 	{:else}

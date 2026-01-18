@@ -98,6 +98,10 @@ opacity-50 cursor-not-allowed
 		 */
 		strikethrough?: boolean;
 		/**
+		 * Element ID
+		 */
+		id?: string;
+		/**
 		 * Accessible label for screen readers
 		 */
 		ariaLabel?: string;

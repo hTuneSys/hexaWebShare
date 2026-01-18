@@ -90,6 +90,14 @@ SPDX-License-Identifier: MIT
 		 */
 		ariaLabel?: string;
 		/**
+		 * ARIA disabled attribute
+		 */
+		'aria-disabled'?: boolean;
+		/**
+		 * HTML tabindex attribute
+		 */
+		tabindex?: number;
+		/**
 		 * Title attribute for tooltip
 		 */
 		title?: string;
@@ -135,6 +143,8 @@ SPDX-License-Identifier: MIT
 		'aria-disabled': ariaDisabled,
 		'aria-current': ariaCurrent,
 		ariaLabel,
+		'aria-disabled': ariaDisabled,
+		tabindex,
 		title,
 		download,
 		onclick,
@@ -210,6 +220,10 @@ SPDX-License-Identifier: MIT
 		if (disabled) {
 			event.preventDefault();
 			return;
+		}
+		// Call custom onkeydown handler if provided
+		if (onkeydown) {
+			onkeydown(event);
 		}
 		// Allow Enter key to trigger click for accessibility
 		if (event.key === 'Enter' && onclick) {
