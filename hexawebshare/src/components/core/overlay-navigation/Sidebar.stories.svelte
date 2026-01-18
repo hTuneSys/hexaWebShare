@@ -41,27 +41,68 @@ SPDX-License-Identifier: MIT
 		argTypes: {
 			variant: {
 				control: { type: 'select' },
-				options: ['default', 'compact', 'bordered']
+				options: ['default', 'compact', 'bordered'],
+				description: 'Visual variant of the sidebar',
+				table: {
+					type: { summary: "'default' | 'compact' | 'bordered'" },
+					defaultValue: { summary: "'default'" }
+				}
 			},
 			size: {
 				control: { type: 'select' },
-				options: ['sm', 'md', 'lg']
+				options: ['sm', 'md', 'lg'],
+				description: 'Size preset for the sidebar items',
+				table: {
+					type: { summary: "'sm' | 'md' | 'lg'" },
+					defaultValue: { summary: "'md'" }
+				}
 			},
 			width: {
 				control: { type: 'select' },
-				options: ['narrow', 'default', 'wide']
+				options: ['narrow', 'default', 'wide'],
+				description: 'Width of the sidebar',
+				table: {
+					type: { summary: "'narrow' | 'default' | 'wide'" },
+					defaultValue: { summary: "'default'" }
+				}
 			},
-			collapsed: { control: 'boolean' },
-			collapsible: { control: 'boolean' },
-			sticky: { control: 'boolean' },
-			disabled: { control: 'boolean' },
-			loading: { control: 'boolean' },
-			title: { control: 'text' },
-			subtitle: { control: 'text' }
+			collapsed: {
+				control: 'boolean',
+				description: 'Whether the sidebar is collapsed'
+			},
+			collapsible: {
+				control: 'boolean',
+				description: 'Whether the sidebar can be collapsed'
+			},
+			sticky: {
+				control: 'boolean',
+				description: 'Whether the sidebar is sticky'
+			},
+			disabled: {
+				control: 'boolean',
+				description: 'Disable all sidebar items'
+			},
+			loading: {
+				control: 'boolean',
+				description: 'Whether the sidebar is in loading state'
+			},
+			title: {
+				control: 'text',
+				description: 'Title displayed at the top of the sidebar'
+			},
+			subtitle: {
+				control: 'text',
+				description: 'Subtitle displayed below the title'
+			}
 		},
 		args: {
 			items: defaultItems,
 			title: 'Sidebar',
+			variant: 'default',
+			size: 'md',
+			width: 'default',
+			collapsed: false,
+			collapsible: false,
 			onItemClick: fn(),
 			onCollapse: fn()
 		}

@@ -4,6 +4,9 @@ SPDX-License-Identifier: MIT
 -->
 
 <script lang="ts">
+	import Text from '../typography/Text.svelte';
+	import IconButton from '../buttons/IconButton.svelte';
+
 	/**
 	 * Step data structure for programmatic rendering
 	 */
@@ -175,36 +178,37 @@ SPDX-License-Identifier: MIT
 	{#each steps as step, index (step.id)}
 		<li class={getStepClasses(index, step)} {...getStepAriaAttributes(index, step)}>
 			{#if clickable && !step.disabled && !disabled}
-				<button
-					type="button"
+				<IconButton
+					variant="ghost"
 					class="step-button"
 					onclick={() => handleStepClick(step, index)}
 					onkeydown={(e) => handleKeyDown(e, step, index)}
-					aria-label={step.description ? `${step.label}: ${step.description}` : step.label}
-					aria-current={getStepState(index) === 'current' ? 'step' : undefined}
-					aria-disabled={step.disabled || disabled || false}
+					ariaLabel={step.description ? `${step.label}: ${step.description}` : step.label}
+					disabled={step.disabled || disabled}
 				>
-					<div class="step-wrapper">
-						{#if step.icon}
-							<span class="step-icon" aria-hidden="true">{step.icon}</span>
-						{/if}
-						<div class="step-content">
-							<span class="step-label">{step.label}</span>
-							{#if step.description}
-								<span class="step-description">{step.description}</span>
+					{#snippet children()}
+						<div class="step-wrapper">
+							{#if step.icon}
+								<span class="step-icon" aria-hidden="true">{step.icon}</span>
 							{/if}
+							<div class="step-content">
+								<Text>{step.label}</Text>
+								{#if step.description}
+									<Text size="sm">{step.description}</Text>
+								{/if}
+							</div>
 						</div>
-					</div>
-				</button>
+					{/snippet}
+				</IconButton>
 			{:else}
 				<div class="step-wrapper">
 					{#if step.icon}
 						<span class="step-icon" aria-hidden="true">{step.icon}</span>
 					{/if}
 					<div class="step-content">
-						<span class="step-label">{step.label}</span>
+						<Text>{step.label}</Text>
 						{#if step.description}
-							<span class="step-description">{step.description}</span>
+							<Text size="sm">{step.description}</Text>
 						{/if}
 					</div>
 				</div>
@@ -224,15 +228,6 @@ SPDX-License-Identifier: MIT
 		display: flex;
 		flex-direction: column;
 		gap: 0.25rem;
-	}
-
-	.step-label {
-		font-weight: 500;
-	}
-
-	.step-description {
-		font-size: 0.875rem;
-		opacity: 0.7;
 	}
 
 	.step-icon {
@@ -262,28 +257,14 @@ SPDX-License-Identifier: MIT
 		justify-content: center;
 	}
 
-	.step.step-disabled .step-label {
-		color: hsl(var(--bc) / 0.85);
-		font-weight: 500;
-	}
-
-	.step.step-disabled .step-description {
-		color: hsl(var(--bc) / 0.7);
-		opacity: 1;
-	}
-
 	.step.step-disabled .step-icon {
 		opacity: 0.8;
 	}
 
 	.step-button {
-		background: none;
-		border: none;
-		padding: 0;
-		margin: 0;
 		width: 100%;
 		text-align: left;
-		cursor: pointer;
+		justify-content: flex-start;
 	}
 
 	.step-button:hover {

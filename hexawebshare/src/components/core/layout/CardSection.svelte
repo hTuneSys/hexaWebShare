@@ -5,6 +5,9 @@ SPDX-License-Identifier: MIT
 
 <script lang="ts">
 	import type { Snippet } from 'svelte';
+	import Heading from '../typography/Heading.svelte';
+	import Text from '../typography/Text.svelte';
+	import Spinner from '../feedback/Spinner.svelte';
 
 	/**
 	 * Props interface for the CardSection component
@@ -189,14 +192,14 @@ SPDX-License-Identifier: MIT
 
 					<div class="flex-1">
 						{#if title}
-							<span class="card-section-title text-base-content block text-base font-semibold">
+							<Heading level="h3" weight="semibold" size="md" class="card-section-title">
 								{title}
-							</span>
+							</Heading>
 						{/if}
 						{#if description}
-							<span class="card-section-description text-base-content/70 mt-1 block text-sm">
+							<Text variant="muted" size="sm" display="block" class="card-section-description mt-1">
 								{description}
-							</span>
+							</Text>
 						{/if}
 					</div>
 				</div>
@@ -229,14 +232,14 @@ SPDX-License-Identifier: MIT
 
 					<div class="flex-1">
 						{#if title}
-							<h3 class="card-section-title text-base-content text-base font-semibold">
+							<Heading level="h3" weight="semibold" size="md" class="card-section-title">
 								{title}
-							</h3>
+							</Heading>
 						{/if}
 						{#if description}
-							<p class="card-section-description text-base-content/70 mt-1 text-sm">
+							<Text variant="muted" size="sm" display="block" class="card-section-description mt-1">
 								{description}
-							</p>
+							</Text>
 						{/if}
 					</div>
 				</div>
@@ -255,7 +258,7 @@ SPDX-License-Identifier: MIT
 	<div class={contentClasses}>
 		{#if loading}
 			<div class="flex items-center justify-center py-8" aria-label="Loading content">
-				<span class="loading loading-spinner loading-md"></span>
+				<Spinner size="md" variant="neutral" ariaLabel="Loading section content" />
 			</div>
 		{:else if children}
 			{@render children()}

@@ -5,6 +5,8 @@ SPDX-License-Identifier: MIT
 
 <script lang="ts">
 	import type { Snippet } from 'svelte';
+	import Heading from '../typography/Heading.svelte';
+	import Text from '../typography/Text.svelte';
 
 	/**
 	 * Props interface for the EmptyState component
@@ -255,7 +257,7 @@ SPDX-License-Identifier: MIT
 		<div class="flex flex-col items-center justify-center gap-4">
 			<span class="loading loading-spinner {spinnerSizeClass} text-primary" aria-hidden="true"
 			></span>
-			<p class="text-base-content/70 text-sm">Loading...</p>
+			<Text size="sm" variant="muted" text="Loading..." />
 		</div>
 	{:else}
 		<!-- Icon -->
@@ -285,16 +287,12 @@ SPDX-License-Identifier: MIT
 
 		<!-- Title -->
 		{#if title}
-			<h3 id={titleId} class={titleClasses}>
-				{title}
-			</h3>
+			<Heading level="h3" text={title} id={titleId} class={titleClasses} />
 		{/if}
 
 		<!-- Description -->
 		{#if description}
-			<p id={descriptionId} class={descriptionClasses}>
-				{description}
-			</p>
+			<Text display="block" text={description} id={descriptionId} class={descriptionClasses} />
 		{/if}
 
 		<!-- Custom content slot -->
