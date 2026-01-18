@@ -114,14 +114,14 @@ SPDX-License-Identifier: MIT
 />
 
 <!-- With Children/Content -->
-<Story name="With Custom Content">
-	<Dialog open={true} title="Delete Confirmation" size="md">
-		<p>Are you sure you want to delete this item? This action cannot be undone.</p>
+<Story name="With Custom Content" args={{ open: true, title: 'Delete Confirmation', size: 'md' }}>
+	{#snippet children()}
+		<p class="py-4">Are you sure you want to delete this item? This action cannot be undone.</p>
 		<div class="modal-action">
 			<button class="btn">Cancel</button>
 			<button class="btn btn-error">Delete</button>
 		</div>
-	</Dialog>
+	{/snippet}
 </Story>
 
 <!-- Interactive Examples -->

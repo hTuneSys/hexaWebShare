@@ -11,6 +11,10 @@ SPDX-License-Identifier: MIT
 	 */
 	interface Props {
 		/**
+		 * HTML id attribute for the heading element
+		 */
+		id?: string;
+		/**
 		 * Heading content (text or snippet)
 		 */
 		children?: Snippet;
@@ -124,6 +128,7 @@ SPDX-License-Identifier: MIT
 	}
 
 	const {
+		id,
 		children,
 		text,
 		level = 'h2',
