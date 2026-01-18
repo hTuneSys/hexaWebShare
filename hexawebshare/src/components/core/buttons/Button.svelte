@@ -31,9 +31,14 @@ SPDX-License-Identifier: MIT
 		'aria-current'?: 'page' | 'step' | 'location' | 'date' | 'time' | boolean;
 		onclick?: () => void;
 		onkeydown?: (event: KeyboardEvent) => void;
+		onfocus?: (event: FocusEvent) => void;
+		onblur?: (event: FocusEvent) => void;
 		class?: string;
+		id?: string;
 		tabindex?: number;
+		role?: string;
 		'aria-disabled'?: boolean;
+		'aria-current'?: 'page' | 'step' | 'location' | 'date' | 'time' | boolean;
 	}
 
 	const {
@@ -48,14 +53,21 @@ SPDX-License-Identifier: MIT
 		disabled = false,
 		loading = false,
 		ariaLabel,
+		onclick,
 		onkeydown,
-		class: className = '',
+		onfocus,
+		onblur,
+		class: className,
+		id,
 		tabindex,
+		role,
 		'aria-disabled': ariaDisabled,
+		'aria-current': ariaCurrent,
 		...props
 	}: Props = $props();
 
 	let buttonClasses = $derived(
+		// If custom class is provided, use it (for menu items and special cases)
 		className
 			? className
 			: [
@@ -86,22 +98,23 @@ SPDX-License-Identifier: MIT
 
 <button
 	type="button"
+	{id}
 	class={buttonClasses}
 	{disabled}
-	aria-label={ariaLabel}
-	aria-disabled={ariaDisabled || disabled || undefined}
 	{tabindex}
+	{role}
+	aria-label={ariaLabel}
+	aria-disabled={ariaDisabled !== undefined ? ariaDisabled : disabled}
+	aria-current={ariaCurrent}
+	{onclick}
 	{onkeydown}
+	{onfocus}
+	{onblur}
 	{...props}
 >
 	{#if loading}
 		<span class="loading loading-spinner"></span>
 	{:else if children}
-		{@render children()}
-	{:else if label}
-		{label}
-	{/if}
-	{#if children}
 		{@render children()}
 	{:else if label}
 		{label}

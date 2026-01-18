@@ -66,6 +66,26 @@ SPDX-License-Identifier: MIT
 		 */
 		class?: string;
 		/**
+		 * HTML id attribute
+		 */
+		id?: string;
+		/**
+		 * HTML tabindex attribute
+		 */
+		tabindex?: number;
+		/**
+		 * HTML role attribute
+		 */
+		role?: string;
+		/**
+		 * ARIA disabled attribute
+		 */
+		'aria-disabled'?: boolean;
+		/**
+		 * ARIA current attribute
+		 */
+		'aria-current'?: 'page' | 'step' | 'location' | 'date' | 'time' | boolean;
+		/**
 		 * ARIA label for accessibility
 		 */
 		ariaLabel?: string;
@@ -93,6 +113,14 @@ SPDX-License-Identifier: MIT
 		 * Keyboard event handler
 		 */
 		onkeydown?: (event: KeyboardEvent) => void;
+		/**
+		 * Focus event handler
+		 */
+		onfocus?: (event: FocusEvent) => void;
+		/**
+		 * Blur event handler
+		 */
+		onblur?: (event: FocusEvent) => void;
 	}
 
 	const {
@@ -109,6 +137,11 @@ SPDX-License-Identifier: MIT
 		fontWeight = 'normal',
 		external = false,
 		class: className = '',
+		id,
+		tabindex,
+		role,
+		'aria-disabled': ariaDisabled,
+		'aria-current': ariaCurrent,
 		ariaLabel,
 		'aria-disabled': ariaDisabled,
 		tabindex,
@@ -116,6 +149,8 @@ SPDX-License-Identifier: MIT
 		download,
 		onclick,
 		onkeydown,
+		onfocus,
+		onblur,
 		...props
 	}: Props = $props();
 
@@ -194,6 +229,10 @@ SPDX-License-Identifier: MIT
 		if (event.key === 'Enter' && onclick) {
 			onclick(event as any);
 		}
+		// Call custom onkeydown handler if provided
+		if (onkeydown) {
+			onkeydown(event);
+		}
 	}
 </script>
 
@@ -202,13 +241,18 @@ SPDX-License-Identifier: MIT
 	class={linkClasses}
 	{target}
 	rel={rel()}
+	{id}
+	{role}
 	aria-label={ariaLabel}
-	aria-disabled={ariaDisabled || disabled || undefined}
+	aria-disabled={ariaDisabled !== undefined ? ariaDisabled : disabled}
+	aria-current={ariaCurrent}
 	{title}
 	download={download === true ? '' : download === false ? undefined : download}
 	tabindex={tabindex !== undefined ? tabindex : disabled ? -1 : 0}
 	onclick={handleClick}
-	onkeydown={handleKeyDown}
+	onkeydown={onkeydown || handleKeyDown}
+	{onfocus}
+	{onblur}
 	{...props}
 >
 	{#if children}
