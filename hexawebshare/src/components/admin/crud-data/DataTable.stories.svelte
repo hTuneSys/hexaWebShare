@@ -3,48 +3,146 @@ SPDX-FileCopyrightText: 2025 hexaTune LLC
 SPDX-License-Identifier: MIT
 -->
 
-<script module>
+<script module lang="ts">
 	import { defineMeta } from '@storybook/addon-svelte-csf';
 	import DataTable from './DataTable.svelte';
-	import { fn } from 'storybook/test';
+	import type { DataTableColumn, DataTableAction, SortState } from './DataTable.svelte';
+
+	/**
+	 * Sample user interface for story examples
+	 */
+	interface User {
+		id: number;
+		name: string;
+		email: string;
+		role: string;
+		status: string;
+		createdAt: string;
+	}
+
+	/**
+	 * Sample user data for stories
+	 */
+	const sampleUsers: User[] = [
+		{
+			id: 1,
+			name: 'John Doe',
+			email: 'john@example.com',
+			role: 'Admin',
+			status: 'Active',
+			createdAt: '2024-01-15'
+		},
+		{
+			id: 2,
+			name: 'Jane Smith',
+			email: 'jane@example.com',
+			role: 'Editor',
+			status: 'Active',
+			createdAt: '2024-02-20'
+		},
+		{
+			id: 3,
+			name: 'Bob Johnson',
+			email: 'bob@example.com',
+			role: 'Viewer',
+			status: 'Inactive',
+			createdAt: '2024-03-10'
+		},
+		{
+			id: 4,
+			name: 'Alice Brown',
+			email: 'alice@example.com',
+			role: 'Editor',
+			status: 'Active',
+			createdAt: '2024-04-05'
+		},
+		{
+			id: 5,
+			name: 'Charlie Wilson',
+			email: 'charlie@example.com',
+			role: 'Viewer',
+			status: 'Pending',
+			createdAt: '2024-05-12'
+		}
+	];
+
+	/**
+	 * Extended sample data for pagination stories
+	 */
+	const extendedUsers: User[] = Array.from({ length: 50 }, (_, i) => ({
+		id: i + 1,
+		name: `User ${i + 1}`,
+		email: `user${i + 1}@example.com`,
+		role: ['Admin', 'Editor', 'Viewer'][i % 3],
+		status: ['Active', 'Inactive', 'Pending'][i % 3],
+		createdAt: `2024-${String((i % 12) + 1).padStart(2, '0')}-${String((i % 28) + 1).padStart(2, '0')}`
+	}));
+
+	/**
+	 * Sample columns configuration
+	 */
+	const columns: DataTableColumn<User>[] = [
+		{ key: 'id', label: 'ID', width: '60px', sortable: true },
+		{ key: 'name', label: 'Name', sortable: true },
+		{ key: 'email', label: 'Email', hideOnMobile: true },
+		{ key: 'role', label: 'Role', sortable: true },
+		{ key: 'status', label: 'Status', align: 'center' },
+		{ key: 'createdAt', label: 'Created', hideOnMobile: true, sortable: true }
+	];
+
+	/**
+	 * Sample actions configuration
+	 */
+	const actions: DataTableAction<User>[] = [
+		{
+			id: 'view',
+			label: 'View Details',
+			icon: 'eye',
+			onClick: (row: User) => console.log('View:', row)
+		},
+		{
+			id: 'edit',
+			label: 'Edit',
+			icon: 'edit',
+			onClick: (row: User) => console.log('Edit:', row)
+		},
+		{
+			id: 'delete',
+			label: 'Delete',
+			icon: 'trash',
+			variant: 'danger',
+			onClick: (row: User) => console.log('Delete:', row)
+		}
+	];
 
 	const { Story } = defineMeta({
-		title: 'Admin/CRUD Data/DataTable',
 		component: DataTable,
+		title: 'Admin/CRUD Data/DataTable',
 		tags: ['autodocs'],
 		argTypes: {
-			size: {
-				control: { type: 'select' },
-				options: ['xs', 'sm', 'md', 'lg'],
-				description: 'Size variant of the table'
+			columns: {
+				control: 'object',
+				description: 'Column definitions for the table'
 			},
-			zebra: {
-				control: 'boolean',
-				description: 'Enable zebra striped rows'
+			data: {
+				control: 'object',
+				description: 'Data array to display in the table'
 			},
-			hover: {
-				control: 'boolean',
-				description: 'Enable hover effect on rows'
-			},
-			compact: {
-				control: 'boolean',
-				description: 'Make the table compact'
-			},
-			bordered: {
-				control: 'boolean',
-				description: 'Show borders between cells'
-			},
-			loading: {
-				control: 'boolean',
-				description: 'Show loading state'
-			},
-			disabled: {
-				control: 'boolean',
-				description: 'Disable the table'
+			actions: {
+				control: 'object',
+				description: 'Row action definitions'
 			},
 			selectable: {
 				control: 'boolean',
 				description: 'Enable row selection with checkboxes'
+			},
+			selectedRows: {
+				control: 'object',
+				description: 'Array of selected row indices'
+			},
+			sortState: {
+				control: 'object',
+				description: 'Current sort state'
 			},
 			paginated: {
 				control: 'boolean',
@@ -52,7 +150,7 @@ SPDX-License-Identifier: MIT
 			},
 			currentPage: {
 				control: 'number',
-				description: 'Current page number (1-indexed)'
+				description: 'Current page number (1-based)'
 			},
 			pageSize: {
 				control: 'number',
@@ -62,13 +160,46 @@ SPDX-License-Identifier: MIT
 				control: 'number',
 				description: 'Total number of items'
 			},
+			pageSizeOptions: {
+				control: 'object',
+				description: 'Available page size options'
+			},
+			size: {
+				control: 'select',
+				options: ['xs', 'sm', 'md', 'lg'],
+				description: 'Table size variant'
+			},
+			zebra: {
+				control: 'boolean',
+				description: 'Enable zebra striping'
+			},
+			hover: {
+				control: 'boolean',
+				description: 'Enable row hover effect'
+			},
+			compact: {
+				control: 'boolean',
+				description: 'Use compact spacing'
+			},
+			bordered: {
+				control: 'boolean',
+				description: 'Show cell borders'
+			},
+			loading: {
+				control: 'boolean',
+				description: 'Show loading state'
+			},
+			disabled: {
+				control: 'boolean',
+				description: 'Disable all interactions'
+			},
 			ariaLabel: {
 				control: 'text',
 				description: 'Accessible label for the table'
 			},
 			caption: {
 				control: 'text',
-				description: 'Caption for the table'
+				description: 'Table caption text'
 			},
 			emptyStateTitle: {
 				control: 'text',
@@ -78,258 +209,215 @@ SPDX-License-Identifier: MIT
 				control: 'text',
 				description: 'Description for empty state'
 			},
+			loadingAriaLabel: {
+				control: 'text',
+				description: 'Accessible label for loading spinner'
+			},
 			actionsColumnLabel: {
 				control: 'text',
 				description: 'Label for actions column header'
 			},
 			selectAllAriaLabel: {
 				control: 'text',
-				description: 'Aria label for select all checkbox'
+				description: 'Accessible label for select all checkbox'
 			},
-			loadingAriaLabel: {
+			selectRowAriaLabelFormat: {
 				control: 'text',
-				description: 'Aria label for loading state'
+				description: 'Format string for row checkbox aria label'
+			},
+			actionsAriaLabelFormat: {
+				control: 'text',
+				description: 'Format string for actions dropdown aria label'
 			},
 			paginationAriaLabel: {
 				control: 'text',
-				description: 'Aria label for pagination'
+				description: 'Accessible label for pagination'
+			},
+			onSelectionChange: {
+				action: 'selectionChange',
+				description: 'Callback when selection changes'
+			},
+			onSortChange: {
+				action: 'sortChange',
+				description: 'Callback when sort changes'
+			},
+			onPageChange: {
+				action: 'pageChange',
+				description: 'Callback when page changes'
+			},
+			onPageSizeChange: {
+				action: 'pageSizeChange',
+				description: 'Callback when page size changes'
+			},
+			onRowClick: {
+				action: 'rowClick',
+				description: 'Callback when a row is clicked'
 			}
-		},
-		args: {
-			onSelectionChange: fn(),
-			onSortChange: fn(),
-			onPageChange: fn(),
-			onPageSizeChange: fn(),
-			onRowClick: fn()
 		}
 	});
-
-	// Sample columns for user data
-	const userColumns = [
-		{ key: 'id', label: 'ID', sortable: true, width: '60px' },
-		{ key: 'name', label: 'Name', sortable: true },
-		{ key: 'email', label: 'Email', sortable: true },
-		{ key: 'role', label: 'Role', sortable: true },
-		{ key: 'status', label: 'Status', align: /** @type {'center'} */ ('center') }
-	];
-
-	// Sample user data
-	const userData = [
-		{ id: 1, name: 'John Doe', email: 'john@example.com', role: 'Admin', status: 'Active' },
-		{ id: 2, name: 'Jane Smith', email: 'jane@example.com', role: 'Editor', status: 'Active' },
-		{ id: 3, name: 'Bob Johnson', email: 'bob@example.com', role: 'Viewer', status: 'Inactive' },
-		{ id: 4, name: 'Alice Brown', email: 'alice@example.com', role: 'Editor', status: 'Active' },
-		{
-			id: 5,
-			name: 'Charlie Wilson',
-			email: 'charlie@example.com',
-			role: 'Viewer',
-			status: 'Pending'
-		}
-	];
-
-	// Sample columns for product data
-	const productColumns = [
-		{ key: 'sku', label: 'SKU', sortable: true, width: '100px' },
-		{ key: 'product', label: 'Product', sortable: true },
-		{ key: 'category', label: 'Category', sortable: true, hideOnMobile: true },
-		{ key: 'price', label: 'Price', sortable: true, align: /** @type {'right'} */ ('right') },
-		{ key: 'stock', label: 'Stock', sortable: true, align: /** @type {'center'} */ ('center') }
-	];
-
-	// Sample product data
-	const productData = [
-		{
-			sku: 'PRD-001',
-			product: 'Wireless Mouse',
-			category: 'Electronics',
-			price: '$29.99',
-			stock: 150
-		},
-		{ sku: 'PRD-002', product: 'USB-C Hub', category: 'Electronics', price: '$49.99', stock: 75 },
-		{
-			sku: 'PRD-003',
-			product: 'Mechanical Keyboard',
-			category: 'Electronics',
-			price: '$129.99',
-			stock: 45
-		},
-		{
-			sku: 'PRD-004',
-			product: 'Monitor Stand',
-			category: 'Accessories',
-			price: '$39.99',
-			stock: 200
-		},
-		{ sku: 'PRD-005', product: 'Webcam HD', category: 'Electronics', price: '$79.99', stock: 60 },
-		{ sku: 'PRD-006', product: 'Desk Lamp', category: 'Accessories', price: '$24.99', stock: 120 },
-		{
-			sku: 'PRD-007',
-			product: 'Mouse Pad XL',
-			category: 'Accessories',
-			price: '$14.99',
-			stock: 300
-		}
-	];
-
-	// Sample row actions
-	const rowActions = [
-		{ id: 'view', label: 'View Details', icon: '👁️', onClick: fn() },
-		{ id: 'edit', label: 'Edit', icon: '✏️', onClick: fn() },
-		{
-			id: 'delete',
-			label: 'Delete',
-			icon: '🗑️',
-			variant: /** @type {'danger'} */ ('danger'),
-			onClick: fn()
-		}
-	];
-
-	// Page size options
-	const pageSizeOptions = [5, 10, 20, 50];
 </script>
 
-<!-- Default Story -->
+<!-- Story 1: Default -->
 <Story
 	name="Default"
 	args={{
-		columns: userColumns,
-		data: userData,
-		size: 'md',
-		hover: true,
-		ariaLabel: 'User accounts table'
+		columns: columns as any,
+		data: sampleUsers as any,
+		ariaLabel: 'User data table'
 	}}
 />
 
-<!-- With Selection -->
+<!-- Story 2: With Selection -->
 <Story
 	name="With Selection"
 	args={{
-		columns: userColumns,
-		data: userData,
-		size: 'md',
-		hover: true,
+		columns: columns as any,
+		data: sampleUsers as any,
 		selectable: true,
 		selectedRows: [0, 2],
-		ariaLabel: 'Selectable user table',
 		selectAllAriaLabel: 'Select all users',
-		selectRowAriaLabelFormat: 'Select user row {index}'
+		selectRowAriaLabelFormat: 'Select user {index}',
+		ariaLabel: 'Selectable user data table'
 	}}
 />
 
-<!-- With Sorting -->
+<!-- Story 3: With Sorting -->
 <Story
 	name="With Sorting"
 	args={{
-		columns: productColumns,
-		data: productData,
-		size: 'md',
-		hover: true,
-		sortState: { column: 'product', direction: /** @type {'asc'} */ ('asc') },
-		ariaLabel: 'Sortable product table'
+		columns: columns as any,
+		data: sampleUsers as any,
+		sortState: { column: 'name', direction: 'asc' } as SortState,
+		ariaLabel: 'Sortable user data table'
 	}}
 />
 
-<!-- With Actions -->
+<!-- Story 4: With Actions -->
 <Story
 	name="With Actions"
 	args={{
-		columns: userColumns,
-		data: userData,
-		size: 'md',
-		hover: true,
-		actions: rowActions,
+		columns: columns as any,
+		data: sampleUsers as any,
+		actions: actions as any,
 		actionsColumnLabel: 'Actions',
 		actionsAriaLabelFormat: 'Actions for row {index}',
-		ariaLabel: 'User table with actions'
+		ariaLabel: 'User data table with actions'
 	}}
 />
 
-<!-- With Pagination -->
+<!-- Story 5: With Pagination -->
 <Story
 	name="With Pagination"
 	args={{
-		columns: productColumns,
-		data: productData,
-		size: 'md',
-		hover: true,
-		paginated: true,
-		currentPage: 1,
-		pageSize: 5,
-		totalItems: 25,
-		pageSizeOptions: pageSizeOptions,
-		paginationAriaLabel: 'Product table pagination',
-		ariaLabel: 'Paginated product table'
-	}}
-/>
-
-<!-- Loading State -->
-<Story
-	name="Loading State"
-	args={{
-		columns: userColumns,
-		data: [],
-		size: 'md',
-		loading: true,
-		loadingAriaLabel: 'Loading user data',
-		ariaLabel: 'Loading table'
-	}}
-/>
-
-<!-- Empty State -->
-<Story
-	name="Empty State"
-	args={{
-		columns: userColumns,
-		data: [],
-		size: 'md',
-		emptyStateTitle: 'No Users Found',
-		emptyStateDescription: 'There are no users matching your criteria. Try adjusting your filters.',
-		ariaLabel: 'Empty user table'
-	}}
-/>
-
-<!-- Zebra Striped -->
-<Story
-	name="Zebra Striped"
-	args={{
-		columns: productColumns,
-		data: productData,
-		size: 'md',
-		zebra: true,
-		hover: true,
-		ariaLabel: 'Zebra striped product table'
-	}}
-/>
-
-<!-- Bordered -->
-<Story
-	name="Bordered"
-	args={{
-		columns: userColumns,
-		data: userData,
-		size: 'md',
-		bordered: true,
-		hover: true,
-		ariaLabel: 'Bordered user table'
-	}}
-/>
-
-<!-- Playground - Interactive story with all features -->
-<Story
-	name="Playground"
-	args={{
-		columns: productColumns,
-		data: productData,
-		actions: rowActions,
-		selectable: true,
-		selectedRows: [],
-		sortState: { column: null, direction: null },
+		columns: columns as any,
+		data: extendedUsers.slice(0, 10) as any,
 		paginated: true,
 		currentPage: 1,
 		pageSize: 10,
 		totalItems: 50,
-		pageSizeOptions: pageSizeOptions,
+		pageSizeOptions: [5, 10, 25, 50],
+		paginationAriaLabel: 'User table pagination',
+		ariaLabel: 'Paginated user data table'
+	}}
+/>
+
+<!-- Story 6: Zebra Striping -->
+<Story
+	name="Zebra Striping"
+	args={{
+		columns: columns as any,
+		data: sampleUsers as any,
+		zebra: true,
+		ariaLabel: 'Zebra striped user data table'
+	}}
+/>
+
+<!-- Story 7: Bordered -->
+<Story
+	name="Bordered"
+	args={{
+		columns: columns as any,
+		data: sampleUsers as any,
+		bordered: true,
+		ariaLabel: 'Bordered user data table'
+	}}
+/>
+
+<!-- Story 8: Compact Size -->
+<Story
+	name="Compact Size"
+	args={{
+		columns: columns as any,
+		data: sampleUsers as any,
+		size: 'xs',
+		compact: true,
+		ariaLabel: 'Compact user data table'
+	}}
+/>
+
+<!-- Story 9: Loading State -->
+<Story
+	name="Loading State"
+	args={{
+		columns: columns as any,
+		data: [],
+		loading: true,
+		loadingAriaLabel: 'Loading user data',
+		ariaLabel: 'Loading user data table'
+	}}
+/>
+
+<!-- Story 10: Empty State -->
+<Story
+	name="Empty State"
+	args={{
+		columns: columns as any,
+		data: [],
+		emptyStateTitle: 'No users found',
+		emptyStateDescription: 'There are no users matching your criteria. Try adjusting your filters.',
+		ariaLabel: 'Empty user data table'
+	}}
+/>
+
+<!-- Story 11: Disabled State -->
+<Story
+	name="Disabled State"
+	args={{
+		columns: columns as any,
+		data: sampleUsers as any,
+		selectable: true,
+		actions: actions as any,
+		disabled: true,
+		ariaLabel: 'Disabled user data table'
+	}}
+/>
+
+<!-- Story 12: With Caption -->
+<Story
+	name="With Caption"
+	args={{
+		columns: columns as any,
+		data: sampleUsers as any,
+		caption: 'List of registered users in the system',
+		ariaLabel: 'User data table with caption'
+	}}
+/>
+
+<!-- Story 13: Playground (Interactive) -->
+<Story
+	name="Playground"
+	args={{
+		columns: columns as any,
+		data: sampleUsers as any,
+		actions: actions as any,
+		selectable: true,
+		selectedRows: [],
+		sortState: { column: null, direction: null } as SortState,
+		paginated: true,
+		currentPage: 1,
+		pageSize: 10,
+		totalItems: 5,
+		pageSizeOptions: [5, 10, 25],
 		size: 'md',
 		zebra: false,
 		hover: true,
@@ -337,15 +425,15 @@ SPDX-License-Identifier: MIT
 		bordered: false,
 		loading: false,
 		disabled: false,
-		ariaLabel: 'Interactive DataTable playground',
-		caption: 'Product inventory management',
-		emptyStateTitle: 'No Products',
-		emptyStateDescription: 'No products available',
-		loadingAriaLabel: 'Loading products',
+		ariaLabel: 'Interactive user data table',
+		caption: '',
+		emptyStateTitle: 'No data available',
+		emptyStateDescription: 'There is no data to display.',
+		loadingAriaLabel: 'Loading data',
 		actionsColumnLabel: 'Actions',
-		selectAllAriaLabel: 'Select all products',
-		selectRowAriaLabelFormat: 'Select product row {index}',
-		actionsAriaLabelFormat: 'Actions for product {index}',
-		paginationAriaLabel: 'Product pagination'
+		selectAllAriaLabel: 'Select all rows',
+		selectRowAriaLabelFormat: 'Select row {index}',
+		actionsAriaLabelFormat: 'Actions for row {index}',
+		paginationAriaLabel: 'Table pagination'
 	}}
 />
