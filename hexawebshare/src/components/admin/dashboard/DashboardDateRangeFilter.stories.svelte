@@ -96,6 +96,13 @@ SPDX-License-Identifier: MIT
 				control: 'text',
 				description: 'Accessible label for screen readers'
 			},
+			presetAriaLabelTemplate: {
+				control: 'text',
+				description: 'Template for preset button aria-labels. Use {label} as placeholder.',
+				table: {
+					defaultValue: { summary: 'Select {label} date range' }
+				}
+			},
 			presets: {
 				control: 'object',
 				description: 'Array of custom preset date ranges. Set to undefined to use default presets.',

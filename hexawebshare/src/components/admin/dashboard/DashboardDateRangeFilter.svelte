@@ -133,6 +133,12 @@ SPDX-License-Identifier: MIT
 		 */
 		requiredLabel?: string;
 		/**
+		 * Template for preset button aria-labels
+		 * Use {label} as placeholder for preset label
+		 * @default 'Select {label} date range'
+		 */
+		presetAriaLabelTemplate?: string;
+		/**
 		 * Change event handler for start date
 		 */
 		onStartDateChange?: (event: Event) => void;
@@ -183,6 +189,7 @@ SPDX-License-Identifier: MIT
 		ariaLabel,
 		ariaDescribedby,
 		requiredLabel = 'required',
+		presetAriaLabelTemplate = 'Select {label} date range',
 		onStartDateChange,
 		onEndDateChange,
 		onStartDateInput,
@@ -463,7 +470,7 @@ SPDX-License-Identifier: MIT
 					size={buttonSize}
 					disabled={disabled || !isPresetValid(preset)}
 					onclick={() => handlePresetSelect(preset)}
-					ariaLabel={`Select ${preset.label} date range`}
+					ariaLabel={presetAriaLabelTemplate.replace('{label}', preset.label)}
 				/>
 			{/each}
 		</div>
