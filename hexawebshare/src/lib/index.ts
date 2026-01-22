@@ -110,3 +110,11 @@ export type {
 	SocialLink
 } from '../components/utility/utility/FooterBar.svelte';
 export { default as GlobalSearchBar } from '../components/utility/utility/GlobalSearchBar.svelte';
+
+// Admin / CRUD Data
+export { default as DataTableToolbar } from '../components/admin/crud-data/DataTableToolbar.svelte';
+export type {
+	ToolbarAction,
+	BulkAction,
+	ViewOption
+} from '../components/admin/crud-data/DataTableToolbar.svelte';

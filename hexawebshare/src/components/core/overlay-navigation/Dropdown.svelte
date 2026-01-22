@@ -425,7 +425,7 @@ SPDX-License-Identifier: MIT
 	}
 </script>
 
-<details bind:this={dropdownElement} class={dropdownClasses} ontoggle={handleToggle} {...props}>
+<details bind:this={dropdownElement} open={isOpen} class={dropdownClasses} ontoggle={handleToggle} {...props}>
 	<!-- Trigger -->
 	<summary
 		class={trigger ? triggerClass : triggerClasses}
