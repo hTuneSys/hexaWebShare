@@ -21,8 +21,9 @@ SPDX-License-Identifier: MIT
 		tags: ['autodocs'],
 		argTypes: {
 			data: {
-				control: 'object',
-				description: 'Data array - each item represents a slice in the pie chart'
+				control: { type: 'object' },
+				description:
+					'Data array - each item represents a slice in the pie chart. Format: [{ label: string, value: number }, ...]'
 			},
 			colorScheme: {
 				control: 'object',
@@ -45,9 +46,27 @@ SPDX-License-Identifier: MIT
 				control: 'boolean',
 				description: 'Show values on slices or in legend'
 			},
+			showOnlyPercentage: {
+				control: 'boolean',
+				description: 'Show only percentage on slices, hide category labels'
+			},
 			showLegend: {
 				control: 'boolean',
 				description: 'Show legend below chart'
+			},
+			hideLegendLabels: {
+				control: 'boolean',
+				description: 'Hide category labels in legend, show only color and value'
+			},
+			useColoredBadges: {
+				control: 'boolean',
+				description:
+					'Use colored badges in legend that match slice colors. When false, all badges use neutral color.'
+			},
+			hideLabeledFromLegend: {
+				control: 'boolean',
+				description:
+					'Hide legend items for slices that have labels displayed on the chart. When false, all slices are shown in legend.'
 			},
 			labelMinPercentage: {
 				control: { type: 'number', min: 0, max: 50, step: 1 },
@@ -96,7 +115,11 @@ SPDX-License-Identifier: MIT
 			size: 'md',
 			showLabels: true,
 			showValues: true,
+			showOnlyPercentage: true,
 			showLegend: true,
+			hideLegendLabels: false,
+			useColoredBadges: true,
+			hideLabeledFromLegend: false,
 			labelMinPercentage: 15,
 			loading: false,
 			disabled: false,
@@ -205,6 +228,59 @@ SPDX-License-Identifier: MIT
 />
 
 <Story
+	name="Hide Labeled From Legend"
+	args={{
+		data: sampleData,
+		size: 'md',
+		showLabels: true,
+		showValues: true,
+		showLegend: true,
+		hideLabeledFromLegend: true,
+		labelMinPercentage: 15
+	}}
+/>
+
+<Story
+	name="Hide Legend Labels"
+	args={{
+		data: sampleData,
+		size: 'md',
+		showLabels: true,
+		showValues: true,
+		showLegend: true,
+		hideLegendLabels: true,
+		labelMinPercentage: 15
+	}}
+/>
+
+<Story
+	name="Show Only Percentage"
+	args={{
+		data: sampleData,
+		size: 'md',
+		showLabels: true,
+		showValues: true,
+		showOnlyPercentage: true,
+		showLegend: true,
+		labelMinPercentage: 15
+	}}
+/>
+
+<Story
+	name="Neutral Badges"
+	args={{
+		data: sampleData,
+		size: 'md',
+		showLabels: true,
+		showValues: true,
+		showOnlyPercentage: true,
+		showLegend: true,
+		useColoredBadges: false,
+		labelMinPercentage: 15
+	}}
+/>
+
+<Story
 	name="Playground"
 	args={{
 		data: sampleData,
@@ -212,7 +288,11 @@ SPDX-License-Identifier: MIT
 		size: 'md',
 		showLabels: true,
 		showValues: true,
+		showOnlyPercentage: true,
 		showLegend: true,
+		hideLegendLabels: false,
+		useColoredBadges: true,
+		hideLabeledFromLegend: false,
 		labelMinPercentage: 15,
 		loading: false,
 		disabled: false,

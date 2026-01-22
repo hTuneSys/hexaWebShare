@@ -7,7 +7,7 @@ SPDX-License-Identifier: MIT
 	import EmptyState from '../../core/data-display/EmptyState.svelte';
 	import Loader from '../../core/feedback/Loader.svelte';
 	import Text from '../../core/typography/Text.svelte';
-	import ChartLegend from './ChartLegend.svelte';
+	import Badge from '../../core/media/Badge.svelte';
 
 	/**
 	 * Data point interface for pie chart slices
@@ -58,6 +58,12 @@ SPDX-License-Identifier: MIT
 		 */
 		showLabels?: boolean;
 		/**
+		 * Show only percentage on slices, hide category labels
+		 * When true, only percentage is shown on slices, not the category name
+		 * @default true
+		 */
+		showOnlyPercentage?: boolean;
+		/**
 		 * Show values on slices or in legend
 		 * @default true
 		 */
@@ -67,6 +73,25 @@ SPDX-License-Identifier: MIT
 		 * @default true
 		 */
 		showLegend?: boolean;
+		/**
+		 * Hide category labels in legend, show only color and value
+		 * @default false
+		 */
+		hideLegendLabels?: boolean;
+		/**
+		 * Use colored badges in legend that match slice colors.
+		 * When false, all badges use neutral (black) color.
+		 * @default true
+		 */
+		useColoredBadges?: boolean;
+		/**
+		 * Hide legend items for slices that have labels displayed on the chart.
+		 * When true, slices with visible labels (percentage >= labelMinPercentage) are excluded from legend.
+		 * Only small slices without labels will be shown in legend.
+		 * When false, all slices are shown in legend regardless of label visibility.
+		 * @default false
+		 */
+		hideLabeledFromLegend?: boolean;
 		/**
 		 * Minimum slice percentage to show label on chart (avoids overlap on small adjacent slices).
 		 * Smaller slices are still in legend and tooltip.
@@ -144,7 +169,11 @@ SPDX-License-Identifier: MIT
 		size = 'md',
 		showLabels = true,
 		showValues = true,
+		showOnlyPercentage = true,
 		showLegend = true,
+		hideLegendLabels = false,
+		useColoredBadges = true,
+		hideLabeledFromLegend = false,
 		labelMinPercentage = 15,
 		loading = false,
 		disabled = false,
@@ -160,15 +189,15 @@ SPDX-License-Identifier: MIT
 		...props
 	}: Props = $props();
 
-	// SVG dimensions
-	const SVG_SIZE = 200;
-	const CX = SVG_SIZE / 2;
-	const CY = SVG_SIZE / 2;
-	const OUTER_R = (SVG_SIZE / 2) * 0.9;
-	let innerR = $derived(donut ? OUTER_R * 0.55 : 0);
-
 	// Size-based chart dimensions
 	let chartSizePx = $derived(size === 'sm' ? 160 : size === 'md' ? 200 : 280);
+
+	// SVG dimensions (dynamic based on size prop)
+	let SVG_SIZE = $derived(chartSizePx);
+	let CX = $derived(SVG_SIZE / 2);
+	let CY = $derived(SVG_SIZE / 2);
+	let OUTER_R = $derived((SVG_SIZE / 2) * 0.9);
+	let innerR = $derived(donut ? OUTER_R * 0.55 : 0);
 
 	let containerClasses = $derived(
 		[
@@ -272,13 +301,35 @@ SPDX-License-Identifier: MIT
 		info: 'oklch(var(--in))'
 	};
 
-	let legendItemsWithColors = $derived(
-		processedData.map((s) => ({
-			label: s.label,
-			color: VARIANT_COLORS[s.variant],
-			value: showValues ? String(s.value) : undefined,
-			ariaLabel: `${s.label}: ${s.value} (${s.percentage.toFixed(1)}%)`
-		}))
+	let legendItemsWithColors = $derived.by(() =>
+		processedData
+			.filter((s) => {
+				// If hideLabeledFromLegend is true and labels are shown,
+				// exclude slices that have labels displayed on the chart
+				if (hideLabeledFromLegend && showLabels) {
+					return s.percentage < labelMinPercentage;
+				}
+				return true;
+			})
+			.map((s) => ({
+				label: hideLegendLabels ? '' : s.label,
+				color: VARIANT_COLORS[s.variant],
+				variant: s.variant,
+				value: showValues ? String(s.value) : undefined,
+				ariaLabel: `${s.label}: ${s.value} (${s.percentage.toFixed(1)}%)`
+			}))
+	);
+
+	// Legend size classes
+	let legendSize = $derived(size === 'sm' ? 'sm' : size === 'lg' ? 'lg' : 'md');
+	let legendTextSize = $derived(
+		legendSize === 'sm' ? 'sm' : legendSize === 'md' ? 'base' : 'lg'
+	) as 'xs' | 'sm' | 'base' | 'lg' | 'xl' | '2xl';
+	let legendColorSize = $derived(
+		legendSize === 'sm' ? 'w-3 h-3' : legendSize === 'md' ? 'w-3.5 h-3.5' : 'w-4 h-4'
+	);
+	let legendGap = $derived(
+		legendSize === 'sm' ? 'gap-1.5' : legendSize === 'md' ? 'gap-2' : 'gap-2.5'
 	);
 
 	let accessibleDescription = $derived(
@@ -395,26 +446,26 @@ SPDX-License-Identifier: MIT
 					{/each}
 				</svg>
 				{#if showLabels}
-					<div
-						class="pointer-events-none absolute inset-0"
-						aria-hidden="true"
-					>
+					<div class="pointer-events-none absolute inset-0" aria-hidden="true">
 						{#each processedData as slice}
 							{#if slice.percentage >= labelMinPercentage}
 								{@const [lx, ly] = labelPos(slice)}
 								<div
 									class="absolute flex flex-col items-center justify-center"
-									style="left: {(lx / SVG_SIZE) * 100}%; top: {(ly / SVG_SIZE) * 100}%; transform: translate(-50%, -50%);"
+									style="left: {(lx / SVG_SIZE) * 100}%; top: {(ly / SVG_SIZE) *
+										100}%; transform: translate(-50%, -50%);"
 								>
-									<Text
-										text={slice.label}
-										size="xs"
-										display="block"
-										align="center"
-										weight="medium"
-										ariaHidden={true}
-										class="text-base-content"
-									/>
+									{#if !showOnlyPercentage}
+										<Text
+											text={slice.label}
+											size="xs"
+											display="block"
+											align="center"
+											weight="medium"
+											ariaHidden={true}
+											class="text-base-content"
+										/>
+									{/if}
 									{#if showValues}
 										<Text
 											text={slice.percentage.toFixed(0) + '%'}
@@ -423,7 +474,7 @@ SPDX-License-Identifier: MIT
 											align="center"
 											variant="muted"
 											ariaHidden={true}
-											class="-mt-0.5 text-base-content/70"
+											class={showOnlyPercentage ? '' : 'text-base-content/70 -mt-0.5'}
 										/>
 									{/if}
 								</div>
@@ -433,15 +484,39 @@ SPDX-License-Identifier: MIT
 				{/if}
 			</div>
 			{#if showLegend && legendItemsWithColors.length > 0}
-				<ChartLegend
-					items={legendItemsWithColors}
-					orientation="horizontal"
-					position="bottom"
-					size={size === 'sm' ? 'sm' : size === 'lg' ? 'lg' : 'md'}
-					{showValues}
-					spacing="normal"
-					ariaLabel="Chart legend"
-				/>
+				<!--
+				  NOTE: Custom legend implementation is intentional here.
+				  Reason: ChartLegend component doesn't support colored Badge variants.
+				  We need Badge colors to match slice colors, so we implement custom legend.
+				-->
+				<div class="mt-4 flex flex-row flex-wrap gap-3" aria-label="Chart legend" role="list">
+					{#each legendItemsWithColors as item}
+						<div class="flex items-center {legendGap} select-none" role="listitem">
+							<!--
+							  NOTE: Raw HTML span is intentional here.
+							  Reason: This is a visual color indicator (swatch) for legend items, not a semantic status indicator.
+							  No suitable library component exists for simple color swatches. StatusDot is for status indicators,
+							  not color swatches. This span serves as a decorative visual element matching the pie slice color.
+							-->
+							<span
+								class="inline-block rounded-sm {legendColorSize}"
+								style="background-color: {item.color}"
+								aria-hidden="true"
+							></span>
+							{#if !hideLegendLabels && item.label}
+								<Text text={item.label} size={legendTextSize} weight="medium" />
+							{/if}
+							{#if showValues && item.value !== undefined}
+								<Badge
+									label={String(item.value)}
+									size={legendSize === 'sm' ? 'sm' : legendSize === 'md' ? 'md' : 'lg'}
+									variant={useColoredBadges ? item.variant : 'neutral'}
+									class={hideLegendLabels ? '' : 'ml-1'}
+								/>
+							{/if}
+						</div>
+					{/each}
+				</div>
 			{/if}
 		</div>
 	{/if}
