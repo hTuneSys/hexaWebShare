@@ -201,7 +201,7 @@ SPDX-License-Identifier: MIT
 	let playgroundSearch = $state('');
 	let playgroundFilterOpen = $state(true);
 	let playgroundViewValue = $state('comfortable');
-	
+
 	// Filter and view state for stories
 	let withFiltersFilterOpen = $state(true);
 	let withViewOptionsViewValue = $state('comfortable');
@@ -209,7 +209,7 @@ SPDX-License-Identifier: MIT
 	let appliedCategory = $state('all');
 	let showFiltersApplyToast = $state(false);
 	let showFiltersResetToast = $state(false);
-	
+
 	// Tag filter state for story
 	let tagFilterSearch = $state('');
 	let selectedTags = $state<string[]>([]);
@@ -217,7 +217,7 @@ SPDX-License-Identifier: MIT
 	let tagFilterOpen = $state(true);
 	let showApplyToast = $state(false);
 	let showClearToast = $state(false);
-	
+
 	const availableTags = [
 		'React',
 		'Vue',
@@ -242,8 +242,28 @@ SPDX-License-Identifier: MIT
 	];
 
 	// Filter button variants (can be changed in stories)
-	let applyButtonVariant: 'primary' | 'secondary' | 'accent' | 'neutral' | 'info' | 'success' | 'warning' | 'error' | 'ghost' | 'link' = 'primary';
-	let resetButtonVariant: 'primary' | 'secondary' | 'accent' | 'neutral' | 'info' | 'success' | 'warning' | 'error' | 'ghost' | 'link' = 'ghost';
+	let applyButtonVariant:
+		| 'primary'
+		| 'secondary'
+		| 'accent'
+		| 'neutral'
+		| 'info'
+		| 'success'
+		| 'warning'
+		| 'error'
+		| 'ghost'
+		| 'link' = 'primary';
+	let resetButtonVariant:
+		| 'primary'
+		| 'secondary'
+		| 'accent'
+		| 'neutral'
+		| 'info'
+		| 'success'
+		| 'warning'
+		| 'error'
+		| 'ghost'
+		| 'link' = 'ghost';
 
 	// Callback functions for Storybook Actions panel
 	const filterApplyCallback = fn();
@@ -390,7 +410,7 @@ SPDX-License-Identifier: MIT
 
 <!-- Filter Content Snippet (defined at file level for reuse) -->
 {#snippet filterContentSnippet()}
-	<div class="p-4 space-y-4 min-w-64">
+	<div class="min-w-64 space-y-4 p-4">
 		<Text text="Filter Options" weight="bold" size="base" display="block" class="mb-2" />
 		<div>
 			<Select
@@ -427,29 +447,17 @@ SPDX-License-Identifier: MIT
 			/>
 		</div>
 		<div class="flex gap-2 pt-2">
-			<Button 
-				label="Apply" 
-				variant="primary" 
-				size="sm" 
-				class="flex-1"
-				onclick={handleFilterApply}
-			/>
-			<Button 
-				label="Reset" 
-				variant="ghost" 
-				size="sm" 
-				class="flex-1"
-				onclick={handleFilterReset}
-			/>
+			<Button label="Apply" variant="primary" size="sm" onclick={handleFilterApply} />
+			<Button label="Reset" variant="ghost" size="sm" onclick={handleFilterReset} />
 		</div>
 	</div>
 {/snippet}
 
 <!-- Tag Filter Content Snippet (with search and removable tags) -->
 {#snippet tagFilterContentSnippet()}
-	<div class="p-4 space-y-4 min-w-80">
+	<div class="min-w-80 space-y-4 p-4">
 		<Text text="Filter by Tags" weight="bold" size="base" display="block" class="mb-2" />
-		
+
 		<!-- Search Input -->
 		<div>
 			<Input
@@ -463,70 +471,75 @@ SPDX-License-Identifier: MIT
 				class="w-full"
 			/>
 		</div>
-		
+
 		<!-- Selected Tags Display -->
 		{#if selectedTags.length > 0}
 			<div class="space-y-2">
 				<Text text="Selected Tags" weight="semibold" size="sm" display="block" />
 				<div class="flex flex-wrap gap-2">
 					{#each selectedTags as tag (tag)}
-						<Tag
-							label={tag}
-							variant="primary"
-							size="sm"
-							removable={true}
-							onRemove={() => {
-								selectedTags = selectedTags.filter((t) => t !== tag);
-							}}
-							removeLabel="Remove {tag}"
-						/>
+						<!-- 
+							NOTE: Raw HTML div is intentional here.
+							TECHNICAL REASON: Event propagation must be stopped to prevent Dropdown from closing when Tag is clicked.
+							Tag component's onclick prop doesn't receive event parameter, so wrapper div is needed for stopPropagation().
+							CONSEQUENCE: Without this wrapper, clicking Tag would trigger Dropdown's closeOnSelect behavior.
+							VALIDATION: Dropdown component closes on any click inside when closeOnSelect is true.
+						-->
+						<div role="none" tabindex="-1" onclick={(e) => e.stopPropagation()}>
+							<Tag
+								label={tag}
+								variant="primary"
+								size="sm"
+								removable={true}
+								onRemove={() => {
+									selectedTags = selectedTags.filter((t) => t !== tag);
+								}}
+								removeLabel="Remove {tag}"
+							/>
+						</div>
 					{/each}
 				</div>
 			</div>
 		{/if}
-		
+
 		<!-- Available Tags List -->
 		<div class="space-y-2">
 			<Text text="Available Tags" weight="semibold" size="sm" display="block" />
-			<div class="max-h-48 overflow-y-auto border border-base-300 rounded-box p-2">
+			<div class="border-base-300 rounded-box max-h-48 overflow-y-auto border p-2">
 				<div class="flex flex-wrap gap-2">
-					{#each availableTags.filter((tag) => 
-						!selectedTags.includes(tag) && 
-						(tagFilterSearch === '' || tag.toLowerCase().includes(tagFilterSearch.toLowerCase()))
-					) as tag (tag)}
-						<Tag
-							label={tag}
-							variant="neutral"
-							size="sm"
-							clickable={true}
-							onclick={() => {
-								if (!selectedTags.includes(tag)) {
-									selectedTags = [...selectedTags, tag];
-								}
-							}}
-							ariaLabel="Select {tag}"
-						/>
+					{#each availableTags.filter((tag) => !selectedTags.includes(tag) && (tagFilterSearch === '' || tag
+									.toLowerCase()
+									.includes(tagFilterSearch.toLowerCase()))) as tag (tag)}
+						<!-- 
+							NOTE: Raw HTML div is intentional here.
+							TECHNICAL REASON: Event propagation must be stopped to prevent Dropdown from closing when Tag is clicked.
+							Tag component's onclick prop doesn't receive event parameter, so wrapper div is needed for stopPropagation().
+							CONSEQUENCE: Without this wrapper, clicking Tag would trigger Dropdown's closeOnSelect behavior.
+							VALIDATION: Dropdown component closes on any click inside when closeOnSelect is true.
+						-->
+						<div role="none" tabindex="-1" onclick={(e) => e.stopPropagation()}>
+							<Tag
+								label={tag}
+								variant="neutral"
+								size="sm"
+								clickable={true}
+								onclick={() => {
+									if (!selectedTags.includes(tag)) {
+										selectedTags = [...selectedTags, tag];
+									}
+								}}
+								ariaLabel="Select {tag}"
+							/>
+						</div>
 					{/each}
 				</div>
 			</div>
 		</div>
-		
+
 		<!-- Action Buttons -->
-		<div class="flex gap-2 pt-2 border-t border-base-300">
-			<Button 
-				label="Apply" 
-				variant="primary" 
-				size="sm" 
-				class="flex-1"
-				onclick={handleTagFilterApply}
-			/>
-			<Button 
-				label="Clear All" 
-				variant="ghost" 
-				size="sm" 
-				class="flex-1"
-				onclick={handleTagFilterClear}
-			/>
+		<div class="border-base-300 flex gap-2 border-t pt-2">
+			<Button label="Apply" variant="primary" size="sm" onclick={handleTagFilterApply} />
+			<Button label="Clear All" variant="ghost" size="sm" onclick={handleTagFilterClear} />
 		</div>
 	</div>
 {/snippet}
@@ -583,7 +596,7 @@ SPDX-License-Identifier: MIT
 				<DataTableToolbar
 					bind:searchValue={withBulkActionsSearch}
 					actions={sampleActions}
-					bulkActions={bulkActions}
+					{bulkActions}
 					selectedCount={5}
 					searchPlaceholder="Search..."
 					showSearch={true}
@@ -608,7 +621,7 @@ SPDX-License-Identifier: MIT
 >
 	{#snippet children()}
 		{#snippet customFilterContent()}
-			<div class="p-4 space-y-4 min-w-64">
+			<div class="min-w-64 space-y-4 p-4">
 				<Text text="Filter Options" weight="bold" size="base" display="block" class="mb-2" />
 				<div>
 					<Select
@@ -645,17 +658,17 @@ SPDX-License-Identifier: MIT
 					/>
 				</div>
 				<div class="flex gap-2 pt-2">
-					<Button 
-						label="Apply" 
-						variant={applyButtonVariant} 
-						size="sm" 
+					<Button
+						label="Apply"
+						variant={applyButtonVariant}
+						size="sm"
 						class="flex-1"
 						onclick={handleFilterApply}
 					/>
-					<Button 
-						label="Reset" 
-						variant={resetButtonVariant} 
-						size="sm" 
+					<Button
+						label="Reset"
+						variant={resetButtonVariant}
+						size="sm"
 						class="flex-1"
 						onclick={handleFilterReset}
 					/>
@@ -677,43 +690,57 @@ SPDX-License-Identifier: MIT
 					onFilterApply={filterApplyCallback}
 					onFilterClear={filterClearCallback}
 				/>
-				
+
 				<!-- Applied Filters Display -->
 				{#if appliedStatus !== 'all' || appliedCategory !== 'all'}
-					<div class="bg-success/10 border-success border-2 p-4 rounded-box transition-all duration-300">
-						<div class="flex items-center gap-2 mb-2">
-							<Text text="✓ Filters Applied Successfully" weight="bold" size="base" display="block" class="text-success" />
+					<div
+						class="bg-success/10 border-success rounded-box border-2 p-4 transition-all duration-300"
+					>
+						<div class="mb-2 flex items-center gap-2">
+							<Text
+								text="✓ Filters Applied Successfully"
+								weight="bold"
+								size="base"
+								display="block"
+								class="text-success"
+							/>
 						</div>
-						<Text text="Applied Filters:" weight="semibold" size="sm" display="block" class="mb-2" />
+						<Text
+							text="Applied Filters:"
+							weight="semibold"
+							size="sm"
+							display="block"
+							class="mb-2"
+						/>
 						<div class="flex flex-wrap gap-2">
 							{#if appliedStatus !== 'all'}
-								<Tag
-									label={`Status: ${appliedStatus}`}
-									variant="primary"
-									size="sm"
-								/>
+								<Tag label={`Status: ${appliedStatus}`} variant="primary" size="sm" />
 							{/if}
 							{#if appliedCategory !== 'all'}
-								<Tag
-									label={`Category: ${appliedCategory}`}
-									variant="primary"
-									size="sm"
-								/>
+								<Tag label={`Category: ${appliedCategory}`} variant="primary" size="sm" />
 							{/if}
 						</div>
 					</div>
 				{:else}
-					<div class="bg-base-200 p-4 rounded-box border border-base-300">
-						<Text text="No filters applied" weight="normal" size="sm" display="block" class="text-base-content/60" />
+					<div class="bg-base-200 rounded-box border-base-300 border p-4">
+						<Text
+							text="No filters applied"
+							weight="normal"
+							size="sm"
+							display="block"
+							class="text-base-content/60"
+						/>
 					</div>
 				{/if}
 			</div>
-			
+
 			<!-- Toast Notifications -->
 			{#if showFiltersApplyToast}
 				<Toast
 					title="Filters Applied"
-					message={appliedStatus !== 'all' || appliedCategory !== 'all' ? 'Filters have been applied successfully' : 'No filters selected'}
+					message={appliedStatus !== 'all' || appliedCategory !== 'all'
+						? 'Filters have been applied successfully'
+						: 'No filters selected'}
 					variant="success"
 					position="top-right"
 					duration={3000}
@@ -724,7 +751,7 @@ SPDX-License-Identifier: MIT
 					}}
 				/>
 			{/if}
-			
+
 			{#if showFiltersResetToast}
 				<Toast
 					title="Filters Reset"
@@ -759,7 +786,7 @@ SPDX-License-Identifier: MIT
 					bind:searchValue={withViewOptionsSearch}
 					actions={sampleActions}
 					showViewOptions={true}
-					viewOptions={viewOptions}
+					{viewOptions}
 					bind:viewValue={withViewOptionsViewValue}
 					searchPlaceholder="Search..."
 					showSearch={true}
@@ -780,14 +807,15 @@ SPDX-License-Identifier: MIT
 		showFilter: true,
 		filterContent: tagFilterContentSnippet,
 		onFilterApply: tagFilterApplyCallback,
-		onFilterClear: tagFilterClearCallback
+		onFilterClear: tagFilterClearCallback,
+		filterCloseOnSelect: false
 	}}
 >
 	{#snippet children()}
 		{#snippet customTagFilterContent()}
-			<div class="p-4 space-y-4 min-w-80">
+			<div class="min-w-80 space-y-4 p-4">
 				<Text text="Filter by Tags" weight="bold" size="base" display="block" class="mb-2" />
-				
+
 				<!-- Search Input -->
 				<div>
 					<Input
@@ -801,7 +829,7 @@ SPDX-License-Identifier: MIT
 						class="w-full"
 					/>
 				</div>
-				
+
 				<!-- Selected Tags Display -->
 				{#if selectedTags.length > 0}
 					<div class="space-y-2">
@@ -822,16 +850,15 @@ SPDX-License-Identifier: MIT
 						</div>
 					</div>
 				{/if}
-				
+
 				<!-- Available Tags List -->
 				<div class="space-y-2">
 					<Text text="Available Tags" weight="semibold" size="sm" display="block" />
-					<div class="max-h-48 overflow-y-auto border border-base-300 rounded-box p-2">
+					<div class="border-base-300 rounded-box max-h-48 overflow-y-auto border p-2">
 						<div class="flex flex-wrap gap-2">
-							{#each availableTags.filter((tag) => 
-								!selectedTags.includes(tag) && 
-								(tagFilterSearch === '' || tag.toLowerCase().includes(tagFilterSearch.toLowerCase()))
-							) as tag (tag)}
+							{#each availableTags.filter((tag) => !selectedTags.includes(tag) && (tagFilterSearch === '' || tag
+											.toLowerCase()
+											.includes(tagFilterSearch.toLowerCase()))) as tag (tag)}
 								<Tag
 									label={tag}
 									variant="neutral"
@@ -848,20 +875,20 @@ SPDX-License-Identifier: MIT
 						</div>
 					</div>
 				</div>
-				
+
 				<!-- Action Buttons -->
-				<div class="flex gap-2 pt-2 border-t border-base-300">
-					<Button 
-						label="Apply" 
-						variant={applyButtonVariant} 
-						size="sm" 
+				<div class="border-base-300 flex gap-2 border-t pt-2">
+					<Button
+						label="Apply"
+						variant={applyButtonVariant}
+						size="sm"
 						class="flex-1"
 						onclick={handleTagFilterApply}
 					/>
-					<Button 
-						label="Clear All" 
-						variant={resetButtonVariant} 
-						size="sm" 
+					<Button
+						label="Clear All"
+						variant={resetButtonVariant}
+						size="sm"
 						class="flex-1"
 						onclick={handleTagFilterClear}
 					/>
@@ -883,39 +910,66 @@ SPDX-License-Identifier: MIT
 					onFilterApply={tagFilterApplyCallback}
 					onFilterClear={tagFilterClearCallback}
 				/>
-				
+
 				<!-- Applied Filters Display -->
 				{#if appliedTags.length > 0}
-					<div class="bg-success border-success border-2 p-4 rounded-box shadow-lg">
-						<div class="flex items-center gap-2 mb-3">
-							<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-success-content" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+					<div class="bg-success border-success rounded-box border-2 p-4 shadow-lg">
+						<div class="mb-3 flex items-center gap-2">
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								class="text-success-content h-6 w-6"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke="currentColor"
+							>
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M5 13l4 4L19 7"
+								/>
 							</svg>
-							<Text text="Filters Applied Successfully!" weight="bold" size="lg" display="block" class="text-success-content" />
+							<Text
+								text="Filters Applied Successfully!"
+								weight="bold"
+								size="lg"
+								display="block"
+								class="text-success-content"
+							/>
 						</div>
-						<Text text="Applied Filters:" weight="semibold" size="sm" display="block" class="mb-2 text-success-content/90" />
+						<Text
+							text="Applied Filters:"
+							weight="semibold"
+							size="sm"
+							display="block"
+							class="text-success-content/90 mb-2"
+						/>
 						<div class="flex flex-wrap gap-2">
 							{#each appliedTags as tag (tag)}
-								<Tag
-									label={tag}
-									variant="primary"
-									size="sm"
-								/>
+								<Tag label={tag} variant="primary" size="sm" />
 							{/each}
 						</div>
 					</div>
 				{:else}
-					<div class="bg-base-200 p-4 rounded-box border border-base-300">
-						<Text text="No filters applied. Select tags and click Apply button." weight="normal" size="sm" display="block" class="text-base-content/60" />
+					<div class="bg-base-200 rounded-box border-base-300 border p-4">
+						<Text
+							text="No filters applied. Select tags and click Apply button."
+							weight="normal"
+							size="sm"
+							display="block"
+							class="text-base-content/60"
+						/>
 					</div>
 				{/if}
 			</div>
-			
+
 			<!-- Toast Notifications -->
 			{#if showApplyToast}
 				<Toast
 					title="Filters Applied"
-					message={appliedTags.length > 0 ? `Applied ${appliedTags.length} filter${appliedTags.length > 1 ? 's' : ''}` : 'No filters selected'}
+					message={appliedTags.length > 0
+						? `Applied ${appliedTags.length} filter${appliedTags.length > 1 ? 's' : ''}`
+						: 'No filters selected'}
 					variant="success"
 					position="top-right"
 					duration={3000}
@@ -926,7 +980,7 @@ SPDX-License-Identifier: MIT
 					}}
 				/>
 			{/if}
-			
+
 			{#if showClearToast}
 				<Toast
 					title="Filters Cleared"
@@ -1047,8 +1101,8 @@ SPDX-License-Identifier: MIT
 					disabled={false}
 					loading={false}
 					actions={sampleActions}
-					bulkActions={bulkActions}
-					viewOptions={viewOptions}
+					{bulkActions}
+					{viewOptions}
 				/>
 			</div>
 		</div>

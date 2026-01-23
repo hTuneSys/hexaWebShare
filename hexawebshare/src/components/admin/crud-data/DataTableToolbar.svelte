@@ -314,6 +314,11 @@ A comprehensive toolbar component for data tables with search, actions, filters,
 		 */
 		onFilterClear?: () => void;
 		/**
+		 * Whether to close filter dropdown when an item is selected
+		 * @default true
+		 */
+		filterCloseOnSelect?: boolean;
+		/**
 		 * Additional CSS classes
 		 */
 		class?: string;
@@ -352,6 +357,7 @@ A comprehensive toolbar component for data tables with search, actions, filters,
 		onClearSelection,
 		onFilterApply,
 		onFilterClear,
+		filterCloseOnSelect = true,
 		class: className = '',
 		...props
 	}: Props = $props();
@@ -400,7 +406,11 @@ A comprehensive toolbar component for data tables with search, actions, filters,
 
 	// Search input classes
 	const searchWrapperClasses = $derived(
-		['flex', 'items-center', size === 'sm' ? 'w-full sm:w-64' : size === 'lg' ? 'w-full sm:w-80' : 'w-full sm:w-72'].join(' ')
+		[
+			'flex',
+			'items-center',
+			size === 'sm' ? 'w-full sm:w-64' : size === 'lg' ? 'w-full sm:w-80' : 'w-full sm:w-72'
+		].join(' ')
 	);
 
 	// Handle search input
@@ -522,7 +532,7 @@ A comprehensive toolbar component for data tables with search, actions, filters,
 									viewBox="0 0 24 24"
 									stroke-width="2"
 									stroke="currentColor"
-									class="w-4 h-4"
+									class="h-4 w-4"
 								>
 									<path
 										stroke-linecap="round"
@@ -542,7 +552,7 @@ A comprehensive toolbar component for data tables with search, actions, filters,
 									viewBox="0 0 24 24"
 									stroke-width="2"
 									stroke="currentColor"
-									class="w-3 h-3 transition-transform {filterOpen ? 'rotate-180' : ''}"
+									class="h-3 w-3 transition-transform {filterOpen ? 'rotate-180' : ''}"
 								>
 									<path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
 								</svg>
@@ -552,8 +562,14 @@ A comprehensive toolbar component for data tables with search, actions, filters,
 				</Button>
 			{/snippet}
 			{#snippet defaultNoFilterContent()}
-				<div class="p-4 min-w-48">
-					<Text text={noFilterText} weight="normal" size="sm" display="block" class="text-base-content/60" />
+				<div class="min-w-48 p-4">
+					<Text
+						text={noFilterText}
+						weight="normal"
+						size="sm"
+						display="block"
+						class="text-base-content/60"
+					/>
 				</div>
 			{/snippet}
 			<Dropdown
@@ -561,6 +577,7 @@ A comprehensive toolbar component for data tables with search, actions, filters,
 				size={buttonSize}
 				disabled={disabled || loading}
 				ariaLabel={filterAriaLabel}
+				closeOnSelect={filterCloseOnSelect}
 				onOpenChange={(open) => {
 					filterOpen = open;
 				}}
@@ -644,9 +661,13 @@ A comprehensive toolbar component for data tables with search, actions, filters,
 											viewBox="0 0 24 24"
 											stroke-width="2"
 											stroke="currentColor"
-											class="w-5 h-5"
+											class="h-5 w-5"
 										>
-											<path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+											<path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												d="M12 4.5v15m7.5-7.5h-15"
+											/>
 										</svg>
 									{/snippet}
 								</Icon>
@@ -659,7 +680,7 @@ A comprehensive toolbar component for data tables with search, actions, filters,
 											viewBox="0 0 24 24"
 											stroke-width="2"
 											stroke="currentColor"
-											class="w-5 h-5"
+											class="h-5 w-5"
 										>
 											<path
 												stroke-linecap="round"
@@ -678,7 +699,7 @@ A comprehensive toolbar component for data tables with search, actions, filters,
 											viewBox="0 0 24 24"
 											stroke-width="2"
 											stroke="currentColor"
-											class="w-5 h-5"
+											class="h-5 w-5"
 										>
 											<path
 												stroke-linecap="round"
@@ -697,7 +718,7 @@ A comprehensive toolbar component for data tables with search, actions, filters,
 											viewBox="0 0 24 24"
 											stroke-width="2"
 											stroke="currentColor"
-											class="w-5 h-5"
+											class="h-5 w-5"
 										>
 											<path
 												stroke-linecap="round"
