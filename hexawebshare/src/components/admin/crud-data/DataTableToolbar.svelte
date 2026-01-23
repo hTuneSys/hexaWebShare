@@ -227,6 +227,11 @@ A comprehensive toolbar component for data tables with search, actions, filters,
 		 */
 		filterContent?: Snippet;
 		/**
+		 * Empty filter state text (shown when no filter content provided)
+		 * @default 'No filter'
+		 */
+		noFilterText?: string;
+		/**
 		 * View options (density, column visibility, etc.)
 		 */
 		viewOptions?: ViewOption[];
@@ -301,6 +306,14 @@ A comprehensive toolbar component for data tables with search, actions, filters,
 		 */
 		onClearSelection?: () => void;
 		/**
+		 * Filter apply handler (called when filter is applied)
+		 */
+		onFilterApply?: (filters: unknown) => void;
+		/**
+		 * Filter clear/reset handler (called when filter is cleared)
+		 */
+		onFilterClear?: () => void;
+		/**
 		 * Additional CSS classes
 		 */
 		class?: string;
@@ -320,6 +333,7 @@ A comprehensive toolbar component for data tables with search, actions, filters,
 		filterLabel = 'Filter',
 		filterOpen = $bindable(false),
 		filterContent,
+		noFilterText = 'No filter',
 		viewOptions = [],
 		viewValue = $bindable(''),
 		showViewOptions = false,
@@ -336,6 +350,8 @@ A comprehensive toolbar component for data tables with search, actions, filters,
 		onsearch,
 		onViewChange,
 		onClearSelection,
+		onFilterApply,
+		onFilterClear,
 		class: className = '',
 		...props
 	}: Props = $props();
@@ -437,7 +453,7 @@ A comprehensive toolbar component for data tables with search, actions, filters,
 	This is a structural container (toolbar wrapper) with no semantic or interactive behavior.
 	No suitable library component exists for generic layout wrappers.
 -->
-<div class={containerClasses} role="toolbar" aria-label={ariaLabel || 'Data table toolbar'} {...props}>
+<div class={containerClasses} role="toolbar" aria-label={ariaLabel} {...props}>
 	<!-- Left Section: Search and Filters -->
 	<!-- 
 		NOTE: Raw HTML div is intentional here.
@@ -491,6 +507,11 @@ A comprehensive toolbar component for data tables with search, actions, filters,
 					size={buttonSize}
 					disabled={disabled || loading}
 					ariaLabel={filterAriaLabel}
+					onclick={() => {
+						// Toggle the dropdown by toggling filterOpen state
+						// The Dropdown component will handle the actual DOM manipulation
+						filterOpen = !filterOpen;
+					}}
 				>
 					{#snippet children()}
 						<Icon size="sm" ariaHidden={true}>
@@ -512,8 +533,28 @@ A comprehensive toolbar component for data tables with search, actions, filters,
 							{/snippet}
 						</Icon>
 						{filterLabel}
+						<!-- Dropdown arrow icon -->
+						<Icon size="xs" ariaHidden={true}>
+							{#snippet children()}
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke-width="2"
+									stroke="currentColor"
+									class="w-3 h-3 transition-transform {filterOpen ? 'rotate-180' : ''}"
+								>
+									<path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+								</svg>
+							{/snippet}
+						</Icon>
 					{/snippet}
 				</Button>
+			{/snippet}
+			{#snippet defaultNoFilterContent()}
+				<div class="p-4 min-w-48">
+					<Text text={noFilterText} weight="normal" size="sm" display="block" class="text-base-content/60" />
+				</div>
 			{/snippet}
 			<Dropdown
 				open={filterOpen}
@@ -524,8 +565,11 @@ A comprehensive toolbar component for data tables with search, actions, filters,
 					filterOpen = open;
 				}}
 				trigger={filterTrigger}
-				children={filterContent}
-			/>
+			>
+				{#snippet children()}
+					{@render (filterContent || defaultNoFilterContent)()}
+				{/snippet}
+			</Dropdown>
 		{/if}
 
 		<!-- Bulk Actions Badge and Clear -->
@@ -567,7 +611,7 @@ A comprehensive toolbar component for data tables with search, actions, filters,
 			{#each bulkActions as action (action.label)}
 				<Button
 					label={action.label}
-					variant={action.variant || 'primary'}
+					variant={action.variant}
 					size={buttonSize}
 					disabled={disabled || loading || action.disabled}
 					onclick={action.onclick}
@@ -699,3 +743,34 @@ A comprehensive toolbar component for data tables with search, actions, filters,
 		{/if}
 	</div>
 </div>
+
+<style>
+	/* Hide native browser search icons for consistent UX */
+	:global(.data-table-toolbar input[type='search'])::-webkit-search-decoration,
+	:global(.data-table-toolbar input[type='search'])::-webkit-search-cancel-button,
+	:global(.data-table-toolbar input[type='search'])::-webkit-search-results-button,
+	:global(.data-table-toolbar input[type='search'])::-webkit-search-results-decoration {
+		-webkit-appearance: none;
+		appearance: none;
+		display: none;
+	}
+
+	/* Firefox */
+	:global(.data-table-toolbar input[type='search'])::-moz-search-clear-button {
+		display: none;
+	}
+
+	/* Hide Dropdown summary marker (triangle icon) - we use custom arrow icon inside button */
+	:global(.data-table-toolbar .dropdown summary) {
+		list-style: none;
+	}
+
+	:global(.data-table-toolbar .dropdown summary::-webkit-details-marker) {
+		display: none;
+	}
+
+	:global(.data-table-toolbar .dropdown summary::marker) {
+		display: none;
+		content: '';
+	}
+</style>

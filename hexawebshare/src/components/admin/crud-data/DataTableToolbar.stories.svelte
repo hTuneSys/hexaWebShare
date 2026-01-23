@@ -131,6 +131,14 @@ SPDX-License-Identifier: MIT
 				control: false,
 				description: 'Clear selection handler'
 			},
+			onFilterApply: {
+				control: false,
+				description: 'Filter apply handler'
+			},
+			onFilterClear: {
+				control: false,
+				description: 'Filter clear/reset handler'
+			},
 			class: {
 				control: 'text',
 				description: 'Additional CSS classes'
@@ -140,6 +148,8 @@ SPDX-License-Identifier: MIT
 			onsearch: fn(),
 			onViewChange: fn(),
 			onClearSelection: fn(),
+			onFilterApply: fn(),
+			onFilterClear: fn(),
 			searchPlaceholder: 'Search...',
 			showSearch: true,
 			searchSize: 'md',
@@ -177,6 +187,7 @@ SPDX-License-Identifier: MIT
 	import Text from '../../core/typography/Text.svelte';
 	import Tag from '../../core/media/Tag.svelte';
 	import Input from '../../core/forms/Input.svelte';
+	import Toast from '../../core/feedback/Toast.svelte';
 
 	let defaultSearch = $state('');
 	let withActionsSearch = $state('');
@@ -194,11 +205,18 @@ SPDX-License-Identifier: MIT
 	// Filter and view state for stories
 	let withFiltersFilterOpen = $state(true);
 	let withViewOptionsViewValue = $state('comfortable');
+	let appliedStatus = $state('all');
+	let appliedCategory = $state('all');
+	let showFiltersApplyToast = $state(false);
+	let showFiltersResetToast = $state(false);
 	
 	// Tag filter state for story
 	let tagFilterSearch = $state('');
 	let selectedTags = $state<string[]>([]);
+	let appliedTags = $state<string[]>([]);
 	let tagFilterOpen = $state(true);
+	let showApplyToast = $state(false);
+	let showClearToast = $state(false);
 	
 	const availableTags = [
 		'React',
@@ -222,6 +240,67 @@ SPDX-License-Identifier: MIT
 		'Spring',
 		'Laravel'
 	];
+
+	// Filter button variants (can be changed in stories)
+	let applyButtonVariant: 'primary' | 'secondary' | 'accent' | 'neutral' | 'info' | 'success' | 'warning' | 'error' | 'ghost' | 'link' = 'primary';
+	let resetButtonVariant: 'primary' | 'secondary' | 'accent' | 'neutral' | 'info' | 'success' | 'warning' | 'error' | 'ghost' | 'link' = 'ghost';
+
+	// Callback functions for Storybook Actions panel
+	const filterApplyCallback = fn();
+	const filterClearCallback = fn();
+	const tagFilterApplyCallback = fn();
+	const tagFilterClearCallback = fn();
+
+	// Handler functions for filter buttons (for Storybook Actions panel)
+	function handleFilterApply() {
+		showFiltersApplyToast = true;
+		withFiltersFilterOpen = false;
+		// Call DataTableToolbar's onFilterApply callback
+		filterApplyCallback({ status: appliedStatus, category: appliedCategory });
+		setTimeout(() => {
+			showFiltersApplyToast = false;
+		}, 3000);
+	}
+
+	function handleFilterReset() {
+		appliedStatus = 'all';
+		appliedCategory = 'all';
+		showFiltersResetToast = true;
+		withFiltersFilterOpen = false;
+		// Call DataTableToolbar's onFilterClear callback
+		filterClearCallback();
+		setTimeout(() => {
+			showFiltersResetToast = false;
+		}, 3000);
+	}
+
+	function handleTagFilterApply() {
+		if (selectedTags.length === 0) {
+			alert('Please select at least one tag before applying filters.');
+			return;
+		}
+		appliedTags = [...selectedTags];
+		showApplyToast = true;
+		tagFilterOpen = false;
+		// Call DataTableToolbar's onFilterApply callback
+		tagFilterApplyCallback({ tags: appliedTags });
+		setTimeout(() => {
+			showApplyToast = false;
+		}, 3000);
+	}
+
+	function handleTagFilterClear() {
+		selectedTags = [];
+		appliedTags = [];
+		tagFilterSearch = '';
+		showClearToast = true;
+		tagFilterOpen = false;
+		// Call DataTableToolbar's onFilterClear callback
+		tagFilterClearCallback();
+		setTimeout(() => {
+			showClearToast = false;
+		}, 3000);
+	}
 
 	const sampleActions: ToolbarAction[] = [
 		{
@@ -275,6 +354,16 @@ SPDX-License-Identifier: MIT
 			label: 'Export Selected',
 			variant: 'secondary',
 			onclick: fn()
+		},
+		{
+			label: 'Archive Selected',
+			variant: 'primary',
+			onclick: fn()
+		},
+		{
+			label: 'Mark as Read',
+			variant: 'primary',
+			onclick: fn()
 		}
 	];
 
@@ -305,6 +394,7 @@ SPDX-License-Identifier: MIT
 		<Text text="Filter Options" weight="bold" size="base" display="block" class="mb-2" />
 		<div>
 			<Select
+				value={appliedStatus}
 				options={[
 					{ value: 'all', label: 'All Status' },
 					{ value: 'active', label: 'Active' },
@@ -314,10 +404,14 @@ SPDX-License-Identifier: MIT
 				size="sm"
 				ariaLabel="Status filter"
 				class="w-full"
+				onchange={(e) => {
+					appliedStatus = (e.target as HTMLSelectElement).value;
+				}}
 			/>
 		</div>
 		<div>
 			<Select
+				value={appliedCategory}
 				options={[
 					{ value: 'all', label: 'All Categories' },
 					{ value: 'cat1', label: 'Category 1' },
@@ -327,11 +421,26 @@ SPDX-License-Identifier: MIT
 				size="sm"
 				ariaLabel="Category filter"
 				class="w-full"
+				onchange={(e) => {
+					appliedCategory = (e.target as HTMLSelectElement).value;
+				}}
 			/>
 		</div>
 		<div class="flex gap-2 pt-2">
-			<Button label="Apply" variant="primary" size="sm" class="flex-1" onclick={fn()} />
-			<Button label="Reset" variant="ghost" size="sm" class="flex-1" onclick={fn()} />
+			<Button 
+				label="Apply" 
+				variant="primary" 
+				size="sm" 
+				class="flex-1"
+				onclick={handleFilterApply}
+			/>
+			<Button 
+				label="Reset" 
+				variant="ghost" 
+				size="sm" 
+				class="flex-1"
+				onclick={handleFilterReset}
+			/>
 		</div>
 	</div>
 {/snippet}
@@ -408,18 +517,15 @@ SPDX-License-Identifier: MIT
 				label="Apply" 
 				variant="primary" 
 				size="sm" 
-				class="flex-1" 
-				onclick={fn()} 
+				class="flex-1"
+				onclick={handleTagFilterApply}
 			/>
 			<Button 
 				label="Clear All" 
 				variant="ghost" 
 				size="sm" 
-				class="flex-1" 
-				onclick={() => {
-					selectedTags = [];
-					tagFilterSearch = '';
-				}} 
+				class="flex-1"
+				onclick={handleTagFilterClear}
 			/>
 		</div>
 	</div>
@@ -434,6 +540,7 @@ SPDX-License-Identifier: MIT
 					bind:searchValue={defaultSearch}
 					searchPlaceholder="Search..."
 					showSearch={true}
+					showFilter={true}
 					searchSize="md"
 					size="md"
 				/>
@@ -452,6 +559,7 @@ SPDX-License-Identifier: MIT
 					actions={sampleActions}
 					searchPlaceholder="Search..."
 					showSearch={true}
+					showFilter={true}
 					searchSize="md"
 					size="md"
 				/>
@@ -479,6 +587,7 @@ SPDX-License-Identifier: MIT
 					selectedCount={5}
 					searchPlaceholder="Search..."
 					showSearch={true}
+					showFilter={true}
 					searchSize="md"
 					size="md"
 				/>
@@ -492,24 +601,144 @@ SPDX-License-Identifier: MIT
 	name="With Filters"
 	args={{
 		showFilter: true,
-		filterContent: filterContentSnippet
+		filterContent: filterContentSnippet,
+		onFilterApply: filterApplyCallback,
+		onFilterClear: filterClearCallback
 	}}
 >
 	{#snippet children()}
+		{#snippet customFilterContent()}
+			<div class="p-4 space-y-4 min-w-64">
+				<Text text="Filter Options" weight="bold" size="base" display="block" class="mb-2" />
+				<div>
+					<Select
+						value={appliedStatus}
+						options={[
+							{ value: 'all', label: 'All Status' },
+							{ value: 'active', label: 'Active' },
+							{ value: 'inactive', label: 'Inactive' },
+							{ value: 'pending', label: 'Pending' }
+						]}
+						size="sm"
+						ariaLabel="Status filter"
+						class="w-full"
+						onchange={(e) => {
+							appliedStatus = (e.target as HTMLSelectElement).value;
+						}}
+					/>
+				</div>
+				<div>
+					<Select
+						value={appliedCategory}
+						options={[
+							{ value: 'all', label: 'All Categories' },
+							{ value: 'cat1', label: 'Category 1' },
+							{ value: 'cat2', label: 'Category 2' },
+							{ value: 'cat3', label: 'Category 3' }
+						]}
+						size="sm"
+						ariaLabel="Category filter"
+						class="w-full"
+						onchange={(e) => {
+							appliedCategory = (e.target as HTMLSelectElement).value;
+						}}
+					/>
+				</div>
+				<div class="flex gap-2 pt-2">
+					<Button 
+						label="Apply" 
+						variant={applyButtonVariant} 
+						size="sm" 
+						class="flex-1"
+						onclick={handleFilterApply}
+					/>
+					<Button 
+						label="Reset" 
+						variant={resetButtonVariant} 
+						size="sm" 
+						class="flex-1"
+						onclick={handleFilterReset}
+					/>
+				</div>
+			</div>
+		{/snippet}
 		<div class="bg-base-100 min-h-screen p-8">
-			<div class="container mx-auto max-w-6xl">
+			<div class="container mx-auto max-w-6xl space-y-4">
 				<DataTableToolbar
 					bind:searchValue={withFiltersSearch}
 					showFilter={true}
 					bind:filterOpen={withFiltersFilterOpen}
-					filterContent={filterContentSnippet}
+					filterContent={customFilterContent}
 					searchPlaceholder="Search..."
 					showSearch={true}
 					searchSize="md"
 					size="md"
 					filterLabel="Filter"
+					onFilterApply={filterApplyCallback}
+					onFilterClear={filterClearCallback}
 				/>
+				
+				<!-- Applied Filters Display -->
+				{#if appliedStatus !== 'all' || appliedCategory !== 'all'}
+					<div class="bg-success/10 border-success border-2 p-4 rounded-box transition-all duration-300">
+						<div class="flex items-center gap-2 mb-2">
+							<Text text="✓ Filters Applied Successfully" weight="bold" size="base" display="block" class="text-success" />
+						</div>
+						<Text text="Applied Filters:" weight="semibold" size="sm" display="block" class="mb-2" />
+						<div class="flex flex-wrap gap-2">
+							{#if appliedStatus !== 'all'}
+								<Tag
+									label={`Status: ${appliedStatus}`}
+									variant="primary"
+									size="sm"
+								/>
+							{/if}
+							{#if appliedCategory !== 'all'}
+								<Tag
+									label={`Category: ${appliedCategory}`}
+									variant="primary"
+									size="sm"
+								/>
+							{/if}
+						</div>
+					</div>
+				{:else}
+					<div class="bg-base-200 p-4 rounded-box border border-base-300">
+						<Text text="No filters applied" weight="normal" size="sm" display="block" class="text-base-content/60" />
+					</div>
+				{/if}
 			</div>
+			
+			<!-- Toast Notifications -->
+			{#if showFiltersApplyToast}
+				<Toast
+					title="Filters Applied"
+					message={appliedStatus !== 'all' || appliedCategory !== 'all' ? 'Filters have been applied successfully' : 'No filters selected'}
+					variant="success"
+					position="top-right"
+					duration={3000}
+					showIcon={true}
+					closable={true}
+					onDismiss={() => {
+						showFiltersApplyToast = false;
+					}}
+				/>
+			{/if}
+			
+			{#if showFiltersResetToast}
+				<Toast
+					title="Filters Reset"
+					message="All filters have been reset"
+					variant="info"
+					position="top-right"
+					duration={3000}
+					showIcon={true}
+					closable={true}
+					onDismiss={() => {
+						showFiltersResetToast = false;
+					}}
+				/>
+			{/if}
 		</div>
 	{/snippet}
 </Story>
@@ -534,6 +763,7 @@ SPDX-License-Identifier: MIT
 					bind:viewValue={withViewOptionsViewValue}
 					searchPlaceholder="Search..."
 					showSearch={true}
+					showFilter={true}
 					searchSize="md"
 					size="md"
 					viewLabel="View"
@@ -548,24 +778,169 @@ SPDX-License-Identifier: MIT
 	name="With Tag Filter"
 	args={{
 		showFilter: true,
-		filterContent: tagFilterContentSnippet
+		filterContent: tagFilterContentSnippet,
+		onFilterApply: tagFilterApplyCallback,
+		onFilterClear: tagFilterClearCallback
 	}}
 >
 	{#snippet children()}
+		{#snippet customTagFilterContent()}
+			<div class="p-4 space-y-4 min-w-80">
+				<Text text="Filter by Tags" weight="bold" size="base" display="block" class="mb-2" />
+				
+				<!-- Search Input -->
+				<div>
+					<Input
+						placeholder="Search tags..."
+						size="sm"
+						value={tagFilterSearch}
+						oninput={(e) => {
+							tagFilterSearch = (e.target as HTMLInputElement).value;
+						}}
+						ariaLabel="Search tags"
+						class="w-full"
+					/>
+				</div>
+				
+				<!-- Selected Tags Display -->
+				{#if selectedTags.length > 0}
+					<div class="space-y-2">
+						<Text text="Selected Tags" weight="semibold" size="sm" display="block" />
+						<div class="flex flex-wrap gap-2">
+							{#each selectedTags as tag (tag)}
+								<Tag
+									label={tag}
+									variant="primary"
+									size="sm"
+									removable={true}
+									onRemove={() => {
+										selectedTags = selectedTags.filter((t) => t !== tag);
+									}}
+									removeLabel="Remove {tag}"
+								/>
+							{/each}
+						</div>
+					</div>
+				{/if}
+				
+				<!-- Available Tags List -->
+				<div class="space-y-2">
+					<Text text="Available Tags" weight="semibold" size="sm" display="block" />
+					<div class="max-h-48 overflow-y-auto border border-base-300 rounded-box p-2">
+						<div class="flex flex-wrap gap-2">
+							{#each availableTags.filter((tag) => 
+								!selectedTags.includes(tag) && 
+								(tagFilterSearch === '' || tag.toLowerCase().includes(tagFilterSearch.toLowerCase()))
+							) as tag (tag)}
+								<Tag
+									label={tag}
+									variant="neutral"
+									size="sm"
+									clickable={true}
+									onclick={() => {
+										if (!selectedTags.includes(tag)) {
+											selectedTags = [...selectedTags, tag];
+										}
+									}}
+									ariaLabel="Select {tag}"
+								/>
+							{/each}
+						</div>
+					</div>
+				</div>
+				
+				<!-- Action Buttons -->
+				<div class="flex gap-2 pt-2 border-t border-base-300">
+					<Button 
+						label="Apply" 
+						variant={applyButtonVariant} 
+						size="sm" 
+						class="flex-1"
+						onclick={handleTagFilterApply}
+					/>
+					<Button 
+						label="Clear All" 
+						variant={resetButtonVariant} 
+						size="sm" 
+						class="flex-1"
+						onclick={handleTagFilterClear}
+					/>
+				</div>
+			</div>
+		{/snippet}
 		<div class="bg-base-100 min-h-screen p-8">
-			<div class="container mx-auto max-w-6xl">
+			<div class="container mx-auto max-w-6xl space-y-4">
 				<DataTableToolbar
 					bind:searchValue={defaultSearch}
 					showFilter={true}
 					bind:filterOpen={tagFilterOpen}
-					filterContent={tagFilterContentSnippet}
+					filterContent={customTagFilterContent}
 					searchPlaceholder="Search..."
 					showSearch={true}
 					searchSize="md"
 					size="md"
 					filterLabel="Filter by Tags"
+					onFilterApply={tagFilterApplyCallback}
+					onFilterClear={tagFilterClearCallback}
 				/>
+				
+				<!-- Applied Filters Display -->
+				{#if appliedTags.length > 0}
+					<div class="bg-success border-success border-2 p-4 rounded-box shadow-lg">
+						<div class="flex items-center gap-2 mb-3">
+							<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-success-content" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+							</svg>
+							<Text text="Filters Applied Successfully!" weight="bold" size="lg" display="block" class="text-success-content" />
+						</div>
+						<Text text="Applied Filters:" weight="semibold" size="sm" display="block" class="mb-2 text-success-content/90" />
+						<div class="flex flex-wrap gap-2">
+							{#each appliedTags as tag (tag)}
+								<Tag
+									label={tag}
+									variant="primary"
+									size="sm"
+								/>
+							{/each}
+						</div>
+					</div>
+				{:else}
+					<div class="bg-base-200 p-4 rounded-box border border-base-300">
+						<Text text="No filters applied. Select tags and click Apply button." weight="normal" size="sm" display="block" class="text-base-content/60" />
+					</div>
+				{/if}
 			</div>
+			
+			<!-- Toast Notifications -->
+			{#if showApplyToast}
+				<Toast
+					title="Filters Applied"
+					message={appliedTags.length > 0 ? `Applied ${appliedTags.length} filter${appliedTags.length > 1 ? 's' : ''}` : 'No filters selected'}
+					variant="success"
+					position="top-right"
+					duration={3000}
+					showIcon={true}
+					closable={true}
+					onDismiss={() => {
+						showApplyToast = false;
+					}}
+				/>
+			{/if}
+			
+			{#if showClearToast}
+				<Toast
+					title="Filters Cleared"
+					message="All filters have been cleared"
+					variant="info"
+					position="top-right"
+					duration={3000}
+					showIcon={true}
+					closable={true}
+					onDismiss={() => {
+						showClearToast = false;
+					}}
+				/>
+			{/if}
 		</div>
 	{/snippet}
 </Story>
@@ -581,6 +956,7 @@ SPDX-License-Identifier: MIT
 					loading={true}
 					searchPlaceholder="Search..."
 					showSearch={true}
+					showFilter={true}
 					searchSize="md"
 					size="md"
 				/>
@@ -600,6 +976,7 @@ SPDX-License-Identifier: MIT
 					disabled={true}
 					searchPlaceholder="Search..."
 					showSearch={true}
+					showFilter={true}
 					searchSize="md"
 					size="md"
 				/>
@@ -618,6 +995,7 @@ SPDX-License-Identifier: MIT
 					actions={multipleActions}
 					searchPlaceholder="Search..."
 					showSearch={true}
+					showFilter={true}
 					searchSize="md"
 					size="md"
 				/>
@@ -634,6 +1012,7 @@ SPDX-License-Identifier: MIT
 				<DataTableToolbar
 					bind:searchValue={defaultSearch}
 					actions={sampleActions}
+					showFilter={true}
 					size="sm"
 					searchSize="sm"
 				/>
