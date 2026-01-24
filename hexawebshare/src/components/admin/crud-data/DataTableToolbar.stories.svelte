@@ -410,7 +410,7 @@ SPDX-License-Identifier: MIT
 
 <!-- Filter Content Snippet (defined at file level for reuse) -->
 {#snippet filterContentSnippet()}
-	<div class="min-w-64 space-y-4 p-4">
+	<div class="min-w-72 space-y-4 p-4">
 		<Text text="Filter Options" weight="bold" size="base" display="block" class="mb-2" />
 		<div>
 			<Select
@@ -423,7 +423,7 @@ SPDX-License-Identifier: MIT
 				]}
 				size="sm"
 				ariaLabel="Status filter"
-				class="w-full"
+				class="w-full min-w-52"
 				onchange={(e) => {
 					appliedStatus = (e.target as HTMLSelectElement).value;
 				}}
@@ -440,7 +440,7 @@ SPDX-License-Identifier: MIT
 				]}
 				size="sm"
 				ariaLabel="Category filter"
-				class="w-full"
+				class="w-full min-w-52"
 				onchange={(e) => {
 					appliedCategory = (e.target as HTMLSelectElement).value;
 				}}
@@ -621,7 +621,7 @@ SPDX-License-Identifier: MIT
 >
 	{#snippet children()}
 		{#snippet customFilterContent()}
-			<div class="min-w-64 space-y-4 p-4">
+			<div class="min-w-72 space-y-4 p-4">
 				<Text text="Filter Options" weight="bold" size="base" display="block" class="mb-2" />
 				<div>
 					<Select
@@ -634,7 +634,7 @@ SPDX-License-Identifier: MIT
 						]}
 						size="sm"
 						ariaLabel="Status filter"
-						class="w-full"
+						class="w-full min-w-52"
 						onchange={(e) => {
 							appliedStatus = (e.target as HTMLSelectElement).value;
 						}}
@@ -651,7 +651,7 @@ SPDX-License-Identifier: MIT
 						]}
 						size="sm"
 						ariaLabel="Category filter"
-						class="w-full"
+						class="w-full min-w-52"
 						onchange={(e) => {
 							appliedCategory = (e.target as HTMLSelectElement).value;
 						}}

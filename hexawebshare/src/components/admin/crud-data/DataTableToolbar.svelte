@@ -50,6 +50,7 @@ A comprehensive toolbar component for data tables with search, actions, filters,
 	import Badge from '../../core/media/Badge.svelte';
 	import Icon from '../../core/media/Icon.svelte';
 	import Dropdown from '../../core/overlay-navigation/Dropdown.svelte';
+	import Spinner from '../../core/feedback/Spinner.svelte';
 
 	/**
 	 * Action button configuration
@@ -290,6 +291,11 @@ A comprehensive toolbar component for data tables with search, actions, filters,
 		 */
 		viewAriaLabel?: string;
 		/**
+		 * Loading spinner ARIA label
+		 * @default 'Loading'
+		 */
+		loadingAriaLabel?: string;
+		/**
 		 * Toolbar ARIA label
 		 */
 		ariaLabel?: string;
@@ -351,6 +357,7 @@ A comprehensive toolbar component for data tables with search, actions, filters,
 		searchAriaLabel = 'Search table',
 		filterAriaLabel = 'Filter table',
 		viewAriaLabel = 'View options',
+		loadingAriaLabel = 'Loading',
 		ariaLabel,
 		onsearch,
 		onViewChange,
@@ -387,7 +394,7 @@ A comprehensive toolbar component for data tables with search, actions, filters,
 			'border-base-300',
 			'rounded-box',
 			toolbarSizeClasses[size],
-			disabled && 'opacity-50',
+			(disabled || loading) && 'opacity-50',
 			className
 		]
 			.filter(Boolean)
@@ -463,7 +470,13 @@ A comprehensive toolbar component for data tables with search, actions, filters,
 	This is a structural container (toolbar wrapper) with no semantic or interactive behavior.
 	No suitable library component exists for generic layout wrappers.
 -->
-<div class={containerClasses} role="toolbar" aria-label={ariaLabel} {...props}>
+<div
+	class={containerClasses}
+	role="toolbar"
+	aria-label={ariaLabel}
+	aria-busy={loading}
+	{...props}
+>
 	<!-- Left Section: Search and Filters -->
 	<!-- 
 		NOTE: Raw HTML div is intentional here.
@@ -471,6 +484,9 @@ A comprehensive toolbar component for data tables with search, actions, filters,
 		No suitable library component exists for generic layout wrappers.
 	-->
 	<div class={leftSectionClasses}>
+		{#if loading}
+			<Spinner size="sm" ariaLabel={loadingAriaLabel} />
+		{/if}
 		{#if showSearch}
 			<!-- 
 				NOTE: Raw HTML div is intentional here.
