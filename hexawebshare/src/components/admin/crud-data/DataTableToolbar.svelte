@@ -470,13 +470,7 @@ A comprehensive toolbar component for data tables with search, actions, filters,
 	This is a structural container (toolbar wrapper) with no semantic or interactive behavior.
 	No suitable library component exists for generic layout wrappers.
 -->
-<div
-	class={containerClasses}
-	role="toolbar"
-	aria-label={ariaLabel}
-	aria-busy={loading}
-	{...props}
->
+<div class={containerClasses} role="toolbar" aria-label={ariaLabel} aria-busy={loading} {...props}>
 	<!-- Left Section: Search and Filters -->
 	<!-- 
 		NOTE: Raw HTML div is intentional here.
