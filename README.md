@@ -2,7 +2,7 @@
 SPDX-FileCopyrightText: 2025 hexaTune LLC
 SPDX-License-Identifier: MIT
 -->
-
+<!-- Security Test Bypass -->
 <div align="center">
 
 # 🎨 hexaWebShare
