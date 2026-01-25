@@ -131,7 +131,7 @@ SPDX-License-Identifier: MIT
 	name="With Clear All"
 	args={{
 		filters: sampleFilters,
-		clearAllLabel: 'Filtreleri Temizle'
+		clearAllLabel: 'Clear All Filters'
 	}}
 />
 
