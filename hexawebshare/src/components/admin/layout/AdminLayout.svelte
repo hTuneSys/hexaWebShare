@@ -215,68 +215,20 @@ SPDX-License-Identifier: MIT
 
 	<!-- Content Wrapper (Sidebar + Main Content) -->
 	<div class="admin-content-wrapper flex w-full flex-1 overflow-hidden">
-		{#if hasSidebar && mobileDrawer}
-			<!-- Mobile Drawer Implementation -->
-			<Drawer
-				open={mobileSidebarOpen}
-				side="left"
-				overlay={true}
-				closeOnBackdrop={true}
-				closeOnEscape={true}
-				ariaLabel={sidebarAriaLabel}
-				showCloseButton={true}
-			>
-				{#snippet children()}
-					{#if sidebar}
-						{@render sidebar()}
-					{:else if sidebarConfig}
-						<Sidebar {...sidebarConfig} />
-					{/if}
-				{/snippet}
-
-				{#snippet content()}
-					<div class="flex w-full flex-1 overflow-hidden">
-						<!-- Desktop Sidebar (hidden on mobile) -->
-						{#if sidebar}
-							<aside class="admin-sidebar hidden shrink-0 lg:block" aria-label={sidebarAriaLabel}>
-								{@render sidebar()}
-							</aside>
-						{:else if sidebarConfig}
-							<div class="hidden shrink-0 lg:block">
-								<Sidebar {...sidebarConfig} />
-							</div>
-						{/if}
-
-						<!-- Main Content Area -->
-						<main
-							class="admin-main-content bg-base-100 flex w-full min-w-0 flex-1 flex-col overflow-auto"
-						>
-							{#if loading}
-								<div class="flex flex-1 items-center justify-center">
-									<Spinner size="lg" variant="primary" ariaLabel={loadingLabel} />
-								</div>
-							{:else if children}
-								{@render children()}
-							{/if}
-						</main>
-					</div>
-				{/snippet}
-			</Drawer>
-		{:else}
-			<!-- Desktop Only Layout (no mobile drawer) -->
-			<div class="flex w-full flex-1 overflow-hidden">
-				<!-- Sidebar Section -->
+		{#if hasSidebar}
+			<!-- Desktop Layout (hidden on mobile) - No Drawer to avoid DaisyUI double-render -->
+			<div class="hidden w-full flex-1 overflow-hidden lg:flex">
 				{#if sidebar}
-					<aside class="admin-sidebar hidden shrink-0 lg:block" aria-label={sidebarAriaLabel}>
+					<aside class="admin-sidebar shrink-0" aria-label={sidebarAriaLabel}>
 						{@render sidebar()}
 					</aside>
 				{:else if sidebarConfig}
-					<div class="hidden shrink-0 lg:block">
+					<div class="shrink-0">
 						<Sidebar {...sidebarConfig} />
 					</div>
 				{/if}
 
-				<!-- Main Content Area -->
+				<!-- Main Content Area (Desktop) -->
 				<main
 					class="admin-main-content bg-base-100 flex w-full min-w-0 flex-1 flex-col overflow-auto"
 				>
@@ -289,6 +241,72 @@ SPDX-License-Identifier: MIT
 					{/if}
 				</main>
 			</div>
+
+			<!-- Mobile Layout (hidden on desktop) - Drawer for sidebar -->
+			{#if mobileDrawer}
+				<div class="flex w-full flex-1 overflow-hidden lg:hidden">
+					<Drawer
+						open={mobileSidebarOpen}
+						side="left"
+						overlay={true}
+						closeOnBackdrop={true}
+						closeOnEscape={true}
+						ariaLabel={sidebarAriaLabel}
+						showCloseButton={true}
+					>
+						{#snippet children()}
+							{#if sidebar}
+								{@render sidebar()}
+							{:else if sidebarConfig}
+								<Sidebar {...sidebarConfig} />
+							{/if}
+						{/snippet}
+
+						{#snippet content()}
+							<!-- Main Content Area (Mobile) -->
+							<main
+								class="admin-main-content bg-base-100 flex w-full min-w-0 flex-1 flex-col overflow-auto"
+							>
+								{#if loading}
+									<div class="flex flex-1 items-center justify-center">
+										<Spinner size="lg" variant="primary" ariaLabel={loadingLabel} />
+									</div>
+								{:else if children}
+									{@render children()}
+								{/if}
+							</main>
+						{/snippet}
+					</Drawer>
+				</div>
+			{:else}
+				<!-- Mobile without Drawer -->
+				<div class="flex w-full flex-1 overflow-hidden lg:hidden">
+					<main
+						class="admin-main-content bg-base-100 flex w-full min-w-0 flex-1 flex-col overflow-auto"
+					>
+						{#if loading}
+							<div class="flex flex-1 items-center justify-center">
+								<Spinner size="lg" variant="primary" ariaLabel={loadingLabel} />
+							</div>
+						{:else if children}
+							{@render children()}
+						{/if}
+					</main>
+				</div>
+			{/if}
+		{:else}
+			<!-- No Sidebar Layout -->
+			<main
+				class="admin-main-content bg-base-100 flex w-full min-w-0 flex-1 flex-col overflow-auto"
+			>
+				{#if loading}
+					<div class="flex flex-1 items-center justify-center">
+						<Spinner size="lg" variant="primary" ariaLabel={loadingLabel} />
+					</div>
+				{:else if children}
+					{@render children()}
+				{/if}
+			</main>
 		{/if}
 	</div>
 
