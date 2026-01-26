@@ -488,34 +488,16 @@ A comprehensive toolbar component for data tables with search, actions, filters,
 				No suitable library component exists for generic layout wrappers.
 			-->
 			<div class={searchWrapperClasses}>
-				<!-- 
-					NOTE: Raw HTML input is used here instead of Input component.
-					TECHNICAL REASON: Input component does not support onkeydown prop for Enter key handling.
-					ATTEMPTED SOLUTIONS:
-					1. Used Input component with oninput - missing Enter key support
-					2. Tried wrapper div with onkeydown - doesn't work when input is focused
-					CONSEQUENCE: Using Input component would prevent Enter key search functionality
-					VALIDATION: Input component interface checked - no onkeydown prop available
-				-->
-				<input
+				<Input
 					type="search"
-					bind:value={searchValue}
+					value={searchValue}
 					placeholder={searchPlaceholder}
 					disabled={disabled || loading}
-					aria-label={searchAriaLabel}
+					ariaLabel={searchAriaLabel}
 					oninput={handleSearchInput}
 					onkeydown={handleSearchKeydown}
-					class={[
-						'input',
-						'input-bordered',
-						'w-full',
-						searchSize === 'xs' && 'input-xs',
-						searchSize === 'sm' && 'input-sm',
-						searchSize === 'md' && 'input-md',
-						searchSize === 'lg' && 'input-lg'
-					]
-						.filter(Boolean)
-						.join(' ')}
+					size={searchSize}
+					class="w-full"
 				/>
 			</div>
 		{/if}
