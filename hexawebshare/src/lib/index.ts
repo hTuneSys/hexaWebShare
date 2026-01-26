@@ -102,6 +102,10 @@ export { default as MutedText } from '../components/core/typography/MutedText.sv
 export { default as Paragraph } from '../components/core/typography/Paragraph.svelte';
 export { default as Text } from '../components/core/typography/Text.svelte';
 
+// Admin / Layout
+export { default as AdminLayout } from '../components/admin/layout/AdminLayout.svelte';
+export type { SidebarItem } from '../components/core/overlay-navigation/Sidebar.svelte';
+
 // Utility / Utility
 export { default as FooterBar } from '../components/utility/utility/FooterBar.svelte';
 export type {
