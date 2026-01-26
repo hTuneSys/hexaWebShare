@@ -301,6 +301,69 @@ SPDX-License-Identifier: MIT
 		 * @default 'Reset form'
 		 */
 		resetAriaLabel?: string;
+		/**
+		 * Validation message templates (support {field}, {min}, {max}, {type} placeholders)
+		 */
+		/**
+		 * Required field validation message
+		 * @default '{field} is required'
+		 */
+		requiredMessage?: string;
+		/**
+		 * Minimum length validation message
+		 * @default '{field} must be at least {min} characters'
+		 */
+		minLengthMessage?: string;
+		/**
+		 * Minimum value validation message
+		 * @default '{field} must be at least {min}'
+		 */
+		minValueMessage?: string;
+		/**
+		 * Maximum length validation message
+		 * @default '{field} must be at most {max} characters'
+		 */
+		maxLengthMessage?: string;
+		/**
+		 * Maximum value validation message
+		 * @default '{field} must be at most {max}'
+		 */
+		maxValueMessage?: string;
+		/**
+		 * Invalid format validation message
+		 * @default '{field} format is invalid'
+		 */
+		invalidFormatMessage?: string;
+		/**
+		 * Invalid email validation message
+		 * @default '{field} must be a valid email address'
+		 */
+		invalidEmailMessage?: string;
+		/**
+		 * Invalid URL validation message
+		 * @default '{field} must be a valid URL'
+		 */
+		invalidUrlMessage?: string;
+		/**
+		 * Invalid number validation message
+		 * @default '{field} must be a valid number'
+		 */
+		invalidNumberMessage?: string;
+		/**
+		 * Invalid date validation message
+		 * @default '{field} must be a valid date'
+		 */
+		invalidDateMessage?: string;
+		/**
+		 * Unknown field type error message
+		 * @default 'Unknown field type: {type}'
+		 */
+		unknownFieldTypeMessage?: string;
+		/**
+		 * Generic form submission error message
+		 * @default 'An error occurred while submitting the form'
+		 */
+		submitErrorMessage?: string;
 	}
 
 	const {
@@ -335,6 +398,18 @@ SPDX-License-Identifier: MIT
 		submitAriaLabel = 'Submit form',
 		cancelAriaLabel = 'Cancel form',
 		resetAriaLabel = 'Reset form',
+		requiredMessage = '{field} is required',
+		minLengthMessage = '{field} must be at least {min} characters',
+		minValueMessage = '{field} must be at least {min}',
+		maxLengthMessage = '{field} must be at most {max} characters',
+		maxValueMessage = '{field} must be at most {max}',
+		invalidFormatMessage = '{field} format is invalid',
+		invalidEmailMessage = '{field} must be a valid email address',
+		invalidUrlMessage = '{field} must be a valid URL',
+		invalidNumberMessage = '{field} must be a valid number',
+		invalidDateMessage = '{field} must be a valid date',
+		unknownFieldTypeMessage = 'Unknown field type: {type}',
+		submitErrorMessage = 'An error occurred while submitting the form',
 		...props
 	}: Props = $props();
 
@@ -344,6 +419,16 @@ SPDX-License-Identifier: MIT
 	let touchedFields = $state<Set<string>>(new Set());
 	let internalSuccess = $state<string | undefined>(undefined);
 	let internalError = $state<string | undefined>(undefined);
+
+	/**
+	 * Format message template with replacements
+	 * Replaces {key} placeholders with values from replacements object
+	 */
+	function formatMessage(template: string, replacements: Record<string, any>): string {
+		return template.replace(/{(\w+)}/g, (match, key) =>
+			replacements[key] !== undefined ? String(replacements[key]) : match
+		);
+	}
 
 	// Initialize form values from initialValues and field defaults
 	$effect(() => {
@@ -376,7 +461,7 @@ SPDX-License-Identifier: MIT
 		// Required validation
 		if (rules.required) {
 			if (value === null || value === undefined || value === '') {
-				return `${field.label} is required`;
+				return formatMessage(requiredMessage, { field: field.label });
 			}
 		}
 
@@ -390,30 +475,30 @@ SPDX-License-Identifier: MIT
 
 		// Min validation
 		if (rules.min !== undefined) {
-			if (field.type === 'number' || field.type === 'text' || field.type === 'textarea') {
-				if (field.type === 'number') {
-					if (isNaN(numValue) || numValue < rules.min) {
-						return `${field.label} must be at least ${rules.min}`;
-					}
-				} else {
-					if (stringValue.length < rules.min) {
-						return `${field.label} must be at least ${rules.min} characters`;
-					}
+			if (field.type === 'number') {
+				// Number type: validate numeric value
+				if (isNaN(numValue) || numValue < rules.min) {
+					return formatMessage(minValueMessage, { field: field.label, min: rules.min });
+				}
+			} else {
+				// String-based types: validate string length
+				if (stringValue.length < rules.min) {
+					return formatMessage(minLengthMessage, { field: field.label, min: rules.min });
 				}
 			}
 		}
 
 		// Max validation
 		if (rules.max !== undefined) {
-			if (field.type === 'number' || field.type === 'text' || field.type === 'textarea') {
-				if (field.type === 'number') {
-					if (isNaN(numValue) || numValue > rules.max) {
-						return `${field.label} must be at most ${rules.max}`;
-					}
-				} else {
-					if (stringValue.length > rules.max) {
-						return `${field.label} must be at most ${rules.max} characters`;
-					}
+			if (field.type === 'number') {
+				// Number type: validate numeric value
+				if (isNaN(numValue) || numValue > rules.max) {
+					return formatMessage(maxValueMessage, { field: field.label, max: rules.max });
+				}
+			} else {
+				// String-based types: validate string length
+				if (stringValue.length > rules.max) {
+					return formatMessage(maxLengthMessage, { field: field.label, max: rules.max });
 				}
 			}
 		}
@@ -422,7 +507,7 @@ SPDX-License-Identifier: MIT
 		if (rules.pattern) {
 			const regex = new RegExp(rules.pattern);
 			if (!regex.test(stringValue)) {
-				return `${field.label} format is invalid`;
+				return formatMessage(invalidFormatMessage, { field: field.label });
 			}
 		}
 
@@ -431,21 +516,21 @@ SPDX-License-Identifier: MIT
 			if (rules.type === 'email') {
 				const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 				if (!emailRegex.test(stringValue)) {
-					return `${field.label} must be a valid email address`;
+					return formatMessage(invalidEmailMessage, { field: field.label });
 				}
 			} else if (rules.type === 'url') {
 				try {
 					new URL(stringValue);
 				} catch {
-					return `${field.label} must be a valid URL`;
+					return formatMessage(invalidUrlMessage, { field: field.label });
 				}
 			} else if (rules.type === 'number') {
 				if (isNaN(numValue)) {
-					return `${field.label} must be a valid number`;
+					return formatMessage(invalidNumberMessage, { field: field.label });
 				}
 			} else if (rules.type === 'date') {
 				if (isNaN(Date.parse(stringValue))) {
-					return `${field.label} must be a valid date`;
+					return formatMessage(invalidDateMessage, { field: field.label });
 				}
 			}
 		}
@@ -545,8 +630,7 @@ SPDX-License-Identifier: MIT
 				}
 			} catch (err) {
 				// Show error message
-				internalError =
-					err instanceof Error ? err.message : 'An error occurred while submitting the form';
+				internalError = err instanceof Error ? err.message : submitErrorMessage;
 
 				// Auto-hide error message after specified duration
 				setTimeout(() => {
@@ -828,7 +912,10 @@ SPDX-License-Identifier: MIT
 										}}
 									/>
 								{:else}
-									<Text text={`Unknown field type: ${field.type}`} variant="error" />
+									<Text
+										text={formatMessage(unknownFieldTypeMessage, { type: field.type })}
+										variant="error"
+									/>
 								{/if}
 							{/each}
 						</div>
@@ -960,7 +1047,10 @@ SPDX-License-Identifier: MIT
 									}}
 								/>
 							{:else}
-								<Text text={`Unknown field type: ${field.type}`} variant="error" />
+								<Text
+									text={formatMessage(unknownFieldTypeMessage, { type: field.type })}
+									variant="error"
+								/>
 							{/if}
 						{/each}
 					</div>
