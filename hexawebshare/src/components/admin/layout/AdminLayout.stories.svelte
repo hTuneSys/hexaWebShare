@@ -78,25 +78,8 @@ SPDX-License-Identifier: MIT
 				control: 'text',
 				description: 'Accessible label for sidebar (required)'
 			}
-		},
-		args: {
-			sidebarItems: defaultSidebarItems,
-			sidebarTitle: 'Admin Panel',
-			sidebarSubtitle: 'Navigation',
-			variant: 'default',
-			sidebarWidth: 'default',
-			sidebarCollapsed: false,
-			sidebarCollapsible: true,
-			loading: false,
-			disabled: false,
-			mobileSidebarOpen: false,
-			mobileDrawer: true,
-			ariaLabel: 'Admin layout',
-			loadingLabel: 'Loading content',
-			sidebarAriaLabel: 'Admin navigation sidebar',
-			class: '',
-			onSidebarCollapse: fn()
 		}
+		// NOTE: args removed to prevent double-render with snippet-based components
 	});
 </script>
 
