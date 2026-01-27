@@ -104,6 +104,19 @@ SPDX-License-Identifier: MIT
 		align?: 'auto' | 'start' | 'center' | 'end' | 'stretch';
 
 		/**
+		 * Flexbox control
+		 * @default undefined
+		 */
+		flex?: 'none' | '1' | 'auto' | 'initial' | 'grow' | 'shrink';
+		/**
+		 * Hide the column below a certain breakpoint
+		 */
+		hideBelow?: 'sm' | 'md' | 'lg' | 'xl';
+		/**
+		 * Hide the column above a certain breakpoint
+		 */
+		hideAbove?: 'sm' | 'md' | 'lg' | 'xl';
+		/**
 		 * Additional CSS classes to apply to the column
 		 * @default ''
 		 */
@@ -125,6 +138,9 @@ SPDX-License-Identifier: MIT
 		xl,
 		order,
 		align,
+		flex,
+		hideBelow,
+		hideAbove,
 		ariaLabel = 'Grid column',
 		class: className = '',
 		...props
@@ -370,9 +386,54 @@ SPDX-License-Identifier: MIT
 							: ''
 	);
 
+	// Flex classes
+	let flexClass = $derived(
+		flex === 'none'
+			? 'flex-none'
+			: flex === '1'
+				? 'flex-1'
+				: flex === 'auto'
+					? 'flex-auto'
+					: flex === 'initial'
+						? 'flex-initial'
+						: flex === 'grow'
+							? 'flex-grow'
+							: flex === 'shrink'
+								? 'flex-shrink'
+								: ''
+	);
+
+	// Visibility classes
+	let visibilityClasses = $derived(
+		[
+			hideBelow === 'sm' && 'hidden sm:block',
+			hideBelow === 'md' && 'hidden md:block',
+			hideBelow === 'lg' && 'hidden lg:block',
+			hideBelow === 'xl' && 'hidden xl:block',
+			hideAbove === 'sm' && 'sm:hidden',
+			hideAbove === 'md' && 'md:hidden',
+			hideAbove === 'lg' && 'lg:hidden',
+			hideAbove === 'xl' && 'xl:hidden'
+		]
+			.filter(Boolean)
+			.join(' ')
+	);
+
 	// Combine all classes
 	let colClasses = $derived(
-		[spanClass, startClass, smClass, mdClass, lgClass, xlClass, orderClass, alignClass, className]
+		[
+			spanClass,
+			startClass,
+			smClass,
+			mdClass,
+			lgClass,
+			xlClass,
+			orderClass,
+			alignClass,
+			flexClass,
+			visibilityClasses,
+			className
+		]
 			.filter(Boolean)
 			.join(' ')
 	);

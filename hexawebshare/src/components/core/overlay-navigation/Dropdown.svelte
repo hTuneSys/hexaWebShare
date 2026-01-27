@@ -402,9 +402,10 @@ SPDX-License-Identifier: MIT
 			'bg-base-100',
 			'rounded-box',
 			'z-50',
-			'shadow-lg',
+			'shadow-xl',
 			'border',
-			'border-base-300',
+			'border-base-200',
+			'mt-2',
 			size === 'sm' && 'p-1 min-w-40',
 			size === 'md' && 'p-2 min-w-48',
 			size === 'lg' && 'p-3 min-w-56',
@@ -476,7 +477,7 @@ SPDX-License-Identifier: MIT
 							<a
 								id="{dropdownId}-item-{index}"
 								href={item.href}
-								class="flex items-center gap-2"
+								class="flex items-center gap-3 py-2 max-sm:py-2.5"
 								tabindex={item.disabled ? -1 : 0}
 								role="menuitem"
 								aria-disabled={item.disabled}
@@ -486,29 +487,20 @@ SPDX-License-Identifier: MIT
 								onblur={handleItemBlur}
 							>
 								{#if item.icon}
-									<span class="text-lg" aria-hidden="true">{item.icon}</span>
+									<span class="text-xl max-sm:text-xl" aria-hidden="true">{item.icon}</span>
 								{/if}
 								<span class="flex flex-col">
-									<Text text={item.label} />
+									<Text text={item.label} class="max-sm:text-base" />
 									{#if item.description}
-										<Text text={item.description} size="xs" class="opacity-60" />
+										<Text text={item.description} size="xs" class="opacity-60 max-sm:text-xs" />
 									{/if}
 								</span>
 							</a>
 						{:else}
-							<!-- 
-							NOTE: Raw HTML <button> is intentional here instead of Button component.
-							TECHNICAL REASON: 
-							1. WAI-ARIA menuitem pattern requires <button role="menuitem"> for dropdown items
-							2. DaisyUI's dropdown-content pattern expects unstyled buttons (no .btn classes)
-							3. Button component adds .btn classes that conflict with dropdown styling
-							CONSEQUENCE: Using Button component would break DaisyUI dropdown CSS and menuitem ARIA pattern
-							VALIDATION: WAI-ARIA Menu pattern + DaisyUI v4.x dropdown docs
-						-->
 							<button
 								type="button"
 								id="{dropdownId}-item-{index}"
-								class="flex w-full items-center gap-2 text-left"
+								class="flex w-full items-center gap-3 py-2 text-left max-sm:py-2.5"
 								tabindex={item.disabled ? -1 : 0}
 								disabled={item.disabled || disabled}
 								role="menuitem"
@@ -519,12 +511,12 @@ SPDX-License-Identifier: MIT
 								onblur={handleItemBlur}
 							>
 								{#if item.icon}
-									<span class="text-lg" aria-hidden="true">{item.icon}</span>
+									<span class="text-xl max-sm:text-xl" aria-hidden="true">{item.icon}</span>
 								{/if}
 								<span class="flex flex-col">
-									<Text text={item.label} />
+									<Text text={item.label} class="max-sm:text-base" />
 									{#if item.description}
-										<Text text={item.description} size="xs" class="opacity-60" />
+										<Text text={item.description} size="xs" class="opacity-60 max-sm:text-xs" />
 									{/if}
 								</span>
 							</button>
@@ -538,3 +530,20 @@ SPDX-License-Identifier: MIT
 		{/if}
 	</div>
 </details>
+
+<style>
+	/* Hide default browser disclosure triangle/marker */
+	summary {
+		list-style: none;
+	}
+
+	summary::-webkit-details-marker {
+		display: none;
+	}
+
+	/* Also for Firefox and other browsers */
+	summary::marker {
+		content: none;
+		display: none;
+	}
+</style>
