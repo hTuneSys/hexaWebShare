@@ -6,7 +6,6 @@ SPDX-License-Identifier: MIT
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 	import type { DropdownItem } from '../../core/overlay-navigation/Dropdown.svelte';
-	import Dropdown from '../../core/overlay-navigation/Dropdown.svelte';
 	import Button from '../../core/buttons/Button.svelte';
 	import IconButton from '../../core/buttons/IconButton.svelte';
 	import Link from '../../core/typography/Link.svelte';
@@ -143,7 +142,6 @@ SPDX-License-Identifier: MIT
 			'bg-base-200',
 			'text-base-content',
 			'min-h-full',
-			'overflow-hidden',
 			'transition-all',
 			'duration-300',
 			widthClasses,
@@ -160,7 +158,7 @@ SPDX-License-Identifier: MIT
 		[
 			'menu',
 			'flex-1',
-			'overflow-y-auto',
+			'overflow-visible',
 			'p-2',
 			'gap-1',
 			variant === 'compact' && 'menu-compact',
@@ -346,45 +344,76 @@ SPDX-License-Identifier: MIT
 				{#each items as item, index (item.id)}
 					<li>
 						{#if item.children && item.children.length > 0}
-							<Dropdown
-								items={item.children}
-								position="right"
-								align="start"
-								{size}
-								disabled={item.disabled || disabled}
-								ariaLabel={item.label}
-								class="w-full"
-							>
-								{#snippet trigger()}
-									<Button
-										class="{getItemClasses(item)} justify-between"
-										disabled={item.disabled || disabled}
-									>
-										{#snippet children()}
-											<!--
-												NOTE: Raw HTML span is intentional here.
-												TECHNICAL REASON: This is a structural wrapper for icon and label grouping.
-												No suitable library component exists for inline flex wrappers.
-											-->
-											<span class="flex items-center {gapClasses}">
-												{#if item.icon}
-													<span class={iconSizeClasses}>{item.icon}</span>
+							<!--
+								NOTE: Raw HTML details/summary is intentional here.
+								TECHNICAL REASON: DaisyUI menu component uses native details/summary
+								for collapsible submenus. This is the standard pattern for nested menus.
+								Using Dropdown component creates positioning/overflow issues in sidebars.
+								VALIDATION: DaisyUI v4.x Menu documentation - Collapsible submenu pattern.
+							-->
+							<details class="group" open={item.active}>
+								<summary
+									class="{getItemClasses(item)} cursor-pointer list-none justify-between"
+									class:opacity-50={item.disabled || disabled}
+									class:pointer-events-none={item.disabled || disabled}
+								>
+									<!--
+										NOTE: Raw HTML span is intentional here.
+										TECHNICAL REASON: This is a structural wrapper for icon and label grouping.
+										No suitable library component exists for inline flex wrappers.
+									-->
+									<span class="flex items-center {gapClasses}">
+										{#if item.icon}
+											<span class={iconSizeClasses} aria-hidden="true">{item.icon}</span>
+										{/if}
+										{#if !collapsed}
+											<Text text={item.label} truncate={true} class="flex-1" />
+										{/if}
+									</span>
+									{#if !collapsed && item.badge !== undefined}
+										<Badge
+											label={String(item.badge)}
+											variant={item.badgeVariant ?? defaultBadgeVariant}
+											{size}
+										/>
+									{/if}
+								</summary>
+								{#if !collapsed}
+									<ul class="mt-1 ml-4 space-y-1">
+										{#each item.children as child (child.id)}
+											<li>
+												{#if child.href}
+													<Link
+														href={child.href}
+														class="{paddingClasses} flex items-center {gapClasses} hover:bg-base-300 rounded-lg"
+														onclick={() => child.onClick?.()}
+													>
+														{#snippet children()}
+															{#if child.icon}
+																<span class={iconSizeClasses} aria-hidden="true">{child.icon}</span>
+															{/if}
+															<Text text={child.label} truncate={true} class="flex-1" />
+														{/snippet}
+													</Link>
+												{:else}
+													<Button
+														class="{paddingClasses} flex w-full items-center {gapClasses} hover:bg-base-300 justify-start rounded-lg"
+														disabled={child.disabled}
+														onclick={() => child.onClick?.()}
+													>
+														{#snippet children()}
+															{#if child.icon}
+																<span class={iconSizeClasses} aria-hidden="true">{child.icon}</span>
+															{/if}
+															<Text text={child.label} truncate={true} class="flex-1" />
+														{/snippet}
+													</Button>
 												{/if}
-												{#if !collapsed}
-													<span class="truncate">{item.label}</span>
-												{/if}
-											</span>
-											{#if !collapsed && item.badge !== undefined}
-												<Badge
-													label={String(item.badge)}
-													variant={item.badgeVariant ?? defaultBadgeVariant}
-													{size}
-												/>
-											{/if}
-										{/snippet}
-									</Button>
-								{/snippet}
-							</Dropdown>
+											</li>
+										{/each}
+									</ul>
+								{/if}
+							</details>
 						{:else if item.href}
 							<Link
 								href={item.href}
@@ -396,12 +425,13 @@ SPDX-License-Identifier: MIT
 										<!--
 											NOTE: Raw HTML span is intentional here.
 											TECHNICAL REASON: This is an inline wrapper for icon display.
-											No suitable library component exists for simple icon containers.
+											Icon component uses w/h sizing but item.icon contains emoji/characters
+											which require font-size (text-lg, text-xl) for proper scaling.
 										-->
-										<span class={iconSizeClasses}>{item.icon}</span>
+										<span class={iconSizeClasses} aria-hidden="true">{item.icon}</span>
 									{/if}
 									{#if !collapsed}
-										<span class="truncate">{item.label}</span>
+										<Text text={item.label} truncate={true} class="flex-1" />
 										{#if item.badge !== undefined}
 											<Badge
 												label={String(item.badge)}
@@ -423,12 +453,13 @@ SPDX-License-Identifier: MIT
 										<!--
 											NOTE: Raw HTML span is intentional here.
 											TECHNICAL REASON: This is an inline wrapper for icon display.
-											No suitable library component exists for simple icon containers.
+											Icon component uses w/h sizing but item.icon contains emoji/characters
+											which require font-size (text-lg, text-xl) for proper scaling.
 										-->
-										<span class={iconSizeClasses}>{item.icon}</span>
+										<span class={iconSizeClasses} aria-hidden="true">{item.icon}</span>
 									{/if}
 									{#if !collapsed}
-										<span class="truncate text-left">{item.label}</span>
+										<Text text={item.label} truncate={true} class="flex-1 text-left" />
 										{#if item.badge !== undefined}
 											<Badge
 												label={String(item.badge)}
