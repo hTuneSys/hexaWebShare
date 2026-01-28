@@ -14,6 +14,9 @@ SPDX-License-Identifier: MIT
 		argTypes: {
 			onToggleSidebar: { action: 'toggleSidebar' },
 			onSearch: { action: 'search' },
+			onNotificationClick: { action: 'notificationClicked' },
+			onEmptyNotificationClick: { action: 'emptyNotificationClicked' },
+			onLoginClick: { action: 'loginClicked' },
 			user: { control: 'object' },
 			notifications: { control: 'object' },
 			loginLabel: { control: 'text' },

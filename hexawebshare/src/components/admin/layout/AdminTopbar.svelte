@@ -50,6 +50,9 @@ SPDX-License-Identifier: MIT
 		onProfileClick?: () => void;
 		onSettingsClick?: () => void;
 		onLogoutClick?: () => void;
+		onNotificationClick?: (notificationId: string) => void;
+		onEmptyNotificationClick?: () => void;
+		onLoginClick?: () => void;
 		// Icons
 		profileIcon?: string;
 		settingsIcon?: string;
@@ -75,6 +78,9 @@ SPDX-License-Identifier: MIT
 		onProfileClick,
 		onSettingsClick,
 		onLogoutClick,
+		onNotificationClick,
+		onEmptyNotificationClick,
+		onLoginClick,
 		profileIcon = '👤',
 		settingsIcon = '⚙️',
 		logoutIcon = '🚪',
@@ -106,6 +112,13 @@ SPDX-License-Identifier: MIT
 		{ id: 'sep', type: 'divider', label: '' },
 		{ id: 'logout', label: logoutLabel, icon: logoutIcon, variant: 'error', onClick: onLogoutClick }
 	];
+
+	// Handle notification item click
+	function handleNotificationClick(item: MenuItem) {
+		if (onNotificationClick && typeof item.id === 'string') {
+			onNotificationClick(item.id);
+		}
+	}
 </script>
 
 <Row sticky border gap="4" align="center" class="bg-base-100 h-16 px-4" ariaLabel={navAriaLabel}>
@@ -222,7 +235,12 @@ SPDX-License-Identifier: MIT
 						{/snippet}
 
 						{#snippet children()}
-							<Menu items={notificationItems} size="sm" class="w-64" />
+							<Menu
+								items={notificationItems}
+								size="sm"
+								class="w-64"
+								onItemClick={handleNotificationClick}
+							/>
 						{/snippet}
 					</Dropdown>
 				{:else}
@@ -230,7 +248,7 @@ SPDX-License-Identifier: MIT
 						variant="ghost"
 						circle
 						ariaLabel={notificationsLabel}
-						onclick={() => console.log('No notifications')}
+						onclick={onEmptyNotificationClick}
 					>
 						<Icon name="bell">
 							<svg
@@ -276,7 +294,7 @@ SPDX-License-Identifier: MIT
 						size="sm"
 						class="px-4"
 						label={loginLabel}
-						onclick={() => console.log('Login')}
+						onclick={onLoginClick}
 					/>
 				{/if}
 			</Row>
