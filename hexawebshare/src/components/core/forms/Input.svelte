@@ -134,6 +134,10 @@ SPDX-License-Identifier: MIT
 		 */
 		onfocus?: (event: Event) => void;
 		/**
+		 * Keydown event handler
+		 */
+		onkeydown?: (event: KeyboardEvent) => void;
+		/**
 		 * Additional CSS classes
 		 */
 		class?: string;
@@ -161,6 +165,11 @@ SPDX-License-Identifier: MIT
 		loading = false,
 		requiredLabel = 'required',
 		loadingLabel = 'Loading',
+		onchange,
+		oninput,
+		onblur,
+		onfocus,
+		onkeydown,
 		class: className = '',
 		...props
 	}: Props = $props();
@@ -234,6 +243,11 @@ SPDX-License-Identifier: MIT
 			aria-required={required}
 			aria-disabled={disabled}
 			aria-busy={loading}
+			{onchange}
+			{oninput}
+			{onblur}
+			{onfocus}
+			{onkeydown}
 			{...props}
 		/>
 		{#if loading}
