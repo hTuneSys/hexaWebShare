@@ -75,12 +75,13 @@ SPDX-License-Identifier: MIT
 		defaultIconPoints = '12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2',
 		defaultIconWidth = '20',
 		defaultIconHeight = '20',
+		onclick,
+		onkeydown,
 		...props
 	}: Props = $props();
 
 	let buttonClasses = $derived(
 		[
-			className,
 			'btn',
 			variant === 'primary' && 'btn-primary',
 			variant === 'secondary' && 'btn-secondary',
@@ -113,6 +114,8 @@ SPDX-License-Identifier: MIT
 	{disabled}
 	aria-label={ariaLabel}
 	aria-expanded={ariaExpanded}
+	{onclick}
+	{onkeydown}
 	{...props}
 >
 	{#if loading}

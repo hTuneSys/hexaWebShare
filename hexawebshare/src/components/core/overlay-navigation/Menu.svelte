@@ -18,7 +18,7 @@ SPDX-License-Identifier: MIT
 		/**
 		 * Label text displayed in the menu item
 		 */
-		label: string;
+		label?: string;
 		/**
 		 * Optional description or subtitle
 		 */
@@ -32,6 +32,15 @@ SPDX-License-Identifier: MIT
 		 * @default false
 		 */
 		disabled?: boolean;
+		/**
+		 * Type of the menu item
+		 * @default 'item'
+		 */
+		type?: 'item' | 'title' | 'divider';
+		/**
+		 * Visual variant of the item
+		 */
+		variant?: 'default' | 'error';
 		/**
 		 * Whether the item is active/selected
 		 * @default false
@@ -142,7 +151,13 @@ SPDX-License-Identifier: MIT
 
 	// Compute item classes based on state
 	const getItemClasses = (item: MenuItem, index: number) =>
-		[item.active && 'active', item.disabled && 'disabled', focusedIndex === index && 'focus']
+		[
+			item.type === 'title' && 'menu-title',
+			item.active && 'active',
+			item.disabled && 'disabled',
+			item.variant === 'error' && 'text-error',
+			focusedIndex === index && 'focus'
+		]
 			.filter(Boolean)
 			.join(' ');
 
@@ -278,56 +293,72 @@ SPDX-License-Identifier: MIT
 			VALIDATION: WAI-ARIA Authoring Practices Guide + DaisyUI v4.x menu documentation
 		-->
 		{#each items as item, index (item.id)}
-			<li class={getItemClasses(item, index)}>
-				{#if item.href && !item.disabled}
-					<a
-						id="{menuId}-item-{index}"
-						href={item.href}
-						class="flex items-center gap-2"
-						tabindex={item.disabled ? -1 : 0}
-						aria-disabled={item.disabled}
-						onclick={() => handleItemClick(item, index)}
-						onkeydown={(e) => handleKeyDown(e, item, index)}
-						onfocus={() => handleFocus(index)}
-						onblur={handleBlur}
-					>
-						{#if item.icon}
-							<span class="text-lg" aria-hidden="true">{item.icon}</span>
-						{/if}
-						<span class="flex flex-col">
-							<Text text={item.label} />
-							{#if item.description}
-								<Text text={item.description} size="xs" class="opacity-60" />
+			{#if item.type === 'title'}
+				<li
+					class="{getItemClasses(item, index)} {item.divider
+						? 'border-base-200 mb-1 border-b pb-1.5'
+						: ''} pointer-events-none cursor-default select-none"
+				>
+					<Text
+						text={item.label}
+						size="xs"
+						class="font-semibold tracking-wider uppercase opacity-60"
+					/>
+				</li>
+			{:else if item.type === 'divider'}
+				<li class="border-base-200 my-1 border-b" role="separator"></li>
+			{:else}
+				<li class={getItemClasses(item, index)}>
+					{#if item.href && !item.disabled}
+						<a
+							id="{menuId}-item-{index}"
+							href={item.href}
+							class="flex items-center gap-2.5 py-1.5 max-sm:py-2"
+							tabindex={item.disabled ? -1 : 0}
+							aria-disabled={item.disabled}
+							onclick={() => handleItemClick(item, index)}
+							onkeydown={(e) => handleKeyDown(e, item, index)}
+							onfocus={() => handleFocus(index)}
+							onblur={handleBlur}
+						>
+							{#if item.icon}
+								<span class="text-lg" aria-hidden="true">{item.icon}</span>
 							{/if}
-						</span>
-					</a>
-				{:else}
-					<button
-						type="button"
-						id="{menuId}-item-{index}"
-						class="flex w-full items-center gap-2 text-left"
-						tabindex={item.disabled ? -1 : 0}
-						disabled={item.disabled || disabled}
-						aria-disabled={item.disabled || disabled}
-						onclick={() => handleItemClick(item, index)}
-						onkeydown={(e) => handleKeyDown(e, item, index)}
-						onfocus={() => handleFocus(index)}
-						onblur={handleBlur}
-					>
-						{#if item.icon}
-							<span class="text-lg" aria-hidden="true">{item.icon}</span>
-						{/if}
-						<span class="flex flex-col">
-							<Text text={item.label} />
-							{#if item.description}
-								<Text text={item.description} size="xs" class="opacity-60" />
+							<span class="flex flex-col">
+								<Text text={item.label} size="sm" />
+								{#if item.description}
+									<Text text={item.description} size="xs" class="opacity-60" />
+								{/if}
+							</span>
+						</a>
+					{:else}
+						<button
+							type="button"
+							id="{menuId}-item-{index}"
+							class="flex w-full items-center gap-2.5 py-1.5 text-left max-sm:py-2"
+							tabindex={item.disabled ? -1 : 0}
+							disabled={item.disabled || disabled}
+							aria-disabled={item.disabled || disabled}
+							onclick={() => handleItemClick(item, index)}
+							onkeydown={(e) => handleKeyDown(e, item, index)}
+							onfocus={() => handleFocus(index)}
+							onblur={handleBlur}
+						>
+							{#if item.icon}
+								<span class="text-lg" aria-hidden="true">{item.icon}</span>
 							{/if}
-						</span>
-					</button>
-				{/if}
-			</li>
+							<span class="flex flex-col">
+								<Text text={item.label} size="sm" />
+								{#if item.description}
+									<Text text={item.description} size="xs" class="opacity-60" />
+								{/if}
+							</span>
+						</button>
+					{/if}
+				</li>
+			{/if}
 			{#if item.divider && index < items.length - 1}
-				<div class="divider my-1" role="separator" aria-orientation="horizontal"></div>
+				<li class="border-base-200 my-1 border-b" role="separator"></li>
 			{/if}
 		{/each}
 	{/if}
