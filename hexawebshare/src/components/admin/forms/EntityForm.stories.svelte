@@ -317,18 +317,6 @@ SPDX-License-Identifier: MIT
 	}}
 />
 
-<!-- With Validation -->
-<Story
-	name="With Validation"
-	args={{
-		title: 'Create User with Validation',
-		description: 'Form fields include validation rules',
-		mode: 'create',
-		fields: userFields,
-		showCancel: true
-	}}
-/>
-
 <!-- Loading State -->
 <Story
 	name="Loading State"
