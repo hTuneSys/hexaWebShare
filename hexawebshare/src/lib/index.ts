@@ -104,6 +104,8 @@ export { default as Text } from '../components/core/typography/Text.svelte';
 
 // Admin / Layout
 export { default as AdminLayout } from '../components/admin/layout/AdminLayout.svelte';
+export { default as AdminSidebar } from '../components/admin/layout/AdminSidebar.svelte';
+export type { AdminSidebarItem } from '../components/admin/layout/AdminSidebar.svelte';
 export type { SidebarItem } from '../components/core/overlay-navigation/Sidebar.svelte';
 
 // Utility / Utility
@@ -114,3 +116,11 @@ export type {
 	SocialLink
 } from '../components/utility/utility/FooterBar.svelte';
 export { default as GlobalSearchBar } from '../components/utility/utility/GlobalSearchBar.svelte';
+
+// Admin / CRUD Data
+export { default as DataTableToolbar } from '../components/admin/crud-data/DataTableToolbar.svelte';
+export type {
+	ToolbarAction,
+	BulkAction,
+	ViewOption
+} from '../components/admin/crud-data/DataTableToolbar.svelte';

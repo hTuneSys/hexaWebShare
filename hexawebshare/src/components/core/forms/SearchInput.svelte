@@ -179,21 +179,24 @@ SPDX-License-Identifier: MIT
 		[
 			'input',
 			'input-bordered',
+			'bg-base-200/40',
+			'transition-all duration-200 ease-in-out',
+			'focus:outline-none focus:border-primary/40 focus:ring-4 focus:ring-primary/5',
 			'w-full',
 			'pl-10',
 			showClearButton && value ? 'pr-10' : 'pr-4',
-			variant === 'primary' && 'input-primary',
-			variant === 'secondary' && 'input-secondary',
-			variant === 'accent' && 'input-accent',
-			variant === 'info' && 'input-info',
-			variant === 'success' && 'input-success',
-			variant === 'warning' && 'input-warning',
-			variant === 'error' && 'input-error',
+			variant === 'primary' && 'input-primary focus:ring-primary/10',
+			variant === 'secondary' && 'input-secondary focus:ring-secondary/10',
+			variant === 'accent' && 'input-accent focus:ring-accent/10',
+			variant === 'info' && 'input-info focus:ring-info/10',
+			variant === 'success' && 'input-success focus:ring-success/10',
+			variant === 'warning' && 'input-warning focus:ring-warning/10',
+			variant === 'error' && 'input-error focus:ring-error/10',
 			size === 'xs' && 'input-xs',
 			size === 'sm' && 'input-sm',
 			size === 'md' && 'input-md',
 			size === 'lg' && 'input-lg',
-			error !== undefined && error !== '' && 'input-error'
+			error !== undefined && error !== '' && 'input-error focus:ring-error/10'
 		]
 			.filter(Boolean)
 			.join(' ')
@@ -333,7 +336,7 @@ SPDX-License-Identifier: MIT
 		/>
 
 		<!-- Clear Button or Loading Spinner -->
-		<div class="absolute top-1/2 -translate-y-1/2 {iconRightClass}">
+		<div class="absolute top-1/2 z-10 -translate-y-1/2 {iconRightClass}">
 			{#if loading}
 				<Spinner size={spinnerSize} class="text-base-content/50" ariaLabel={searchingLabel} />
 			{:else if showClearButton && value}
@@ -344,7 +347,7 @@ SPDX-License-Identifier: MIT
 					onclick={handleClear}
 					{disabled}
 					ariaLabel={clearLabel}
-					class="h-auto min-h-0 p-0.5"
+					class="h-8 min-h-0 w-8 p-0"
 				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"

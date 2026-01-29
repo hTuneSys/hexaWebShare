@@ -173,6 +173,11 @@ SPDX-License-Identifier: MIT
 		unstyled = false,
 		requiredLabel = 'required',
 		loadingLabel = 'Loading',
+		onchange,
+		oninput,
+		onblur,
+		onfocus,
+		onkeydown,
 		class: className = '',
 		...props
 	}: Props = $props();
@@ -245,6 +250,11 @@ SPDX-License-Identifier: MIT
 		aria-required={required}
 		aria-disabled={disabled}
 		aria-busy={loading}
+		{onchange}
+		{oninput}
+		{onblur}
+		{onfocus}
+		{onkeydown}
 		{...props}
 	/>
 {:else}
@@ -273,6 +283,11 @@ SPDX-License-Identifier: MIT
 				aria-required={required}
 				aria-disabled={disabled}
 				aria-busy={loading}
+				{onchange}
+				{oninput}
+				{onblur}
+				{onfocus}
+				{onkeydown}
 				{...props}
 			/>
 			{#if loading}
