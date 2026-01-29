@@ -32,7 +32,8 @@ SPDX-License-Identifier: MIT
 			| 'time'
 			| 'datetime-local'
 			| 'month'
-			| 'week';
+			| 'week'
+			| 'hidden';
 		/**
 		 * Color variant of the input
 		 * @default undefined (default DaisyUI input style)
@@ -108,6 +109,12 @@ SPDX-License-Identifier: MIT
 		 */
 		loading?: boolean;
 		/**
+		 * Whether to render only the input element without wrapper, label, error, or helpText
+		 * Useful for embedding inside custom containers
+		 * @default false
+		 */
+		unstyled?: boolean;
+		/**
 		 * Accessible label for required field indicator
 		 * @default 'required'
 		 */
@@ -134,6 +141,10 @@ SPDX-License-Identifier: MIT
 		 */
 		onfocus?: (event: Event) => void;
 		/**
+		 * Keydown event handler
+		 */
+		onkeydown?: (event: KeyboardEvent) => void;
+		/**
 		 * Additional CSS classes
 		 */
 		class?: string;
@@ -159,6 +170,7 @@ SPDX-License-Identifier: MIT
 		ariaLabel,
 		ariaDescribedby,
 		loading = false,
+		unstyled = false,
 		requiredLabel = 'required',
 		loadingLabel = 'Loading',
 		class: className = '',
@@ -207,57 +219,85 @@ SPDX-License-Identifier: MIT
 
 	// Loading spinner size
 	let spinnerSize = $derived(size);
+
+	// Hidden inputs should always render unstyled
+	let isUnstyled = $derived(unstyled || type === 'hidden');
 </script>
 
-<div class="form-control w-full">
-	{#if label}
-		<Label text={label} for={labelForId} {required} {size} requiredAriaLabel={requiredLabel} />
-	{/if}
+{#if isUnstyled}
+	<!-- Unstyled mode: render only the input element without wrapper -->
+	<input
+		{type}
+		id={fieldId}
+		{name}
+		{value}
+		{placeholder}
+		{disabled}
+		{readonly}
+		{required}
+		{maxlength}
+		{minlength}
+		{pattern}
+		class={className}
+		aria-label={ariaLabel || placeholder}
+		aria-describedby={ariaDescribedby}
+		aria-invalid={error !== undefined && error !== '' ? 'true' : undefined}
+		aria-required={required}
+		aria-disabled={disabled}
+		aria-busy={loading}
+		{...props}
+	/>
+{:else}
+	<div class="form-control w-full">
+		{#if label}
+			<Label text={label} for={labelForId} {required} {size} requiredAriaLabel={requiredLabel} />
+		{/if}
 
-	<div class="relative">
-		<input
-			{type}
-			id={fieldId}
-			{name}
-			{value}
-			{placeholder}
-			{disabled}
-			{readonly}
-			{required}
-			{maxlength}
-			{minlength}
-			{pattern}
-			class={inputClasses}
-			aria-label={ariaLabel || (label ? undefined : placeholder)}
-			aria-describedby={ariaDescribedby}
-			aria-invalid={error !== undefined && error !== '' ? 'true' : undefined}
-			aria-required={required}
-			aria-disabled={disabled}
-			aria-busy={loading}
-			{...props}
-		/>
-		{#if loading}
-			<div
-				class="absolute top-1/2 right-3 -translate-y-1/2"
-				role="status"
-				aria-label={loadingLabel}
-			>
-				<Spinner size={spinnerSize} variant="primary" ariaLabel={loadingLabel} />
+		<div class="relative">
+			<input
+				{type}
+				id={fieldId}
+				{name}
+				{value}
+				{placeholder}
+				{disabled}
+				{readonly}
+				{required}
+				{maxlength}
+				{minlength}
+				{pattern}
+				class={inputClasses}
+				aria-label={ariaLabel || (label ? undefined : placeholder)}
+				aria-describedby={ariaDescribedby}
+				aria-invalid={error !== undefined && error !== '' ? 'true' : undefined}
+				aria-required={required}
+				aria-disabled={disabled}
+				aria-busy={loading}
+				{...props}
+			/>
+			{#if loading}
+				<div
+					class="absolute top-1/2 right-3 -translate-y-1/2"
+					role="status"
+					aria-label={loadingLabel}
+				>
+					<Spinner size={spinnerSize} variant="primary" ariaLabel={loadingLabel} />
+				</div>
+			{/if}
+		</div>
+
+		{#if error && error !== ''}
+			<div class={labelClasses}>
+				<div role="alert" aria-live="polite">
+					<Text text={error} size="xs" variant="error" class="label-text-alt" />
+				</div>
+			</div>
+		{/if}
+
+		{#if helpText && (!error || error === '')}
+			<div class={labelClasses}>
+				<Text text={helpText} size="xs" variant="muted" class="label-text-alt" />
 			</div>
 		{/if}
 	</div>
-
-	{#if error && error !== ''}
-		<div class={labelClasses}>
-			<div role="alert" aria-live="polite">
-				<Text text={error} size="xs" variant="error" class="label-text-alt" />
-			</div>
-		</div>
-	{/if}
-
-	{#if helpText && (!error || error === '')}
-		<div class={labelClasses}>
-			<Text text={helpText} size="xs" variant="muted" class="label-text-alt" />
-		</div>
-	{/if}
-</div>
+{/if}
