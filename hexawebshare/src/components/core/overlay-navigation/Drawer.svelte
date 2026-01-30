@@ -159,6 +159,9 @@ SPDX-License-Identifier: MIT
 			side === 'right' && 'w-80',
 			side === 'top' && 'h-80 w-full',
 			side === 'bottom' && 'h-80 w-full',
+			// Elevation and position
+			'z-20',
+			'relative',
 			// Padding
 			'p-4',
 			contentClass
