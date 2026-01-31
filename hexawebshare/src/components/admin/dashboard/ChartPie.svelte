@@ -8,6 +8,10 @@ SPDX-License-Identifier: MIT
 	import Loader from '../../core/feedback/Loader.svelte';
 	import Text from '../../core/typography/Text.svelte';
 	import Badge from '../../core/media/Badge.svelte';
+	import Button from '../../core/buttons/Button.svelte';
+	import Heading from '../../core/typography/Heading.svelte';
+	import StatusDot from '../../core/data-display/StatusDot.svelte';
+	import Row from '../../core/layout/Row.svelte';
 
 	/**
 	 * Data point interface for pie chart slices
@@ -27,7 +31,8 @@ SPDX-License-Identifier: MIT
 		| 'success'
 		| 'warning'
 		| 'error'
-		| 'info';
+		| 'info'
+		| 'neutral';
 
 	/**
 	 * Props interface for the ChartPie component
@@ -99,6 +104,75 @@ SPDX-License-Identifier: MIT
 		 */
 		labelMinPercentage?: number;
 		/**
+		 * Sort data before rendering.
+		 * @default 'none'
+		 */
+		sortBy?: 'value-desc' | 'value-asc' | 'label' | 'none';
+		/**
+		 * When set, slices with percentage below this value are merged into one slice.
+		 * Pass otherLabel for the merged slice label (e.g. for i18n).
+		 */
+		groupSmallSlicesBelowPercentage?: number;
+		/**
+		 * Label for the merged "other" slice when groupSmallSlicesBelowPercentage is used.
+		 * Pass from i18n; no default to avoid hardcoded strings.
+		 */
+		otherLabel?: string;
+		/**
+		 * Color variant for the merged "Other" slice.
+		 * Use a visible variant (e.g. 'info') since 'neutral' can blend with light backgrounds.
+		 * @default 'info'
+		 */
+		otherSliceVariant?: ChartPieVariant;
+		/**
+		 * Format numeric values for display (legend, labels, center). Pass from app (e.g. Intl).
+		 */
+		formatValue?: (value: number) => string;
+		/**
+		 * When donut is true, optional title shown in center (e.g. "Total"). Value is formatted with formatValue.
+		 */
+		centerTitle?: string;
+		/**
+		 * Ratio of inner radius to outer radius when donut is true (0.5–0.8). Affects hole size.
+		 * @default 0.55
+		 */
+		innerRadiusRatio?: number;
+		/**
+		 * Starting angle in degrees (0 = 12 o'clock, 90 = 3 o'clock). Chart draws clockwise from there.
+		 * @default 0
+		 */
+		startAngle?: number;
+		/**
+		 * Format percentage for display (slice labels, tooltip, aria). Pass from app (e.g. Intl).
+		 */
+		formatPercentage?: (percentage: number) => string;
+		/**
+		 * Legend position relative to chart.
+		 * @default 'bottom'
+		 */
+		legendPosition?: 'top' | 'right' | 'bottom' | 'left';
+		/**
+		 * Scale factor for slice on hover (1 = no effect). Creates "explode" feel.
+		 * @default 1.05
+		 */
+		hoverScale?: number;
+		/**
+		 * Called when a slice is clicked.
+		 */
+		onSliceClick?: (dataPoint: ChartPieDataPoint, index: number) => void;
+		/**
+		 * Called when pointer enters a slice.
+		 */
+		onSliceHover?: (dataPoint: ChartPieDataPoint, index: number) => void;
+		/**
+		 * Index of the selected slice (controlled). Use with onSelectedChange for two-way binding.
+		 */
+		selectedIndex?: number;
+		/**
+		 * Called when selection changes (slice or legend click).
+		 */
+		onSelectedChange?: (index: number) => void;
+		/**
 		 * Whether the chart is in loading state
 		 * @default false
 		 */
@@ -143,6 +217,26 @@ SPDX-License-Identifier: MIT
 		 */
 		ariaLabel?: string;
 		/**
+		 * Fallback for aria-label when ariaLabel is not set. Use {count} for data point count.
+		 */
+		ariaLabelFallback?: string;
+		/**
+		 * Accessible description template when chart has data. Placeholders: {count}, {sliceOrSlices}, {items}, {total}.
+		 */
+		accessibleDescriptionTemplate?: string;
+		/**
+		 * Word for one slice (used in accessible description when count is 1). Pass from i18n.
+		 */
+		sliceSingular?: string;
+		/**
+		 * Word for multiple slices (used in accessible description when count > 1). Pass from i18n.
+		 */
+		slicePlural?: string;
+		/**
+		 * Accessible label for the legend list (e.g. for i18n).
+		 */
+		legendAriaLabel?: string;
+		/**
 		 * ID of element that labels this chart
 		 */
 		ariaLabelledBy?: string;
@@ -175,6 +269,21 @@ SPDX-License-Identifier: MIT
 		useColoredBadges = true,
 		hideLabeledFromLegend = false,
 		labelMinPercentage = 15,
+		sortBy = 'none',
+		groupSmallSlicesBelowPercentage,
+		otherLabel = '',
+		otherSliceVariant = 'info',
+		formatValue = (v: number) => String(v),
+		centerTitle,
+		innerRadiusRatio = 0.55,
+		startAngle = 0,
+		formatPercentage = (p: number) => p.toFixed(0) + '%',
+		legendPosition = 'bottom',
+		hoverScale = 1.05,
+		onSliceClick,
+		onSliceHover,
+		selectedIndex,
+		onSelectedChange,
 		loading = false,
 		disabled = false,
 		error = false,
@@ -184,6 +293,11 @@ SPDX-License-Identifier: MIT
 		errorTitle = 'Unable to load chart',
 		errorDescription = 'Something went wrong while loading the chart data.',
 		ariaLabel,
+		ariaLabelFallback = 'Pie chart showing {count} data points',
+		accessibleDescriptionTemplate = 'Pie chart with {count} {sliceOrSlices}. {items}. Total: {total}.',
+		sliceSingular = 'slice',
+		slicePlural = 'slices',
+		legendAriaLabel = 'Chart legend',
 		ariaLabelledBy,
 		class: className = '',
 		...props
@@ -197,11 +311,10 @@ SPDX-License-Identifier: MIT
 	let CX = $derived(SVG_SIZE / 2);
 	let CY = $derived(SVG_SIZE / 2);
 	let OUTER_R = $derived((SVG_SIZE / 2) * 0.9);
-	let innerR = $derived(donut ? OUTER_R * 0.55 : 0);
+	let innerR = $derived(donut ? OUTER_R * Math.min(0.8, Math.max(0.3, innerRadiusRatio)) : 0);
 
 	let containerClasses = $derived(
 		[
-			'chart-pie-container',
 			'w-full',
 			'flex flex-col items-center',
 			disabled && 'opacity-50 cursor-not-allowed pointer-events-none',
@@ -226,34 +339,63 @@ SPDX-License-Identifier: MIT
 
 	let processedData = $derived.by((): ProcessedSlice[] => {
 		if (!data?.length || total <= 0) return [];
+		const withVariant = data.map((d, i) => ({
+			label: d.label,
+			value: Math.max(0, d.value),
+			variant: (colorScheme[i % colorScheme.length] ?? 'primary') as ChartPieVariant
+		}));
+		let sorted = withVariant;
+		if (sortBy === 'value-desc') {
+			sorted = [...withVariant].sort((a, b) => b.value - a.value);
+		} else if (sortBy === 'value-asc') {
+			sorted = [...withVariant].sort((a, b) => a.value - b.value);
+		} else if (sortBy === 'label') {
+			sorted = [...withVariant].sort((a, b) => a.label.localeCompare(b.label));
+		}
+		const sortedTotal = sorted.reduce((s, d) => s + d.value, 0);
+		if (sortedTotal <= 0) return [];
+		const threshold = groupSmallSlicesBelowPercentage ?? 0;
+		const raw: ProcessedSlice[] = [];
 		let acc = 0;
-		return data.map((d, i) => {
-			const v = Math.max(0, d.value);
-			const pct = total > 0 ? (v / total) * 100 : 0;
+		const small: ProcessedSlice[] = [];
+		for (const d of sorted) {
+			const pct = (d.value / sortedTotal) * 100;
 			const start = acc / 100;
 			acc += pct;
 			const end = acc / 100;
-			const variant = colorScheme[i % colorScheme.length] ?? 'primary';
-			return {
-				label: d.label,
-				value: v,
-				percentage: pct,
-				start,
-				end,
-				variant
-			};
-		});
+			const slice: ProcessedSlice = { ...d, percentage: pct, start, end };
+			if (threshold > 0 && pct < threshold) {
+				small.push(slice);
+			} else {
+				raw.push(slice);
+			}
+		}
+		if (small.length > 0) {
+			const otherValue = small.reduce((s, x) => s + x.value, 0);
+			const otherPct = small.reduce((s, x) => s + x.percentage, 0);
+			const otherStart = raw.length > 0 ? raw[raw.length - 1].end : 0;
+			raw.push({
+				label: otherLabel,
+				value: otherValue,
+				percentage: otherPct,
+				start: otherStart,
+				end: 1,
+				variant: otherSliceVariant
+			});
+		}
+		return raw;
 	});
 
-	// Start at 12 o'clock (-90°), clockwise. angle 0 = top.
+	// t: 0-1 fraction of circle. startAngle in degrees (0 = 12 o'clock). Clockwise.
+	const angleOffsetRad = $derived((startAngle * Math.PI) / 180 - Math.PI / 2);
 	function angleToCoord(t: number): [number, number] {
-		const rad = t * 2 * Math.PI - Math.PI / 2;
+		const rad = t * 2 * Math.PI + angleOffsetRad;
 		return [CX + OUTER_R * Math.cos(rad), CY + OUTER_R * Math.sin(rad)];
 	}
 
 	function innerCoord(t: number): [number, number] {
 		if (innerR <= 0) return [CX, CY];
-		const rad = t * 2 * Math.PI - Math.PI / 2;
+		const rad = t * 2 * Math.PI + angleOffsetRad;
 		return [CX + innerR * Math.cos(rad), CY + innerR * Math.sin(rad)];
 	}
 
@@ -273,7 +415,7 @@ SPDX-License-Identifier: MIT
 	function labelPos(s: ProcessedSlice): [number, number] {
 		const t = (s.start + s.end) / 2;
 		const r = donut ? (innerR + OUTER_R) / 2 : (OUTER_R * 2) / 3;
-		const rad = t * 2 * Math.PI - Math.PI / 2;
+		const rad = t * 2 * Math.PI + angleOffsetRad;
 		return [CX + r * Math.cos(rad), CY + r * Math.sin(rad)];
 	}
 
@@ -285,38 +427,25 @@ SPDX-License-Identifier: MIT
 		success: 'fill-success',
 		warning: 'fill-warning',
 		error: 'fill-error',
-		info: 'fill-info'
-	};
-
-	// ChartLegend expects `color` as hex/css. We use DaisyUI variants.
-	// ChartLegend uses `style="background-color: {item.color}"`. We need actual colors.
-	// Use a small map of variant -> DaisyUI semantic color. Legend color swatch.
-	const VARIANT_COLORS: Record<ChartPieVariant, string> = {
-		primary: 'oklch(var(--p))',
-		secondary: 'oklch(var(--s))',
-		accent: 'oklch(var(--a))',
-		success: 'oklch(var(--su))',
-		warning: 'oklch(var(--wa))',
-		error: 'oklch(var(--er))',
-		info: 'oklch(var(--in))'
+		info: 'fill-info',
+		neutral: 'fill-neutral'
 	};
 
 	let legendItemsWithColors = $derived.by(() =>
 		processedData
-			.filter((s) => {
-				// If hideLabeledFromLegend is true and labels are shown,
-				// exclude slices that have labels displayed on the chart
+			.map((s, sliceIndex) => ({ s, sliceIndex }))
+			.filter(({ s }) => {
 				if (hideLabeledFromLegend && showLabels) {
 					return s.percentage < labelMinPercentage;
 				}
 				return true;
 			})
-			.map((s) => ({
+			.map(({ s, sliceIndex }) => ({
 				label: hideLegendLabels ? '' : s.label,
-				color: VARIANT_COLORS[s.variant],
 				variant: s.variant,
-				value: showValues ? String(s.value) : undefined,
-				ariaLabel: `${s.label}: ${s.value} (${s.percentage.toFixed(1)}%)`
+				value: showValues ? formatValue(s.value) : undefined,
+				ariaLabel: `${s.label}: ${formatValue(s.value)} (${formatPercentage(s.percentage)})`,
+				sliceIndex
 			}))
 	);
 
@@ -325,25 +454,33 @@ SPDX-License-Identifier: MIT
 	let legendTextSize = $derived(
 		legendSize === 'sm' ? 'sm' : legendSize === 'md' ? 'base' : 'lg'
 	) as 'xs' | 'sm' | 'base' | 'lg' | 'xl' | '2xl';
-	let legendColorSize = $derived(
-		legendSize === 'sm' ? 'w-3 h-3' : legendSize === 'md' ? 'w-3.5 h-3.5' : 'w-4 h-4'
-	);
+	let legendDotSize = $derived(legendSize === 'sm' ? 'sm' : legendSize === 'md' ? 'md' : 'lg') as
+		| 'xs'
+		| 'sm'
+		| 'md'
+		| 'lg'
+		| 'xl';
 	let legendGap = $derived(
 		legendSize === 'sm' ? 'gap-1.5' : legendSize === 'md' ? 'gap-2' : 'gap-2.5'
 	);
 
 	let accessibleDescription = $derived(
-		data?.length
-			? `Pie chart with ${data.length} ${data.length === 1 ? 'slice' : 'slices'}. ` +
-					processedData
-						.map((s) => `${s.label}: ${s.value} (${s.percentage.toFixed(1)}%)`)
-						.join('. ') +
-					`. Total: ${total}.`
-			: 'No data available in chart.'
+		data?.length && total > 0
+			? accessibleDescriptionTemplate
+					.replace('{count}', String(data.length))
+					.replace('{sliceOrSlices}', data.length === 1 ? sliceSingular : slicePlural)
+					.replace(
+						'{items}',
+						processedData
+							.map((s) => `${s.label}: ${formatValue(s.value)} (${formatPercentage(s.percentage)})`)
+							.join('. ')
+					)
+					.replace('{total}', formatValue(total))
+			: emptyTitle
 	);
 
 	let defaultAriaLabel = $derived(
-		ariaLabel ?? `Pie chart showing ${data?.length ?? 0} data points`
+		ariaLabel ?? ariaLabelFallback.replace('{count}', String(data?.length ?? 0))
 	);
 
 	let hasData = $derived(Boolean(data?.length && total > 0));
@@ -359,19 +496,22 @@ SPDX-License-Identifier: MIT
 	aria-describedby="chart-pie-description"
 	{...props}
 >
+	<!--
+	  NOTE: Raw HTML div is intentional here.
+	  Reason: sr-only container for accessible description; no library component for live region.
+	-->
 	<div id="chart-pie-description" class="sr-only">
 		{accessibleDescription}
 	</div>
 
 	{#if loading}
-		<!--
-		  NOTE: Raw HTML div is intentional here.
-		  Reason: Structural centering container for Loader. No suitable layout component exists
-		  for a fixed-size centered box. Loader is a library component (ChartLine uses same pattern).
-		-->
-		<div
-			class="flex w-full items-center justify-center"
-			style="width: {chartSizePx}px; height: {chartSizePx}px;"
+		<Row
+			align="center"
+			justify="center"
+			gap="0"
+			class="w-full overflow-x-hidden"
+			style="width: {chartSizePx}px; min-height: {chartSizePx}px;"
+			ariaLabel={loadingAriaLabel}
 		>
 			<Loader
 				size="lg"
@@ -380,16 +520,15 @@ SPDX-License-Identifier: MIT
 				ariaLabel={loadingAriaLabel}
 				fullWidth
 			/>
-		</div>
+		</Row>
 	{:else if error}
-		<!--
-		  NOTE: Raw HTML div is intentional here.
-		  Reason: Structural centering container for EmptyState. Same as loading block.
-		  EmptyState is a library component.
-		-->
-		<div
-			class="flex items-center justify-center"
-			style="width: {chartSizePx}px; height: {chartSizePx}px;"
+		<Row
+			align="center"
+			justify="center"
+			gap="0"
+			class="w-full overflow-x-hidden"
+			style="width: {chartSizePx}px; min-height: {chartSizePx}px;"
+			ariaLabel={errorTitle}
 		>
 			<EmptyState
 				title={errorTitle}
@@ -398,16 +537,15 @@ SPDX-License-Identifier: MIT
 				size="sm"
 				ariaLabel={errorTitle}
 			/>
-		</div>
+		</Row>
 	{:else if !hasData}
-		<!--
-		  NOTE: Raw HTML div is intentional here.
-		  Reason: Structural centering container for EmptyState. Same as loading/error blocks.
-		  EmptyState is a library component.
-		-->
-		<div
-			class="flex items-center justify-center"
-			style="width: {chartSizePx}px; height: {chartSizePx}px;"
+		<Row
+			align="center"
+			justify="center"
+			gap="0"
+			class="w-full overflow-x-hidden"
+			style="width: {chartSizePx}px; min-height: {chartSizePx}px;"
+			ariaLabel={emptyTitle}
 		>
 			<EmptyState
 				title={emptyTitle}
@@ -415,37 +553,110 @@ SPDX-License-Identifier: MIT
 				size="sm"
 				ariaLabel={emptyTitle}
 			/>
-		</div>
+		</Row>
 	{:else}
+		<!--
+		  NOTE: Raw HTML div is intentional here.
+		  Reason: Structural wrapper for chart; no layout component for fixed-size chart container.
+		-->
 		<div
-			class="chart-pie-wrapper relative flex flex-col items-center"
-			style="width: {chartSizePx}px;"
+			class="relative flex {legendPosition === 'top' || legendPosition === 'bottom'
+				? 'flex-col'
+				: 'flex-row'} items-center justify-center gap-3"
+			style={legendPosition === 'left' || legendPosition === 'right'
+				? `min-width: ${chartSizePx}px`
+				: `width: ${chartSizePx}px`}
 		>
-			<div class="relative" style="width: {chartSizePx}px; height: {chartSizePx}px;">
+			<!--
+			  NOTE: Raw HTML div is intentional here.
+			  Reason: Structural wrapper for SVG and labels; required for absolute positioning.
+			-->
+			<div
+				class="relative {legendPosition === 'top'
+					? 'order-2'
+					: legendPosition === 'left'
+						? 'order-2'
+						: 'order-1'}"
+				style="width: {chartSizePx}px; height: {chartSizePx}px;"
+			>
 				<svg
 					viewBox="0 0 {SVG_SIZE} {SVG_SIZE}"
 					class="absolute inset-0 h-full w-full"
-					role="img"
-					aria-hidden="true"
+					role={onSliceClick || onSelectedChange ? undefined : 'img'}
+					aria-hidden={onSliceClick || onSelectedChange ? undefined : true}
 					focusable="false"
 				>
 					{#each processedData as slice, i}
-						<path
-							d={slicePath(slice)}
-							class="{variantFill[slice.variant]} opacity-90 transition-opacity hover:opacity-100"
-							role="group"
-							aria-label="{slice.label}: {slice.value} ({slice.percentage.toFixed(1)}%)"
+						{@const [sx, sy] = labelPos(slice)}
+						<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
+						<g
+							style="transform-origin: {sx}px {sy}px; --hover-scale: {hoverScale}"
+							class="transition-transform duration-200 {hoverScale > 1
+								? 'hover:scale-[var(--hover-scale)]'
+								: ''}"
 						>
-							<!--
-							  NOTE: Raw SVG title is intentional here.
-							  Reason: Native SVG tooltip for slice hover. Tooltip component wraps HTML;
-							  SVG requires <title> as first child of graphics element. Standard, accessible.
-							-->
-							<title>{slice.label}: {slice.value} ({slice.percentage.toFixed(1)}%)</title>
-						</path>
+							<path
+								d={slicePath(slice)}
+								class="{variantFill[slice.variant]} transition-opacity {selectedIndex === i
+									? 'opacity-100'
+									: 'opacity-80 hover:opacity-100'} {onSliceClick || onSelectedChange
+									? 'cursor-pointer'
+									: ''}"
+								role={onSliceClick || onSelectedChange ? 'button' : 'group'}
+								tabindex={onSliceClick || onSelectedChange ? 0 : undefined}
+								aria-label="{slice.label}: {formatValue(slice.value)} ({formatPercentage(
+									slice.percentage
+								)})"
+								aria-pressed={selectedIndex === i ? 'true' : undefined}
+								onclick={(e) => {
+									if (disabled) return;
+									onSliceClick?.({ label: slice.label, value: slice.value }, i);
+									onSelectedChange?.(i);
+								}}
+								onkeydown={(e) => {
+									if (disabled) return;
+									if (e.key === 'Enter' || e.key === ' ') {
+										e.preventDefault();
+										onSliceClick?.({ label: slice.label, value: slice.value }, i);
+										onSelectedChange?.(i);
+									}
+								}}
+								onmouseenter={() => {
+									if (!disabled) onSliceHover?.({ label: slice.label, value: slice.value }, i);
+								}}
+							>
+								<!--
+								  NOTE: Raw SVG title is intentional here.
+								  Reason: Native SVG tooltip for slice hover. Tooltip component wraps HTML;
+								  SVG requires <title> as first child of graphics element. Standard, accessible.
+								-->
+								<title
+									>{slice.label}: {formatValue(slice.value)} ({formatPercentage(
+										slice.percentage
+									)})</title
+								>
+							</path>
+						</g>
 					{/each}
 				</svg>
+				{#if donut && centerTitle}
+					<!--
+					  NOTE: Raw HTML div is intentional here.
+					  Reason: Structural centering container for donut center text. Heading and Text are library components.
+					-->
+					<div
+						class="pointer-events-none absolute inset-0 flex flex-col items-center justify-center"
+						aria-hidden="true"
+					>
+						<Heading text={centerTitle} level="h4" size="xs" align="center" weight="medium" />
+						<Text text={formatValue(total)} size="sm" variant="muted" align="center" />
+					</div>
+				{/if}
 				{#if showLabels}
+					<!--
+					  NOTE: Raw HTML div is intentional here.
+					  Reason: Overlay container for slice labels; pointer-events-none so clicks reach SVG.
+					-->
 					<div class="pointer-events-none absolute inset-0" aria-hidden="true">
 						{#each processedData as slice}
 							{#if slice.percentage >= labelMinPercentage}
@@ -468,7 +679,7 @@ SPDX-License-Identifier: MIT
 									{/if}
 									{#if showValues}
 										<Text
-											text={slice.percentage.toFixed(0) + '%'}
+											text={formatPercentage(slice.percentage)}
 											size="xs"
 											display="block"
 											align="center"
@@ -487,34 +698,74 @@ SPDX-License-Identifier: MIT
 				<!--
 				  NOTE: Custom legend implementation is intentional here.
 				  Reason: ChartLegend component doesn't support colored Badge variants.
-				  We need Badge colors to match slice colors, so we implement custom legend.
+				  We use Button for each legend item so selection is keyboard-accessible.
 				-->
-				<div class="mt-4 flex flex-row flex-wrap gap-3" aria-label="Chart legend" role="list">
+				<!--
+				  NOTE: Raw HTML div is intentional here.
+				  Reason: List container for legend; role="list". Button/Badge/Text are library components inside.
+				-->
+				<div
+					class="flex {legendPosition === 'top' || legendPosition === 'bottom'
+						? 'flex-row flex-wrap'
+						: 'flex-col'} {legendPosition === 'top' || legendPosition === 'left'
+						? 'order-1'
+						: 'order-2'} gap-3"
+					aria-label={legendAriaLabel}
+					role="list"
+				>
 					{#each legendItemsWithColors as item}
-						<div class="flex items-center {legendGap} select-none" role="listitem">
-							<!--
-							  NOTE: Raw HTML span is intentional here.
-							  Reason: This is a visual color indicator (swatch) for legend items, not a semantic status indicator.
-							  No suitable library component exists for simple color swatches. StatusDot is for status indicators,
-							  not color swatches. This span serves as a decorative visual element matching the pie slice color.
-							-->
-							<span
-								class="inline-block rounded-sm {legendColorSize}"
-								style="background-color: {item.color}"
-								aria-hidden="true"
-							></span>
-							{#if !hideLegendLabels && item.label}
-								<Text text={item.label} size={legendTextSize} weight="medium" />
-							{/if}
-							{#if showValues && item.value !== undefined}
-								<Badge
-									label={String(item.value)}
-									size={legendSize === 'sm' ? 'sm' : legendSize === 'md' ? 'md' : 'lg'}
-									variant={useColoredBadges ? item.variant : 'neutral'}
-									class={hideLegendLabels ? '' : 'ml-1'}
+						{#if onSelectedChange}
+							<Button
+								variant="ghost"
+								size="sm"
+								ariaLabel={item.ariaLabel}
+								aria-pressed={selectedIndex === item.sliceIndex ? 'true' : undefined}
+								class="flex min-h-0 items-center {legendGap} px-2 py-1"
+								onclick={() => onSelectedChange(item.sliceIndex)}
+							>
+								<StatusDot
+									variant={item.variant}
+									size={legendDotSize}
+									ariaHidden={true}
+									class="shrink-0"
 								/>
-							{/if}
-						</div>
+								{#if !hideLegendLabels && item.label}
+									<Text text={item.label} size={legendTextSize} weight="medium" />
+								{/if}
+								{#if showValues && item.value !== undefined}
+									<Badge
+										label={item.value}
+										size={legendSize === 'sm' ? 'sm' : legendSize === 'md' ? 'md' : 'lg'}
+										variant={useColoredBadges ? item.variant : 'neutral'}
+										class={hideLegendLabels ? '' : 'ml-1'}
+									/>
+								{/if}
+							</Button>
+						{:else}
+							<!--
+							  NOTE: Raw HTML div is intentional here.
+							  Reason: Legend listitem container when not interactive. StatusDot, Text, Badge are library components.
+							-->
+							<div class="flex items-center {legendGap} select-none" role="listitem">
+								<StatusDot
+									variant={item.variant}
+									size={legendDotSize}
+									ariaHidden={true}
+									class="shrink-0"
+								/>
+								{#if !hideLegendLabels && item.label}
+									<Text text={item.label} size={legendTextSize} weight="medium" />
+								{/if}
+								{#if showValues && item.value !== undefined}
+									<Badge
+										label={item.value}
+										size={legendSize === 'sm' ? 'sm' : legendSize === 'md' ? 'md' : 'lg'}
+										variant={useColoredBadges ? item.variant : 'neutral'}
+										class={hideLegendLabels ? '' : 'ml-1'}
+									/>
+								{/if}
+							</div>
+						{/if}
 					{/each}
 				</div>
 			{/if}

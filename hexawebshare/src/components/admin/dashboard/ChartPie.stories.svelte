@@ -72,6 +72,54 @@ SPDX-License-Identifier: MIT
 				control: { type: 'number', min: 0, max: 50, step: 1 },
 				description: 'Minimum slice % to show label on chart (avoids overlap)'
 			},
+			sortBy: {
+				control: { type: 'select' },
+				options: ['none', 'value-desc', 'value-asc', 'label'],
+				description: 'Sort data before rendering'
+			},
+			groupSmallSlicesBelowPercentage: {
+				control: { type: 'number', min: 0, max: 30, step: 1 },
+				description: 'Merge slices below this % into one "Other" slice'
+			},
+			otherLabel: {
+				control: 'text',
+				description: 'Label for merged "Other" slice'
+			},
+			otherSliceVariant: {
+				control: { type: 'select' },
+				options: [
+					'primary',
+					'secondary',
+					'accent',
+					'success',
+					'warning',
+					'error',
+					'info',
+					'neutral'
+				],
+				description: 'Color variant for merged "Other" slice (info is more visible than neutral)'
+			},
+			centerTitle: {
+				control: 'text',
+				description: 'Donut center title (e.g. Total)'
+			},
+			innerRadiusRatio: {
+				control: { type: 'range', min: 0.3, max: 0.8, step: 0.05 },
+				description: 'Donut hole size ratio'
+			},
+			startAngle: {
+				control: { type: 'number', min: 0, max: 360, step: 15 },
+				description: 'Starting angle in degrees'
+			},
+			legendPosition: {
+				control: { type: 'select' },
+				options: ['top', 'right', 'bottom', 'left'],
+				description: 'Legend position'
+			},
+			hoverScale: {
+				control: { type: 'range', min: 1, max: 1.15, step: 0.01 },
+				description: 'Hover scale effect'
+			},
 			loading: {
 				control: 'boolean',
 				description: 'Loading state'
@@ -121,6 +169,15 @@ SPDX-License-Identifier: MIT
 			useColoredBadges: true,
 			hideLabeledFromLegend: false,
 			labelMinPercentage: 15,
+			sortBy: 'none',
+			groupSmallSlicesBelowPercentage: undefined,
+			otherLabel: '',
+			otherSliceVariant: 'info',
+			centerTitle: '',
+			innerRadiusRatio: 0.55,
+			startAngle: 0,
+			legendPosition: 'bottom',
+			hoverScale: 1.05,
 			loading: false,
 			disabled: false,
 			error: false
@@ -174,13 +231,15 @@ SPDX-License-Identifier: MIT
 />
 
 <Story
-	name="Without Legend"
+	name="Donut with center"
 	args={{
 		data: sampleData,
+		donut: true,
 		size: 'md',
 		showLabels: true,
 		showValues: true,
-		showLegend: false
+		showLegend: true,
+		centerTitle: 'Total'
 	}}
 />
 
@@ -227,58 +286,10 @@ SPDX-License-Identifier: MIT
 	}}
 />
 
-<Story
-	name="Hide Labeled From Legend"
-	args={{
-		data: sampleData,
-		size: 'md',
-		showLabels: true,
-		showValues: true,
-		showLegend: true,
-		hideLabeledFromLegend: true,
-		labelMinPercentage: 15
-	}}
-/>
-
-<Story
-	name="Hide Legend Labels"
-	args={{
-		data: sampleData,
-		size: 'md',
-		showLabels: true,
-		showValues: true,
-		showLegend: true,
-		hideLegendLabels: true,
-		labelMinPercentage: 15
-	}}
-/>
-
-<Story
-	name="Show Only Percentage"
-	args={{
-		data: sampleData,
-		size: 'md',
-		showLabels: true,
-		showValues: true,
-		showOnlyPercentage: true,
-		showLegend: true,
-		labelMinPercentage: 15
-	}}
-/>
-
-<Story
-	name="Neutral Badges"
-	args={{
-		data: sampleData,
-		size: 'md',
-		showLabels: true,
-		showValues: true,
-		showOnlyPercentage: true,
-		showLegend: true,
-		useColoredBadges: false,
-		labelMinPercentage: 15
-	}}
-/>
+<!--
+	Legend/label variants (hideLabeledFromLegend, hideLegendLabels, showOnlyPercentage, useColoredBadges)
+	are available via Playground controls above.
+-->
 
 <Story
 	name="Playground"
@@ -294,6 +305,14 @@ SPDX-License-Identifier: MIT
 		useColoredBadges: true,
 		hideLabeledFromLegend: false,
 		labelMinPercentage: 15,
+		sortBy: 'none',
+		groupSmallSlicesBelowPercentage: undefined,
+		otherLabel: '',
+		centerTitle: '',
+		innerRadiusRatio: 0.55,
+		startAngle: 0,
+		legendPosition: 'bottom',
+		hoverScale: 1.05,
 		loading: false,
 		disabled: false,
 		error: false,
