@@ -56,6 +56,10 @@ SPDX-License-Identifier: MIT
 		 */
 		href?: string;
 		/**
+		 * Additional CSS classes for the item
+		 */
+		class?: string;
+		/**
 		 * Click handler function
 		 */
 		onClick?: () => void;
@@ -156,7 +160,8 @@ SPDX-License-Identifier: MIT
 			item.active && 'active',
 			item.disabled && 'disabled',
 			item.variant === 'error' && 'text-error',
-			focusedIndex === index && 'focus'
+			focusedIndex === index && 'focus',
+			item.class
 		]
 			.filter(Boolean)
 			.join(' ');
@@ -325,9 +330,9 @@ SPDX-License-Identifier: MIT
 								<span class="text-lg" aria-hidden="true">{item.icon}</span>
 							{/if}
 							<span class="flex flex-col">
-								<Text text={item.label} size="sm" />
+								<Text text={item.label} size="sm" variant="inherit" />
 								{#if item.description}
-									<Text text={item.description} size="xs" class="opacity-60" />
+									<Text text={item.description} size="xs" class="opacity-60" variant="inherit" />
 								{/if}
 							</span>
 						</a>
@@ -348,9 +353,9 @@ SPDX-License-Identifier: MIT
 								<span class="text-lg" aria-hidden="true">{item.icon}</span>
 							{/if}
 							<span class="flex flex-col">
-								<Text text={item.label} size="sm" />
+								<Text text={item.label} size="sm" variant="inherit" />
 								{#if item.description}
-									<Text text={item.description} size="xs" class="opacity-60" />
+									<Text text={item.description} size="xs" class="opacity-60" variant="inherit" />
 								{/if}
 							</span>
 						</button>

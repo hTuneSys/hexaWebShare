@@ -54,6 +54,7 @@ opacity-50 cursor-not-allowed
 		 * @default 'default'
 		 */
 		variant?:
+			| 'inherit'
 			| 'default'
 			| 'muted'
 			| 'primary'
