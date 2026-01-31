@@ -7,12 +7,20 @@ SPDX-License-Identifier: MIT
 	import type { Snippet } from 'svelte';
 	import type { SidebarItem } from '../../core/overlay-navigation/Sidebar.svelte';
 	import Sidebar from '../../core/overlay-navigation/Sidebar.svelte';
+	import Row from '../../core/layout/Row.svelte';
 	import Spinner from '../../core/feedback/Spinner.svelte';
 	import Alert from '../../core/feedback/Alert.svelte';
 
+	/** Context passed to header snippet (e.g. onRefresh for toolbar actions) */
+	interface HeaderContext {
+		onRefresh?: () => void;
+	}
+
 	interface Props {
-		/** Header content (e.g. title, toolbar) */
-		header?: Snippet;
+		/** Callback when refresh action is triggered (passed to header snippet) */
+		onRefresh?: () => void;
+		/** Header content (e.g. title, toolbar). Receives { onRefresh } for action callbacks. */
+		header?: Snippet<[HeaderContext]>;
 		/** Main content area */
 		children?: Snippet;
 		/** Optional sidebar content (e.g. filters, custom UI). Use either this or sidebarItems. */
@@ -56,6 +64,7 @@ SPDX-License-Identifier: MIT
 	}
 
 	const {
+		onRefresh,
 		header,
 		children,
 		sidebar,
@@ -178,7 +187,7 @@ SPDX-License-Identifier: MIT
 		<header
 			class="dashboard-header border-base-300 bg-base-100 sticky top-0 z-40 min-w-0 shrink-0 border-b"
 		>
-			{@render header()}
+			{@render header({ onRefresh })}
 		</header>
 	{/if}
 
@@ -198,9 +207,9 @@ SPDX-License-Identifier: MIT
 			aria-label={mainAriaLabel}
 		>
 			{#if loading}
-				<div class="flex flex-1 items-center justify-center p-8">
+				<Row align="center" justify="center" gap="0" class="flex-1 p-8" ariaLabel={loadingLabel}>
 					<Spinner size="lg" variant="primary" ariaLabel={loadingLabel} />
-				</div>
+				</Row>
 			{:else if error}
 				<div class="p-4 lg:p-6">
 					<Alert variant="error" title={errorMessage} withIcon={true} />

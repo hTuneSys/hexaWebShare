@@ -5,6 +5,7 @@ SPDX-License-Identifier: MIT
 
 <script module lang="ts">
 	import { defineMeta } from '@storybook/addon-svelte-csf';
+	import { fn } from 'storybook/test';
 	import DashboardLayout from './DashboardLayout.svelte';
 
 	const { Story } = defineMeta({
@@ -12,6 +13,10 @@ SPDX-License-Identifier: MIT
 		component: DashboardLayout,
 		tags: ['autodocs'],
 		argTypes: {
+			onRefresh: {
+				action: 'onRefresh',
+				description: 'Callback when refresh button is clicked'
+			},
 			variant: {
 				control: { type: 'select' },
 				options: ['default', 'bordered', 'filled'],
@@ -47,6 +52,9 @@ SPDX-License-Identifier: MIT
 				options: ['default', 'compact', 'bordered'],
 				description: 'Sidebar variant when using sidebarItems'
 			}
+		},
+		args: {
+			onRefresh: fn()
 		}
 	});
 </script>
@@ -62,19 +70,26 @@ SPDX-License-Identifier: MIT
 	import Container from '../../core/layout/Container.svelte';
 
 	const defaultSidebarItems: SidebarItem[] = [
-		{ id: 'overview', label: 'Overview', icon: '📊', active: true },
-		{ id: 'analytics', label: 'Analytics', icon: '📈' },
-		{ id: 'reports', label: 'Reports', icon: '📋', badge: 3, badgeVariant: 'primary' },
-		{ id: 'settings', label: 'Settings', icon: '⚙️' }
+		{ id: 'overview', label: 'Overview', icon: '📊', active: true, onClick: fn() },
+		{ id: 'analytics', label: 'Analytics', icon: '📈', onClick: fn() },
+		{
+			id: 'reports',
+			label: 'Reports',
+			icon: '📋',
+			badge: 3,
+			badgeVariant: 'primary',
+			onClick: fn()
+		},
+		{ id: 'settings', label: 'Settings', icon: '⚙️', onClick: fn() }
 	];
 </script>
 
-{#snippet headerSnippet()}
+{#snippet headerSnippet({ onRefresh }: { onRefresh?: () => void })}
 	<div
 		class="flex min-w-0 flex-wrap items-center justify-between gap-2 px-3 py-2 sm:gap-4 sm:px-4 sm:py-3 lg:px-6"
 	>
 		<Heading level="h1" size="lg" text="Dashboard" class="min-w-0 shrink" />
-		<Button label="Refresh" variant="primary" size="sm" class="shrink-0" />
+		<Button label="Refresh" variant="primary" size="sm" class="shrink-0" onclick={onRefresh} />
 	</div>
 {/snippet}
 
