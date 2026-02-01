@@ -10,6 +10,8 @@ SPDX-License-Identifier: MIT
 	import IconButton from '../buttons/IconButton.svelte';
 	import Heading from '../typography/Heading.svelte';
 	import MutedText from '../typography/MutedText.svelte';
+	import Icon from '../media/Icon.svelte';
+	import X from 'lucide-svelte/icons/x';
 
 	type SlotContent = Snippet | { default?: Snippet };
 	type AlertVariant =
@@ -311,21 +313,9 @@ SPDX-License-Identifier: MIT
 				title={dismissLabel}
 				disabled={disabled || loading}
 			>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					width="16"
-					height="16"
-					viewBox="0 0 24 24"
-					fill="none"
-					stroke="currentColor"
-					stroke-width="2"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					aria-hidden="true"
-				>
-					<line x1="18" y1="6" x2="6" y2="18" />
-					<line x1="6" y1="6" x2="18" y2="18" />
-				</svg>
+				<Icon size="xs" ariaHidden={true}>
+					<X />
+				</Icon>
 			</IconButton>
 		{/if}
 	</div>

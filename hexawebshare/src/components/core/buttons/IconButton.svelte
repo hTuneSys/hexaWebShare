@@ -143,13 +143,15 @@ Works seamlessly with Lucide icons via the Icon component or directly:
 <IconButton variant="primary" square ariaLabel="Open menu">
 	<Menu />
 </IconButton>
-``` **Custom Icons:** ```svelte
-<IconButton variant="secondary" circle>
-	{#snippet children()}
-		<svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5">
-			<path d="..." />
-		</svg>
-	{/snippet}
+``` **Custom SVG Icons (when Lucide doesn't have what you need):** ```svelte
+<IconButton variant="secondary" circle ariaLabel="Custom action">
+	<!-- 
+		NOTE: Raw SVG is acceptable here only for truly custom icons
+		not available in Lucide. For standard icons, always use Lucide.
+	-->
+	<svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5">
+		<path d="..." />
+	</svg>
 </IconButton>
 ``` **Loading State:** ```svelte
 <IconButton loading ariaLabel="Loading">

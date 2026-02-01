@@ -598,7 +598,9 @@ SPDX-License-Identifier: MIT
 							ariaLabel="Remove {option.label}"
 							{disabled}
 						>
-							<Text text="×" variant="muted" />
+							<Icon size="xs" ariaHidden={true}>
+								<X />
+							</Icon>
 						</IconButton>
 					{/if}
 				</span>

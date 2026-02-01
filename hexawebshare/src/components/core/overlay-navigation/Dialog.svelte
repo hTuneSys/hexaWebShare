@@ -10,6 +10,8 @@ SPDX-License-Identifier: MIT
 	import Form from '../forms/Form.svelte';
 	import Heading from '../typography/Heading.svelte';
 	import Text from '../typography/Text.svelte';
+	import Icon from '../media/Icon.svelte';
+	import X from 'lucide-svelte/icons/x';
 
 	interface Props {
 		open: boolean;
@@ -115,20 +117,9 @@ SPDX-License-Identifier: MIT
 			{#if closable}
 				<div class="absolute top-2 right-2">
 					<IconButton variant="ghost" size="sm" circle onclick={onClose} ariaLabel="Close dialog">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="16"
-							height="16"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-						>
-							<line x1="18" y1="6" x2="6" y2="18"></line>
-							<line x1="6" y1="6" x2="18" y2="18"></line>
-						</svg>
+						<Icon size="xs" ariaHidden={true}>
+							<X />
+						</Icon>
 					</IconButton>
 				</div>
 			{/if}

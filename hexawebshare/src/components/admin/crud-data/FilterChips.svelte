@@ -8,6 +8,8 @@ SPDX-License-Identifier: MIT
 	import IconButton from '../../core/buttons/IconButton.svelte';
 	import Button from '../../core/buttons/Button.svelte';
 	import SkeletonLoader from '../../core/feedback/SkeletonLoader.svelte';
+	import Icon from '../../core/media/Icon.svelte';
+	import X from 'lucide-svelte/icons/x';
 
 	/**
 	 * Interface for a single filter item
@@ -180,21 +182,9 @@ SPDX-License-Identifier: MIT
 						ariaLabel={removeFilterAriaLabelFormat.replace('{label}', filter.label)}
 						class="hover:bg-base-content/20 flex h-auto min-h-0 items-center justify-center p-0.5"
 					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width={size === 'xs' ? '10' : '14'}
-							height={size === 'xs' ? '10' : '14'}
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							stroke-width="3"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							aria-hidden="true"
-						>
-							<line x1="18" y1="6" x2="6" y2="18"></line>
-							<line x1="6" y1="6" x2="18" y2="18"></line>
-						</svg>
+						<Icon size="xs" ariaHidden={true}>
+							<X />
+						</Icon>
 					</IconButton>
 				{/if}
 			</div>
