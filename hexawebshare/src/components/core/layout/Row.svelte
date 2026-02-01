@@ -70,6 +70,10 @@ SPDX-License-Identifier: MIT
 		 * @default ''
 		 */
 		class?: string;
+		/**
+		 * Inline styles for dynamic dimensions (e.g. min-height, width)
+		 */
+		style?: string;
 	}
 
 	let {
@@ -85,6 +89,7 @@ SPDX-License-Identifier: MIT
 		hideAbove,
 		ariaLabel,
 		class: className = '',
+		style,
 		...props
 	}: Props = $props();
 
@@ -170,6 +175,7 @@ SPDX-License-Identifier: MIT
 	class="{displayClass} {gapClass} {alignClass} {justifyClass} {wrapClass} {visibilityClasses} {layoutClasses} {className}"
 	role="group"
 	aria-label={ariaLabel}
+	{style}
 	{...props}
 >
 	{@render children?.()}
