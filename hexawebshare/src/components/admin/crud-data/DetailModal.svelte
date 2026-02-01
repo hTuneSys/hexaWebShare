@@ -56,10 +56,7 @@ SPDX-License-Identifier: MIT
 		data?: DetailItem[];
 		size?: 'sm' | 'md' | 'lg' | null;
 		actions?: DetailAction[];
-		overlay?: boolean;
 		closeOnBackdrop?: boolean;
-		showCloseButton?: boolean;
-		closeOnEscape?: boolean;
 		class?: string;
 		contentClass?: string;
 		ariaLabel?: string;
@@ -68,7 +65,6 @@ SPDX-License-Identifier: MIT
 		emptyValuePlaceholder: string;
 		booleanTrueLabel: string;
 		booleanFalseLabel: string;
-		closeAriaLabel?: string;
 		headerDropdownItems?: DropdownItem[];
 		headerDropdownLabel?: string;
 		headerDropdownPosition?: 'bottom' | 'top' | 'left' | 'right';
@@ -94,10 +90,7 @@ SPDX-License-Identifier: MIT
 		data,
 		size,
 		actions,
-		overlay,
 		closeOnBackdrop,
-		showCloseButton,
-		closeOnEscape,
 		class: className,
 		contentClass,
 		ariaLabel,
@@ -106,7 +99,6 @@ SPDX-License-Identifier: MIT
 		emptyValuePlaceholder,
 		booleanTrueLabel,
 		booleanFalseLabel,
-		closeAriaLabel,
 		headerDropdownItems,
 		headerDropdownLabel,
 		headerDropdownPosition,
