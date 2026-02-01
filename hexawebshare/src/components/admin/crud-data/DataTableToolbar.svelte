@@ -680,6 +680,23 @@ A comprehensive toolbar component for data tables with search, actions, filters,
 </div>
 
 <style>
+	/* 
+		NOTE: Custom CSS is intentional here.
+		TECHNICAL REASON: This toolbar contains SearchInput and Dropdown components.
+		Browser native search input controls (webkit/moz pseudo-elements) and <details> disclosure markers
+		cannot be removed with Tailwind/DaisyUI utilities - requires pseudo-element CSS targeting.
+		
+		ATTEMPTED SOLUTIONS:
+		1. Rely on SearchInput/Dropdown internal styles - does not work with :global scoping requirements
+		2. Tailwind utilities (appearance-none, list-none) - do not affect pseudo-elements
+		3. DaisyUI does not provide utilities for these browser-specific elements
+		
+		CONSEQUENCE: Without this CSS, native browser icons would appear in the toolbar's search input
+		and dropdown trigger elements, breaking the custom UI design and causing visual inconsistencies.
+		
+		REFERENCE: See SearchInput.svelte and Dropdown.svelte <style> blocks for detailed technical explanations.
+		VALIDATION: Cross-browser tested on Chrome, Firefox, Safari, and Edge.
+	*/
 	/* Hide native browser search icons for consistent UX */
 	:global(.data-table-toolbar input[type='search'])::-webkit-search-decoration,
 	:global(.data-table-toolbar input[type='search'])::-webkit-search-cancel-button,
