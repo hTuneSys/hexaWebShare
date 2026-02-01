@@ -130,15 +130,20 @@ SPDX-License-Identifier: MIT
 		 * @default 'Clear all'
 		 */
 		clearAllLabel?: string;
-		/**
-		 * ARIA label for remove file button
-		 * @default 'Remove file'
-		 */
-		removeFileAriaLabel?: string;
-		/**
-		 * Change event handler - receives FileList
-		 */
-		onchange?: (event: Event) => void;
+	/**
+	 * ARIA label for remove file button
+	 * @default 'Remove file'
+	 */
+	removeFileAriaLabel?: string;
+	/**
+	 * Aria-label for required field indicator
+	 * @default 'required'
+	 */
+	requiredAriaLabel?: string;
+	/**
+	 * Change event handler - receives FileList
+	 */
+	onchange?: (event: Event) => void;
 		/**
 		 * File selection event handler - receives array of File objects
 		 */
@@ -173,14 +178,15 @@ SPDX-License-Identifier: MIT
 		browseButtonLabel = 'browse',
 		acceptedText = 'Accepted:',
 		maxSizeText = 'Max size:',
-		selectedFilesText = '{count} file(s) selected',
-		clearAllLabel = 'Clear all',
-		removeFileAriaLabel = 'Remove file',
-		onchange,
-		onfiles,
-		class: className = '',
-		...props
-	}: Props = $props();
+	selectedFilesText = '{count} file(s) selected',
+	clearAllLabel = 'Clear all',
+	removeFileAriaLabel = 'Remove file',
+	requiredAriaLabel = 'required',
+	onchange,
+	onfiles,
+	class: className = '',
+	...props
+}: Props = $props();
 
 	// Generate unique ID if not provided
 	let fieldId = $derived(id || `file-upload-${Math.random().toString(36).slice(2, 11)}`);
@@ -404,7 +410,7 @@ SPDX-License-Identifier: MIT
 			<span class="label-text">
 				{label}
 				{#if required}
-					<span class="text-error ml-1" aria-label="required">*</span>
+					<span class="text-error ml-1" aria-label={requiredAriaLabel}>*</span>
 				{/if}
 			</span>
 		</label>
@@ -495,7 +501,9 @@ SPDX-License-Identifier: MIT
 		<div class="mt-4 space-y-2">
 			<div class="flex items-center justify-between">
 				<span class="text-base-content text-sm font-medium">
-					{selectedFilesText.replace('{count}', selectedFiles.length.toString()).replace('(s)', selectedFiles.length > 1 ? 's' : '')}
+					{selectedFilesText
+						.replace('{count}', selectedFiles.length.toString())
+						.replace('(s)', selectedFiles.length > 1 ? 's' : '')}
 				</span>
 				{#if multiple && selectedFiles.length > 1}
 					<Button label={clearAllLabel} variant="ghost" size="xs" {disabled} onclick={clearAll} />
