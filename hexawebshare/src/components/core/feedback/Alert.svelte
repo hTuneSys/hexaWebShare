@@ -240,6 +240,19 @@ SPDX-License-Identifier: MIT
 	const handleAction = () => {
 		onaction?.();
 	};
+
+	// Helper: Map Alert size to child component sizes
+	const getIconSize = () => {
+		return size === 'lg' ? 'sm' : 'xs';
+	};
+
+	const getButtonSize = () => {
+		return size === 'lg' ? 'md' : 'sm';
+	};
+
+	const getSpinnerSize = () => {
+		return size === 'lg' ? 'md' : 'sm';
+	};
 </script>
 
 {#if visible}
@@ -285,7 +298,7 @@ SPDX-License-Identifier: MIT
 		{#if loading}
 			<Spinner
 				type="spinner"
-				size="sm"
+				size={getSpinnerSize()}
 				variant={variant === 'neutral' ? 'primary' : variant}
 				ariaLabel={loadingLabel}
 			/>
@@ -294,7 +307,7 @@ SPDX-License-Identifier: MIT
 		{#if actionLabel}
 			<Button
 				variant="ghost"
-				size="sm"
+				size={getButtonSize()}
 				class="btn-outline"
 				onclick={handleAction}
 				ariaLabel={actionAriaLabel ?? actionLabel}
@@ -306,14 +319,14 @@ SPDX-License-Identifier: MIT
 		{#if closable}
 			<IconButton
 				variant="ghost"
-				size="sm"
+				size={getButtonSize()}
 				square
 				onclick={handleClose}
 				ariaLabel={dismissLabel}
 				title={dismissLabel}
 				disabled={disabled || loading}
 			>
-				<Icon size="xs" ariaHidden={true}>
+				<Icon size={getIconSize()} ariaHidden={true}>
 					<X />
 				</Icon>
 			</IconButton>
