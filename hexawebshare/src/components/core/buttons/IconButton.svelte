@@ -123,41 +123,38 @@ A button component optimized for displaying icon-only buttons with consistent st
 - Full accessibility support
 
 **Lucide Integration:**
-Works seamlessly with Lucide icons via the Icon component or directly:
+Works seamlessly with Lucide icons via the Icon component or directly.
 
-```svelte
-<script>
-  import { IconButton } from 'hexawebshare';
-  import { Icon } from 'hexawebshare';
-  import { X, Menu, Search, Bell } from 'lucide-svelte';
-</script>
+USAGE EXAMPLES:
 
-<!-- Using Icon component wrapper (recommended) -->
-<IconButton variant="ghost" circle ariaLabel="Close">
-	<Icon size="sm">
-		<X />
-	</Icon>
-</IconButton>
+Using Icon component wrapper (recommended):
+  import IconButton from 'hexawebshare';
+  import Icon from 'hexawebshare';
+  import X from 'lucide-svelte/icons/x';
+  
+  IconButton with variant="ghost", circle, and ariaLabel="Close"
+    Icon with size="sm"
+      X icon component
 
-<!-- Direct Lucide icon (also works) -->
-<IconButton variant="primary" square ariaLabel="Open menu">
-	<Menu />
-</IconButton>
-``` **Custom SVG Icons (when Lucide doesn't have what you need):** ```svelte
-<IconButton variant="secondary" circle ariaLabel="Custom action">
-	<!-- 
-		NOTE: Raw SVG is acceptable here only for truly custom icons
-		not available in Lucide. For standard icons, always use Lucide.
-	-->
-	<svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5">
-		<path d="..." />
-	</svg>
-</IconButton>
-``` **Loading State:** ```svelte
-<IconButton loading ariaLabel="Loading">
-	<Search />
-</IconButton>
-``` **Default Fallback:** If no children are provided, displays a default polygon icon as a placeholder.
+Direct Lucide icon (also works):
+  import Menu from 'lucide-svelte/icons/menu';
+  
+  IconButton with variant="primary", square, ariaLabel="Open menu"
+    Menu icon component
+
+Custom SVG Icons (when Lucide doesn't have what you need):
+  IconButton with variant="secondary", circle, ariaLabel="Custom action"
+    svg element with viewBox="0 0 24 24", fill="currentColor", class="h-5 w-5"
+      path element with custom d attribute
+  
+  NOTE: Raw SVG is acceptable here only for truly custom icons
+  not available in Lucide. For standard icons, always use Lucide.
+
+Loading State:
+  IconButton with loading prop and ariaLabel="Loading"
+    Search icon component
+
+**Default Fallback:** If no children are provided, displays a default polygon icon as a placeholder.
 -->
 
 <button
