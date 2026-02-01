@@ -11,6 +11,7 @@ SPDX-License-Identifier: MIT
 	import EmptyState from '../../core/data-display/EmptyState.svelte';
 	import Spinner from '../../core/feedback/Spinner.svelte';
 	import StatusBadge from '../../core/data-display/StatusBadge.svelte';
+	import Text from '../../core/typography/Text.svelte';
 	import Icon from '../../core/media/Icon.svelte';
 	import Pencil from 'lucide-svelte/icons/pencil';
 	import Trash2 from 'lucide-svelte/icons/trash-2';
@@ -444,10 +445,10 @@ SPDX-License-Identifier: MIT
 					<td colspan={showActions ? 5 : 4} class="py-12 text-center">
 						<div class="flex flex-col items-center justify-center gap-3">
 							<Spinner type="spinner" size="md" variant="primary" ariaLabel={loadingAriaLabel} />
-							<span class="text-base-content/60 text-sm">
-								<span class="sr-only">{loadingAriaLabel}</span>
-								<span aria-hidden="true">{loadingText}</span>
-							</span>
+							<div>
+								<Text text={loadingAriaLabel} class="sr-only" />
+								<Text text={loadingText} variant="muted" size="sm" ariaHidden={true} />
+							</div>
 						</div>
 					</td>
 				</tr>
@@ -500,27 +501,29 @@ SPDX-License-Identifier: MIT
 									placeholder={getUserInitials(user.name)}
 									ariaLabel={`${user.name}${avatarAriaLabelSuffix}`}
 									ariaHidden={true}
+							/>
+							<div class="flex min-w-0 flex-1 flex-col">
+								<Text text={user.name} weight="medium" truncate={true} />
+								{#if user.lastLogin}
+									<Text 
+										text={`${lastLoginAriaLabel}: ${typeof user.lastLogin === 'string' ? user.lastLogin : user.lastLogin.toLocaleDateString()}`}
+										variant="muted" 
+										size="xs" 
+										truncate={true}
+										class="hidden md:block"
+										ariaLabel={lastLoginAriaLabel}
+									/>
+								{/if}
+								<!-- Mobile: Show email on small screens -->
+								<Text 
+									text={user.email}
+									variant="muted" 
+									size="xs" 
+									truncate={true}
+									class="md:hidden"
+									ariaLabel={emailAriaLabel}
 								/>
-								<div class="flex min-w-0 flex-1 flex-col">
-									<span class="truncate font-medium">{user.name}</span>
-									{#if user.lastLogin}
-										<span
-											class="text-base-content/60 hidden truncate text-xs md:block"
-											aria-label={lastLoginAriaLabel}
-										>
-											{lastLoginAriaLabel}: {typeof user.lastLogin === 'string'
-												? user.lastLogin
-												: user.lastLogin.toLocaleDateString()}
-										</span>
-									{/if}
-									<!-- Mobile: Show email on small screens -->
-									<span
-										class="text-base-content/60 truncate text-xs md:hidden"
-										aria-label={emailAriaLabel}
-									>
-										{user.email}
-									</span>
-								</div>
+							</div>
 							</div>
 						</td>
 						<td class="hidden md:table-cell">
