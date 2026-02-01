@@ -117,9 +117,20 @@ SPDX-License-Identifier: MIT
 	<div class="w-full max-w-2xl">
 		<FormSection title="Billing Information" variant="bordered">
 			<div class="space-y-4">
-				<Input label="Card Number" placeholder="1234 5678 9012 3456" />
-				<Input label="Expiry Date" placeholder="MM/YY" />
-				<Input label="CVV" placeholder="123" />
+				<Input
+					label="Card Number"
+					placeholder="1234 5678 9012 3456"
+					pattern={'[0-9\\s]{13,19}'}
+					maxlength={19}
+				/>
+				<Input
+					label="Expiry Date"
+					placeholder="MM/YY"
+					pattern={'(0[1-9]|1[0-2])\\/([0-9]{2})'}
+					maxlength={5}
+					helpText="Format: MM/YY (e.g., 12/25)"
+				/>
+				<Input label="CVV" placeholder="123" pattern={'[0-9]{3,4}'} maxlength={4} />
 			</div>
 		</FormSection>
 	</div>
