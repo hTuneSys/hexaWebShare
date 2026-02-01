@@ -25,6 +25,16 @@ SPDX-License-Identifier: MIT
 		ariaLabel?: string;
 		ariaLabelledBy?: string;
 		class?: string;
+		/**
+		 * Aria-label for close button
+		 * @default 'Close dialog'
+		 */
+		closeButtonAriaLabel?: string;
+		/**
+		 * Aria-label for backdrop click area
+		 * @default 'Close dialog'
+		 */
+		backdropCloseAriaLabel?: string;
 	}
 
 	const {
@@ -39,6 +49,8 @@ SPDX-License-Identifier: MIT
 		ariaLabel,
 		ariaLabelledBy,
 		class: className = '',
+		closeButtonAriaLabel = 'Close dialog',
+		backdropCloseAriaLabel = 'Close dialog',
 		...props
 	}: Props = $props();
 
@@ -116,7 +128,7 @@ SPDX-License-Identifier: MIT
 		<div class={modalBoxClasses}>
 			{#if closable}
 				<div class="absolute top-2 right-2">
-					<IconButton variant="ghost" size="sm" circle onclick={onClose} ariaLabel="Close dialog">
+					<IconButton variant="ghost" size="sm" circle onclick={onClose} ariaLabel={closeButtonAriaLabel}>
 						<Icon size="xs" ariaHidden={true}>
 							<X />
 						</Icon>
@@ -144,7 +156,7 @@ SPDX-License-Identifier: MIT
 					label=""
 					variant="ghost"
 					onclick={onClose}
-					ariaLabel="Close dialog"
+					ariaLabel={backdropCloseAriaLabel}
 					class="!absolute !inset-0 !m-0 !h-full !min-h-0 !w-full !border-none !bg-transparent !p-0"
 				/>
 			</Form>
