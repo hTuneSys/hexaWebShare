@@ -65,14 +65,19 @@ SPDX-License-Identifier: MIT
 		 * Accessible label for screen readers
 		 */
 		ariaLabel?: string;
-		/**
-		 * HTML name attribute for form submission
-		 */
-		name?: string;
-		/**
-		 * Additional CSS classes for the container
-		 */
-		class?: string;
+	/**
+	 * HTML name attribute for form submission
+	 */
+	name?: string;
+	/**
+	 * Aria-label for loading state spinner
+	 * @default 'Loading'
+	 */
+	loadingAriaLabel?: string;
+	/**
+	 * Additional CSS classes for the container
+	 */
+	class?: string;
 		/**
 		 * Event triggered when all digits are filled
 		 * @param code The complete code
@@ -98,6 +103,7 @@ SPDX-License-Identifier: MIT
 		helpText,
 		ariaLabel,
 		name,
+		loadingAriaLabel = 'Loading',
 		class: className = '',
 		oncomplete,
 		onchange
@@ -316,12 +322,12 @@ SPDX-License-Identifier: MIT
 			{/each}
 		</div>
 
-		{#if loading}
-			<div class="bg-base-100/50 absolute inset-0 flex items-center justify-center rounded-lg">
-				<span class="loading loading-spinner {loadingSizeClass} text-primary" aria-label="Loading"
-				></span>
-			</div>
-		{/if}
+	{#if loading}
+		<div class="bg-base-100/50 absolute inset-0 flex items-center justify-center rounded-lg">
+			<span class="loading loading-spinner {loadingSizeClass} text-primary" aria-label={loadingAriaLabel}
+			></span>
+		</div>
+	{/if}
 	</div>
 
 	{#if error}
