@@ -7,6 +7,7 @@ SPDX-License-Identifier: MIT
 	import Button from '../buttons/Button.svelte';
 	import IconButton from '../buttons/IconButton.svelte';
 	import Icon from '../media/Icon.svelte';
+	import Text from '../typography/Text.svelte';
 	import CloudUpload from 'lucide-svelte/icons/cloud-upload';
 	import X from 'lucide-svelte/icons/x';
 
@@ -481,19 +482,19 @@ SPDX-License-Identifier: MIT
 							onclick={() => {
 								triggerFileInput();
 							}}
-						/>
-					</span>
-				</div>
-				{#if helpText && (!error || error === '')}
-					<p class="text-base-content/70 text-xs">{helpText}</p>
-				{/if}
-				{#if accept}
-					<p class="text-base-content/50 text-xs">{acceptedText} {accept}</p>
-				{/if}
-				{#if maxSize}
-					<p class="text-base-content/50 text-xs">{maxSizeText} {formatFileSize(maxSize)}</p>
-				{/if}
+					/>
+				</span>
 			</div>
+			{#if helpText && (!error || error === '')}
+				<Text text={helpText} variant="muted" size="xs" display="block" />
+			{/if}
+			{#if accept}
+				<Text text={`${acceptedText} ${accept}`} class="text-base-content/50" size="xs" display="block" />
+			{/if}
+			{#if maxSize}
+				<Text text={`${maxSizeText} ${formatFileSize(maxSize)}`} class="text-base-content/50" size="xs" display="block" />
+			{/if}
+		</div>
 		{/if}
 	</div>
 
