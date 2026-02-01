@@ -222,10 +222,19 @@ SPDX-License-Identifier: MIT
 	// Handle toggle event from details element
 	function handleToggle(event: Event) {
 		const details = event.target as HTMLDetailsElement;
-		if (!isControlled) {
-			internalOpen = details.open;
+		const newOpenState = details.open;
+		
+		// In controlled mode, prevent native state changes that don't match prop
+		if (isControlled) {
+			// Sync the details element with the controlled prop
+			details.open = open ?? false;
+			// Don't update internal state, only notify parent
+			onOpenChange?.(open ?? false);
+		} else {
+			// In uncontrolled mode, update internal state
+			internalOpen = newOpenState;
+			onOpenChange?.(newOpenState);
 		}
-		onOpenChange?.(details.open);
 	}
 
 	// Handle item click
@@ -352,10 +361,15 @@ SPDX-License-Identifier: MIT
 		};
 	});
 
-	// Sync controlled open state
+	// Sync controlled open state with details element
+	// This effect runs whenever the controlled 'open' prop changes
 	$effect(() => {
 		if (isControlled && dropdownElement) {
-			dropdownElement.open = open ?? false;
+			const targetState = open ?? false;
+			// Only update if there's actually a difference to prevent infinite loops
+			if (dropdownElement.open !== targetState) {
+				dropdownElement.open = targetState;
+			}
 		}
 	});
 
