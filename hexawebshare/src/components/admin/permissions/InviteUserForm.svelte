@@ -199,6 +199,11 @@ SPDX-License-Identifier: MIT
 			| 'error'
 			| 'ghost';
 		/**
+		 * Size for permission badges
+		 * @default 'lg'
+		 */
+		badgeSize?: 'xs' | 'sm' | 'md' | 'lg';
+		/**
 		 * Submit event handler - called when form is submitted
 		 */
 		onFormSubmit?: (data: InviteUserFormData) => void | Promise<void>;
@@ -239,6 +244,7 @@ SPDX-License-Identifier: MIT
 		submitVariant = 'primary',
 		cancelVariant = 'ghost',
 		badgeVariant = 'primary',
+		badgeSize = 'lg',
 		onFormSubmit,
 		onCancel,
 		class: className = '',
@@ -329,7 +335,7 @@ SPDX-License-Identifier: MIT
 			{/if}
 
 			{#if formError}
-				<Alert variant="error" description={formError} class="mb-4" />
+				<Alert variant="error" description={formError} withIcon={false} class="mb-4" />
 			{/if}
 
 			<div class="space-y-4">
@@ -407,7 +413,7 @@ SPDX-License-Identifier: MIT
 							{@const permission = normalizedPermissions.find((p) => p.value === permissionValue)}
 							{#if permission}
 								<div class="flex items-center gap-2">
-									<Badge label={permission.label} variant={badgeVariant} size="lg" />
+									<Badge label={permission.label} variant={badgeVariant} size={badgeSize} />
 									{#if !disabled && !loading}
 										<IconButton
 											variant="ghost"
