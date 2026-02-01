@@ -111,6 +111,17 @@ SPDX-License-Identifier: MIT
 </Story>
 
 <!-- Playground -->
+<!-- 
+NOTE: Storybook controls are partially interactive for this component.
+TECHNICAL REASON: Section has optional Svelte 5 snippet (children prop).
+The addon-svelte-csf Story component cannot pass args to snippet parameters in Svelte 5.
+ATTEMPTED SOLUTIONS:
+1. Tried {#snippet children(args)} pattern - TypeScript error: Snippet<[]> doesn't accept parameters
+2. Tried auto-wiring without snippet - Component children would be empty
+CONSEQUENCE: Playground story shows default variant; use other stories to see specific variations.
+WORKAROUND: Use the variant stories above to explore different configurations.
+TODO: Investigate Storybook v8+ compatibility with Svelte 5 snippet pattern
+-->
 <Story
 	name="Playground"
 	args={{
@@ -124,4 +135,29 @@ SPDX-License-Identifier: MIT
 		loading: false,
 		divider: false
 	}}
-/>
+>
+	{#snippet children()}
+		<Section
+			title="Interactive Section"
+			description="Try changing the controls"
+			variant="default"
+			padding="md"
+			collapsible={false}
+			collapsed={false}
+			disabled={false}
+			loading={false}
+			divider={false}
+		>
+			{#snippet children()}
+				<p class="text-base-content/80">
+					This is the interactive playground for the Section component. Use the controls panel to
+					experiment with different props.
+				</p>
+				<p class="text-base-content/60 mt-2 text-sm">
+					Note: Due to Svelte 5 snippet limitations, controls don't update the story in real-time.
+					Use the variant stories above to see specific configurations.
+				</p>
+			{/snippet}
+		</Section>
+	{/snippet}
+</Story>
