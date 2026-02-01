@@ -78,8 +78,26 @@ SPDX-License-Identifier: MIT
 				control: 'text',
 				description: 'Accessible label for sidebar (required)'
 			}
+		},
+		// NOTE: args removed from default args to prevent double-render with snippet-based components
+		// Playground story uses args to enable interactive controls
+		args: {
+			sidebarItems: defaultSidebarItems,
+			sidebarTitle: 'Admin Panel',
+			sidebarSubtitle: 'Navigation',
+			variant: 'default',
+			sidebarWidth: 'default',
+			sidebarCollapsed: false,
+			sidebarCollapsible: true,
+			loading: false,
+			disabled: false,
+			mobileSidebarOpen: false,
+			mobileDrawer: true,
+			ariaLabel: 'Interactive admin layout playground',
+			loadingLabel: 'Loading playground content',
+			sidebarAriaLabel: 'Admin navigation sidebar',
+			onSidebarCollapse: fn()
 		}
-		// NOTE: args removed to prevent double-render with snippet-based components
 	});
 </script>
 
@@ -583,7 +601,35 @@ SPDX-License-Identifier: MIT
 </Story>
 
 <!-- Story 13: Playground (Interactive) -->
-<Story name="Playground">
+<!-- 
+NOTE: Storybook controls are partially interactive for this component.
+TECHNICAL REASON: AdminLayout requires Svelte 5 snippets (header, children, footer).
+The addon-svelte-csf Story component cannot pass args to snippet parameters in Svelte 5.
+ATTEMPTED SOLUTIONS:
+1. Tried {#snippet children(args)} pattern - TypeScript error: Snippet<[]> doesn't accept parameters
+2. Tried reactive state with $derived - Storybook controls don't update local state
+CONSEQUENCE: Playground story shows default variant; use other stories to see specific variations.
+WORKAROUND: Use the 12 variant stories above to explore different configurations.
+TODO: Investigate Storybook v8+ compatibility with Svelte 5 snippet pattern
+-->
+<Story
+	name="Playground"
+	args={{
+		sidebarItems: defaultSidebarItems,
+		sidebarTitle: 'Admin Panel',
+		sidebarSubtitle: 'Navigation',
+		variant: 'default',
+		sidebarWidth: 'default',
+		sidebarCollapsed: false,
+		sidebarCollapsible: true,
+		loading: false,
+		disabled: false,
+		mobileDrawer: true,
+		ariaLabel: 'Interactive admin layout playground',
+		loadingLabel: 'Loading playground content',
+		sidebarAriaLabel: 'Admin navigation sidebar'
+	}}
+>
 	{#snippet children()}
 		<AdminLayout
 			sidebarItems={defaultSidebarItems}
@@ -629,7 +675,15 @@ SPDX-License-Identifier: MIT
 			{#snippet children()}
 				<div class="p-6">
 					<Heading level="h2" text="Interactive Playground" />
-					<Text text="Use Storybook controls to customize the layout properties." class="mt-2" />
+					<Text
+						text="Note: Storybook controls are not fully functional for snippet-based components in Svelte 5."
+						class="mt-2"
+					/>
+					<Text
+						text="Use the variant stories above to explore different layout configurations."
+						class="mt-2"
+						variant="muted"
+					/>
 					<Text
 						text="On mobile devices, click the hamburger menu to toggle the sidebar drawer."
 						class="mt-2"
