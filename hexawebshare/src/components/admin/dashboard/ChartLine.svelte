@@ -90,15 +90,30 @@ SPDX-License-Identifier: MIT
 		 * @default false
 		 */
 		disabled?: boolean;
-		/**
-		 * Accessible label for screen readers
-		 */
-		ariaLabel?: string;
-		/**
-		 * Additional CSS classes
-		 */
-		class?: string;
-	}
+	/**
+	 * Accessible label for screen readers
+	 */
+	ariaLabel?: string;
+	/**
+	 * Loading state label text
+	 * @default 'Loading chart data...'
+	 */
+	loadingLabel?: string;
+	/**
+	 * Empty state title when no data available
+	 * @default 'No data available'
+	 */
+	emptyStateTitle?: string;
+	/**
+	 * Empty state description when no data available
+	 * @default 'There is no data to display in this chart.'
+	 */
+	emptyStateDescription?: string;
+	/**
+	 * Additional CSS classes
+	 */
+	class?: string;
+}
 
 	const {
 		data,
@@ -114,6 +129,9 @@ SPDX-License-Identifier: MIT
 		loading = false,
 		disabled = false,
 		ariaLabel,
+		loadingLabel = 'Loading chart data...',
+		emptyStateTitle = 'No data available',
+		emptyStateDescription = 'There is no data to display in this chart.',
 		class: className = ''
 	}: Props = $props();
 
@@ -269,14 +287,14 @@ SPDX-License-Identifier: MIT
 <Card {title} {disabled} {ariaLabel} class={className}>
 	{#if loading}
 		<div class="flex w-full items-center justify-center" style="height: {height};">
-			<Loader size="lg" {variant} label="Loading chart data..." />
+			<Loader size="lg" {variant} label={loadingLabel} />
 		</div>
 	{:else}
 		<div class="w-full" style="width: {width}; height: {height};">
 			{#if !hasData}
 				<EmptyState
-					title="No data available"
-					description="There is no data to display in this chart."
+					title={emptyStateTitle}
+					description={emptyStateDescription}
 					variant="neutral"
 					size="sm"
 				/>
