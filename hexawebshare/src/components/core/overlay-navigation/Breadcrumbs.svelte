@@ -122,7 +122,7 @@ SPDX-License-Identifier: MIT
 	// Computed container classes
 	let containerClasses = $derived(
 		[
-			'breadcrumbs',
+			'hb-breadcrumbs',
 			size === 'xs' && 'text-xs',
 			size === 'sm' && 'text-sm',
 			size === 'md' && 'text-base',
@@ -201,7 +201,7 @@ SPDX-License-Identifier: MIT
 	aria-labelledby={ariaLabelledby}
 	{...props}
 >
-	<ul class="breadcrumbs" role="list">
+	<ul class="hb-breadcrumbs-list" role="list">
 		{#each items as item, index (item.id ?? index)}
 			{@const isLast = isLastItem(index)}
 			{@const itemClasses = getItemClasses(item, index, isLast)}
@@ -288,7 +288,7 @@ SPDX-License-Identifier: MIT
 </nav>
 
 <style>
-	.breadcrumbs {
+	.hb-breadcrumbs-list {
 		display: flex;
 		flex-wrap: wrap;
 		align-items: center;
@@ -424,8 +424,9 @@ SPDX-License-Identifier: MIT
 	}
 
 	@media (max-width: 640px) {
-		.breadcrumbs {
+		.hb-breadcrumbs-list {
 			font-size: 0.875rem;
+			gap: 0.25rem;
 		}
 
 		.breadcrumb-separator {

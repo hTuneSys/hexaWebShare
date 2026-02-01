@@ -144,6 +144,11 @@ SPDX-License-Identifier: MIT
 						? '2xl'
 						: '2xl' // xl avatar
 	) as 'xs' | 'sm' | 'base' | 'lg' | 'xl' | '2xl';
+
+	// Placeholder/Fallback display classes
+	let fallbackClasses = $derived(
+		'bg-neutral text-neutral-content flex h-full w-full items-center justify-center'
+	);
 </script>
 
 <div
@@ -168,11 +173,14 @@ SPDX-License-Identifier: MIT
 			/>
 		{:else if !loading}
 			{#if placeholder}
-				<Text size={placeholderSize}>{placeholder}</Text>
+				<Text size={placeholderSize} display="block" class={fallbackClasses}>
+					{placeholder}
+				</Text>
 			{:else}
 				<!-- Fallback: Show first letter of alt text -->
 				<Text
 					size={placeholderSize}
+					display="block"
 					class="bg-base-300 text-base-content flex h-full w-full items-center justify-center"
 				>
 					{alt.charAt(0).toUpperCase() || fallbackChar}
