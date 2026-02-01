@@ -223,7 +223,7 @@ SPDX-License-Identifier: MIT
 	function handleToggle(event: Event) {
 		const details = event.target as HTMLDetailsElement;
 		const newOpenState = details.open;
-		
+
 		// In controlled mode, prevent native state changes that don't match prop
 		if (isControlled) {
 			// Sync the details element with the controlled prop

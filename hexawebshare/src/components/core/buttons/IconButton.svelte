@@ -36,21 +36,6 @@
 		 * Inline CSS style attribute
 		 */
 		style?: string;
-		/**
-		 * Default icon polygon points (used when no children provided)
-		 * @default '12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'
-		 */
-		defaultIconPoints?: string;
-		/**
-		 * Default icon width
-		 * @default '20'
-		 */
-		defaultIconWidth?: string | number;
-		/**
-		 * Default icon height
-		 * @default '20'
-		 */
-		defaultIconHeight?: string | number;
 	}
 
 	const {
@@ -67,9 +52,6 @@
 		'aria-expanded': ariaExpanded,
 		children,
 		class: className = '',
-		defaultIconPoints = '12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2',
-		defaultIconWidth = '20',
-		defaultIconHeight = '20',
 		onclick,
 		onkeydown,
 		...props
@@ -153,8 +135,6 @@ Custom SVG Icons (when Lucide doesn't have what you need):
 Loading State:
   IconButton with loading prop and ariaLabel="Loading"
     Search icon component
-
-**Default Fallback:** If no children are provided, displays a default polygon icon as a placeholder.
 -->
 
 <button
@@ -171,20 +151,5 @@ Loading State:
 		<Spinner type="spinner" {size} />
 	{:else if children}
 		{@render children()}
-	{:else}
-		<!-- Default icon when no children provided -->
-		<svg
-			xmlns="http://www.w3.org/2000/svg"
-			width={defaultIconWidth}
-			height={defaultIconHeight}
-			viewBox="0 0 24 24"
-			fill="none"
-			stroke="currentColor"
-			stroke-width="2"
-			stroke-linecap="round"
-			stroke-linejoin="round"
-		>
-			<polygon points={defaultIconPoints} />
-		</svg>
 	{/if}
 </button>

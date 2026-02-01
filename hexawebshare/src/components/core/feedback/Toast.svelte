@@ -9,6 +9,8 @@ SPDX-License-Identifier: MIT
 	import IconButton from '../buttons/IconButton.svelte';
 	import Text from '../typography/Text.svelte';
 	import Spinner from './Spinner.svelte';
+	import Icon from '../media/Icon.svelte';
+	import X from 'lucide-svelte/icons/x';
 
 	type ToastVariant = 'info' | 'success' | 'warning' | 'error' | 'neutral';
 	type ToastPosition =
@@ -269,8 +271,11 @@ SPDX-License-Identifier: MIT
 						ariaLabel="Close notification"
 						onclick={handleDismiss}
 						{disabled}
-						defaultIconPoints="18 6 6 18 M 6 6 18 18"
-					/>
+					>
+						<Icon name="close" size="sm" ariaHidden>
+							<X />
+						</Icon>
+					</IconButton>
 				{/if}
 			</div>
 		</div>

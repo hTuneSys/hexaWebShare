@@ -344,7 +344,10 @@ SPDX-License-Identifier: MIT
 	{#snippet children()}
 		<DataTable
 			columns={columns as any}
-			data={extendedUsers.slice((paginationStoryCurrentPage - 1) * paginationStoryPageSize, paginationStoryCurrentPage * paginationStoryPageSize) as any}
+			data={extendedUsers.slice(
+				(paginationStoryCurrentPage - 1) * paginationStoryPageSize,
+				paginationStoryCurrentPage * paginationStoryPageSize
+			) as any}
 			paginated={true}
 			currentPage={paginationStoryCurrentPage}
 			pageSize={paginationStoryPageSize}

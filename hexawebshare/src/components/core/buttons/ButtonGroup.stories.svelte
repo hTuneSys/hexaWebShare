@@ -31,7 +31,12 @@ SPDX-License-Identifier: MIT
 <!-- Essential Variants (5-10 stories required) -->
 <Story name="Default Horizontal">
 	{#snippet children()}
-		<ButtonGroup orientation="horizontal" gap="sm" ariaLabel="Action buttons group" responsive={false}>
+		<ButtonGroup
+			orientation="horizontal"
+			gap="sm"
+			ariaLabel="Action buttons group"
+			responsive={false}
+		>
 			<Button label="Save" variant="primary" />
 			<Button label="Cancel" variant="secondary" />
 			<Button label="Delete" variant="error" />
@@ -133,7 +138,12 @@ SPDX-License-Identifier: MIT
 <!-- Playground (REQUIRED - interactive controls for all props) -->
 <Story name="Playground">
 	{#snippet children()}
-		<ButtonGroup orientation="horizontal" gap="sm" responsive={false} ariaLabel="Button group playground">
+		<ButtonGroup
+			orientation="horizontal"
+			gap="sm"
+			responsive={false}
+			ariaLabel="Button group playground"
+		>
 			<Button label="First" variant="primary" />
 			<Button label="Second" variant="secondary" />
 			<Button label="Third" variant="accent" />

@@ -187,9 +187,18 @@ SPDX-License-Identifier: MIT
 		This container groups label and description text (no semantic meaning).
 	-->
 	<div class="space-y-1">
-		<Text text={labelText} size={labelTextSize} weight="semibold" class={`leading-tight ${textColorClasses}`} />
+		<Text
+			text={labelText}
+			size={labelTextSize}
+			weight="semibold"
+			class={`leading-tight ${textColorClasses}`}
+		/>
 		{#if description}
-			<Text text={description} size={descriptionTextSize} class={`${textColorClasses} opacity-80`} />
+			<Text
+				text={description}
+				size={descriptionTextSize}
+				class={`${textColorClasses} opacity-80`}
+			/>
 		{/if}
 	</div>
 </div>

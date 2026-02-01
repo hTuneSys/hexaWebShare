@@ -345,7 +345,12 @@ SPDX-License-Identifier: MIT
 							<span class="flex flex-col">
 								<Text text={item.label} size={getLabelSize()} variant="inherit" />
 								{#if item.description}
-									<Text text={item.description} size={getDescriptionSize()} class="opacity-60" variant="inherit" />
+									<Text
+										text={item.description}
+										size={getDescriptionSize()}
+										class="opacity-60"
+										variant="inherit"
+									/>
 								{/if}
 							</span>
 						</a>
@@ -368,7 +373,12 @@ SPDX-License-Identifier: MIT
 							<span class="flex flex-col">
 								<Text text={item.label} size={getLabelSize()} variant="inherit" />
 								{#if item.description}
-									<Text text={item.description} size={getDescriptionSize()} class="opacity-60" variant="inherit" />
+									<Text
+										text={item.description}
+										size={getDescriptionSize()}
+										class="opacity-60"
+										variant="inherit"
+									/>
 								{/if}
 							</span>
 						</button>

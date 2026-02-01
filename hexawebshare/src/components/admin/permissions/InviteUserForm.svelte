@@ -14,6 +14,8 @@ SPDX-License-Identifier: MIT
 	import CardSection from '../../core/layout/CardSection.svelte';
 	import Heading from '../../core/typography/Heading.svelte';
 	import Badge from '../../core/media/Badge.svelte';
+	import Icon from '../../core/media/Icon.svelte';
+	import X from 'lucide-svelte/icons/x';
 
 	/**
 	 * Role option type
@@ -460,8 +462,11 @@ SPDX-License-Identifier: MIT
 												'{permission}',
 												permission.label
 											)}
-											defaultIconPoints="6 6 12 12 18 6 12 12 18 18 12 12 6 18 12 12"
-										/>
+										>
+											<Icon name="close" size="xs" ariaHidden>
+												<X />
+											</Icon>
+										</IconButton>
 									{/if}
 								</div>
 							{/if}

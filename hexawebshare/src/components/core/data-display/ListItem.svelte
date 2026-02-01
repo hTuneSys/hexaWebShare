@@ -216,21 +216,13 @@ A standalone list item component with rich features for building custom lists.
 
 	// Text styling for labels
 	let labelExtraClasses = $derived(
-		[
-			'truncate',
-			disabled && 'text-base-content/50',
-			active && 'font-semibold'
-		]
+		['truncate', disabled && 'text-base-content/50', active && 'font-semibold']
 			.filter(Boolean)
 			.join(' ')
 	);
 
 	let descriptionExtraClasses = $derived(
-		[
-			'truncate',
-			active ? 'opacity-80' : 'opacity-70',
-			disabled && 'text-base-content/40'
-		]
+		['truncate', active ? 'opacity-80' : 'opacity-70', disabled && 'text-base-content/40']
 			.filter(Boolean)
 			.join(' ')
 	);

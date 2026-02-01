@@ -75,7 +75,7 @@ SPDX-License-Identifier: MIT
 <!-- Default (span-6) -->
 <Story name="Default" args={{ span: '6' }}>
 	{#snippet children()}
-		<div class="bg-primary text-primary-content p-4 rounded-lg text-center">
+		<div class="bg-primary text-primary-content rounded-lg p-4 text-center">
 			Column span-6 (50% width)
 		</div>
 	{/snippet}
@@ -84,7 +84,7 @@ SPDX-License-Identifier: MIT
 <!-- Full Width (span-12) -->
 <Story name="Full Width" args={{ span: '12' }}>
 	{#snippet children()}
-		<div class="bg-secondary text-secondary-content p-4 rounded-lg text-center">
+		<div class="bg-secondary text-secondary-content rounded-lg p-4 text-center">
 			Column span-12 (100% width)
 		</div>
 	{/snippet}
@@ -93,7 +93,7 @@ SPDX-License-Identifier: MIT
 <!-- Quarter Width (span-3) -->
 <Story name="Quarter Width" args={{ span: '3' }}>
 	{#snippet children()}
-		<div class="bg-accent text-accent-content p-4 rounded-lg text-center">
+		<div class="bg-accent text-accent-content rounded-lg p-4 text-center">
 			Column span-3 (25% width)
 		</div>
 	{/snippet}
@@ -102,7 +102,7 @@ SPDX-License-Identifier: MIT
 <!-- One Third (span-4) -->
 <Story name="One Third" args={{ span: '4' }}>
 	{#snippet children()}
-		<div class="bg-info text-info-content p-4 rounded-lg text-center">
+		<div class="bg-info text-info-content rounded-lg p-4 text-center">
 			Column span-4 (33% width)
 		</div>
 	{/snippet}
@@ -111,7 +111,7 @@ SPDX-License-Identifier: MIT
 <!-- With Offset (start-5) -->
 <Story name="With Offset" args={{ span: '4', start: '5' }}>
 	{#snippet children()}
-		<div class="bg-warning text-warning-content p-4 rounded-lg text-center">
+		<div class="bg-warning text-warning-content rounded-lg p-4 text-center">
 			Column span-4 starting at position 5
 		</div>
 	{/snippet}
@@ -120,7 +120,7 @@ SPDX-License-Identifier: MIT
 <!-- Responsive -->
 <Story name="Responsive" args={{ span: '12', sm: '6', md: '4', lg: '3' }}>
 	{#snippet children()}
-		<div class="bg-success text-success-content p-4 rounded-lg text-center">
+		<div class="bg-success text-success-content rounded-lg p-4 text-center">
 			Responsive: Full → Half → Third → Quarter
 		</div>
 	{/snippet}
@@ -129,7 +129,7 @@ SPDX-License-Identifier: MIT
 <!-- Centered (start-4, span-6) -->
 <Story name="Centered" args={{ span: '6', start: '4' }}>
 	{#snippet children()}
-		<div class="bg-error text-error-content p-4 rounded-lg text-center">
+		<div class="bg-error text-error-content rounded-lg p-4 text-center">
 			Centered column (span-6, start-4)
 		</div>
 	{/snippet}
@@ -138,7 +138,7 @@ SPDX-License-Identifier: MIT
 <!-- Playground -->
 <Story name="Playground" args={{ span: 'auto' }}>
 	{#snippet children()}
-		<div class="bg-neutral text-neutral-content p-4 rounded-lg text-center">
+		<div class="bg-neutral text-neutral-content rounded-lg p-4 text-center">
 			Playground Column Content
 		</div>
 	{/snippet}

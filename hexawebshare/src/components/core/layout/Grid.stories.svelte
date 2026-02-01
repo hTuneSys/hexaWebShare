@@ -248,7 +248,14 @@ TODO: Investigate Storybook v8+ compatibility with Svelte 5 snippet pattern
 	}}
 >
 	{#snippet children()}
-		<Grid columns={3} gap="md" variant="default" loading={false} disabled={false} background={false}>
+		<Grid
+			columns={3}
+			gap="md"
+			variant="default"
+			loading={false}
+			disabled={false}
+			background={false}
+		>
 			{#snippet children()}
 				<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
 					Item 1

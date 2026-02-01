@@ -150,7 +150,11 @@ SPDX-License-Identifier: MIT
 		<div class="bg-base-100 min-h-screen p-8">
 			<div class="flex min-h-[400px] flex-col items-center justify-center">
 				<p class="mb-4 text-lg">Main content area</p>
-				<Button label="Open Detail Drawer" variant="primary" onclick={() => (withDataOpen = true)} />
+				<Button
+					label="Open Detail Drawer"
+					variant="primary"
+					onclick={() => (withDataOpen = true)}
+				/>
 			</div>
 			<DetailDrawer bind:open={withDataOpen} title="User Details" data={sampleData} />
 		</div>
@@ -185,7 +189,11 @@ SPDX-License-Identifier: MIT
 		<div class="bg-base-100 min-h-screen p-8">
 			<div class="flex min-h-[400px] flex-col items-center justify-center">
 				<p class="mb-4 text-lg">Main content area</p>
-				<Button label="Open Detail Drawer" variant="primary" onclick={() => (leftSideOpen = true)} />
+				<Button
+					label="Open Detail Drawer"
+					variant="primary"
+					onclick={() => (leftSideOpen = true)}
+				/>
 			</div>
 			<DetailDrawer bind:open={leftSideOpen} title="Settings" side="left" data={sampleData} />
 		</div>
