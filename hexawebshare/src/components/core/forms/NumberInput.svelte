@@ -320,6 +320,12 @@ SPDX-License-Identifier: MIT
 		}
 		onblur?.(event);
 	}
+
+	// Helper: Map NumberInput size to helper/error text size
+	const getHelperTextSize = (): 'xs' | 'sm' => {
+		// Helper and error text are typically xs, but scale to sm for lg inputs
+		return size === 'lg' ? 'sm' : 'xs';
+	};
 </script>
 
 <div class="form-control w-full">
@@ -403,14 +409,14 @@ SPDX-License-Identifier: MIT
 	{#if error && error !== ''}
 		<div class={labelClasses}>
 			<div role="alert" aria-live="polite">
-				<Text text={error} size="xs" variant="error" class="label-text-alt" />
+				<Text text={error} size={getHelperTextSize()} variant="error" class="label-text-alt" />
 			</div>
 		</div>
 	{/if}
 
 	{#if helpText && (!error || error === '')}
 		<div class={labelClasses}>
-			<Text text={helpText} size="xs" variant="muted" class="label-text-alt" />
+			<Text text={helpText} size={getHelperTextSize()} variant="muted" class="label-text-alt" />
 		</div>
 	{/if}
 </div>
