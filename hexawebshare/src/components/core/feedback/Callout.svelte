@@ -215,7 +215,7 @@ SPDX-License-Identifier: MIT
 			variant="ghost"
 			size="sm"
 			square
-			class="shrink-0"
+			class="shrink-0 self-start"
 			onclick={handleClose}
 			ariaLabel={dismissLabel}
 			disabled={disabled || loading}
