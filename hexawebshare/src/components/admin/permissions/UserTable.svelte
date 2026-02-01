@@ -138,10 +138,112 @@ SPDX-License-Identifier: MIT
 		 */
 		onretry?: () => void;
 		/**
-		 * Additional CSS classes
+		 * Table column header text for Name column
+		 * @default 'Name'
 		 */
-		class?: string;
-	}
+		headerName?: string;
+		/**
+		 * Table column header text for Email column
+		 * @default 'Email'
+		 */
+		headerEmail?: string;
+		/**
+		 * Table column header text for Role column
+		 * @default 'Role'
+		 */
+		headerRole?: string;
+		/**
+		 * Table column header text for Status column
+		 * @default 'Status'
+		 */
+		headerStatus?: string;
+		/**
+		 * Table column header text for Actions column
+		 * @default 'Actions'
+		 */
+		headerActions?: string;
+		/**
+		 * Loading message text displayed in spinner
+		 * @default 'Loading users table'
+		 */
+		loadingAriaLabel?: string;
+		/**
+		 * Loading display text shown during load
+		 * @default 'Loading users...'
+		 */
+		loadingText?: string;
+		/**
+		 * Retry button label text
+		 * @default 'Retry'
+		 */
+		retryLabel?: string;
+		/**
+		 * Retry button aria-label text
+		 * @default 'Retry loading users'
+		 */
+		retryAriaLabel?: string;
+		/**
+		 * Error state aria-label
+		 * @default 'Error loading users'
+		 */
+		errorAriaLabel?: string;
+		/**
+		 * Empty state aria-label
+		 * @default 'Empty users table'
+		 */
+		emptyAriaLabel?: string;
+		/**
+		 * Aria-label for last login text
+		 * @default 'Last login'
+		 */
+		lastLoginAriaLabel?: string;
+		/**
+		 * Aria-label for email address
+		 * @default 'Email address'
+		 */
+		emailAriaLabel?: string;
+		/**
+		 * Aria-label prefix for user role
+		 * @default 'User role: '
+		 */
+		userRoleAriaLabelPrefix?: string;
+		/**
+		 * Aria-label prefix for user status
+		 * @default 'User status: '
+		 */
+		userStatusAriaLabelPrefix?: string;
+		/**
+		 * Aria-label for user actions group
+		 * @default 'User actions'
+		 */
+		userActionsAriaLabel?: string;
+		/**
+		 * Aria-label prefix for edit action
+		 * @default 'Edit user '
+		 */
+		editUserAriaLabelPrefix?: string;
+		/**
+		 * Aria-label prefix for delete action
+		 * @default 'Delete user '
+		 */
+		deleteUserAriaLabelPrefix?: string;
+	/**
+	 * Aria-label suffix for avatar
+	 * @default ' avatar'
+	 */
+	avatarAriaLabelSuffix?: string;
+	/**
+	 * Function to format clickable row aria-label with user info
+	 * @param user - User object
+	 * @returns Formatted aria-label string
+	 * @default (user) => `User ${user.name}, ${user.role}, ${user.status}. Press Enter or Space to select.`
+	 */
+	formatRowAriaLabel?: (user: User) => string;
+	/**
+	 * Additional CSS classes
+	 */
+	class?: string;
+}
 
 	const {
 		users = [],
@@ -161,9 +263,30 @@ SPDX-License-Identifier: MIT
 		ariaLabel = 'Users table',
 		emptyMessage = 'No users found',
 		onretry,
-		class: className = '',
-		...props
-	}: Props = $props();
+		headerName = 'Name',
+		headerEmail = 'Email',
+		headerRole = 'Role',
+		headerStatus = 'Status',
+		headerActions = 'Actions',
+		loadingAriaLabel = 'Loading users table',
+		loadingText = 'Loading users...',
+		retryLabel = 'Retry',
+		retryAriaLabel = 'Retry loading users',
+		errorAriaLabel = 'Error loading users',
+		emptyAriaLabel = 'Empty users table',
+		lastLoginAriaLabel = 'Last login',
+		emailAriaLabel = 'Email address',
+		userRoleAriaLabelPrefix = 'User role: ',
+		userStatusAriaLabelPrefix = 'User status: ',
+		userActionsAriaLabel = 'User actions',
+	editUserAriaLabelPrefix = 'Edit user ',
+	deleteUserAriaLabelPrefix = 'Delete user ',
+	avatarAriaLabelSuffix = ' avatar',
+	formatRowAriaLabel = (user: User) =>
+		`User ${user.name}, ${user.role}, ${user.status}. Press Enter or Space to select.`,
+	class: className = '',
+	...props
+}: Props = $props();
 
 	// Table wrapper classes
 	let wrapperClasses = $derived(
@@ -305,12 +428,12 @@ SPDX-License-Identifier: MIT
 	>
 		<thead>
 			<tr>
-				<th scope="col" class="min-w-[200px]">Name</th>
-				<th scope="col" class="hidden md:table-cell">Email</th>
-				<th scope="col" class="hidden sm:table-cell">Role</th>
-				<th scope="col">Status</th>
+				<th scope="col" class="min-w-[200px]">{headerName}</th>
+				<th scope="col" class="hidden md:table-cell">{headerEmail}</th>
+				<th scope="col" class="hidden sm:table-cell">{headerRole}</th>
+				<th scope="col">{headerStatus}</th>
 				{#if showActions}
-					<th scope="col" class="w-[100px] text-right">Actions</th>
+					<th scope="col" class="w-[100px] text-right">{headerActions}</th>
 				{/if}
 			</tr>
 		</thead>
@@ -320,10 +443,10 @@ SPDX-License-Identifier: MIT
 				<tr>
 					<td colspan={showActions ? 5 : 4} class="py-12 text-center">
 						<div class="flex flex-col items-center justify-center gap-3">
-							<Spinner type="spinner" size="md" variant="primary" ariaLabel="Loading users table" />
+							<Spinner type="spinner" size="md" variant="primary" ariaLabel={loadingAriaLabel} />
 							<span class="text-base-content/60 text-sm">
-								<span class="sr-only">Loading users table</span>
-								<span aria-hidden="true">Loading users...</span>
+								<span class="sr-only">{loadingAriaLabel}</span>
+								<span aria-hidden="true">{loadingText}</span>
 							</span>
 						</div>
 					</td>
@@ -336,12 +459,12 @@ SPDX-License-Identifier: MIT
 								variant="error"
 								size="md"
 								description={error}
-								actionLabel={onretry ? 'Retry' : undefined}
-								actionAriaLabel={onretry ? 'Retry loading users' : undefined}
+								actionLabel={onretry ? retryLabel : undefined}
+								actionAriaLabel={onretry ? retryAriaLabel : undefined}
 								onaction={onretry}
 								fullWidth={false}
 								withIcon={true}
-								ariaLabel="Error loading users"
+								ariaLabel={errorAriaLabel}
 							/>
 						</div>
 					</td>
@@ -354,7 +477,7 @@ SPDX-License-Identifier: MIT
 							variant="neutral"
 							size="md"
 							fullWidth={false}
-							ariaLabel="Empty users table"
+							ariaLabel={emptyAriaLabel}
 						/>
 					</td>
 				</tr>
@@ -364,12 +487,10 @@ SPDX-License-Identifier: MIT
 						class={getRowClasses(index)}
 						onclick={() => handleRowClick(user, index)}
 						onkeydown={(e) => handleRowKeyDown(e, user, index)}
-						aria-rowindex={index + 2}
-						tabindex={onuserclick && !disabled && !loading ? 0 : undefined}
-						aria-label={onuserclick
-							? `User ${user.name}, ${user.role}, ${user.status}. Press Enter or Space to select.`
-							: undefined}
-					>
+					aria-rowindex={index + 2}
+					tabindex={onuserclick && !disabled && !loading ? 0 : undefined}
+					aria-label={onuserclick ? formatRowAriaLabel(user) : undefined}
+				>
 						<td class="max-w-[300px] min-w-[200px]">
 							<div class="flex items-center gap-3">
 								<Avatar
@@ -377,7 +498,7 @@ SPDX-License-Identifier: MIT
 									alt={user.name}
 									size="sm"
 									placeholder={getUserInitials(user.name)}
-									ariaLabel={`${user.name} avatar`}
+									ariaLabel={`${user.name}${avatarAriaLabelSuffix}`}
 									ariaHidden={true}
 								/>
 								<div class="flex min-w-0 flex-1 flex-col">
@@ -385,9 +506,9 @@ SPDX-License-Identifier: MIT
 									{#if user.lastLogin}
 										<span
 											class="text-base-content/60 hidden truncate text-xs md:block"
-											aria-label="Last login"
+											aria-label={lastLoginAriaLabel}
 										>
-											Last login: {typeof user.lastLogin === 'string'
+											{lastLoginAriaLabel}: {typeof user.lastLogin === 'string'
 												? user.lastLogin
 												: user.lastLogin.toLocaleDateString()}
 										</span>
@@ -395,7 +516,7 @@ SPDX-License-Identifier: MIT
 									<!-- Mobile: Show email on small screens -->
 									<span
 										class="text-base-content/60 truncate text-xs md:hidden"
-										aria-label="Email address"
+										aria-label={emailAriaLabel}
 									>
 										{user.email}
 									</span>
@@ -405,7 +526,7 @@ SPDX-License-Identifier: MIT
 						<td class="hidden md:table-cell">
 							<span
 								class="text-base-content block max-w-[200px] truncate"
-								aria-label="Email address"
+								aria-label={emailAriaLabel}
 							>
 								{user.email}
 							</span>
@@ -415,7 +536,7 @@ SPDX-License-Identifier: MIT
 								label={user.role}
 								variant={getRoleVariant(user.role)}
 								size="sm"
-								ariaLabel={`User role: ${user.role}`}
+								ariaLabel={`${userRoleAriaLabelPrefix}${user.role}`}
 							/>
 						</td>
 						<td>
@@ -423,7 +544,7 @@ SPDX-License-Identifier: MIT
 								label={user.status.charAt(0).toUpperCase() + user.status.slice(1)}
 								variant={getStatusVariant(user.status)}
 								size="sm"
-								ariaLabel={`User status: ${user.status}`}
+								ariaLabel={`${userStatusAriaLabelPrefix}${user.status}`}
 							/>
 						</td>
 						{#if showActions}
@@ -431,14 +552,14 @@ SPDX-License-Identifier: MIT
 								<div
 									class="flex items-center justify-end gap-1 sm:gap-2"
 									role="group"
-									aria-label="User actions"
+									aria-label={userActionsAriaLabel}
 								>
 									{#if onedit}
 										<IconButton
 											variant="ghost"
 											size="xs"
 											circle={true}
-											ariaLabel={`Edit user ${user.name}`}
+											ariaLabel={`${editUserAriaLabelPrefix}${user.name}`}
 											onclick={() => handleEditClick(user, index)}
 											disabled={disabled || loading}
 										>
@@ -452,7 +573,7 @@ SPDX-License-Identifier: MIT
 											variant="ghost"
 											size="xs"
 											circle={true}
-											ariaLabel={`Delete user ${user.name}`}
+											ariaLabel={`${deleteUserAriaLabelPrefix}${user.name}`}
 											onclick={() => handleDeleteClick(user, index)}
 											disabled={disabled || loading}
 											class="text-error hover:bg-error/10"
