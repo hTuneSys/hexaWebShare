@@ -326,6 +326,16 @@ SPDX-License-Identifier: MIT
 		// Helper and error text are typically xs, but scale to sm for lg inputs
 		return size === 'lg' ? 'sm' : 'xs';
 	};
+
+	// Map input size to icon size for stepper buttons
+	type IconSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+	const iconSizeMap: Record<'xs' | 'sm' | 'md' | 'lg', IconSize> = {
+		xs: 'xs',
+		sm: 'xs',
+		md: 'sm',
+		lg: 'md'
+	};
+	const iconSize = $derived(iconSizeMap[size]);
 </script>
 
 <div class="form-control w-full">
@@ -343,7 +353,7 @@ SPDX-License-Identifier: MIT
 				disabled={disabled || readonly || loading || isAtMin}
 				ariaLabel={decreaseLabel}
 			>
-				<Icon {size} ariaHidden={true}>
+				<Icon size={iconSize} ariaHidden={true}>
 					<Minus />
 				</Icon>
 			</IconButton>
@@ -399,7 +409,7 @@ SPDX-License-Identifier: MIT
 				disabled={disabled || readonly || loading || isAtMax}
 				ariaLabel={increaseLabel}
 			>
-				<Icon {size} ariaHidden={true}>
+				<Icon size={iconSize} ariaHidden={true}>
 					<Plus />
 				</Icon>
 			</IconButton>
