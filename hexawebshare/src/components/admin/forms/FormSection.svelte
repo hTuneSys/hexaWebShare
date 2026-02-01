@@ -179,6 +179,14 @@ SPDX-License-Identifier: MIT
 <section class="{sectionClasses} {paddingClasses}" aria-label={ariaLabel || title} {...props}>
 	{#if title || description || headerActions || collapsible}
 		{#if collapsible}
+			<!-- 
+				NOTE: Raw HTML <button> is intentional here instead of Button component.
+				TECHNICAL REASON: Collapsible form section pattern requires a full-width, transparent,
+				text-left button that acts as a clickable header with aria-expanded state.
+				The button must have no visual button styling (no borders, backgrounds, or padding from .btn).
+				CONSEQUENCE: Using Button component would add .btn classes that conflict with the header layout.
+				VALIDATION: WAI-ARIA accordion pattern and collapsible section best practices.
+			-->
 			<button
 				type="button"
 				class="{headerClasses} w-full border-0 bg-transparent text-left"

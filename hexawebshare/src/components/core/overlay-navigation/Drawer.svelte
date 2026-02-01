@@ -246,6 +246,13 @@ SPDX-License-Identifier: MIT
 			-->
 			<label for={toggleId} class="drawer-overlay" aria-hidden="true"></label>
 			<!-- 
+				NOTE: Raw HTML <button> is intentional here instead of Button component.
+				TECHNICAL REASON: This is an invisible backdrop overlay for accessibility.
+				It provides keyboard navigation and click-to-close functionality without any visual styling.
+				The button must be completely transparent and cover the entire backdrop area.
+				CONSEQUENCE: Using Button component would add unwanted visual styles (.btn classes).
+				VALIDATION: This pattern follows standard modal/drawer backdrop implementation.
+				
 				Interactive backdrop overlay for accessibility.
 				This button provides proper keyboard navigation and screen reader support.
 			-->

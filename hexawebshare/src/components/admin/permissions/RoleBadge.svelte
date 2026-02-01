@@ -4,6 +4,8 @@ SPDX-License-Identifier: MIT
 -->
 
 <script lang="ts">
+	import Badge from '../../core/media/Badge.svelte';
+
 	/**
 	 * Props interface for the RoleBadge component
 	 */
@@ -113,46 +115,21 @@ SPDX-License-Identifier: MIT
 		return 'neutral';
 	});
 
-	// Badge classes using static DaisyUI classes
-	let badgeClasses = $derived(
-		[
-			'badge',
-			resolvedVariant === 'primary' && 'badge-primary',
-			resolvedVariant === 'secondary' && 'badge-secondary',
-			resolvedVariant === 'accent' && 'badge-accent',
-			resolvedVariant === 'neutral' && 'badge-neutral',
-			resolvedVariant === 'info' && 'badge-info',
-			resolvedVariant === 'success' && 'badge-success',
-			resolvedVariant === 'warning' && 'badge-warning',
-			resolvedVariant === 'error' && 'badge-error',
-			resolvedVariant === 'ghost' && 'badge-ghost',
-			size === 'xs' && 'badge-xs',
-			size === 'sm' && 'badge-sm',
-			size === 'md' && 'badge-md',
-			size === 'lg' && 'badge-lg',
-			outline && 'badge-outline',
-			disabled && 'opacity-50 cursor-not-allowed pointer-events-none',
-			className
-		]
-			.filter(Boolean)
-			.join(' ')
-	);
-
-	// Accessibility: Determine if badge is decorative or semantic
-	// Role badges are typically semantic, so default to false unless explicitly hidden
-	let isDecorative = $derived(ariaHidden || (!ariaLabel && false));
-
 	// Format role name for display (capitalize first letter)
 	let displayRole = $derived(role.charAt(0).toUpperCase() + role.slice(1).toLowerCase());
+
+	// Generate accessible label if not provided
+	let computedAriaLabel = $derived(ariaLabel || (!ariaHidden ? `Role: ${displayRole}` : undefined));
 </script>
 
-<span
-	class={badgeClasses}
-	aria-label={ariaLabel || (isDecorative ? undefined : `Role: ${displayRole}`)}
-	aria-hidden={isDecorative}
-	aria-disabled={disabled}
-	role={isDecorative ? undefined : 'status'}
+<Badge
+	label={displayRole}
+	variant={resolvedVariant}
+	{size}
+	{outline}
+	{disabled}
+	ariaLabel={computedAriaLabel}
+	{ariaHidden}
+	class={className}
 	{...props}
->
-	{displayRole}
-</span>
+/>

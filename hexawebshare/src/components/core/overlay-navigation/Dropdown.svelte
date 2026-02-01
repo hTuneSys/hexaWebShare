@@ -512,20 +512,27 @@ SPDX-License-Identifier: MIT
 									{/if}
 								</span>
 							</a>
-						{:else}
-							<button
-								type="button"
-								id="{dropdownId}-item-{index}"
-								class="flex w-full items-center gap-3 py-2 text-left max-sm:py-2.5"
-								tabindex={item.disabled ? -1 : 0}
-								disabled={item.disabled || disabled}
-								role="menuitem"
-								aria-disabled={item.disabled || disabled}
-								onclick={() => handleItemClick(item, index)}
-								onkeydown={(e) => handleItemKeydown(e, item, index)}
-								onfocus={() => handleItemFocus(index)}
-								onblur={handleItemBlur}
-							>
+					{:else}
+						<!-- 
+							NOTE: Raw HTML <button> is intentional here instead of Button component.
+							TECHNICAL REASON: WAI-ARIA menu pattern requires <button role="menuitem"> with specific styling.
+							The Button component adds .btn classes that conflict with dropdown menu item styling.
+							CONSEQUENCE: Using Button would break the dropdown menu item appearance and spacing.
+							VALIDATION: WAI-ARIA menu pattern and DaisyUI dropdown component requirements.
+						-->
+						<button
+							type="button"
+							id="{dropdownId}-item-{index}"
+							class="flex w-full items-center gap-3 py-2 text-left max-sm:py-2.5"
+							tabindex={item.disabled ? -1 : 0}
+							disabled={item.disabled || disabled}
+							role="menuitem"
+							aria-disabled={item.disabled || disabled}
+							onclick={() => handleItemClick(item, index)}
+							onkeydown={(e) => handleItemKeydown(e, item, index)}
+							onfocus={() => handleItemFocus(index)}
+							onblur={handleItemBlur}
+						>
 								{#if item.icon}
 									<span class="text-xl max-sm:text-xl" aria-hidden="true">{item.icon}</span>
 								{/if}
