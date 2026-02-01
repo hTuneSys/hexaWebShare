@@ -305,7 +305,6 @@ All helper components use library primitives (Text, Icon, EmptyState, Spinner) f
 			zebra && 'table-zebra',
 			pinRows && 'table-pin-rows',
 			pinCols && 'table-pin-cols',
-			compact && 'table-compact',
 			bordered && 'border border-base-300'
 		]
 			.filter(Boolean)
