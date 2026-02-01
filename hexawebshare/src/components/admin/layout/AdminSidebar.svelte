@@ -162,7 +162,6 @@ SPDX-License-Identifier: MIT
 			'overflow-visible',
 			'p-2',
 			'gap-1',
-			variant === 'compact' && 'menu-compact',
 			size === 'sm' && 'menu-sm',
 			size === 'lg' && 'menu-lg'
 		]
@@ -335,7 +334,7 @@ SPDX-License-Identifier: MIT
 								Using Dropdown component creates positioning/overflow issues in sidebars.
 								VALIDATION: DaisyUI v4.x Menu documentation - Collapsible submenu pattern.
 							-->
-							<details class="group" open={item.active}>
+							<details class="group" open={item.active && !collapsed}>
 								<summary
 									class="{getItemClasses(item)} cursor-pointer list-none justify-between"
 									class:opacity-50={item.disabled || disabled}
