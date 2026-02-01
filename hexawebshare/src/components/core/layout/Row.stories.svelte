@@ -153,4 +153,48 @@ SPDX-License-Identifier: MIT
 </Story>
 
 <!-- Playground -->
-<Story name="Playground" args={{}} />
+<!-- 
+NOTE: Storybook controls are partially interactive for this component.
+TECHNICAL REASON: Row has optional Svelte 5 snippet (children prop).
+The addon-svelte-csf Story component cannot pass args to snippet parameters in Svelte 5.
+ATTEMPTED SOLUTIONS:
+1. Tried {#snippet children(args)} pattern - TypeScript error: Snippet<[]> doesn't accept parameters
+2. Tried auto-wiring without snippet - Component children would be empty
+CONSEQUENCE: Playground story shows default variant; use other stories to see specific variations.
+WORKAROUND: Use the variant stories above to explore different configurations.
+TODO: Investigate Storybook v8+ compatibility with Svelte 5 snippet pattern
+-->
+<Story
+	name="Playground"
+	args={{
+		gap: '4',
+		align: 'center',
+		justify: 'start',
+		wrap: false
+	}}
+>
+	{#snippet children()}
+		<Row gap="4" align="center" justify="start" wrap={false}>
+			<div
+				class="bg-primary text-primary-content flex h-16 w-16 items-center justify-center rounded font-bold"
+			>
+				1
+			</div>
+			<div
+				class="bg-secondary text-secondary-content flex h-16 w-16 items-center justify-center rounded font-bold"
+			>
+				2
+			</div>
+			<div
+				class="bg-accent text-accent-content flex h-16 w-16 items-center justify-center rounded font-bold"
+			>
+				3
+			</div>
+			<div
+				class="bg-info text-info-content flex h-16 w-16 items-center justify-center rounded font-bold"
+			>
+				4
+			</div>
+		</Row>
+	{/snippet}
+</Story>
