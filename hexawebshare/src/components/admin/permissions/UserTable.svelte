@@ -11,6 +11,7 @@ SPDX-License-Identifier: MIT
 	import EmptyState from '../../core/data-display/EmptyState.svelte';
 	import Spinner from '../../core/feedback/Spinner.svelte';
 	import StatusBadge from '../../core/data-display/StatusBadge.svelte';
+	import Icon from '../../core/media/Icon.svelte';
 	import Pencil from 'lucide-svelte/icons/pencil';
 	import Trash2 from 'lucide-svelte/icons/trash-2';
 
@@ -441,7 +442,9 @@ SPDX-License-Identifier: MIT
 											onclick={() => handleEditClick(user, index)}
 											disabled={disabled || loading}
 										>
-											<Pencil size={16} aria-hidden="true" />
+											<Icon size="xs" ariaHidden={true}>
+												<Pencil />
+											</Icon>
 										</IconButton>
 									{/if}
 									{#if ondelete}
@@ -454,7 +457,9 @@ SPDX-License-Identifier: MIT
 											disabled={disabled || loading}
 											class="text-error hover:bg-error/10"
 										>
-											<Trash2 size={16} aria-hidden="true" />
+											<Icon size="xs" ariaHidden={true}>
+												<Trash2 />
+											</Icon>
 										</IconButton>
 									{/if}
 								</div>

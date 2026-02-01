@@ -6,6 +6,7 @@ SPDX-License-Identifier: MIT
 <script lang="ts">
 	import Button from '../buttons/Button.svelte';
 	import IconButton from '../buttons/IconButton.svelte';
+	import Icon from '../media/Icon.svelte';
 	import CloudUpload from 'lucide-svelte/icons/cloud-upload';
 	import X from 'lucide-svelte/icons/x';
 
@@ -405,7 +406,9 @@ SPDX-License-Identifier: MIT
 			</div>
 		{:else}
 			<div class="flex flex-col items-center justify-center gap-2">
-				<CloudUpload size={48} class="text-base-content/50" aria-hidden="true" />
+				<Icon size="xl" ariaHidden={true}>
+					<CloudUpload size={48} class="text-base-content/50" />
+				</Icon>
 				<div class="text-base-content text-sm font-medium">
 					{#if dragDrop}
 						Drag and drop files here, or
@@ -459,17 +462,19 @@ SPDX-License-Identifier: MIT
 							<p class="text-base-content truncate text-sm font-medium">{file.name}</p>
 							<p class="text-base-content/70 text-xs">{formatFileSize(file.size)}</p>
 						</div>
-						<span class="ml-2">
-							<IconButton
-								variant="ghost"
-								size="xs"
-								ariaLabel="Remove file"
-								{disabled}
-								onclick={() => removeFile(index)}
-							>
-								<X size={16} aria-hidden="true" />
-							</IconButton>
-						</span>
+					<span class="ml-2">
+						<IconButton
+							variant="ghost"
+							size="xs"
+							ariaLabel="Remove file"
+							{disabled}
+							onclick={() => removeFile(index)}
+						>
+							<Icon size="xs" ariaHidden={true}>
+								<X size={16} />
+							</Icon>
+						</IconButton>
+					</span>
 					</div>
 				{/each}
 			</div>

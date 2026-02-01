@@ -7,6 +7,7 @@ SPDX-License-Identifier: MIT
 	import type { Snippet } from 'svelte';
 	import Heading from '../typography/Heading.svelte';
 	import Text from '../typography/Text.svelte';
+	import Icon from '../media/Icon.svelte';
 	import Archive from 'lucide-svelte/icons/archive';
 
 	/**
@@ -269,7 +270,9 @@ SPDX-License-Identifier: MIT
 		{:else}
 			<!-- Default empty state icon -->
 			<div class={iconContainerClasses} aria-hidden="true">
-				<Archive class={defaultIconClasses} strokeWidth={1.5} aria-hidden="true" />
+				<Icon size="lg" variant={variant} class={defaultIconClasses} ariaHidden={true}>
+					<Archive strokeWidth={1.5} />
+				</Icon>
 			</div>
 		{/if}
 

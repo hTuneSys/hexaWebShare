@@ -14,6 +14,7 @@ SPDX-License-Identifier: MIT
 	import List from '../../core/data-display/List.svelte';
 	import ListItem from '../../core/data-display/ListItem.svelte';
 	import Heading from '../../core/typography/Heading.svelte';
+	import Icon from '../../core/media/Icon.svelte';
 	import EllipsisVertical from 'lucide-svelte/icons/ellipsis-vertical';
 	import Check from 'lucide-svelte/icons/check';
 	import X from 'lucide-svelte/icons/x';
@@ -286,7 +287,9 @@ SPDX-License-Identifier: MIT
 								{disabled}
 							>
 								{#snippet children()}
-									<EllipsisVertical size={20} aria-hidden="true" />
+									<Icon size="sm" ariaHidden={true}>
+										<EllipsisVertical />
+									</Icon>
 								{/snippet}
 							</IconButton>
 						{/snippet}
@@ -308,7 +311,9 @@ SPDX-License-Identifier: MIT
 					ariaLabel="No notifications available"
 				>
 					{#snippet icon()}
-						<Bell size={32} class="text-base-content/20" aria-hidden="true" />
+						<Icon size="lg" ariaHidden={true} class="text-base-content/20">
+							<Bell />
+						</Icon>
 					{/snippet}
 				</EmptyState>
 			{:else}
@@ -381,7 +386,9 @@ SPDX-License-Identifier: MIT
 													{disabled}
 												>
 													{#snippet children()}
-														<Check size={16} aria-hidden="true" />
+														<Icon size="xs" ariaHidden={true}>
+															<Check />
+														</Icon>
 													{/snippet}
 												</IconButton>
 											{/if}
@@ -393,7 +400,9 @@ SPDX-License-Identifier: MIT
 												{disabled}
 											>
 												{#snippet children()}
-													<X size={16} aria-hidden="true" />
+													<Icon size="xs" ariaHidden={true}>
+														<X />
+													</Icon>
 												{/snippet}
 											</IconButton>
 										</div>

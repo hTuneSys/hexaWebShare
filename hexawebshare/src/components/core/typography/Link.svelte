@@ -4,6 +4,7 @@ SPDX-License-Identifier: MIT
 -->
 
 <script lang="ts">
+	import Icon from '../media/Icon.svelte';
 	import ExternalLink from 'lucide-svelte/icons/external-link';
 
 	interface Props {
@@ -253,10 +254,8 @@ SPDX-License-Identifier: MIT
 		{label}
 	{/if}
 	{#if external}
-		<ExternalLink
-			size="1em"
-			class="inline-block"
-			aria-hidden="true"
-		/>
+		<Icon size="xs" ariaHidden={true} class="inline-block">
+			<ExternalLink />
+		</Icon>
 	{/if}
 </a>

@@ -9,6 +9,7 @@ SPDX-License-Identifier: MIT
 	import Spinner from '../feedback/Spinner.svelte';
 	import Text from '../typography/Text.svelte';
 	import Heading from '../typography/Heading.svelte';
+	import Icon from '../media/Icon.svelte';
 	import ChevronDown from 'lucide-svelte/icons/chevron-down';
 
 	/**
@@ -235,7 +236,9 @@ SPDX-License-Identifier: MIT
 				</div>
 
 				<div class="flex flex-shrink-0 items-center gap-2">
-					<ChevronDown class={chevronClasses} aria-hidden="true" />
+					<Icon size="sm" ariaHidden={true} class={chevronClasses}>
+						<ChevronDown />
+					</Icon>
 				</div>
 			</Button>
 		{:else}

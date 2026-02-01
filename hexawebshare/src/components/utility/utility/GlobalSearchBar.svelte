@@ -9,6 +9,7 @@ SPDX-License-Identifier: MIT
 	import IconButton from '../../core/buttons/IconButton.svelte';
 	import Label from '../../core/data-display/Label.svelte';
 	import Text from '../../core/typography/Text.svelte';
+	import Icon from '../../core/media/Icon.svelte';
 	import Search from 'lucide-svelte/icons/search';
 	import X from 'lucide-svelte/icons/x';
 
@@ -510,7 +511,9 @@ SPDX-License-Identifier: MIT
 			class="text-base-content/50 pointer-events-none absolute top-1/2 -translate-y-1/2 {iconLeftClass}"
 			aria-hidden="true"
 		>
-			<Search class={iconSizeClass} aria-hidden="true" />
+			<Icon size="sm" ariaHidden={true}>
+				<Search class={iconSizeClass} />
+			</Icon>
 		</div>
 
 		<!-- Input -->
@@ -548,16 +551,18 @@ SPDX-License-Identifier: MIT
 					aria-label={searchingAriaLabel}
 				></span>
 			{:else if showClearButton && value}
-				<IconButton
-					variant="ghost"
-					size="xs"
-					onclick={handleClear}
-					{disabled}
-					ariaLabel={clearAriaLabel}
-					class="h-auto min-h-0 p-0.5"
-				>
-					<X class={iconSizeClass} aria-hidden="true" />
-				</IconButton>
+			<IconButton
+				variant="ghost"
+				size="xs"
+				onclick={handleClear}
+				{disabled}
+				ariaLabel={clearAriaLabel}
+				class="h-auto min-h-0 p-0.5"
+			>
+				<Icon size="xs" ariaHidden={true}>
+					<X class={iconSizeClass} />
+				</Icon>
+			</IconButton>
 			{/if}
 		</div>
 

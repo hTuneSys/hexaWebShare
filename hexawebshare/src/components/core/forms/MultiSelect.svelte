@@ -9,6 +9,7 @@ SPDX-License-Identifier: MIT
 	import IconButton from '../buttons/IconButton.svelte';
 	import Text from '../typography/Text.svelte';
 	import Checkbox from './Checkbox.svelte';
+	import Icon from '../media/Icon.svelte';
 	import X from 'lucide-svelte/icons/x';
 	import ChevronDown from 'lucide-svelte/icons/chevron-down';
 	import Check from 'lucide-svelte/icons/check';
@@ -635,20 +636,20 @@ SPDX-License-Identifier: MIT
 						<IconButton
 							variant="ghost"
 							size="xs"
-							class="h-auto min-h-0 p-0"
-							ariaLabel={clearAllLabel}
-							onclick={() => clearAll(new MouseEvent('click'))}
-						>
-							<X size={16} aria-hidden="true" />
-						</IconButton>
-					{/if}
-					<!-- Dropdown arrow -->
-					<ChevronDown
-						size={16}
-						class="transition-transform {isOpen ? 'rotate-180' : ''}"
-						aria-hidden="true"
-					/>
+						class="h-auto min-h-0 p-0"
+						ariaLabel={clearAllLabel}
+						onclick={() => clearAll(new MouseEvent('click'))}
+					>
+						<Icon size="xs" ariaHidden={true}>
+							<X size={16} />
+						</Icon>
+					</IconButton>
 				{/if}
+				<!-- Dropdown arrow -->
+				<Icon size="xs" class="transition-transform {isOpen ? 'rotate-180' : ''}" ariaHidden={true}>
+					<ChevronDown size={16} />
+				</Icon>
+			{/if}
 			</div>
 		</div>
 
@@ -692,12 +693,14 @@ SPDX-License-Identifier: MIT
 								tabindex={-1}
 								onclick={(e) => e.stopPropagation()}
 								onchange={() => !isDisabled && toggleOption(option.value)}
-							/>
-							<Text text={option.label} class="flex-1" />
-							{#if isSelected}
-								<Check size={16} class="text-primary" aria-hidden="true" />
-							{/if}
-						</li>
+						/>
+						<Text text={option.label} class="flex-1" />
+						{#if isSelected}
+							<Icon size="xs" variant="primary" ariaHidden={true}>
+								<Check size={16} />
+							</Icon>
+						{/if}
+					</li>
 					{/each}
 				{/if}
 			</ul>

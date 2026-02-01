@@ -7,6 +7,7 @@ SPDX-License-Identifier: MIT
 	import type { Snippet } from 'svelte';
 	import Spinner from '../feedback/Spinner.svelte';
 	import Text from '../typography/Text.svelte';
+	import Icon from '../media/Icon.svelte';
 	import ChevronDown from 'lucide-svelte/icons/chevron-down';
 
 	/**
@@ -450,7 +451,9 @@ SPDX-License-Identifier: MIT
 			{@render trigger()}
 		{:else}
 			{label}
-			<ChevronDown size={16} class="transition-transform" aria-hidden="true" />
+			<Icon size="xs" ariaHidden={true} class="transition-transform">
+				<ChevronDown />
+			</Icon>
 		{/if}
 	</summary>
 

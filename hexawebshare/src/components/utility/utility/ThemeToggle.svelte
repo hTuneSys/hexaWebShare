@@ -325,13 +325,13 @@ SPDX-License-Identifier: MIT
 {#snippet ThemeIcon(name: string)}
 	{#if name === 'light'}
 		<!-- Sun icon -->
-		<Sun size={20} aria-hidden="true" />
+		<Sun size={20} />
 	{:else if name === 'dark'}
 		<!-- Moon icon -->
-		<Moon size={20} aria-hidden="true" />
+		<Moon size={20} />
 	{:else if name === 'system' || name === 'device' || name === 'auto'}
 		<!-- Monitor icon -->
-		<Monitor size={20} aria-hidden="true" />
+		<Monitor size={20} />
 	{:else}
 		<!-- Simple text fallback if no icon found -->
 		<Text text={name.substring(0, 2)} size="xs" class="font-bold uppercase" />

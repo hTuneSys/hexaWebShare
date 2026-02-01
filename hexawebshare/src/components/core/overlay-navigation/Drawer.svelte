@@ -7,6 +7,7 @@ SPDX-License-Identifier: MIT
 	import type { Snippet } from 'svelte';
 	import IconButton from '../buttons/IconButton.svelte';
 	import Heading from '../typography/Heading.svelte';
+	import Icon from '../media/Icon.svelte';
 	import X from 'lucide-svelte/icons/x';
 
 	interface Props {
@@ -281,7 +282,9 @@ SPDX-License-Identifier: MIT
 							ariaLabel={closeAriaLabel}
 							onclick={handleClose}
 						>
-							<X size={20} aria-hidden="true" />
+							<Icon size="sm" ariaHidden={true}>
+								<X />
+							</Icon>
 						</IconButton>
 					{/if}
 				</div>
