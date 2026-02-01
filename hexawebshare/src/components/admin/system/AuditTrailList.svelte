@@ -8,6 +8,7 @@ SPDX-License-Identifier: MIT
 	import Alert from '../../core/feedback/Alert.svelte';
 	import Avatar from '../../core/media/Avatar.svelte';
 	import StatusBadge from '../../core/data-display/StatusBadge.svelte';
+	import Text from '../../core/typography/Text.svelte';
 
 	/**
 	 * User information for audit trail entries
@@ -604,9 +605,11 @@ SPDX-License-Identifier: MIT
 						{item.entity}
 					</span>
 					{#if item.entityId}
-						<span class="text-base-content/60" aria-label={entityIdAriaLabel}
-							>(#{item.entityId})</span
-						>
+						<Text 
+							text={`(#${item.entityId})`} 
+							variant="muted" 
+							ariaLabel={entityIdAriaLabel} 
+						/>
 					{/if}
 				</div>
 					{#if item.details}
