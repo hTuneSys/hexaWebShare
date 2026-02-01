@@ -7,6 +7,7 @@ SPDX-License-Identifier: MIT
 	import type { Snippet } from 'svelte';
 	import IconButton from '../buttons/IconButton.svelte';
 	import Heading from '../typography/Heading.svelte';
+	import X from 'lucide-svelte/icons/x';
 
 	interface Props {
 		/**
@@ -277,23 +278,10 @@ SPDX-License-Identifier: MIT
 							variant="ghost"
 							circle
 							size="sm"
-							onclick={handleClose}
 							ariaLabel={closeAriaLabel}
+							onclick={handleClose}
 						>
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								class="h-6 w-6"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke="currentColor"
-							>
-								<path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									stroke-width="2"
-									d="M6 18L18 6M6 6l12 12"
-								/>
-							</svg>
+							<X size={20} aria-hidden="true" />
 						</IconButton>
 					{/if}
 				</div>

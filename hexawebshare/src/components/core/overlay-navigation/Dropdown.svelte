@@ -7,6 +7,7 @@ SPDX-License-Identifier: MIT
 	import type { Snippet } from 'svelte';
 	import Spinner from '../feedback/Spinner.svelte';
 	import Text from '../typography/Text.svelte';
+	import ChevronDown from 'lucide-svelte/icons/chevron-down';
 
 	/**
 	 * Dropdown item interface for programmatic rendering
@@ -449,15 +450,7 @@ SPDX-License-Identifier: MIT
 			{@render trigger()}
 		{:else}
 			{label}
-			<svg
-				class="h-4 w-4 transition-transform"
-				fill="none"
-				stroke="currentColor"
-				viewBox="0 0 24 24"
-				aria-hidden="true"
-			>
-				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-			</svg>
+			<ChevronDown size={16} class="transition-transform" aria-hidden="true" />
 		{/if}
 	</summary>
 

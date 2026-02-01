@@ -17,6 +17,9 @@ SPDX-License-Identifier: MIT
 		Button
 	} from '../../../lib/index.js';
 	import type { MenuItem } from '../../../lib/index.js';
+	import MenuIcon from 'lucide-svelte/icons/menu';
+	import Search from 'lucide-svelte/icons/search';
+	import Bell from 'lucide-svelte/icons/bell';
 
 	interface User {
 		name: string;
@@ -147,20 +150,8 @@ SPDX-License-Identifier: MIT
 		<!-- Left: Sidebar Toggle -->
 		<Col flex="none" hideAbove="lg">
 			<IconButton variant="ghost" circle ariaLabel={menuLabel} onclick={onToggleSidebar}>
-				<Icon name="menu">
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke-width="1.5"
-						stroke="currentColor"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-						/>
-					</svg>
+				<Icon name="menu" size="md" ariaHidden={true}>
+					<MenuIcon />
 				</Icon>
 			</IconButton>
 		</Col>
@@ -184,20 +175,8 @@ SPDX-License-Identifier: MIT
 							ariaLabel={searchLabel}
 							onclick={() => (isMobileSearchOpen = true)}
 						>
-							<Icon name="search">
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-									/>
-								</svg>
+							<Icon name="search" size="md" ariaHidden={true}>
+								<Search />
 							</Icon>
 						</IconButton>
 					</Col>
@@ -208,20 +187,8 @@ SPDX-License-Identifier: MIT
 					<Dropdown position="bottom" align="end" triggerClass="btn btn-ghost btn-circle">
 						{#snippet trigger()}
 							<div class="indicator">
-								<Icon name="bell">
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										fill="none"
-										viewBox="0 0 24 24"
-										stroke="currentColor"
-									>
-										<path
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											stroke-width="2"
-											d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-										/>
-									</svg>
+								<Icon name="bell" size="md" ariaHidden={true}>
+									<Bell />
 								</Icon>
 								{#if unreadCount > 0}
 									<Badge
@@ -250,20 +217,8 @@ SPDX-License-Identifier: MIT
 						ariaLabel={notificationsLabel}
 						onclick={onEmptyNotificationClick}
 					>
-						<Icon name="bell">
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke="currentColor"
-							>
-								<path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									stroke-width="2"
-									d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-								/>
-							</svg>
+						<Icon name="bell" size="md" ariaHidden={true}>
+							<Bell />
 						</Icon>
 					</IconButton>
 				{/if}

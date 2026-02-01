@@ -8,6 +8,7 @@ SPDX-License-Identifier: MIT
 	import Heading from '../typography/Heading.svelte';
 	import Text from '../typography/Text.svelte';
 	import Spinner from '../feedback/Spinner.svelte';
+	import ChevronDown from 'lucide-svelte/icons/chevron-down';
 
 	/**
 	 * Props interface for the CardSection component
@@ -205,20 +206,7 @@ SPDX-License-Identifier: MIT
 				</div>
 
 				<div class="flex flex-shrink-0 items-center gap-2">
-					<svg
-						class={chevronClasses}
-						fill="none"
-						stroke="currentColor"
-						viewBox="0 0 24 24"
-						aria-hidden="true"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M19 9l-7 7-7-7"
-						/>
-					</svg>
+					<ChevronDown class={chevronClasses} aria-hidden="true" />
 				</div>
 			</button>
 		{:else}

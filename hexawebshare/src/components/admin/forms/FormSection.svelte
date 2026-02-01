@@ -9,6 +9,8 @@ SPDX-License-Identifier: MIT
 	import Text from '../../core/typography/Text.svelte';
 	import Divider from '../../core/layout/Divider.svelte';
 	import Spinner from '../../core/feedback/Spinner.svelte';
+	import Icon from '../../core/media/Icon.svelte';
+	import ChevronDown from 'lucide-svelte/icons/chevron-down';
 
 	/**
 	 * Props interface for the FormSection component
@@ -206,20 +208,9 @@ SPDX-License-Identifier: MIT
 							{@render headerActions()}
 						</div>
 					{/if}
-					<svg
-						class={chevronClasses}
-						fill="none"
-						stroke="currentColor"
-						viewBox="0 0 24 24"
-						aria-hidden="true"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M19 9l-7 7-7-7"
-						/>
-					</svg>
+					<Icon size="sm" class={chevronClasses} ariaHidden={true}>
+						<ChevronDown />
+					</Icon>
 				</div>
 			</button>
 		{:else}

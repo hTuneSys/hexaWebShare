@@ -11,6 +11,8 @@ SPDX-License-Identifier: MIT
 	import EmptyState from '../../core/data-display/EmptyState.svelte';
 	import Spinner from '../../core/feedback/Spinner.svelte';
 	import StatusBadge from '../../core/data-display/StatusBadge.svelte';
+	import Pencil from 'lucide-svelte/icons/pencil';
+	import Trash2 from 'lucide-svelte/icons/trash-2';
 
 	/**
 	 * User data structure for UserTable component
@@ -439,21 +441,7 @@ SPDX-License-Identifier: MIT
 											onclick={() => handleEditClick(user, index)}
 											disabled={disabled || loading}
 										>
-											<svg
-												xmlns="http://www.w3.org/2000/svg"
-												width="16"
-												height="16"
-												viewBox="0 0 24 24"
-												fill="none"
-												stroke="currentColor"
-												stroke-width="2"
-												stroke-linecap="round"
-												stroke-linejoin="round"
-												aria-hidden="true"
-											>
-												<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-												<path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-											</svg>
+											<Pencil size={16} aria-hidden="true" />
 										</IconButton>
 									{/if}
 									{#if ondelete}
@@ -466,23 +454,7 @@ SPDX-License-Identifier: MIT
 											disabled={disabled || loading}
 											class="text-error hover:bg-error/10"
 										>
-											<svg
-												xmlns="http://www.w3.org/2000/svg"
-												width="16"
-												height="16"
-												viewBox="0 0 24 24"
-												fill="none"
-												stroke="currentColor"
-												stroke-width="2"
-												stroke-linecap="round"
-												stroke-linejoin="round"
-												aria-hidden="true"
-											>
-												<polyline points="3 6 5 6 21 6"></polyline>
-												<path
-													d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
-												></path>
-											</svg>
+											<Trash2 size={16} aria-hidden="true" />
 										</IconButton>
 									{/if}
 								</div>

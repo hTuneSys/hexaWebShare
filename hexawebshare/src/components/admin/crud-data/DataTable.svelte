@@ -55,6 +55,10 @@ pagination, and row actions.
 	import Spinner from '../../core/feedback/Spinner.svelte';
 	import Text from '../../core/typography/Text.svelte';
 	import Icon from '../../core/media/Icon.svelte';
+	import ArrowUp from 'lucide-svelte/icons/arrow-up';
+	import ArrowDown from 'lucide-svelte/icons/arrow-down';
+	import ArrowUpDown from 'lucide-svelte/icons/arrow-up-down';
+	import EllipsisVertical from 'lucide-svelte/icons/ellipsis-vertical';
 
 	/**
 	 * Sort direction type
@@ -427,50 +431,11 @@ pagination, and row actions.
 							{#if column.sortable}
 								<Icon size="sm" class="text-base-content/50" ariaHidden={true}>
 									{#if getSortDirection(column) === 'asc'}
-										{#snippet children()}
-											<svg
-												xmlns="http://www.w3.org/2000/svg"
-												viewBox="0 0 24 24"
-												fill="none"
-												stroke="currentColor"
-												stroke-width="2"
-												stroke-linecap="round"
-												stroke-linejoin="round"
-												class="h-full w-full"
-											>
-												<path d="M12 19V5M5 12l7-7 7 7" />
-											</svg>
-										{/snippet}
+										<ArrowUp />
 									{:else if getSortDirection(column) === 'desc'}
-										{#snippet children()}
-											<svg
-												xmlns="http://www.w3.org/2000/svg"
-												viewBox="0 0 24 24"
-												fill="none"
-												stroke="currentColor"
-												stroke-width="2"
-												stroke-linecap="round"
-												stroke-linejoin="round"
-												class="h-full w-full"
-											>
-												<path d="M12 5v14M5 12l7 7 7-7" />
-											</svg>
-										{/snippet}
+										<ArrowDown />
 									{:else}
-										{#snippet children()}
-											<svg
-												xmlns="http://www.w3.org/2000/svg"
-												viewBox="0 0 24 24"
-												fill="none"
-												stroke="currentColor"
-												stroke-width="2"
-												stroke-linecap="round"
-												stroke-linejoin="round"
-												class="h-full w-full"
-											>
-												<path d="M7 15l5 5 5-5M7 9l5-5 5 5" />
-											</svg>
-										{/snippet}
+										<ArrowUpDown />
 									{/if}
 								</Icon>
 							{/if}
@@ -554,18 +519,7 @@ pagination, and row actions.
 								>
 									{#snippet trigger()}
 										<Icon size={size === 'xs' ? 'xs' : 'sm'} ariaHidden={true}>
-											{#snippet children()}
-												<svg
-													xmlns="http://www.w3.org/2000/svg"
-													viewBox="0 0 24 24"
-													fill="currentColor"
-													class="h-full w-full"
-												>
-													<circle cx="12" cy="5" r="2" />
-													<circle cx="12" cy="12" r="2" />
-													<circle cx="12" cy="19" r="2" />
-												</svg>
-											{/snippet}
+											<EllipsisVertical />
 										</Icon>
 									{/snippet}
 								</Dropdown>

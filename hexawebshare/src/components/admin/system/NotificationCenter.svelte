@@ -14,6 +14,10 @@ SPDX-License-Identifier: MIT
 	import List from '../../core/data-display/List.svelte';
 	import ListItem from '../../core/data-display/ListItem.svelte';
 	import Heading from '../../core/typography/Heading.svelte';
+	import EllipsisVertical from 'lucide-svelte/icons/ellipsis-vertical';
+	import Check from 'lucide-svelte/icons/check';
+	import X from 'lucide-svelte/icons/x';
+	import Bell from 'lucide-svelte/icons/bell';
 
 	/**
 	 * Notification item interface
@@ -282,21 +286,7 @@ SPDX-License-Identifier: MIT
 								{disabled}
 							>
 								{#snippet children()}
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										class="h-5 w-5"
-										fill="none"
-										viewBox="0 0 24 24"
-										stroke="currentColor"
-										aria-hidden="true"
-									>
-										<path
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											stroke-width="2"
-											d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
-										/>
-									</svg>
+									<EllipsisVertical size={20} aria-hidden="true" />
 								{/snippet}
 							</IconButton>
 						{/snippet}
@@ -318,21 +308,7 @@ SPDX-License-Identifier: MIT
 					ariaLabel="No notifications available"
 				>
 					{#snippet icon()}
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							class="text-base-content/20 h-8 w-8"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke="currentColor"
-							aria-hidden="true"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="1.5"
-								d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-							/>
-						</svg>
+						<Bell size={32} class="text-base-content/20" aria-hidden="true" />
 					{/snippet}
 				</EmptyState>
 			{:else}
@@ -405,21 +381,7 @@ SPDX-License-Identifier: MIT
 													{disabled}
 												>
 													{#snippet children()}
-														<svg
-															xmlns="http://www.w3.org/2000/svg"
-															class="h-4 w-4"
-															fill="none"
-															viewBox="0 0 24 24"
-															stroke="currentColor"
-															aria-hidden="true"
-														>
-															<path
-																stroke-linecap="round"
-																stroke-linejoin="round"
-																stroke-width="2"
-																d="M5 13l4 4L19 7"
-															/>
-														</svg>
+														<Check size={16} aria-hidden="true" />
 													{/snippet}
 												</IconButton>
 											{/if}
@@ -431,21 +393,7 @@ SPDX-License-Identifier: MIT
 												{disabled}
 											>
 												{#snippet children()}
-													<svg
-														xmlns="http://www.w3.org/2000/svg"
-														class="h-4 w-4"
-														fill="none"
-														viewBox="0 0 24 24"
-														stroke="currentColor"
-														aria-hidden="true"
-													>
-														<path
-															stroke-linecap="round"
-															stroke-linejoin="round"
-															stroke-width="2"
-															d="M6 18L18 6M6 6l12 12"
-														/>
-													</svg>
+													<X size={16} aria-hidden="true" />
 												{/snippet}
 											</IconButton>
 										</div>

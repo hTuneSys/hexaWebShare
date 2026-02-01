@@ -11,6 +11,7 @@ SPDX-License-Identifier: MIT
 	import Badge from '../media/Badge.svelte';
 	import Heading from '../typography/Heading.svelte';
 	import Text from '../typography/Text.svelte';
+	import ChevronsLeft from 'lucide-svelte/icons/chevrons-left';
 
 	/**
 	 * Sidebar item interface for menu items
@@ -382,20 +383,11 @@ SPDX-License-Identifier: MIT
 					onclick={toggleCollapse}
 				>
 					{#snippet children()}
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							class="h-5 w-5 transition-transform {collapsed ? 'rotate-180' : ''}"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke="currentColor"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M11 19l-7-7 7-7m8 14l-7-7 7-7"
-							/>
-						</svg>
+						<ChevronsLeft
+							size={20}
+							class="transition-transform {collapsed ? 'rotate-180' : ''}"
+							aria-hidden="true"
+						/>
 					{/snippet}
 				</IconButton>
 			{/if}

@@ -9,6 +9,8 @@ SPDX-License-Identifier: MIT
 	import Button from '../../core/buttons/Button.svelte';
 	import Input from '../../core/forms/Input.svelte';
 	import Row from '../../core/layout/Row.svelte';
+	import Icon from '../../core/media/Icon.svelte';
+	import X from 'lucide-svelte/icons/x';
 
 	/**
 	 * Props interface for the TagInput component
@@ -464,17 +466,9 @@ SPDX-License-Identifier: MIT
 						onclick={() => removeTag(index)}
 						class="text-base-content/70 hover:text-base-content ml-2 inline-flex h-auto min-h-0 min-w-0 border-none bg-transparent p-0 transition-colors hover:bg-transparent"
 					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="14"
-							height="14"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke="currentColor"
-							stroke-width="2.5"
-						>
-							<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-						</svg>
+						<Icon size="xs" ariaHidden={true}>
+							<X />
+						</Icon>
 					</Button>
 				{/if}
 			</Row>

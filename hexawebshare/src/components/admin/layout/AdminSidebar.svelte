@@ -14,6 +14,7 @@ SPDX-License-Identifier: MIT
 	import Text from '../../core/typography/Text.svelte';
 	import Spinner from '../../core/feedback/Spinner.svelte';
 	import Icon from '../../core/media/Icon.svelte';
+	import ChevronsLeft from 'lucide-svelte/icons/chevrons-left';
 
 	/**
 	 * Badge variant type for sidebar items
@@ -277,29 +278,8 @@ SPDX-License-Identifier: MIT
 						{#if collapseIcon}
 							{@render collapseIcon({ collapsed })}
 						{:else}
-							<Icon size="md" ariaHidden={true}>
-								{#snippet children()}
-									<!--
-										NOTE: Raw HTML svg is intentional here.
-										TECHNICAL REASON: Icon component accepts SVG as children snippet.
-										This is the standard pattern for custom icons in this library.
-										No pre-built chevron icon exists in the component library.
-									-->
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										class="h-5 w-5 transition-transform {collapsed ? 'rotate-180' : ''}"
-										fill="none"
-										viewBox="0 0 24 24"
-										stroke="currentColor"
-									>
-										<path
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											stroke-width="2"
-											d="M11 19l-7-7 7-7m8 14l-7-7 7-7"
-										/>
-									</svg>
-								{/snippet}
+							<Icon size="md" ariaHidden={true} class="transition-transform {collapsed ? 'rotate-180' : ''}">
+								<ChevronsLeft />
 							</Icon>
 						{/if}
 					{/snippet}

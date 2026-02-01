@@ -6,6 +6,8 @@ SPDX-License-Identifier: MIT
 <script lang="ts">
 	import Button from '../buttons/Button.svelte';
 	import IconButton from '../buttons/IconButton.svelte';
+	import CloudUpload from 'lucide-svelte/icons/cloud-upload';
+	import X from 'lucide-svelte/icons/x';
 
 	/**
 	 * Props interface for the FileUpload component
@@ -403,21 +405,7 @@ SPDX-License-Identifier: MIT
 			</div>
 		{:else}
 			<div class="flex flex-col items-center justify-center gap-2">
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					class="text-base-content/50 h-12 w-12"
-					fill="none"
-					viewBox="0 0 24 24"
-					stroke="currentColor"
-					aria-hidden="true"
-				>
-					<path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="2"
-						d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-					/>
-				</svg>
+				<CloudUpload size={48} class="text-base-content/50" aria-hidden="true" />
 				<div class="text-base-content text-sm font-medium">
 					{#if dragDrop}
 						Drag and drop files here, or
@@ -479,21 +467,7 @@ SPDX-License-Identifier: MIT
 								{disabled}
 								onclick={() => removeFile(index)}
 							>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									class="h-4 w-4"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke="currentColor"
-									aria-hidden="true"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										stroke-width="2"
-										d="M6 18L18 6M6 6l12 12"
-									/>
-								</svg>
+								<X size={16} aria-hidden="true" />
 							</IconButton>
 						</span>
 					</div>
