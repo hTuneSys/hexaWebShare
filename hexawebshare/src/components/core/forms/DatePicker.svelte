@@ -108,7 +108,7 @@ SPDX-License-Identifier: MIT
 	}
 
 	const {
-		value,
+		value: valueProp,
 		min,
 		max,
 		variant = 'primary',
@@ -130,6 +130,14 @@ SPDX-License-Identifier: MIT
 		class: className = '',
 		...props
 	}: Props = $props();
+
+	// Internal state for value
+	let value = $state(valueProp);
+
+	// Sync value with prop changes
+	$effect(() => {
+		value = valueProp;
+	});
 
 	// Generate unique ID if not provided
 	let fieldId = $derived(id || `datepicker-${Math.random().toString(36).substring(2, 11)}`);
@@ -173,6 +181,7 @@ SPDX-License-Identifier: MIT
 
 	// Handle change event
 	function handleChange(event: Event) {
+		value = (event.target as HTMLInputElement).value;
 		if (onchange) {
 			onchange(event);
 		}
@@ -180,6 +189,7 @@ SPDX-License-Identifier: MIT
 
 	// Handle input event
 	function handleInput(event: Event) {
+		value = (event.target as HTMLInputElement).value;
 		if (oninput) {
 			oninput(event);
 		}
@@ -196,7 +206,7 @@ SPDX-License-Identifier: MIT
 		id={fieldId}
 		{name}
 		class={inputClasses}
-		{value}
+		bind:value
 		{min}
 		{max}
 		{disabled}
