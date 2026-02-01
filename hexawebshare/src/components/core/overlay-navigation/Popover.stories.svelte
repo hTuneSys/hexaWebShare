@@ -281,6 +281,17 @@ SPDX-License-Identifier: MIT
 </Story>
 
 <!-- Story 11: Playground -->
+<!-- 
+NOTE: Storybook controls are partially interactive for this component.
+TECHNICAL REASON: Popover requires Svelte 5 snippets (trigger and children props).
+The addon-svelte-csf Story component cannot pass args to snippet parameters in Svelte 5.
+ATTEMPTED SOLUTIONS:
+1. Tried {#snippet children(args)} pattern - TypeScript error: Snippet<[]> doesn't accept parameters
+2. Tried reactive state binding - Adds complexity without significant benefit
+CONSEQUENCE: Playground story shows default configuration; Storybook controls don't update props in real-time.
+WORKAROUND: Use the placement-specific stories (Placement Top, Placement Left, etc.) to see different configurations.
+TODO: Investigate Storybook v8+ compatibility with Svelte 5 snippet pattern
+-->
 <Story
 	name="Playground"
 	args={{
@@ -312,7 +323,7 @@ SPDX-License-Identifier: MIT
 				<div class="space-y-3">
 					<Text text="Playground" weight="bold" size="lg" display="block" />
 					<Text
-						text="Use the Storybook controls panel to adjust placement, tone, size, and behavior options."
+						text="Note: Storybook controls are not fully functional for snippet-based components. Use the placement-specific stories above to explore different configurations."
 						size="sm"
 						variant="muted"
 						display="block"
