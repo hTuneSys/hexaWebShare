@@ -96,6 +96,46 @@ SPDX-License-Identifier: MIT
 		 */
 		ariaDescribedby?: string;
 		/**
+		 * Text displayed during file upload
+		 * @default 'Uploading...'
+		 */
+		uploadingText?: string;
+		/**
+		 * Text for drag and drop instruction
+		 * @default 'Drag and drop files here, or'
+		 */
+		dragDropText?: string;
+		/**
+		 * Label for browse button
+		 * @default 'browse'
+		 */
+		browseButtonLabel?: string;
+		/**
+		 * Text prefix for accepted file types
+		 * @default 'Accepted:'
+		 */
+		acceptedText?: string;
+		/**
+		 * Text prefix for maximum file size
+		 * @default 'Max size:'
+		 */
+		maxSizeText?: string;
+		/**
+		 * Text template for selected files count (use {count} placeholder)
+		 * @default '{count} file(s) selected'
+		 */
+		selectedFilesText?: string;
+		/**
+		 * Label for clear all button
+		 * @default 'Clear all'
+		 */
+		clearAllLabel?: string;
+		/**
+		 * ARIA label for remove file button
+		 * @default 'Remove file'
+		 */
+		removeFileAriaLabel?: string;
+		/**
 		 * Change event handler - receives FileList
 		 */
 		onchange?: (event: Event) => void;
@@ -128,6 +168,14 @@ SPDX-License-Identifier: MIT
 		name,
 		ariaLabel,
 		ariaDescribedby,
+		uploadingText = 'Uploading...',
+		dragDropText = 'Drag and drop files here, or',
+		browseButtonLabel = 'browse',
+		acceptedText = 'Accepted:',
+		maxSizeText = 'Max size:',
+		selectedFilesText = '{count} file(s) selected',
+		clearAllLabel = 'Clear all',
+		removeFileAriaLabel = 'Remove file',
 		onchange,
 		onfiles,
 		class: className = '',
@@ -402,7 +450,7 @@ SPDX-License-Identifier: MIT
 			<div class="flex flex-col items-center justify-center gap-2">
 				<span class="loading loading-spinner {loadingSizeClass} text-primary" aria-hidden="true"
 				></span>
-				<span class="text-base-content/70 text-sm">Uploading...</span>
+				<span class="text-base-content/70 text-sm">{uploadingText}</span>
 			</div>
 		{:else}
 			<div class="flex flex-col items-center justify-center gap-2">
@@ -411,7 +459,7 @@ SPDX-License-Identifier: MIT
 				</Icon>
 				<div class="text-base-content text-sm font-medium">
 					{#if dragDrop}
-						Drag and drop files here, or
+						{dragDropText}
 					{/if}
 					<span
 						onclick={(e) => {
@@ -419,7 +467,7 @@ SPDX-License-Identifier: MIT
 						}}
 					>
 						<Button
-							label="browse"
+							label={browseButtonLabel}
 							variant={variant || undefined}
 							{size}
 							outline={!variant}
@@ -434,10 +482,10 @@ SPDX-License-Identifier: MIT
 					<p class="text-base-content/70 text-xs">{helpText}</p>
 				{/if}
 				{#if accept}
-					<p class="text-base-content/50 text-xs">Accepted: {accept}</p>
+					<p class="text-base-content/50 text-xs">{acceptedText} {accept}</p>
 				{/if}
 				{#if maxSize}
-					<p class="text-base-content/50 text-xs">Max size: {formatFileSize(maxSize)}</p>
+					<p class="text-base-content/50 text-xs">{maxSizeText} {formatFileSize(maxSize)}</p>
 				{/if}
 			</div>
 		{/if}
@@ -447,10 +495,10 @@ SPDX-License-Identifier: MIT
 		<div class="mt-4 space-y-2">
 			<div class="flex items-center justify-between">
 				<span class="text-base-content text-sm font-medium">
-					{selectedFiles.length} file{selectedFiles.length > 1 ? 's' : ''} selected
+					{selectedFilesText.replace('{count}', selectedFiles.length.toString()).replace('(s)', selectedFiles.length > 1 ? 's' : '')}
 				</span>
 				{#if multiple && selectedFiles.length > 1}
-					<Button label="Clear all" variant="ghost" size="xs" {disabled} onclick={clearAll} />
+					<Button label={clearAllLabel} variant="ghost" size="xs" {disabled} onclick={clearAll} />
 				{/if}
 			</div>
 			<div class="space-y-2">
@@ -466,7 +514,7 @@ SPDX-License-Identifier: MIT
 							<IconButton
 								variant="ghost"
 								size="xs"
-								ariaLabel="Remove file"
+								ariaLabel={removeFileAriaLabel}
 								{disabled}
 								onclick={() => removeFile(index)}
 							>
