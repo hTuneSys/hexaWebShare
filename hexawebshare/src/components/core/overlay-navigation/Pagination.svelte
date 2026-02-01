@@ -173,6 +173,16 @@ SPDX-License-Identifier: MIT
 		 */
 		pageAriaLabelFormat?: string;
 		/**
+		 * Custom aria-label for ellipsis button
+		 * @default 'Ellipsis'
+		 */
+		ellipsisAriaLabel?: string;
+		/**
+		 * Custom aria-label for items per page selector
+		 * @default 'Items per page'
+		 */
+		pageSizeAriaLabel?: string;
+		/**
 		 * Additional CSS classes
 		 */
 		class?: string;
@@ -208,6 +218,8 @@ SPDX-License-Identifier: MIT
 		nextPageAriaLabel = 'Go to next page',
 		lastPageAriaLabel = 'Go to last page',
 		pageAriaLabelFormat = 'Go to page {page}',
+		ellipsisAriaLabel = 'Ellipsis',
+		pageSizeAriaLabel = 'Items per page',
 		class: className = '',
 		...props
 	}: Props = $props();
@@ -405,7 +417,7 @@ SPDX-License-Identifier: MIT
 						{size}
 						label="…"
 						disabled={true}
-						ariaLabel="Ellipsis"
+						ariaLabel={ellipsisAriaLabel}
 						class="join-item"
 					/>
 				{:else}
@@ -467,7 +479,7 @@ SPDX-License-Identifier: MIT
 						options={selectOptions}
 						{size}
 						disabled={disabled || loading}
-						ariaLabel="Items per page"
+						ariaLabel={pageSizeAriaLabel}
 						class="w-auto min-w-[80px]"
 						onchange={(e) => {
 							const newSize = Number.parseInt((e.target as HTMLSelectElement).value, 10);
