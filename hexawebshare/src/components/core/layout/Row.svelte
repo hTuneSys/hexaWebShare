@@ -37,6 +37,12 @@ SPDX-License-Identifier: MIT
 		wrap?: boolean;
 
 		/**
+		 * Whether to use inline-flex instead of flex
+		 * @default false
+		 */
+		inline?: boolean;
+
+		/**
 		 * ARIA label for accessibility
 		 */
 		ariaLabel?: string;
@@ -72,6 +78,7 @@ SPDX-License-Identifier: MIT
 		align = 'center',
 		justify = 'start',
 		wrap = false,
+		inline = false,
 		sticky = false,
 		border = false,
 		hideBelow,
@@ -135,6 +142,9 @@ SPDX-License-Identifier: MIT
 	// Static class mapping for Wrap
 	let wrapClass = $derived(wrap ? 'flex-wrap' : 'flex-nowrap');
 
+	// Static class mapping for Inline
+	let displayClass = $derived(inline ? 'inline-flex' : 'flex');
+
 	// Visibility and Layout classes
 	let visibilityClasses = $derived(
 		[
@@ -157,7 +167,7 @@ SPDX-License-Identifier: MIT
 </script>
 
 <div
-	class="flex {gapClass} {alignClass} {justifyClass} {wrapClass} {visibilityClasses} {layoutClasses} {className}"
+	class="{displayClass} {gapClass} {alignClass} {justifyClass} {wrapClass} {visibilityClasses} {layoutClasses} {className}"
 	role="group"
 	aria-label={ariaLabel}
 	{...props}
