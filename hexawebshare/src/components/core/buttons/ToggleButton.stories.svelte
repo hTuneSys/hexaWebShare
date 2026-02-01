@@ -123,11 +123,9 @@ SPDX-License-Identifier: MIT
 <Story name="Button Group">
 	{#snippet children()}
 		<ButtonGroup orientation="horizontal" gap="sm">
-			{#snippet children()}
-				<ToggleButton label="Option 1" variant="primary" pressed={false} onclick={fn()} />
-				<ToggleButton label="Option 2" variant="primary" pressed={false} onclick={fn()} />
-				<ToggleButton label="Option 3" variant="primary" pressed={false} onclick={fn()} />
-			{/snippet}
+			<ToggleButton label="Option 1" variant="primary" pressed={false} onclick={fn()} />
+			<ToggleButton label="Option 2" variant="primary" pressed={false} onclick={fn()} />
+			<ToggleButton label="Option 3" variant="primary" pressed={false} onclick={fn()} />
 		</ButtonGroup>
 	{/snippet}
 </Story>
