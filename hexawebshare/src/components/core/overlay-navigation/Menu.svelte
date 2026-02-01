@@ -272,6 +272,19 @@ SPDX-License-Identifier: MIT
 	const handleBlur = () => {
 		focusedIndex = -1;
 	};
+
+	// Helper functions to map Menu size to Text component sizes
+	const getLabelSize = (): 'xs' | 'sm' | 'base' => {
+		return size === 'lg' ? 'base' : 'sm';
+	};
+
+	const getDescriptionSize = (): 'xs' | 'sm' => {
+		return size === 'lg' ? 'sm' : 'xs';
+	};
+
+	const getTitleSize = (): 'xs' | 'sm' => {
+		return size === 'lg' ? 'sm' : 'xs';
+	};
 </script>
 
 <ul
@@ -306,7 +319,7 @@ SPDX-License-Identifier: MIT
 				>
 					<Text
 						text={item.label}
-						size="xs"
+						size={getTitleSize()}
 						class="font-semibold tracking-wider uppercase opacity-60"
 					/>
 				</li>
@@ -330,9 +343,9 @@ SPDX-License-Identifier: MIT
 								<span class="text-lg" aria-hidden="true">{item.icon}</span>
 							{/if}
 							<span class="flex flex-col">
-								<Text text={item.label} size="sm" variant="inherit" />
+								<Text text={item.label} size={getLabelSize()} variant="inherit" />
 								{#if item.description}
-									<Text text={item.description} size="xs" class="opacity-60" variant="inherit" />
+									<Text text={item.description} size={getDescriptionSize()} class="opacity-60" variant="inherit" />
 								{/if}
 							</span>
 						</a>
@@ -353,9 +366,9 @@ SPDX-License-Identifier: MIT
 								<span class="text-lg" aria-hidden="true">{item.icon}</span>
 							{/if}
 							<span class="flex flex-col">
-								<Text text={item.label} size="sm" variant="inherit" />
+								<Text text={item.label} size={getLabelSize()} variant="inherit" />
 								{#if item.description}
-									<Text text={item.description} size="xs" class="opacity-60" variant="inherit" />
+									<Text text={item.description} size={getDescriptionSize()} class="opacity-60" variant="inherit" />
 								{/if}
 							</span>
 						</button>
