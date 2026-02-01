@@ -59,14 +59,24 @@ SPDX-License-Identifier: MIT
 		 * @default false
 		 */
 		divider?: boolean;
-		/**
-		 * Accessible label for screen readers
-		 */
-		ariaLabel?: string;
-		/**
-		 * Icon snippet to display before the title
-		 */
-		icon?: Snippet;
+	/**
+	 * Accessible label for screen readers
+	 */
+	ariaLabel?: string;
+	/**
+	 * Aria-label for loading content container
+	 * @default 'Loading content'
+	 */
+	loadingContentAriaLabel?: string;
+	/**
+	 * Aria-label for loading spinner
+	 * @default 'Loading section content'
+	 */
+	loadingSpinnerAriaLabel?: string;
+	/**
+	 * Icon snippet to display before the title
+	 */
+	icon?: Snippet;
 		/**
 		 * Header actions snippet (buttons, links, etc.)
 		 */
@@ -92,6 +102,8 @@ SPDX-License-Identifier: MIT
 		loading = false,
 		divider = false,
 		ariaLabel,
+		loadingContentAriaLabel = 'Loading content',
+		loadingSpinnerAriaLabel = 'Loading section content',
 		icon,
 		headerActions,
 		children,
@@ -248,8 +260,8 @@ SPDX-License-Identifier: MIT
 
 	<div class={contentClasses}>
 		{#if loading}
-			<div class="flex items-center justify-center py-8" aria-label="Loading content">
-				<Spinner size="md" variant="neutral" ariaLabel="Loading section content" />
+			<div class="flex items-center justify-center py-8" aria-label={loadingContentAriaLabel}>
+				<Spinner size="md" variant="neutral" ariaLabel={loadingSpinnerAriaLabel} />
 			</div>
 		{:else if children}
 			{@render children()}
