@@ -195,6 +195,7 @@ SPDX-License-Identifier: MIT
 		[
 			'font-semibold',
 			'text-base-content',
+			'max-w-md',
 			// Size-based typography
 			size === 'sm' && 'text-base',
 			size === 'md' && 'text-lg',
