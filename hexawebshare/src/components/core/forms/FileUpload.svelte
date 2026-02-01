@@ -131,20 +131,20 @@ SPDX-License-Identifier: MIT
 		 * @default 'Clear all'
 		 */
 		clearAllLabel?: string;
-	/**
-	 * ARIA label for remove file button
-	 * @default 'Remove file'
-	 */
-	removeFileAriaLabel?: string;
-	/**
-	 * Aria-label for required field indicator
-	 * @default 'required'
-	 */
-	requiredAriaLabel?: string;
-	/**
-	 * Change event handler - receives FileList
-	 */
-	onchange?: (event: Event) => void;
+		/**
+		 * ARIA label for remove file button
+		 * @default 'Remove file'
+		 */
+		removeFileAriaLabel?: string;
+		/**
+		 * Aria-label for required field indicator
+		 * @default 'required'
+		 */
+		requiredAriaLabel?: string;
+		/**
+		 * Change event handler - receives FileList
+		 */
+		onchange?: (event: Event) => void;
 		/**
 		 * File selection event handler - receives array of File objects
 		 */
@@ -179,15 +179,15 @@ SPDX-License-Identifier: MIT
 		browseButtonLabel = 'browse',
 		acceptedText = 'Accepted:',
 		maxSizeText = 'Max size:',
-	selectedFilesText = '{count} file(s) selected',
-	clearAllLabel = 'Clear all',
-	removeFileAriaLabel = 'Remove file',
-	requiredAriaLabel = 'required',
-	onchange,
-	onfiles,
-	class: className = '',
-	...props
-}: Props = $props();
+		selectedFilesText = '{count} file(s) selected',
+		clearAllLabel = 'Clear all',
+		removeFileAriaLabel = 'Remove file',
+		requiredAriaLabel = 'required',
+		onchange,
+		onfiles,
+		class: className = '',
+		...props
+	}: Props = $props();
 
 	// Generate unique ID if not provided
 	let fieldId = $derived(id || `file-upload-${Math.random().toString(36).slice(2, 11)}`);
@@ -482,19 +482,29 @@ SPDX-License-Identifier: MIT
 							onclick={() => {
 								triggerFileInput();
 							}}
+						/>
+					</span>
+				</div>
+				{#if helpText && (!error || error === '')}
+					<Text text={helpText} variant="muted" size="xs" display="block" />
+				{/if}
+				{#if accept}
+					<Text
+						text={`${acceptedText} ${accept}`}
+						class="text-base-content/50"
+						size="xs"
+						display="block"
 					/>
-				</span>
+				{/if}
+				{#if maxSize}
+					<Text
+						text={`${maxSizeText} ${formatFileSize(maxSize)}`}
+						class="text-base-content/50"
+						size="xs"
+						display="block"
+					/>
+				{/if}
 			</div>
-			{#if helpText && (!error || error === '')}
-				<Text text={helpText} variant="muted" size="xs" display="block" />
-			{/if}
-			{#if accept}
-				<Text text={`${acceptedText} ${accept}`} class="text-base-content/50" size="xs" display="block" />
-			{/if}
-			{#if maxSize}
-				<Text text={`${maxSizeText} ${formatFileSize(maxSize)}`} class="text-base-content/50" size="xs" display="block" />
-			{/if}
-		</div>
 		{/if}
 	</div>
 

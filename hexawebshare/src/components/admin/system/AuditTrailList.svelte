@@ -92,122 +92,122 @@ SPDX-License-Identifier: MIT
 		 * Callback when an item is clicked
 		 */
 		onItemClick?: (item: AuditTrailItem, index: number) => void;
-	/**
-	 * Accessible label for the list
-	 */
-	ariaLabel?: string;
-	/**
-	 * Aria-label for loading state items
-	 * @default 'Loading audit trail entry'
-	 */
-	loadingAriaLabel?: string;
-	/**
-	 * Error state title text
-	 * @default 'Error loading audit trail'
-	 */
-	errorTitle?: string;
-	/**
-	 * Aria-label for error message
-	 * @default 'Error message'
-	 */
-	errorAriaLabel?: string;
-	/**
-	 * Empty state title text
-	 * @default 'No audit trail entries'
-	 */
-	emptyTitle?: string;
-	/**
-	 * Aria-label for empty state
-	 * @default 'Empty audit trail list'
-	 */
-	emptyAriaLabel?: string;
-	/**
-	 * Aria-label prefix for timestamp
-	 * @default 'Timestamp: '
-	 */
-	timestampAriaLabelPrefix?: string;
-	/**
-	 * Aria-label prefix for action badge
-	 * @default 'Action: '
-	 */
-	actionAriaLabelPrefix?: string;
-	/**
-	 * Aria-label for entity name
-	 * @default 'Entity'
-	 */
-	entityAriaLabel?: string;
-	/**
-	 * Aria-label for entity ID
-	 * @default 'Entity ID'
-	 */
-	entityIdAriaLabel?: string;
-	/**
-	 * Aria-label for IP address
-	 * @default 'IP Address'
-	 */
-	ipAddressAriaLabel?: string;
-	/**
-	 * Label for "created" action
-	 * @default 'Created'
-	 */
-	actionCreatedLabel?: string;
-	/**
-	 * Label for "updated" action
-	 * @default 'Updated'
-	 */
-	actionUpdatedLabel?: string;
-	/**
-	 * Label for "deleted" action
-	 * @default 'Deleted'
-	 */
-	actionDeletedLabel?: string;
-	/**
-	 * Label for "viewed" action
-	 * @default 'Viewed'
-	 */
-	actionViewedLabel?: string;
-	/**
-	 * Label for "exported" action
-	 * @default 'Exported'
-	 */
-	actionExportedLabel?: string;
-	/**
-	 * Label for "imported" action
-	 * @default 'Imported'
-	 */
-	actionImportedLabel?: string;
-	/**
-	 * Label for "logged_in" action
-	 * @default 'Logged In'
-	 */
-	actionLoggedInLabel?: string;
-	/**
-	 * Label for "logged_out" action
-	 * @default 'Logged Out'
-	 */
-	actionLoggedOutLabel?: string;
-	/**
-	 * Label for "permission_changed" action
-	 * @default 'Permission Changed'
-	 */
-	actionPermissionChangedLabel?: string;
-	/**
-	 * Label for "other" action
-	 * @default 'Other'
-	 */
-	actionOtherLabel?: string;
-	/**
-	 * Function to format item aria-label
-	 * @param item - Audit trail item
-	 * @returns Formatted aria-label string
-	 * @default Generates label with action, entity, user, and timestamp
-	 */
-	formatItemAriaLabel?: (item: AuditTrailItem) => string;
-	/**
-	 * Additional CSS classes
-	 */
-	class?: string;
-}
+		/**
+		 * Accessible label for the list
+		 */
+		ariaLabel?: string;
+		/**
+		 * Aria-label for loading state items
+		 * @default 'Loading audit trail entry'
+		 */
+		loadingAriaLabel?: string;
+		/**
+		 * Error state title text
+		 * @default 'Error loading audit trail'
+		 */
+		errorTitle?: string;
+		/**
+		 * Aria-label for error message
+		 * @default 'Error message'
+		 */
+		errorAriaLabel?: string;
+		/**
+		 * Empty state title text
+		 * @default 'No audit trail entries'
+		 */
+		emptyTitle?: string;
+		/**
+		 * Aria-label for empty state
+		 * @default 'Empty audit trail list'
+		 */
+		emptyAriaLabel?: string;
+		/**
+		 * Aria-label prefix for timestamp
+		 * @default 'Timestamp: '
+		 */
+		timestampAriaLabelPrefix?: string;
+		/**
+		 * Aria-label prefix for action badge
+		 * @default 'Action: '
+		 */
+		actionAriaLabelPrefix?: string;
+		/**
+		 * Aria-label for entity name
+		 * @default 'Entity'
+		 */
+		entityAriaLabel?: string;
+		/**
+		 * Aria-label for entity ID
+		 * @default 'Entity ID'
+		 */
+		entityIdAriaLabel?: string;
+		/**
+		 * Aria-label for IP address
+		 * @default 'IP Address'
+		 */
+		ipAddressAriaLabel?: string;
+		/**
+		 * Label for "created" action
+		 * @default 'Created'
+		 */
+		actionCreatedLabel?: string;
+		/**
+		 * Label for "updated" action
+		 * @default 'Updated'
+		 */
+		actionUpdatedLabel?: string;
+		/**
+		 * Label for "deleted" action
+		 * @default 'Deleted'
+		 */
+		actionDeletedLabel?: string;
+		/**
+		 * Label for "viewed" action
+		 * @default 'Viewed'
+		 */
+		actionViewedLabel?: string;
+		/**
+		 * Label for "exported" action
+		 * @default 'Exported'
+		 */
+		actionExportedLabel?: string;
+		/**
+		 * Label for "imported" action
+		 * @default 'Imported'
+		 */
+		actionImportedLabel?: string;
+		/**
+		 * Label for "logged_in" action
+		 * @default 'Logged In'
+		 */
+		actionLoggedInLabel?: string;
+		/**
+		 * Label for "logged_out" action
+		 * @default 'Logged Out'
+		 */
+		actionLoggedOutLabel?: string;
+		/**
+		 * Label for "permission_changed" action
+		 * @default 'Permission Changed'
+		 */
+		actionPermissionChangedLabel?: string;
+		/**
+		 * Label for "other" action
+		 * @default 'Other'
+		 */
+		actionOtherLabel?: string;
+		/**
+		 * Function to format item aria-label
+		 * @param item - Audit trail item
+		 * @returns Formatted aria-label string
+		 * @default Generates label with action, entity, user, and timestamp
+		 */
+		formatItemAriaLabel?: (item: AuditTrailItem) => string;
+		/**
+		 * Additional CSS classes
+		 */
+		class?: string;
+	}
 
 	// Props destructuring with defaults
 	const {
@@ -555,9 +555,9 @@ SPDX-License-Identifier: MIT
 						: focusedIndex === index
 							? 0
 							: -1
-				: -1}
-			aria-label={getItemAriaLabel(item)}
-		>
+					: -1}
+				aria-label={getItemAriaLabel(item)}
+			>
 				<div class="flex items-start justify-between gap-4">
 					<div class="flex min-w-0 flex-1 items-center gap-3">
 						<Avatar
@@ -576,52 +576,48 @@ SPDX-License-Identifier: MIT
 							{/if}
 						</div>
 					</div>
-				<time
-					class={timestampClasses}
-					datetime={typeof item.timestamp === 'string'
-						? item.timestamp
-						: item.timestamp.toISOString()}
-					aria-label={`${timestampAriaLabelPrefix}${formatTimestamp(item.timestamp)}`}
-				>
-					{formatTimestamp(item.timestamp)}
-				</time>
+					<time
+						class={timestampClasses}
+						datetime={typeof item.timestamp === 'string'
+							? item.timestamp
+							: item.timestamp.toISOString()}
+						aria-label={`${timestampAriaLabelPrefix}${formatTimestamp(item.timestamp)}`}
+					>
+						{formatTimestamp(item.timestamp)}
+					</time>
 				</div>
 				<div
 					class={[size === 'sm' && 'ml-11', size === 'md' && 'ml-14', size === 'lg' && 'ml-16']
 						.filter(Boolean)
 						.join(' ')}
 				>
-				<div class="flex flex-wrap items-center gap-2">
-					<StatusBadge
-						label={formatAction(item.action)}
-						variant={getActionVariant(item.action)}
-						size={getBadgeSize()}
-						ariaLabel={`${actionAriaLabelPrefix}${formatAction(item.action)}`}
-					/>
-					<span
-						class={[actionClasses, 'text-base-content/60'].filter(Boolean).join(' ')}
-						aria-label={entityAriaLabel}
-					>
-						{item.entity}
-					</span>
-					{#if item.entityId}
-						<Text 
-							text={`(#${item.entityId})`} 
-							variant="muted" 
-							ariaLabel={entityIdAriaLabel} 
+					<div class="flex flex-wrap items-center gap-2">
+						<StatusBadge
+							label={formatAction(item.action)}
+							variant={getActionVariant(item.action)}
+							size={getBadgeSize()}
+							ariaLabel={`${actionAriaLabelPrefix}${formatAction(item.action)}`}
 						/>
-					{/if}
-				</div>
+						<span
+							class={[actionClasses, 'text-base-content/60'].filter(Boolean).join(' ')}
+							aria-label={entityAriaLabel}
+						>
+							{item.entity}
+						</span>
+						{#if item.entityId}
+							<Text text={`(#${item.entityId})`} variant="muted" ariaLabel={entityIdAriaLabel} />
+						{/if}
+					</div>
 					{#if item.details}
 						<div class={[emailClasses, 'mt-1'].filter(Boolean).join(' ')}>
 							{item.details}
 						</div>
 					{/if}
-				{#if item.ipAddress}
-					<div class="text-base-content/50 mt-1 text-xs" aria-label={ipAddressAriaLabel}>
-						IP: {item.ipAddress}
-					</div>
-				{/if}
+					{#if item.ipAddress}
+						<div class="text-base-content/50 mt-1 text-xs" aria-label={ipAddressAriaLabel}>
+							IP: {item.ipAddress}
+						</div>
+					{/if}
 				</div>
 			</div>
 		{/each}

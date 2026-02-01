@@ -105,7 +105,13 @@ SPDX-License-Identifier: MIT
 					</Heading>
 				{/if}
 				{#if onclose}
-					<IconButton variant="ghost" size="sm" circle ariaLabel={closeButtonAriaLabel} onclick={onclose}>
+					<IconButton
+						variant="ghost"
+						size="sm"
+						circle
+						ariaLabel={closeButtonAriaLabel}
+						onclick={onclose}
+					>
 						<Icon name="close" size="sm" ariaHidden>
 							<X />
 						</Icon>

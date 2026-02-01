@@ -487,38 +487,42 @@ SPDX-License-Identifier: MIT
 											role="presentation"
 										></span>
 									{/snippet}
-								{#snippet children()}
-									<div class="min-w-0 flex-1">
-										<div class="flex items-start justify-between gap-2">
-											<Text 
-												text={notification.title} 
-												size="sm" 
-												weight={!notification.read ? 'semibold' : 'normal'} 
-											/>
-											{#if notification.timestamp}
-												<time
-													class="text-base-content/50 shrink-0 text-xs"
-													datetime={typeof notification.timestamp === 'string'
-														? notification.timestamp
-														: notification.timestamp.toISOString()}
-												>
-													{formatTimestamp(notification.timestamp)}
-												</time>
+									{#snippet children()}
+										<div class="min-w-0 flex-1">
+											<div class="flex items-start justify-between gap-2">
+												<Text
+													text={notification.title}
+													size="sm"
+													weight={!notification.read ? 'semibold' : 'normal'}
+												/>
+												{#if notification.timestamp}
+													<time
+														class="text-base-content/50 shrink-0 text-xs"
+														datetime={typeof notification.timestamp === 'string'
+															? notification.timestamp
+															: notification.timestamp.toISOString()}
+													>
+														{formatTimestamp(notification.timestamp)}
+													</time>
+												{/if}
+											</div>
+											{#if notification.message}
+												<Text
+													text={notification.message}
+													variant="muted"
+													size="xs"
+													display="block"
+													class="mt-0.5"
+												/>
 											{/if}
 										</div>
-										{#if notification.message}
-											<Text 
-												text={notification.message} 
-												variant="muted" 
-												size="xs" 
-												display="block" 
-												class="mt-0.5" 
-											/>
-										{/if}
-									</div>
-								{/snippet}
+									{/snippet}
 									{#snippet trailing()}
-										<div class="flex shrink-0 gap-1" role="group" aria-label={notificationActionsAriaLabel}>
+										<div
+											class="flex shrink-0 gap-1"
+											role="group"
+											aria-label={notificationActionsAriaLabel}
+										>
 											{#if !notification.read}
 												<IconButton
 													variant="ghost"

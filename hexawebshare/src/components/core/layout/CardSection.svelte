@@ -59,24 +59,24 @@ SPDX-License-Identifier: MIT
 		 * @default false
 		 */
 		divider?: boolean;
-	/**
-	 * Accessible label for screen readers
-	 */
-	ariaLabel?: string;
-	/**
-	 * Aria-label for loading content container
-	 * @default 'Loading content'
-	 */
-	loadingContentAriaLabel?: string;
-	/**
-	 * Aria-label for loading spinner
-	 * @default 'Loading section content'
-	 */
-	loadingSpinnerAriaLabel?: string;
-	/**
-	 * Icon snippet to display before the title
-	 */
-	icon?: Snippet;
+		/**
+		 * Accessible label for screen readers
+		 */
+		ariaLabel?: string;
+		/**
+		 * Aria-label for loading content container
+		 * @default 'Loading content'
+		 */
+		loadingContentAriaLabel?: string;
+		/**
+		 * Aria-label for loading spinner
+		 * @default 'Loading section content'
+		 */
+		loadingSpinnerAriaLabel?: string;
+		/**
+		 * Icon snippet to display before the title
+		 */
+		icon?: Snippet;
 		/**
 		 * Header actions snippet (buttons, links, etc.)
 		 */

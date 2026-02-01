@@ -110,20 +110,20 @@ SPDX-License-Identifier: MIT
 		 * Callback when an activity log item is clicked
 		 */
 		onItemClick?: (entry: ActivityLogEntry, index: number) => void;
-	/**
-	 * Accessible label for the list
-	 */
-	ariaLabel?: string;
-	/**
-	 * Aria-label for loading state
-	 * @default 'Loading activity logs'
-	 */
-	loadingAriaLabel?: string;
-	/**
-	 * Additional CSS classes
-	 */
-	class?: string;
-}
+		/**
+		 * Accessible label for the list
+		 */
+		ariaLabel?: string;
+		/**
+		 * Aria-label for loading state
+		 * @default 'Loading activity logs'
+		 */
+		loadingAriaLabel?: string;
+		/**
+		 * Additional CSS classes
+		 */
+		class?: string;
+	}
 
 	const {
 		items = [],
@@ -212,11 +212,7 @@ SPDX-License-Identifier: MIT
 <div class={containerClasses} role="region" aria-label={ariaLabel} {...props}>
 	{#if loading}
 		<!-- Loading State -->
-		<div
-			class="flex items-center justify-center py-12"
-			role="status"
-			aria-label={loadingAriaLabel}
-		>
+		<div class="flex items-center justify-center py-12" role="status" aria-label={loadingAriaLabel}>
 			<span class="loading loading-spinner loading-md text-primary" aria-hidden="true"></span>
 		</div>
 	{:else if displayedItems.length === 0}
@@ -272,43 +268,54 @@ SPDX-License-Identifier: MIT
 									size={size === 'sm' ? 'sm' : size === 'lg' ? 'lg' : 'md'}
 								/>
 							</div>
-					{/if}
-
-					<!-- Content -->
-					<div class="flex min-w-0 flex-1 flex-col gap-1">
-						<div class="flex flex-wrap items-center gap-2">
-							<Text text={entry.action} variant="default" weight="medium" truncate={true} />
-							{#if showBadges && entry.type}
-								<StatusBadge
-									label={entry.type || 'info'}
-									variant={entry.type || 'info'}
-									size="xs"
-									ariaHidden={true}
-								/>
-							{/if}
-						</div>
-						{#if entry.description}
-							<Text text={entry.description} variant="muted" size="sm" truncate={true} />
 						{/if}
-						<div class="flex items-center gap-2">
-							<Text text={entry.user.name} variant="muted" size="xs" truncate={true} />
-							{#if entry.user.email && entry.user.email !== entry.user.name}
-								<Text text={`• ${entry.user.email}`} variant="muted" size="xs" truncate={true} class="hidden sm:inline" />
-							{/if}
-							{#if showTimestamps}
-								<Text text={`• ${formatTimestamp(entry.timestamp)}`} variant="muted" size="xs" class="hidden sm:inline" />
-							{/if}
-						</div>
-					</div>
 
-					<!-- Trailing: Timestamp (mobile) -->
-					{#if showTimestamps}
-						<div class="flex-shrink-0 sm:hidden">
-							<Text text={formatTimestamp(entry.timestamp)} variant="muted" size="xs" />
+						<!-- Content -->
+						<div class="flex min-w-0 flex-1 flex-col gap-1">
+							<div class="flex flex-wrap items-center gap-2">
+								<Text text={entry.action} variant="default" weight="medium" truncate={true} />
+								{#if showBadges && entry.type}
+									<StatusBadge
+										label={entry.type || 'info'}
+										variant={entry.type || 'info'}
+										size="xs"
+										ariaHidden={true}
+									/>
+								{/if}
+							</div>
+							{#if entry.description}
+								<Text text={entry.description} variant="muted" size="sm" truncate={true} />
+							{/if}
+							<div class="flex items-center gap-2">
+								<Text text={entry.user.name} variant="muted" size="xs" truncate={true} />
+								{#if entry.user.email && entry.user.email !== entry.user.name}
+									<Text
+										text={`• ${entry.user.email}`}
+										variant="muted"
+										size="xs"
+										truncate={true}
+										class="hidden sm:inline"
+									/>
+								{/if}
+								{#if showTimestamps}
+									<Text
+										text={`• ${formatTimestamp(entry.timestamp)}`}
+										variant="muted"
+										size="xs"
+										class="hidden sm:inline"
+									/>
+								{/if}
+							</div>
 						</div>
-					{/if}
-				</div>
-			{:else}
+
+						<!-- Trailing: Timestamp (mobile) -->
+						{#if showTimestamps}
+							<div class="flex-shrink-0 sm:hidden">
+								<Text text={formatTimestamp(entry.timestamp)} variant="muted" size="xs" />
+							</div>
+						{/if}
+					</div>
+				{:else}
 					<!-- Non-interactive item -->
 					<div
 						class={[
@@ -332,43 +339,54 @@ SPDX-License-Identifier: MIT
 									size={size === 'sm' ? 'sm' : size === 'lg' ? 'lg' : 'md'}
 								/>
 							</div>
-					{/if}
-
-					<!-- Content -->
-					<div class="flex min-w-0 flex-1 flex-col gap-1">
-						<div class="flex flex-wrap items-center gap-2">
-							<Text text={entry.action} variant="default" weight="medium" truncate={true} />
-							{#if showBadges && entry.type}
-								<StatusBadge
-									label={entry.type || 'info'}
-									variant={entry.type || 'info'}
-									size="xs"
-									ariaHidden={true}
-								/>
-							{/if}
-						</div>
-						{#if entry.description}
-							<Text text={entry.description} variant="muted" size="sm" truncate={true} />
 						{/if}
-						<div class="flex items-center gap-2">
-							<Text text={entry.user.name} variant="muted" size="xs" truncate={true} />
-							{#if entry.user.email && entry.user.email !== entry.user.name}
-								<Text text={`• ${entry.user.email}`} variant="muted" size="xs" truncate={true} class="hidden sm:inline" />
-							{/if}
-							{#if showTimestamps}
-								<Text text={`• ${formatTimestamp(entry.timestamp)}`} variant="muted" size="xs" class="hidden sm:inline" />
-							{/if}
-						</div>
-					</div>
 
-					<!-- Trailing: Timestamp (mobile) -->
-					{#if showTimestamps}
-						<div class="flex-shrink-0 sm:hidden">
-							<Text text={formatTimestamp(entry.timestamp)} variant="muted" size="xs" />
+						<!-- Content -->
+						<div class="flex min-w-0 flex-1 flex-col gap-1">
+							<div class="flex flex-wrap items-center gap-2">
+								<Text text={entry.action} variant="default" weight="medium" truncate={true} />
+								{#if showBadges && entry.type}
+									<StatusBadge
+										label={entry.type || 'info'}
+										variant={entry.type || 'info'}
+										size="xs"
+										ariaHidden={true}
+									/>
+								{/if}
+							</div>
+							{#if entry.description}
+								<Text text={entry.description} variant="muted" size="sm" truncate={true} />
+							{/if}
+							<div class="flex items-center gap-2">
+								<Text text={entry.user.name} variant="muted" size="xs" truncate={true} />
+								{#if entry.user.email && entry.user.email !== entry.user.name}
+									<Text
+										text={`• ${entry.user.email}`}
+										variant="muted"
+										size="xs"
+										truncate={true}
+										class="hidden sm:inline"
+									/>
+								{/if}
+								{#if showTimestamps}
+									<Text
+										text={`• ${formatTimestamp(entry.timestamp)}`}
+										variant="muted"
+										size="xs"
+										class="hidden sm:inline"
+									/>
+								{/if}
+							</div>
 						</div>
-					{/if}
-				</div>
-			{/if}
+
+						<!-- Trailing: Timestamp (mobile) -->
+						{#if showTimestamps}
+							<div class="flex-shrink-0 sm:hidden">
+								<Text text={formatTimestamp(entry.timestamp)} variant="muted" size="xs" />
+							</div>
+						{/if}
+					</div>
+				{/if}
 			{/each}
 		</div>
 	{/if}

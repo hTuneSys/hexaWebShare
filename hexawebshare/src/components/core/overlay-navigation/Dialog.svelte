@@ -128,7 +128,13 @@ SPDX-License-Identifier: MIT
 		<div class={modalBoxClasses}>
 			{#if closable}
 				<div class="absolute top-2 right-2">
-					<IconButton variant="ghost" size="sm" circle onclick={onClose} ariaLabel={closeButtonAriaLabel}>
+					<IconButton
+						variant="ghost"
+						size="sm"
+						circle
+						onclick={onClose}
+						ariaLabel={closeButtonAriaLabel}
+					>
 						<Icon size="xs" ariaHidden={true}>
 							<X />
 						</Icon>

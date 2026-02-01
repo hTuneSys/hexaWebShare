@@ -193,7 +193,7 @@ SPDX-License-Identifier: MIT
 	aria-labelledby={ariaLabelledby}
 	{...props}
 >
-	<ul class="flex flex-wrap items-center gap-2 list-none p-0 m-0 sm:gap-1" role="list">
+	<ul class="m-0 flex list-none flex-wrap items-center gap-2 p-0 sm:gap-1" role="list">
 		{#each items as item, index (item.id ?? index)}
 			{@const isLast = isLastItem(index)}
 			{@const itemClasses = getItemClasses(item, index, isLast)}
@@ -202,7 +202,7 @@ SPDX-License-Identifier: MIT
 				{#if item.href && !item.disabled && !disabled && !loading && !isLast}
 					<Link
 						href={item.href}
-						class="inline-flex items-center gap-1 no-underline transition-opacity hover:opacity-80 focus:outline-2 focus:outline-offset-2 focus:rounded"
+						class="inline-flex items-center gap-1 no-underline transition-opacity hover:opacity-80 focus:rounded focus:outline-2 focus:outline-offset-2"
 						{size}
 						ariaLabel={item.label}
 						aria-disabled={item.disabled || disabled || false}
@@ -231,7 +231,7 @@ SPDX-License-Identifier: MIT
 					<Button
 						variant="ghost"
 						{size}
-						class="inline-flex items-center gap-1 transition-opacity hover:opacity-80 focus:outline-2 focus:outline-offset-2 focus:rounded"
+						class="inline-flex items-center gap-1 transition-opacity hover:opacity-80 focus:rounded focus:outline-2 focus:outline-offset-2"
 						ariaLabel={item.label}
 						aria-disabled={item.disabled || disabled || false}
 						tabindex={item.disabled || disabled || loading ? -1 : 0}
@@ -271,7 +271,7 @@ SPDX-License-Identifier: MIT
 				{/if}
 			</li>
 			{#if !isLast}
-				<li class="inline-flex items-center text-base-content/50 mx-0.5 sm:mx-0" aria-hidden="true">
+				<li class="text-base-content/50 mx-0.5 inline-flex items-center sm:mx-0" aria-hidden="true">
 					<Text text={separator} class="select-none" size={textSize} {loading} />
 				</li>
 			{/if}

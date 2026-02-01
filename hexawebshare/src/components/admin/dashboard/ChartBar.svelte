@@ -64,45 +64,45 @@ SPDX-License-Identifier: MIT
 		 * Accessible label for screen readers
 		 */
 		ariaLabel?: string;
-	/**
-	 * ID of element that labels this chart
-	 */
-	ariaLabelledBy?: string;
-	/**
-	 * Aria-label for loading state spinner
-	 * @default 'Loading chart data'
-	 */
-	loadingAriaLabel?: string;
-	/**
-	 * Aria-label prefix for bar values
-	 * @default 'Value: '
-	 */
-	valueAriaLabelPrefix?: string;
-	/**
-	 * Aria-label prefix for bar labels
-	 * @default 'Label: '
-	 */
-	labelAriaLabelPrefix?: string;
-	/**
-	 * Empty state title when no data available
-	 * @default 'No data available'
-	 */
-	emptyStateTitle?: string;
-	/**
-	 * Empty state description when no data available
-	 * @default 'There is no data to display in this chart.'
-	 */
-	emptyStateDescription?: string;
-	/**
-	 * Aria-label for empty state
-	 * @default 'No data available in chart'
-	 */
-	emptyStateAriaLabel?: string;
-	/**
-	 * Additional CSS classes
-	 */
-	class?: string;
-}
+		/**
+		 * ID of element that labels this chart
+		 */
+		ariaLabelledBy?: string;
+		/**
+		 * Aria-label for loading state spinner
+		 * @default 'Loading chart data'
+		 */
+		loadingAriaLabel?: string;
+		/**
+		 * Aria-label prefix for bar values
+		 * @default 'Value: '
+		 */
+		valueAriaLabelPrefix?: string;
+		/**
+		 * Aria-label prefix for bar labels
+		 * @default 'Label: '
+		 */
+		labelAriaLabelPrefix?: string;
+		/**
+		 * Empty state title when no data available
+		 * @default 'No data available'
+		 */
+		emptyStateTitle?: string;
+		/**
+		 * Empty state description when no data available
+		 * @default 'There is no data to display in this chart.'
+		 */
+		emptyStateDescription?: string;
+		/**
+		 * Aria-label for empty state
+		 * @default 'No data available in chart'
+		 */
+		emptyStateAriaLabel?: string;
+		/**
+		 * Additional CSS classes
+		 */
+		class?: string;
+	}
 
 	const {
 		data,
@@ -271,57 +271,57 @@ SPDX-License-Identifier: MIT
 							aria-hidden="true"
 							tabindex={-1}
 						>
-						{#if showValues && item.value > 0}
+							{#if showValues && item.value > 0}
+								<Text
+									text={String(item.value)}
+									size="xs"
+									class="absolute -top-6 left-1/2 -translate-x-1/2 transform whitespace-nowrap"
+									ariaLabel="{valueAriaLabelPrefix}{item.value}"
+								/>
+							{/if}
+						</div>
+						{#if showLabels}
 							<Text
-								text={String(item.value)}
+								text={item.label}
 								size="xs"
-								class="absolute -top-6 left-1/2 -translate-x-1/2 transform whitespace-nowrap"
-								ariaLabel="{valueAriaLabelPrefix}{item.value}"
+								display="block"
+								align="center"
+								truncate
+								class="mt-2 w-full"
+								ariaLabel="{labelAriaLabelPrefix}{item.label}"
 							/>
 						{/if}
-					</div>
-					{#if showLabels}
-						<Text
-							text={item.label}
-							size="xs"
-							display="block"
-							align="center"
-							truncate
-							class="mt-2 w-full"
-							ariaLabel="{labelAriaLabelPrefix}{item.label}"
-						/>
-					{/if}
 					{:else}
-					<!-- Horizontal bars -->
-					{#if showLabels}
-						<Text
-							text={item.label}
-							size="xs"
-							display="block"
-							align="right"
-							truncate
-							class="mr-2 min-w-[80px]"
-							ariaLabel="{labelAriaLabelPrefix}{item.label}"
-						/>
-					{/if}
-					<div
-						class="bar {barColorClasses} focus:outline-primary relative flex-1 rounded-l transition-all duration-300 hover:opacity-80 focus:outline focus:outline-2 focus:outline-offset-2"
-						style="width: {item.percentage}%; height: 100%; min-width: {item.value > 0
-							? '8px'
-							: '0'};"
-						role="img"
-						aria-hidden="true"
-						tabindex={-1}
-					>
-						{#if showValues && item.value > 0}
+						<!-- Horizontal bars -->
+						{#if showLabels}
 							<Text
-								text={String(item.value)}
+								text={item.label}
 								size="xs"
-								class="absolute top-1/2 left-full ml-2 -translate-y-1/2 transform whitespace-nowrap"
-								ariaLabel="{valueAriaLabelPrefix}{item.value}"
+								display="block"
+								align="right"
+								truncate
+								class="mr-2 min-w-[80px]"
+								ariaLabel="{labelAriaLabelPrefix}{item.label}"
 							/>
 						{/if}
-					</div>
+						<div
+							class="bar {barColorClasses} focus:outline-primary relative flex-1 rounded-l transition-all duration-300 hover:opacity-80 focus:outline focus:outline-2 focus:outline-offset-2"
+							style="width: {item.percentage}%; height: 100%; min-width: {item.value > 0
+								? '8px'
+								: '0'};"
+							role="img"
+							aria-hidden="true"
+							tabindex={-1}
+						>
+							{#if showValues && item.value > 0}
+								<Text
+									text={String(item.value)}
+									size="xs"
+									class="absolute top-1/2 left-full ml-2 -translate-y-1/2 transform whitespace-nowrap"
+									ariaLabel="{valueAriaLabelPrefix}{item.value}"
+								/>
+							{/if}
+						</div>
 					{/if}
 				</div>
 			{/each}

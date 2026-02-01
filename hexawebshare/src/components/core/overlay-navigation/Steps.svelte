@@ -227,12 +227,12 @@ SPDX-License-Identifier: MIT
 		{@const stepClasses = getStepClasses(item, index)}
 		{@const ariaAttrs = getStepAriaAttributes(item, index)}
 		<li class={stepClasses} data-content={item.icon ? item.icon : undefined} {...ariaAttrs}>
-			<div class="flex flex-col items-center gap-1 mt-2 w-full">
+			<div class="mt-2 flex w-full flex-col items-center gap-1">
 				{#if clickable && !item.disabled && !disabled && !loading}
 					<Button
 						variant="ghost"
 						label={item.label}
-						class="p-1 min-h-0 h-auto w-full"
+						class="h-auto min-h-0 w-full p-1"
 						onclick={() => handleStepClick(item, index)}
 						onkeydown={(e: KeyboardEvent) => handleKeyDown(e, item, index)}
 						ariaLabel={item.description ? `${item.label}: ${item.description}` : item.label}

@@ -181,7 +181,7 @@ SPDX-License-Identifier: MIT
 			{#if clickable && !step.disabled && !disabled}
 				<IconButton
 					variant="ghost"
-					class="w-full text-left justify-start hover:opacity-80 focus:outline-2 focus:outline-offset-2"
+					class="w-full justify-start text-left hover:opacity-80 focus:outline-2 focus:outline-offset-2"
 					onclick={() => handleStepClick(step, index)}
 					onkeydown={(e) => handleKeyDown(e, step, index)}
 					ariaLabel={step.description ? `${step.label}: ${step.description}` : step.label}

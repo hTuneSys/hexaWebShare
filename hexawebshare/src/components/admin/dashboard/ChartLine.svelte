@@ -90,30 +90,30 @@ SPDX-License-Identifier: MIT
 		 * @default false
 		 */
 		disabled?: boolean;
-	/**
-	 * Accessible label for screen readers
-	 */
-	ariaLabel?: string;
-	/**
-	 * Loading state label text
-	 * @default 'Loading chart data...'
-	 */
-	loadingLabel?: string;
-	/**
-	 * Empty state title when no data available
-	 * @default 'No data available'
-	 */
-	emptyStateTitle?: string;
-	/**
-	 * Empty state description when no data available
-	 * @default 'There is no data to display in this chart.'
-	 */
-	emptyStateDescription?: string;
-	/**
-	 * Additional CSS classes
-	 */
-	class?: string;
-}
+		/**
+		 * Accessible label for screen readers
+		 */
+		ariaLabel?: string;
+		/**
+		 * Loading state label text
+		 * @default 'Loading chart data...'
+		 */
+		loadingLabel?: string;
+		/**
+		 * Empty state title when no data available
+		 * @default 'No data available'
+		 */
+		emptyStateTitle?: string;
+		/**
+		 * Empty state description when no data available
+		 * @default 'There is no data to display in this chart.'
+		 */
+		emptyStateDescription?: string;
+		/**
+		 * Additional CSS classes
+		 */
+		class?: string;
+	}
 
 	const {
 		data,

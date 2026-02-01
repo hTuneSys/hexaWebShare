@@ -228,23 +228,23 @@ SPDX-License-Identifier: MIT
 		 * @default 'Delete user '
 		 */
 		deleteUserAriaLabelPrefix?: string;
-	/**
-	 * Aria-label suffix for avatar
-	 * @default ' avatar'
-	 */
-	avatarAriaLabelSuffix?: string;
-	/**
-	 * Function to format clickable row aria-label with user info
-	 * @param user - User object
-	 * @returns Formatted aria-label string
-	 * @default (user) => `User ${user.name}, ${user.role}, ${user.status}. Press Enter or Space to select.`
-	 */
-	formatRowAriaLabel?: (user: User) => string;
-	/**
-	 * Additional CSS classes
-	 */
-	class?: string;
-}
+		/**
+		 * Aria-label suffix for avatar
+		 * @default ' avatar'
+		 */
+		avatarAriaLabelSuffix?: string;
+		/**
+		 * Function to format clickable row aria-label with user info
+		 * @param user - User object
+		 * @returns Formatted aria-label string
+		 * @default (user) => `User ${user.name}, ${user.role}, ${user.status}. Press Enter or Space to select.`
+		 */
+		formatRowAriaLabel?: (user: User) => string;
+		/**
+		 * Additional CSS classes
+		 */
+		class?: string;
+	}
 
 	const {
 		users = [],
@@ -280,14 +280,14 @@ SPDX-License-Identifier: MIT
 		userRoleAriaLabelPrefix = 'User role: ',
 		userStatusAriaLabelPrefix = 'User status: ',
 		userActionsAriaLabel = 'User actions',
-	editUserAriaLabelPrefix = 'Edit user ',
-	deleteUserAriaLabelPrefix = 'Delete user ',
-	avatarAriaLabelSuffix = ' avatar',
-	formatRowAriaLabel = (user: User) =>
-		`User ${user.name}, ${user.role}, ${user.status}. Press Enter or Space to select.`,
-	class: className = '',
-	...props
-}: Props = $props();
+		editUserAriaLabelPrefix = 'Edit user ',
+		deleteUserAriaLabelPrefix = 'Delete user ',
+		avatarAriaLabelSuffix = ' avatar',
+		formatRowAriaLabel = (user: User) =>
+			`User ${user.name}, ${user.role}, ${user.status}. Press Enter or Space to select.`,
+		class: className = '',
+		...props
+	}: Props = $props();
 
 	// Table wrapper classes
 	let wrapperClasses = $derived(
@@ -488,10 +488,10 @@ SPDX-License-Identifier: MIT
 						class={getRowClasses(index)}
 						onclick={() => handleRowClick(user, index)}
 						onkeydown={(e) => handleRowKeyDown(e, user, index)}
-					aria-rowindex={index + 2}
-					tabindex={onuserclick && !disabled && !loading ? 0 : undefined}
-					aria-label={onuserclick ? formatRowAriaLabel(user) : undefined}
-				>
+						aria-rowindex={index + 2}
+						tabindex={onuserclick && !disabled && !loading ? 0 : undefined}
+						aria-label={onuserclick ? formatRowAriaLabel(user) : undefined}
+					>
 						<td class="max-w-[300px] min-w-[200px]">
 							<div class="flex items-center gap-3">
 								<Avatar
@@ -501,29 +501,29 @@ SPDX-License-Identifier: MIT
 									placeholder={getUserInitials(user.name)}
 									ariaLabel={`${user.name}${avatarAriaLabelSuffix}`}
 									ariaHidden={true}
-							/>
-							<div class="flex min-w-0 flex-1 flex-col">
-								<Text text={user.name} weight="medium" truncate={true} />
-								{#if user.lastLogin}
-									<Text 
-										text={`${lastLoginAriaLabel}: ${typeof user.lastLogin === 'string' ? user.lastLogin : user.lastLogin.toLocaleDateString()}`}
-										variant="muted" 
-										size="xs" 
-										truncate={true}
-										class="hidden md:block"
-										ariaLabel={lastLoginAriaLabel}
-									/>
-								{/if}
-								<!-- Mobile: Show email on small screens -->
-								<Text 
-									text={user.email}
-									variant="muted" 
-									size="xs" 
-									truncate={true}
-									class="md:hidden"
-									ariaLabel={emailAriaLabel}
 								/>
-							</div>
+								<div class="flex min-w-0 flex-1 flex-col">
+									<Text text={user.name} weight="medium" truncate={true} />
+									{#if user.lastLogin}
+										<Text
+											text={`${lastLoginAriaLabel}: ${typeof user.lastLogin === 'string' ? user.lastLogin : user.lastLogin.toLocaleDateString()}`}
+											variant="muted"
+											size="xs"
+											truncate={true}
+											class="hidden md:block"
+											ariaLabel={lastLoginAriaLabel}
+										/>
+									{/if}
+									<!-- Mobile: Show email on small screens -->
+									<Text
+										text={user.email}
+										variant="muted"
+										size="xs"
+										truncate={true}
+										class="md:hidden"
+										ariaLabel={emailAriaLabel}
+									/>
+								</div>
 							</div>
 						</td>
 						<td class="hidden md:table-cell">

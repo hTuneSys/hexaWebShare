@@ -123,19 +123,19 @@ SPDX-License-Identifier: MIT
 		 * Callback when an item is clicked
 		 */
 		onItemClick?: (item: SidebarItem, index: number) => void;
-	/**
-	 * Callback when collapse state changes
-	 */
-	onCollapse?: (collapsed: boolean) => void;
-	/**
-	 * Aria-label for loading state spinner
-	 * @default 'Loading'
-	 */
-	loadingAriaLabel?: string;
-	/**
-	 * Custom header content
-	 */
-	header?: Snippet;
+		/**
+		 * Callback when collapse state changes
+		 */
+		onCollapse?: (collapsed: boolean) => void;
+		/**
+		 * Aria-label for loading state spinner
+		 * @default 'Loading'
+		 */
+		loadingAriaLabel?: string;
+		/**
+		 * Custom header content
+		 */
+		header?: Snippet;
 		/**
 		 * Custom footer content
 		 */
