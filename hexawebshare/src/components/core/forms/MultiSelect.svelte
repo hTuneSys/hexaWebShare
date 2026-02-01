@@ -587,7 +587,7 @@ SPDX-License-Identifier: MIT
 			<!-- Selected tags -->
 			{#each selectedOptions as option (option.value)}
 				<span class={tagClasses}>
-					<Text text={option.label} />
+					<Text text={option.label} class="max-w-32 truncate text-inherit" />
 					{#if !disabled && !loading}
 						<IconButton
 							variant="ghost"
@@ -700,7 +700,7 @@ SPDX-License-Identifier: MIT
 								onclick={(e) => e.stopPropagation()}
 								onchange={() => !isDisabled && toggleOption(option.value)}
 							/>
-							<Text text={option.label} class="flex-1" />
+							<Text text={option.label} class="min-w-0 flex-1 truncate" />
 							{#if isSelected}
 								<Icon size="xs" variant="primary" ariaHidden={true}>
 									<Check size={16} />
