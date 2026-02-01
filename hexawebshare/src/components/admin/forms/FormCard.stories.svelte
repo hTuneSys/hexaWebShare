@@ -35,6 +35,10 @@ SPDX-License-Identifier: MIT
 			loading: { control: 'boolean', description: 'Whether the card is in loading state' },
 			error: { control: 'boolean', description: 'Whether the card has an error state' },
 			errorMessage: { control: 'text', description: 'Error message to display' },
+			menuItems: {
+				control: 'object',
+				description: 'Dropdown menu items for header actions'
+			},
 			menuLabel: { control: 'text', description: 'Label for the dropdown menu trigger button' },
 			primaryActionLabel: { control: 'text', description: 'Primary action button label' },
 			secondaryActionLabel: { control: 'text', description: 'Secondary action button label' },
