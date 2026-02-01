@@ -69,7 +69,9 @@ SPDX-License-Identifier: MIT
 <!-- Horizontal -->
 <Story name="Horizontal">
 	<div class="w-full">
-		<Divider />
+		<p class="mb-4">Content above</p>
+		<Divider orientation="horizontal" />
+		<p class="mt-4">Content below</p>
 	</div>
 </Story>
 
