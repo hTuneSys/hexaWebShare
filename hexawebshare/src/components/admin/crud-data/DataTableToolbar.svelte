@@ -417,12 +417,13 @@ A comprehensive toolbar component for data tables with search, actions, filters,
 		['flex', 'flex-wrap', 'items-center', 'gap-2', 'shrink-0'].join(' ')
 	);
 
-	// Search input classes
+	// Search input classes - fix mobile overflow by using max-width instead of width
 	const searchWrapperClasses = $derived(
 		[
 			'flex',
 			'items-center',
-			size === 'sm' ? 'w-full sm:w-64' : size === 'lg' ? 'w-full sm:w-80' : 'w-full sm:w-72'
+			'w-full',
+			size === 'sm' ? 'sm:max-w-64' : size === 'lg' ? 'sm:max-w-80' : 'sm:max-w-72'
 		].join(' ')
 	);
 
@@ -666,6 +667,7 @@ A comprehensive toolbar component for data tables with search, actions, filters,
 		{#if showViewOptions && viewOptions.length > 0}
 			<Select
 				value={viewValue}
+				label={viewLabel}
 				options={viewOptions}
 				size={buttonSize}
 				disabled={disabled || loading}
