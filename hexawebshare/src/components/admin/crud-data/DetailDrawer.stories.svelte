@@ -6,6 +6,7 @@ SPDX-License-Identifier: MIT
 <script module>
 	import { defineMeta } from '@storybook/addon-svelte-csf';
 	import DetailDrawer from './DetailDrawer.svelte';
+	import Button from '../../core/buttons/Button.svelte';
 	import { fn } from 'storybook/test';
 
 	const { Story } = defineMeta({
@@ -136,9 +137,7 @@ SPDX-License-Identifier: MIT
 		<div class="bg-base-100 min-h-screen p-8">
 			<div class="flex min-h-[400px] flex-col items-center justify-center">
 				<p class="mb-4 text-lg">Main content area</p>
-				<button class="btn btn-primary" onclick={() => (defaultOpen = true)}>
-					Open Detail Drawer
-				</button>
+				<Button label="Open Detail Drawer" variant="primary" onclick={() => (defaultOpen = true)} />
 			</div>
 			<DetailDrawer bind:open={defaultOpen} title="Default Detail Drawer" />
 		</div>
@@ -151,9 +150,7 @@ SPDX-License-Identifier: MIT
 		<div class="bg-base-100 min-h-screen p-8">
 			<div class="flex min-h-[400px] flex-col items-center justify-center">
 				<p class="mb-4 text-lg">Main content area</p>
-				<button class="btn btn-primary" onclick={() => (withDataOpen = true)}>
-					Open Detail Drawer
-				</button>
+				<Button label="Open Detail Drawer" variant="primary" onclick={() => (withDataOpen = true)} />
 			</div>
 			<DetailDrawer bind:open={withDataOpen} title="User Details" data={sampleData} />
 		</div>
@@ -166,9 +163,11 @@ SPDX-License-Identifier: MIT
 		<div class="bg-base-100 min-h-screen p-8">
 			<div class="flex min-h-[400px] flex-col items-center justify-center">
 				<p class="mb-4 text-lg">Main content area</p>
-				<button class="btn btn-primary" onclick={() => (withActionsOpen = true)}>
-					Open Detail Drawer
-				</button>
+				<Button
+					label="Open Detail Drawer"
+					variant="primary"
+					onclick={() => (withActionsOpen = true)}
+				/>
 			</div>
 			<DetailDrawer
 				bind:open={withActionsOpen}
@@ -186,9 +185,7 @@ SPDX-License-Identifier: MIT
 		<div class="bg-base-100 min-h-screen p-8">
 			<div class="flex min-h-[400px] flex-col items-center justify-center">
 				<p class="mb-4 text-lg">Main content area</p>
-				<button class="btn btn-primary" onclick={() => (leftSideOpen = true)}>
-					Open Detail Drawer
-				</button>
+				<Button label="Open Detail Drawer" variant="primary" onclick={() => (leftSideOpen = true)} />
 			</div>
 			<DetailDrawer bind:open={leftSideOpen} title="Settings" side="left" data={sampleData} />
 		</div>
@@ -201,9 +198,11 @@ SPDX-License-Identifier: MIT
 		<div class="bg-base-100 min-h-screen p-8">
 			<div class="flex min-h-[400px] flex-col items-center justify-center">
 				<p class="mb-4 text-lg">Main content area</p>
-				<button class="btn btn-primary" onclick={() => (emptyStateOpen = true)}>
-					Open Detail Drawer
-				</button>
+				<Button
+					label="Open Detail Drawer"
+					variant="primary"
+					onclick={() => (emptyStateOpen = true)}
+				/>
 			</div>
 			<DetailDrawer bind:open={emptyStateOpen} title="Empty Details" data={{}} />
 		</div>
@@ -216,9 +215,11 @@ SPDX-License-Identifier: MIT
 		<div class="bg-base-100 min-h-screen p-8">
 			<div class="flex min-h-[400px] flex-col items-center justify-center">
 				<p class="mb-4 text-lg">Main content area</p>
-				<button class="btn btn-primary" onclick={() => (withBadgesOpen = true)}>
-					Open Detail Drawer
-				</button>
+				<Button
+					label="Open Detail Drawer"
+					variant="primary"
+					onclick={() => (withBadgesOpen = true)}
+				/>
 			</div>
 			<DetailDrawer bind:open={withBadgesOpen} title="Product Details" data={badgeData} />
 		</div>
@@ -231,9 +232,11 @@ SPDX-License-Identifier: MIT
 		<div class="bg-base-100 min-h-screen p-8">
 			<div class="flex min-h-[400px] flex-col items-center justify-center">
 				<p class="mb-4 text-lg">Main content area</p>
-				<button class="btn btn-primary" onclick={() => (withoutTitleOpen = true)}>
-					Open Detail Drawer
-				</button>
+				<Button
+					label="Open Detail Drawer"
+					variant="primary"
+					onclick={() => (withoutTitleOpen = true)}
+				/>
 			</div>
 			<DetailDrawer bind:open={withoutTitleOpen} data={sampleData} showCloseButton={true} />
 		</div>
@@ -246,12 +249,17 @@ SPDX-License-Identifier: MIT
 		<div class="bg-base-100 min-h-screen p-8">
 			<div class="flex min-h-[400px] flex-col items-center justify-center">
 				<p class="mb-4 text-lg">Main content area</p>
-				<button class="btn btn-primary" onclick={() => (withoutCloseButtonOpen = true)}>
-					Open Detail Drawer
-				</button>
-				<button class="btn btn-secondary mt-2" onclick={() => (withoutCloseButtonOpen = false)}>
-					Close Drawer
-				</button>
+				<Button
+					label="Open Detail Drawer"
+					variant="primary"
+					onclick={() => (withoutCloseButtonOpen = true)}
+				/>
+				<Button
+					label="Close Drawer"
+					variant="secondary"
+					class="mt-2"
+					onclick={() => (withoutCloseButtonOpen = false)}
+				/>
 			</div>
 			<DetailDrawer
 				bind:open={withoutCloseButtonOpen}
@@ -269,9 +277,11 @@ SPDX-License-Identifier: MIT
 		<div class="bg-base-100 min-h-screen p-8">
 			<div class="flex min-h-[400px] flex-col items-center justify-center">
 				<p class="mb-4 text-lg">Main content area</p>
-				<button class="btn btn-primary" onclick={() => (fullFeaturedOpen = true)}>
-					Open Detail Drawer
-				</button>
+				<Button
+					label="Open Detail Drawer"
+					variant="primary"
+					onclick={() => (fullFeaturedOpen = true)}
+				/>
 			</div>
 			<DetailDrawer
 				bind:open={fullFeaturedOpen}
@@ -290,9 +300,11 @@ SPDX-License-Identifier: MIT
 		<div class="bg-base-100 min-h-screen p-8">
 			<div class="flex min-h-[400px] flex-col items-center justify-center">
 				<p class="mb-4 text-lg">Main content area</p>
-				<button class="btn btn-primary" onclick={() => (loadingActionsOpen = true)}>
-					Open Detail Drawer
-				</button>
+				<Button
+					label="Open Detail Drawer"
+					variant="primary"
+					onclick={() => (loadingActionsOpen = true)}
+				/>
 			</div>
 			<DetailDrawer
 				bind:open={loadingActionsOpen}
@@ -326,9 +338,11 @@ SPDX-License-Identifier: MIT
 				<p class="text-base-content/70 mb-4 text-sm">
 					Use Storybook controls to customize the drawer
 				</p>
-				<button class="btn btn-primary" onclick={() => (playgroundOpen = true)}>
-					Open Detail Drawer
-				</button>
+				<Button
+					label="Open Detail Drawer"
+					variant="primary"
+					onclick={() => (playgroundOpen = true)}
+				/>
 			</div>
 			<DetailDrawer
 				bind:open={playgroundOpen}
