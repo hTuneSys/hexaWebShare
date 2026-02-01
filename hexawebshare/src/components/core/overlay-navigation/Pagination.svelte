@@ -461,7 +461,7 @@ SPDX-License-Identifier: MIT
 			<div class="flex items-center gap-2">
 				<Text size={textSize} variant="muted">{itemsPerPageLabel}</Text>
 				<div class="w-auto">
-					<!-- Wrapper genişliğini sınırla -->
+					<!-- Limit wrapper width -->
 					<Select
 						value={String(pageSize)}
 						options={selectOptions}
