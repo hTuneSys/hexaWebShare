@@ -123,14 +123,19 @@ SPDX-License-Identifier: MIT
 		 * Callback when an item is clicked
 		 */
 		onItemClick?: (item: SidebarItem, index: number) => void;
-		/**
-		 * Callback when collapse state changes
-		 */
-		onCollapse?: (collapsed: boolean) => void;
-		/**
-		 * Custom header content
-		 */
-		header?: Snippet;
+	/**
+	 * Callback when collapse state changes
+	 */
+	onCollapse?: (collapsed: boolean) => void;
+	/**
+	 * Aria-label for loading state spinner
+	 * @default 'Loading'
+	 */
+	loadingAriaLabel?: string;
+	/**
+	 * Custom header content
+	 */
+	header?: Snippet;
 		/**
 		 * Custom footer content
 		 */
@@ -199,6 +204,7 @@ SPDX-License-Identifier: MIT
 		ariaLabel,
 		onItemClick,
 		onCollapse,
+		loadingAriaLabel = 'Loading',
 		header,
 		footer,
 		children,
@@ -401,7 +407,8 @@ SPDX-License-Identifier: MIT
 	<div class="flex flex-1 flex-col overflow-hidden">
 		{#if loading}
 			<div class="flex flex-1 items-center justify-center p-4">
-				<span class="loading loading-spinner loading-lg text-primary" aria-label="Loading"></span>
+				<span class="loading loading-spinner loading-lg text-primary" aria-label={loadingAriaLabel}
+				></span>
 			</div>
 		{:else if children}
 			<!-- Custom Children Content -->
