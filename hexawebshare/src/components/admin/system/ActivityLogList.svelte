@@ -109,15 +109,20 @@ SPDX-License-Identifier: MIT
 		 * Callback when an activity log item is clicked
 		 */
 		onItemClick?: (entry: ActivityLogEntry, index: number) => void;
-		/**
-		 * Accessible label for the list
-		 */
-		ariaLabel?: string;
-		/**
-		 * Additional CSS classes
-		 */
-		class?: string;
-	}
+	/**
+	 * Accessible label for the list
+	 */
+	ariaLabel?: string;
+	/**
+	 * Aria-label for loading state
+	 * @default 'Loading activity logs'
+	 */
+	loadingAriaLabel?: string;
+	/**
+	 * Additional CSS classes
+	 */
+	class?: string;
+}
 
 	const {
 		items = [],
@@ -133,6 +138,7 @@ SPDX-License-Identifier: MIT
 		emptyActions,
 		onItemClick,
 		ariaLabel = 'Activity log list',
+		loadingAriaLabel = 'Loading activity logs',
 		class: className = '',
 		...props
 	}: Props = $props();
@@ -208,7 +214,7 @@ SPDX-License-Identifier: MIT
 		<div
 			class="flex items-center justify-center py-12"
 			role="status"
-			aria-label="Loading activity logs"
+			aria-label={loadingAriaLabel}
 		>
 			<span class="loading loading-spinner loading-md text-primary" aria-hidden="true"></span>
 		</div>
