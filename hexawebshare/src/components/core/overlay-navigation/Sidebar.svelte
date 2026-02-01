@@ -384,7 +384,11 @@ SPDX-License-Identifier: MIT
 					onclick={toggleCollapse}
 				>
 					{#snippet children()}
-						<Icon size="sm" ariaHidden={true} class="transition-transform {collapsed ? 'rotate-180' : ''}">
+						<Icon
+							size="sm"
+							ariaHidden={true}
+							class="transition-transform {collapsed ? 'rotate-180' : ''}"
+						>
 							<ChevronsLeft />
 						</Icon>
 					{/snippet}

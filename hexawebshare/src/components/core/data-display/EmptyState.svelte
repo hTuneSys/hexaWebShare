@@ -270,7 +270,7 @@ SPDX-License-Identifier: MIT
 		{:else}
 			<!-- Default empty state icon -->
 			<div class={iconContainerClasses} aria-hidden="true">
-				<Icon size="lg" variant={variant} class={defaultIconClasses} ariaHidden={true}>
+				<Icon size="lg" {variant} class={defaultIconClasses} ariaHidden={true}>
 					<Archive strokeWidth={1.5} />
 				</Icon>
 			</div>

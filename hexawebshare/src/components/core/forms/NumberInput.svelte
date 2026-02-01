@@ -337,7 +337,7 @@ SPDX-License-Identifier: MIT
 				disabled={disabled || readonly || loading || isAtMin}
 				ariaLabel={decreaseLabel}
 			>
-				<Icon size={size} ariaHidden={true}>
+				<Icon {size} ariaHidden={true}>
 					<Minus />
 				</Icon>
 			</IconButton>
@@ -393,7 +393,7 @@ SPDX-License-Identifier: MIT
 				disabled={disabled || readonly || loading || isAtMax}
 				ariaLabel={increaseLabel}
 			>
-				<Icon size={size} ariaHidden={true}>
+				<Icon {size} ariaHidden={true}>
 					<Plus />
 				</Icon>
 			</IconButton>

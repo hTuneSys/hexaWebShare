@@ -462,19 +462,19 @@ SPDX-License-Identifier: MIT
 							<p class="text-base-content truncate text-sm font-medium">{file.name}</p>
 							<p class="text-base-content/70 text-xs">{formatFileSize(file.size)}</p>
 						</div>
-					<span class="ml-2">
-						<IconButton
-							variant="ghost"
-							size="xs"
-							ariaLabel="Remove file"
-							{disabled}
-							onclick={() => removeFile(index)}
-						>
-							<Icon size="xs" ariaHidden={true}>
-								<X size={16} />
-							</Icon>
-						</IconButton>
-					</span>
+						<span class="ml-2">
+							<IconButton
+								variant="ghost"
+								size="xs"
+								ariaLabel="Remove file"
+								{disabled}
+								onclick={() => removeFile(index)}
+							>
+								<Icon size="xs" ariaHidden={true}>
+									<X size={16} />
+								</Icon>
+							</IconButton>
+						</span>
 					</div>
 				{/each}
 			</div>

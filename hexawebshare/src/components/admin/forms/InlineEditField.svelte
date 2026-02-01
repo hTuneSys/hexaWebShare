@@ -343,7 +343,7 @@ SPDX-License-Identifier: MIT
 							ariaLabel="Save changes"
 							onclick={saveChanges}
 						>
-							<Icon size={size} ariaHidden={true}>
+							<Icon {size} ariaHidden={true}>
 								<Check />
 							</Icon>
 						</IconButton>
@@ -354,7 +354,7 @@ SPDX-License-Identifier: MIT
 							ariaLabel="Cancel editing"
 							onclick={cancelEditing}
 						>
-							<Icon size={size} ariaHidden={true}>
+							<Icon {size} ariaHidden={true}>
 								<X />
 							</Icon>
 						</IconButton>

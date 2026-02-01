@@ -551,18 +551,18 @@ SPDX-License-Identifier: MIT
 					aria-label={searchingAriaLabel}
 				></span>
 			{:else if showClearButton && value}
-			<IconButton
-				variant="ghost"
-				size="xs"
-				onclick={handleClear}
-				{disabled}
-				ariaLabel={clearAriaLabel}
-				class="h-auto min-h-0 p-0.5"
-			>
-				<Icon size="xs" ariaHidden={true}>
-					<X class={iconSizeClass} />
-				</Icon>
-			</IconButton>
+				<IconButton
+					variant="ghost"
+					size="xs"
+					onclick={handleClear}
+					{disabled}
+					ariaLabel={clearAriaLabel}
+					class="h-auto min-h-0 p-0.5"
+				>
+					<Icon size="xs" ariaHidden={true}>
+						<X class={iconSizeClass} />
+					</Icon>
+				</IconButton>
 			{/if}
 		</div>
 

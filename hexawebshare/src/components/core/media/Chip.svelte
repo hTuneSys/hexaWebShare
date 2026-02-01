@@ -5,6 +5,8 @@ SPDX-License-Identifier: MIT
 
 <script lang="ts">
 	import IconButton from '../buttons/IconButton.svelte';
+	import Icon from './Icon.svelte';
+	import X from 'lucide-svelte/icons/x';
 
 	interface Props {
 		label: string;
@@ -38,7 +40,7 @@ SPDX-License-Identifier: MIT
 		closable = false,
 		onClose,
 		closeLabel = 'Remove chip',
-		closeIcon = '✕',
+		closeIcon = '',
 		ariaLabel,
 		ariaHidden = false,
 		disabled = false,
@@ -92,7 +94,13 @@ SPDX-License-Identifier: MIT
 			ariaLabel={closeLabel}
 			{disabled}
 		>
-			{closeIcon}
+			{#if closeIcon}
+				{closeIcon}
+			{:else}
+				<Icon size="xs" ariaHidden={true}>
+					<X />
+				</Icon>
+			{/if}
 		</IconButton>
 	{/if}
 </span>

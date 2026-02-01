@@ -301,7 +301,7 @@ SPDX-License-Identifier: MIT
 			class="text-base-content/50 pointer-events-none absolute top-1/2 -translate-y-1/2 {iconLeftClass}"
 			aria-hidden="true"
 		>
-			<Icon size={size} ariaHidden={true}>
+			<Icon {size} ariaHidden={true}>
 				<Search />
 			</Icon>
 		</div>
@@ -341,7 +341,7 @@ SPDX-License-Identifier: MIT
 					ariaLabel={clearLabel}
 					class="h-8 min-h-0 w-8 p-0"
 				>
-					<Icon size={size} ariaHidden={true}>
+					<Icon {size} ariaHidden={true}>
 						<X />
 					</Icon>
 				</IconButton>

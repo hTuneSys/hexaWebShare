@@ -8,6 +8,8 @@ SPDX-License-Identifier: MIT
 	import CardSection from './CardSection.svelte';
 	import Button from '../buttons/Button.svelte';
 	import Text from '../typography/Text.svelte';
+	import Icon from '../media/Icon.svelte';
+	import Info from 'lucide-svelte/icons/info';
 
 	const { Story } = defineMeta({
 		title: 'Core/Layout/CardSection',
@@ -192,19 +194,9 @@ SPDX-License-Identifier: MIT
 				<div class="card-body p-0">
 					<CardSection title="Section with Icon" description="This section displays an icon">
 						{#snippet icon()}
-							<svg
-								class="text-primary h-6 w-6"
-								fill="none"
-								stroke="currentColor"
-								viewBox="0 0 24 24"
-							>
-								<path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									stroke-width="2"
-									d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-								/>
-							</svg>
+							<Icon size="sm" ariaHidden={true}>
+								<Info />
+							</Icon>
 						{/snippet}
 						<Text
 							text="The icon is displayed before the title for visual emphasis."

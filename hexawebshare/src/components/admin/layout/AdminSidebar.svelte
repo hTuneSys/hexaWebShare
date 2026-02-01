@@ -278,7 +278,11 @@ SPDX-License-Identifier: MIT
 						{#if collapseIcon}
 							{@render collapseIcon({ collapsed })}
 						{:else}
-							<Icon size="md" ariaHidden={true} class="transition-transform {collapsed ? 'rotate-180' : ''}">
+							<Icon
+								size="md"
+								ariaHidden={true}
+								class="transition-transform {collapsed ? 'rotate-180' : ''}"
+							>
 								<ChevronsLeft />
 							</Icon>
 						{/if}

@@ -11,6 +11,8 @@ SPDX-License-Identifier: MIT
 	import MutedText from '../typography/MutedText.svelte';
 	import StatusDot from '../data-display/StatusDot.svelte';
 	import Spinner from './Spinner.svelte';
+	import Icon from '../media/Icon.svelte';
+	import X from 'lucide-svelte/icons/x';
 
 	type Children = Snippet | { default?: Snippet };
 
@@ -218,7 +220,9 @@ SPDX-License-Identifier: MIT
 			ariaLabel={dismissLabel}
 			disabled={disabled || loading}
 		>
-			<span aria-hidden="true">×</span>
+			<Icon size="xs" ariaHidden={true}>
+				<X />
+			</Icon>
 		</IconButton>
 	{/if}
 </div>

@@ -7,6 +7,8 @@ SPDX-License-Identifier: MIT
 	import { defineMeta } from '@storybook/addon-svelte-csf';
 	import DataTableToolbar from './DataTableToolbar.svelte';
 	import { fn } from 'storybook/test';
+	import Icon from '../../core/media/Icon.svelte';
+	import Check from 'lucide-svelte/icons/check';
 
 	const { Story } = defineMeta({
 		title: 'Admin/CRUD Data/DataTableToolbar',
@@ -915,20 +917,9 @@ SPDX-License-Identifier: MIT
 				{#if appliedTags.length > 0}
 					<div class="bg-success border-success rounded-box border-2 p-4 shadow-lg">
 						<div class="mb-3 flex items-center gap-2">
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								class="text-success-content h-6 w-6"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke="currentColor"
-							>
-								<path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									stroke-width="2"
-									d="M5 13l4 4L19 7"
-								/>
-							</svg>
+							<Icon size="sm" ariaHidden={true}>
+								<Check />
+							</Icon>
 							<Text
 								text="Filters Applied Successfully!"
 								weight="bold"

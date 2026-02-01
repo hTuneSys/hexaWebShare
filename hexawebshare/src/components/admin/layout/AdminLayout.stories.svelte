@@ -88,6 +88,8 @@ SPDX-License-Identifier: MIT
 	import Text from '../../core/typography/Text.svelte';
 	import Button from '../../core/buttons/Button.svelte';
 	import IconButton from '../../core/buttons/IconButton.svelte';
+	import Icon from '../../core/media/Icon.svelte';
+	import Menu from 'lucide-svelte/icons/menu';
 
 	// Local state for mobile drawer stories
 	let mobileDrawerOpen = $state(false);
@@ -540,20 +542,9 @@ SPDX-License-Identifier: MIT
 							onclick={() => (mobileDrawerOpen = !mobileDrawerOpen)}
 							class="lg:hidden"
 						>
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								class="h-6 w-6"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke="currentColor"
-							>
-								<path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									stroke-width="2"
-									d="M4 6h16M4 12h16M4 18h16"
-								/>
-							</svg>
+							<Icon size="sm" ariaHidden={true}>
+								<Menu />
+							</Icon>
 						</IconButton>
 						<Heading level="h1" size="xl" text="Admin Dashboard" />
 					</div>
@@ -622,20 +613,9 @@ SPDX-License-Identifier: MIT
 							onclick={() => (playgroundMobileOpen = !playgroundMobileOpen)}
 							class="lg:hidden"
 						>
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								class="h-6 w-6"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke="currentColor"
-							>
-								<path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									stroke-width="2"
-									d="M4 6h16M4 12h16M4 18h16"
-								/>
-							</svg>
+							<Icon size="sm" ariaHidden={true}>
+								<Menu />
+							</Icon>
 						</IconButton>
 						<Heading level="h1" size="xl" text="Admin Dashboard" />
 					</div>

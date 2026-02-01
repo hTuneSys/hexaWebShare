@@ -1,67 +1,3 @@
-<!--
-SPDX-FileCopyrightText: 2025 hexaTune LLC
-SPDX-License-Identifier: MIT
--->
-
-<!--
-@component IconButton
-
-A button component optimized for displaying icon-only buttons with consistent styling and behavior.
-
-**Features:**
-- All DaisyUI button variants (primary, secondary, accent, etc.)
-- Multiple sizes (xs, sm, md, lg)
-- Circle and square shapes
-- Outline and glass styles
-- Loading state with spinner
-- Disabled state
-- Full accessibility support
-
-**Lucide Integration:**
-Works seamlessly with Lucide icons via the Icon component or directly:
-
-```svelte
-<script>
-  import { IconButton } from 'hexawebshare';
-  import { Icon } from 'hexawebshare';
-  import { X, Menu, Search, Bell } from 'lucide-svelte';
-</script>
-
-<!-- Using Icon component wrapper (recommended) -->
-<IconButton variant="ghost" circle ariaLabel="Close">
-  <Icon size="sm">
-    <X />
-  </Icon>
-</IconButton>
-
-<!-- Direct Lucide icon (also works) -->
-<IconButton variant="primary" square ariaLabel="Open menu">
-  <Menu />
-</IconButton>
-```
-
-**Custom Icons:**
-```svelte
-<IconButton variant="secondary" circle>
-  {#snippet children()}
-    <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
-      <path d="..." />
-    </svg>
-  {/snippet}
-</IconButton>
-```
-
-**Loading State:**
-```svelte
-<IconButton loading ariaLabel="Loading">
-  <Search />
-</IconButton>
-```
-
-**Default Fallback:**
-If no children are provided, displays a default polygon icon as a placeholder.
--->
-
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 	import Spinner from '../feedback/Spinner.svelte';
@@ -166,6 +102,61 @@ If no children are provided, displays a default polygon icon as a placeholder.
 			.join(' ')
 	);
 </script>
+
+<!--
+SPDX-FileCopyrightText: 2025 hexaTune LLC
+SPDX-License-Identifier: MIT
+-->
+
+<!--
+@component IconButton
+
+A button component optimized for displaying icon-only buttons with consistent styling and behavior.
+
+**Features:**
+- All DaisyUI button variants (primary, secondary, accent, etc.)
+- Multiple sizes (xs, sm, md, lg)
+- Circle and square shapes
+- Outline and glass styles
+- Loading state with spinner
+- Disabled state
+- Full accessibility support
+
+**Lucide Integration:**
+Works seamlessly with Lucide icons via the Icon component or directly:
+
+```svelte
+<script>
+  import { IconButton } from 'hexawebshare';
+  import { Icon } from 'hexawebshare';
+  import { X, Menu, Search, Bell } from 'lucide-svelte';
+</script>
+
+<!-- Using Icon component wrapper (recommended) -->
+<IconButton variant="ghost" circle ariaLabel="Close">
+	<Icon size="sm">
+		<X />
+	</Icon>
+</IconButton>
+
+<!-- Direct Lucide icon (also works) -->
+<IconButton variant="primary" square ariaLabel="Open menu">
+	<Menu />
+</IconButton>
+``` **Custom Icons:** ```svelte
+<IconButton variant="secondary" circle>
+	{#snippet children()}
+		<svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5">
+			<path d="..." />
+		</svg>
+	{/snippet}
+</IconButton>
+``` **Loading State:** ```svelte
+<IconButton loading ariaLabel="Loading">
+	<Search />
+</IconButton>
+``` **Default Fallback:** If no children are provided, displays a default polygon icon as a placeholder.
+-->
 
 <button
 	type="button"

@@ -636,20 +636,24 @@ SPDX-License-Identifier: MIT
 						<IconButton
 							variant="ghost"
 							size="xs"
-						class="h-auto min-h-0 p-0"
-						ariaLabel={clearAllLabel}
-						onclick={() => clearAll(new MouseEvent('click'))}
+							class="h-auto min-h-0 p-0"
+							ariaLabel={clearAllLabel}
+							onclick={() => clearAll(new MouseEvent('click'))}
+						>
+							<Icon size="xs" ariaHidden={true}>
+								<X size={16} />
+							</Icon>
+						</IconButton>
+					{/if}
+					<!-- Dropdown arrow -->
+					<Icon
+						size="xs"
+						class="transition-transform {isOpen ? 'rotate-180' : ''}"
+						ariaHidden={true}
 					>
-						<Icon size="xs" ariaHidden={true}>
-							<X size={16} />
-						</Icon>
-					</IconButton>
+						<ChevronDown size={16} />
+					</Icon>
 				{/if}
-				<!-- Dropdown arrow -->
-				<Icon size="xs" class="transition-transform {isOpen ? 'rotate-180' : ''}" ariaHidden={true}>
-					<ChevronDown size={16} />
-				</Icon>
-			{/if}
 			</div>
 		</div>
 
@@ -693,14 +697,14 @@ SPDX-License-Identifier: MIT
 								tabindex={-1}
 								onclick={(e) => e.stopPropagation()}
 								onchange={() => !isDisabled && toggleOption(option.value)}
-						/>
-						<Text text={option.label} class="flex-1" />
-						{#if isSelected}
-							<Icon size="xs" variant="primary" ariaHidden={true}>
-								<Check size={16} />
-							</Icon>
-						{/if}
-					</li>
+							/>
+							<Text text={option.label} class="flex-1" />
+							{#if isSelected}
+								<Icon size="xs" variant="primary" ariaHidden={true}>
+									<Check size={16} />
+								</Icon>
+							{/if}
+						</li>
 					{/each}
 				{/if}
 			</ul>

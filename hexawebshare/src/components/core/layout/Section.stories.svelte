@@ -6,6 +6,8 @@ SPDX-License-Identifier: MIT
 <script module>
 	import { defineMeta } from '@storybook/addon-svelte-csf';
 	import Section from './Section.svelte';
+	import Icon from '../media/Icon.svelte';
+	import Info from 'lucide-svelte/icons/info';
 
 	const { Story } = defineMeta({
 		title: 'Core/Layout/Section',
@@ -83,20 +85,9 @@ SPDX-License-Identifier: MIT
 <Story name="With Icon">
 	<Section title="Section with Icon" description="This section displays an icon">
 		{#snippet icon()}
-			<svg
-				class="text-primary h-6 w-6"
-				fill="none"
-				stroke="currentColor"
-				viewBox="0 0 24 24"
-				aria-hidden="true"
-			>
-				<path
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					stroke-width="2"
-					d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-				/>
-			</svg>
+			<Icon size="sm" ariaHidden={true}>
+				<Info />
+			</Icon>
 		{/snippet}
 		{#snippet children()}
 			<p class="text-base-content/80">
