@@ -257,6 +257,16 @@ SPDX-License-Identifier: MIT
 	});
 </script>
 
+<script lang="ts">
+	// State management for interactive stories
+	let selectionStorySelectedRows = $state<number[]>([0, 2]);
+	let paginationStoryCurrentPage = $state(1);
+	let paginationStoryPageSize = $state(10);
+	let playgroundSelectedRows = $state<number[]>([]);
+	let playgroundCurrentPage = $state(1);
+	let playgroundPageSize = $state(10);
+</script>
+
 <!-- Story 1: Default -->
 <Story
 	name="Default"
@@ -274,12 +284,26 @@ SPDX-License-Identifier: MIT
 		columns: columns as any,
 		data: sampleUsers as any,
 		selectable: true,
-		selectedRows: [0, 2],
 		selectAllAriaLabel: 'Select all users',
 		selectRowAriaLabelFormat: 'Select user {index}',
 		ariaLabel: 'Selectable user data table'
 	}}
-/>
+>
+	{#snippet children()}
+		<DataTable
+			columns={columns as any}
+			data={sampleUsers as any}
+			selectable={true}
+			selectedRows={selectionStorySelectedRows}
+			selectAllAriaLabel="Select all users"
+			selectRowAriaLabelFormat={'Select user {index}'}
+			ariaLabel="Selectable user data table"
+			onSelectionChange={(rows) => {
+				selectionStorySelectedRows = rows;
+			}}
+		/>
+	{/snippet}
+</Story>
 
 <!-- Story 3: With Sorting -->
 <Story
@@ -312,14 +336,32 @@ SPDX-License-Identifier: MIT
 		columns: columns as any,
 		data: extendedUsers.slice(0, 10) as any,
 		paginated: true,
-		currentPage: 1,
-		pageSize: 10,
-		totalItems: 50,
 		pageSizeOptions: [5, 10, 25, 50],
 		paginationAriaLabel: 'User table pagination',
 		ariaLabel: 'Paginated user data table'
 	}}
-/>
+>
+	{#snippet children()}
+		<DataTable
+			columns={columns as any}
+			data={extendedUsers.slice((paginationStoryCurrentPage - 1) * paginationStoryPageSize, paginationStoryCurrentPage * paginationStoryPageSize) as any}
+			paginated={true}
+			currentPage={paginationStoryCurrentPage}
+			pageSize={paginationStoryPageSize}
+			totalItems={50}
+			pageSizeOptions={[5, 10, 25, 50]}
+			paginationAriaLabel="User table pagination"
+			ariaLabel="Paginated user data table"
+			onPageChange={(page) => {
+				paginationStoryCurrentPage = page;
+			}}
+			onPageSizeChange={(size) => {
+				paginationStoryPageSize = size;
+				paginationStoryCurrentPage = 1;
+			}}
+		/>
+	{/snippet}
+</Story>
 
 <!-- Story 6: Zebra Striping -->
 <Story
@@ -411,12 +453,8 @@ SPDX-License-Identifier: MIT
 		data: sampleUsers as any,
 		actions: actions as any,
 		selectable: true,
-		selectedRows: [],
 		sortState: { column: null, direction: null } as SortState,
 		paginated: true,
-		currentPage: 1,
-		pageSize: 10,
-		totalItems: 5,
 		pageSizeOptions: [5, 10, 25],
 		size: 'md',
 		zebra: false,
@@ -436,4 +474,47 @@ SPDX-License-Identifier: MIT
 		actionsAriaLabelFormat: 'Actions for row {index}',
 		paginationAriaLabel: 'Table pagination'
 	}}
-/>
+>
+	{#snippet children()}
+		<DataTable
+			columns={columns as any}
+			data={sampleUsers as any}
+			actions={actions as any}
+			selectable={true}
+			selectedRows={playgroundSelectedRows}
+			sortState={{ column: null, direction: null } as SortState}
+			paginated={true}
+			currentPage={playgroundCurrentPage}
+			pageSize={playgroundPageSize}
+			totalItems={5}
+			pageSizeOptions={[5, 10, 25]}
+			size="md"
+			zebra={false}
+			hover={true}
+			compact={false}
+			bordered={false}
+			loading={false}
+			disabled={false}
+			ariaLabel="Interactive user data table"
+			caption=""
+			emptyStateTitle="No data available"
+			emptyStateDescription="There is no data to display."
+			loadingAriaLabel="Loading data"
+			actionsColumnLabel="Actions"
+			selectAllAriaLabel="Select all rows"
+			selectRowAriaLabelFormat={'Select row {index}'}
+			actionsAriaLabelFormat={'Actions for row {index}'}
+			paginationAriaLabel="Table pagination"
+			onSelectionChange={(rows) => {
+				playgroundSelectedRows = rows;
+			}}
+			onPageChange={(page) => {
+				playgroundCurrentPage = page;
+			}}
+			onPageSizeChange={(size) => {
+				playgroundPageSize = size;
+				playgroundCurrentPage = 1;
+			}}
+		/>
+	{/snippet}
+</Story>
