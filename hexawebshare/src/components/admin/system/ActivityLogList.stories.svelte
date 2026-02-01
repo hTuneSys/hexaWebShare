@@ -7,6 +7,7 @@ SPDX-License-Identifier: MIT
 	import { defineMeta } from '@storybook/addon-svelte-csf';
 	import { fn } from 'storybook/test';
 	import ActivityLogList from './ActivityLogList.svelte';
+	import Button from '../../core/buttons/Button.svelte';
 
 	// Activity log entry data structure (matching component interface)
 	interface ActivityLogEntry {
@@ -267,8 +268,8 @@ SPDX-License-Identifier: MIT
 <Story name="Empty State with Actions">
 	<ActivityLogList items={[]}>
 		{#snippet emptyActions()}
-			<button class="btn btn-primary btn-sm">Add Activity</button>
-			<button class="btn btn-ghost btn-sm">Refresh</button>
+			<Button label="Add Activity" variant="primary" size="sm" />
+			<Button label="Refresh" variant="ghost" size="sm" />
 		{/snippet}
 	</ActivityLogList>
 </Story>
