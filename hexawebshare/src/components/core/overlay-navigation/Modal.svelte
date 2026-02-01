@@ -19,6 +19,16 @@ SPDX-License-Identifier: MIT
 		closeOnBackdrop?: boolean;
 		onclose?: () => void;
 		class?: string;
+		/**
+		 * Aria-label for close button
+		 * @default 'Close modal'
+		 */
+		closeButtonAriaLabel?: string;
+		/**
+		 * Aria-label for backdrop click area
+		 * @default 'Close modal by clicking backdrop'
+		 */
+		backdropCloseAriaLabel?: string;
 	}
 
 	const {
@@ -29,6 +39,8 @@ SPDX-License-Identifier: MIT
 		closeOnBackdrop = true,
 		onclose,
 		class: className = '',
+		closeButtonAriaLabel = 'Close modal',
+		backdropCloseAriaLabel = 'Close modal by clicking backdrop',
 		...props
 	}: Props = $props();
 
@@ -93,7 +105,7 @@ SPDX-License-Identifier: MIT
 					</Heading>
 				{/if}
 				{#if onclose}
-					<IconButton variant="ghost" size="sm" circle ariaLabel="Close modal" onclick={onclose}>
+					<IconButton variant="ghost" size="sm" circle ariaLabel={closeButtonAriaLabel} onclick={onclose}>
 						<Icon name="close" size="sm" ariaHidden>
 							<X />
 						</Icon>
@@ -115,7 +127,7 @@ SPDX-License-Identifier: MIT
 		<!-- Backdrop button for closing modal when clicking outside -->
 		<IconButton
 			class="modal-backdrop btn-ghost! h-auto! min-h-0! rounded-none! p-0!"
-			ariaLabel="Close modal by clicking backdrop"
+			ariaLabel={backdropCloseAriaLabel}
 			onclick={onclose}
 		>
 			<Text ariaHidden class="sr-only">close</Text>
