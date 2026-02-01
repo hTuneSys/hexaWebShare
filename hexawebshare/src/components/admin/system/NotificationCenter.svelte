@@ -14,6 +14,7 @@ SPDX-License-Identifier: MIT
 	import List from '../../core/data-display/List.svelte';
 	import ListItem from '../../core/data-display/ListItem.svelte';
 	import Heading from '../../core/typography/Heading.svelte';
+	import Text from '../../core/typography/Text.svelte';
 	import Icon from '../../core/media/Icon.svelte';
 	import EllipsisVertical from 'lucide-svelte/icons/ellipsis-vertical';
 	import Check from 'lucide-svelte/icons/check';
@@ -486,30 +487,36 @@ SPDX-License-Identifier: MIT
 											role="presentation"
 										></span>
 									{/snippet}
-									{#snippet children()}
-										<div class="min-w-0 flex-1">
-											<div class="flex items-start justify-between gap-2">
-												<span class="text-sm" class:font-semibold={!notification.read}>
-													{notification.title}
-												</span>
-												{#if notification.timestamp}
-													<time
-														class="text-base-content/50 shrink-0 text-xs"
-														datetime={typeof notification.timestamp === 'string'
-															? notification.timestamp
-															: notification.timestamp.toISOString()}
-													>
-														{formatTimestamp(notification.timestamp)}
-													</time>
-												{/if}
-											</div>
-											{#if notification.message}
-												<span class="text-base-content/70 mt-0.5 block text-xs"
-													>{notification.message}</span
+								{#snippet children()}
+									<div class="min-w-0 flex-1">
+										<div class="flex items-start justify-between gap-2">
+											<Text 
+												text={notification.title} 
+												size="sm" 
+												weight={!notification.read ? 'semibold' : 'normal'} 
+											/>
+											{#if notification.timestamp}
+												<time
+													class="text-base-content/50 shrink-0 text-xs"
+													datetime={typeof notification.timestamp === 'string'
+														? notification.timestamp
+														: notification.timestamp.toISOString()}
 												>
+													{formatTimestamp(notification.timestamp)}
+												</time>
 											{/if}
 										</div>
-									{/snippet}
+										{#if notification.message}
+											<Text 
+												text={notification.message} 
+												variant="muted" 
+												size="xs" 
+												display="block" 
+												class="mt-0.5" 
+											/>
+										{/if}
+									</div>
+								{/snippet}
 									{#snippet trailing()}
 										<div class="flex shrink-0 gap-1" role="group" aria-label={notificationActionsAriaLabel}>
 											{#if !notification.read}
