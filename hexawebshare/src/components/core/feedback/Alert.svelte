@@ -168,7 +168,7 @@ SPDX-License-Identifier: MIT
 		accent: '!',
 		neutral: '-',
 		info: 'i',
-		success: 'v',
+		success: '✓',
 		warning: '!',
 		error: '!'
 	};

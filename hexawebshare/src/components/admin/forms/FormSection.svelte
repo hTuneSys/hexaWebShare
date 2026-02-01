@@ -63,6 +63,11 @@ SPDX-License-Identifier: MIT
 		 */
 		ariaLabel?: string;
 		/**
+		 * Accessible label for loading state
+		 * @default 'Loading form section'
+		 */
+		loadingLabel?: string;
+		/**
 		 * Header actions snippet (buttons, links, etc.)
 		 */
 		headerActions?: Snippet;
@@ -87,6 +92,7 @@ SPDX-License-Identifier: MIT
 		loading = false,
 		divider = false,
 		ariaLabel,
+		loadingLabel = 'Loading form section',
 		headerActions,
 		children,
 		class: className = '',
@@ -246,11 +252,7 @@ SPDX-License-Identifier: MIT
 
 	<div class={contentClasses}>
 		{#if loading}
-			<div
-				class="flex items-center justify-center py-8"
-				role="status"
-				aria-label="Loading form section"
-			>
+			<div class="flex items-center justify-center py-8" role="status" aria-label={loadingLabel}>
 				<Spinner size="md" />
 			</div>
 		{:else if children}

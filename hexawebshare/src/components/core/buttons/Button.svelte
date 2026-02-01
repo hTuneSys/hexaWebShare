@@ -19,6 +19,11 @@ SPDX-License-Identifier: MIT
 			| 'ghost'
 			| 'link';
 		size?: 'xs' | 'sm' | 'md' | 'lg';
+		/**
+		 * Button type attribute
+		 * @default 'button'
+		 */
+		type?: 'button' | 'submit' | 'reset';
 		label?: string;
 		children?: Snippet;
 		outline?: boolean;
@@ -46,6 +51,7 @@ SPDX-License-Identifier: MIT
 	const {
 		variant = 'primary',
 		size = 'md',
+		type = 'button',
 		label,
 		children,
 		outline = false,
@@ -97,7 +103,7 @@ SPDX-License-Identifier: MIT
 </script>
 
 <button
-	type="button"
+	{type}
 	{id}
 	class={buttonClasses}
 	{disabled}
