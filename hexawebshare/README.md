@@ -21,22 +21,14 @@ A comprehensive Svelte 5 component library built with DaisyUI and Tailwind CSS, 
 
 ## 📦 Installation
 
-### Install from GitHub
-
-Choose the branch based on your needs:
-
-#### For Stable Releases (Recommended for Production)
+### Install from NPM (Recommended)
 
 ```bash
-# Install from main branch (stable releases only)
-pnpm add github:hTuneSys/hexaWebShare/hexawebshare#main
-```
+# Install the latest version
+pnpm add @htunesys/hexawebshare
 
-#### For Latest Features (Beta/Develop)
-
-```bash
-# Install from develop branch (latest features, may be unstable)
-pnpm add github:hTuneSys/hexaWebShare/hexawebshare#develop
+# Or install a specific version
+pnpm add @htunesys/hexawebshare@0.1.0
 ```
 
 ### Install Peer Dependencies
@@ -73,7 +65,7 @@ Create or update your CSS file (e.g., `src/app.css`):
 
 ```svelte
 <script lang="ts">
-	import { Button, Card, Input } from 'hexawebshare';
+	import { Button, Card, Input } from '@htunesys/hexawebshare';
 </script>
 
 <Card>
@@ -244,7 +236,7 @@ hexaWebShare uses DaisyUI themes. Available themes:
 All components are fully typed with TypeScript:
 
 ```typescript
-import { Button, type ButtonProps } from 'hexawebshare';
+import { Button, type ButtonProps } from '@htunesys/hexawebshare';
 
 const props: ButtonProps = {
 	variant: 'primary',
@@ -257,22 +249,18 @@ const props: ButtonProps = {
 
 ## 🔄 Version Management
 
-### Stable Releases (main branch)
-
 ```bash
-# Install specific version tag (when released)
-pnpm add github:hTuneSys/hexaWebShare/hexawebshare#v0.1.0
+# Install latest version
+pnpm add @htunesys/hexawebshare
 
-# Install latest stable
-pnpm add github:hTuneSys/hexaWebShare/hexawebshare#main
+# Install specific version
+pnpm add @htunesys/hexawebshare@0.1.0
+
+# Update to latest
+pnpm update @htunesys/hexawebshare
 ```
 
-### Development Builds (develop branch)
-
-```bash
-# Get latest features (may contain breaking changes)
-pnpm add github:hTuneSys/hexaWebShare/hexawebshare#develop
-```
+See all versions on [NPM](https://www.npmjs.com/package/@htunesys/hexawebshare?activeTab=versions)
 
 ---
 

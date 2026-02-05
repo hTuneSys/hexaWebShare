@@ -1,5 +1,5 @@
 {
-	"name": "hexawebshare",
+	"name": "@htunesys/hexawebshare",
 	"version": "0.1.0",
 	"description": "A comprehensive Svelte 5 component library with DaisyUI and Tailwind CSS",
 	"license": "MIT",
@@ -8,6 +8,9 @@
 		"type": "git",
 		"url": "git+https://github.com/hTuneSys/hexaWebShare.git",
 		"directory": "hexawebshare"
+	},
+	"publishConfig": {
+		"access": "public"
 	},
 	"keywords": [
 		"svelte",
