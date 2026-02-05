@@ -90,6 +90,7 @@
 		"prettier-plugin-svelte": "^3.4.0",
 		"prettier-plugin-tailwindcss": "^0.7.1",
 		"publint": "^0.3.15",
+		"simple-icons": "^16.7.0",
 		"storybook": "^10.1.10",
 		"svelte": "^5.43.8",
 		"svelte-check": "^4.3.4",
