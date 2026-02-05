@@ -59,8 +59,10 @@ Create or update your CSS file (e.g., `src/app.css`):
 @import 'tailwindcss';
 
 @plugin 'daisyui' {
-  themes: light --default, dark --prefersdark;
-  logs: false;
+	themes:
+		light --default,
+		dark --prefersdark;
+	logs: false;
 }
 
 @plugin '@tailwindcss/forms';
@@ -71,14 +73,14 @@ Create or update your CSS file (e.g., `src/app.css`):
 
 ```svelte
 <script lang="ts">
-  import { Button, Card, Input } from 'hexawebshare';
+	import { Button, Card, Input } from 'hexawebshare';
 </script>
 
 <Card>
-  <h2>Login Form</h2>
-  <Input label="Email" type="email" placeholder="Enter your email" />
-  <Input label="Password" type="password" placeholder="Enter your password" />
-  <Button variant="primary">Sign In</Button>
+	<h2>Login Form</h2>
+	<Input label="Email" type="email" placeholder="Enter your email" />
+	<Input label="Password" type="password" placeholder="Enter your password" />
+	<Button variant="primary">Sign In</Button>
 </Card>
 ```
 
@@ -89,6 +91,7 @@ Create or update your CSS file (e.g., `src/app.css`):
 ### Core Components
 
 #### Buttons
+
 - `Button` - Versatile button with variants
 - `IconButton` - Icon-only button
 - `ButtonGroup` - Group multiple buttons
@@ -96,6 +99,7 @@ Create or update your CSS file (e.g., `src/app.css`):
 - `SegmentedControl` - Segmented control buttons
 
 #### Forms
+
 - `Input` - Text input with validation
 - `Select` - Dropdown select
 - `Checkbox` - Checkbox input
@@ -111,6 +115,7 @@ Create or update your CSS file (e.g., `src/app.css`):
 - `MultiSelect` - Multi-selection dropdown
 
 #### Layout
+
 - `Card` - Content container
 - `Container` - Page container
 - `Grid` - Grid layout
@@ -120,6 +125,7 @@ Create or update your CSS file (e.g., `src/app.css`):
 - `PageWrapper` - Full page wrapper
 
 #### Feedback
+
 - `Alert` - Alert messages
 - `Toast` - Toast notifications
 - `Spinner` - Loading spinner
@@ -129,6 +135,7 @@ Create or update your CSS file (e.g., `src/app.css`):
 - `Callout` - Important callouts
 
 #### Typography
+
 - `Heading` - Headings (h1-h6)
 - `Text` - Text with variants
 - `Paragraph` - Paragraph text
@@ -137,6 +144,7 @@ Create or update your CSS file (e.g., `src/app.css`):
 - `MutedText` - Muted text
 
 #### Media
+
 - `Avatar` - User avatar
 - `Badge` - Status badge
 - `Chip` - Chip/tag component
@@ -146,6 +154,7 @@ Create or update your CSS file (e.g., `src/app.css`):
 - `Tooltip` - Tooltip overlay
 
 #### Data Display
+
 - `Table` - Data table
 - `List` / `ListItem` - List components
 - `StatusBadge` - Status indicator
@@ -154,6 +163,7 @@ Create or update your CSS file (e.g., `src/app.css`):
 - `EmptyState` - Empty state placeholder
 
 #### Navigation & Overlays
+
 - `Menu` - Dropdown menu
 - `Modal` - Modal dialog
 - `Drawer` - Side drawer
@@ -220,36 +230,10 @@ hexaWebShare uses DaisyUI themes. Available themes:
 
 ```css
 @plugin 'daisyui' {
-  themes: 
-    light,
-    dark,
-    cupcake,
-    bumblebee,
-    emerald,
-    corporate,
-    synthwave,
-    retro,
-    cyberpunk,
-    valentine,
-    halloween,
-    garden,
-    forest,
-    aqua,
-    lofi,
-    pastel,
-    fantasy,
-    wireframe,
-    black,
-    luxury,
-    dracula,
-    cmyk,
-    autumn,
-    business,
-    acid,
-    lemonade,
-    night,
-    coffee,
-    winter;
+	themes:
+		light, dark, cupcake, bumblebee, emerald, corporate, synthwave, retro, cyberpunk, valentine,
+		halloween, garden, forest, aqua, lofi, pastel, fantasy, wireframe, black, luxury, dracula, cmyk,
+		autumn, business, acid, lemonade, night, coffee, winter;
 }
 ```
 
@@ -263,9 +247,9 @@ All components are fully typed with TypeScript:
 import { Button, type ButtonProps } from 'hexawebshare';
 
 const props: ButtonProps = {
-  variant: 'primary',
-  size: 'md',
-  disabled: false
+	variant: 'primary',
+	size: 'md',
+	disabled: false
 };
 ```
 
@@ -274,6 +258,7 @@ const props: ButtonProps = {
 ## 🔄 Version Management
 
 ### Stable Releases (main branch)
+
 ```bash
 # Install specific version tag (when released)
 pnpm add github:hTuneSys/hexaWebShare/hexawebshare#v0.1.0
@@ -283,6 +268,7 @@ pnpm add github:hTuneSys/hexaWebShare/hexawebshare#main
 ```
 
 ### Development Builds (develop branch)
+
 ```bash
 # Get latest features (may contain breaking changes)
 pnpm add github:hTuneSys/hexaWebShare/hexawebshare#develop
@@ -292,16 +278,16 @@ pnpm add github:hTuneSys/hexaWebShare/hexawebshare#develop
 
 ## 🛠️ Development Commands
 
-| Command                | Description                |
-| ---------------------- | -------------------------- |
-| `pnpm dev`             | Start SvelteKit dev server |
-| `pnpm storybook`       | Start Storybook dev server |
-| `pnpm build`           | Build library package      |
+| Command                | Description                    |
+| ---------------------- | ------------------------------ |
+| `pnpm dev`             | Start SvelteKit dev server     |
+| `pnpm storybook`       | Start Storybook dev server     |
+| `pnpm build`           | Build library package          |
 | `pnpm prepack`         | Build package for distribution |
-| `pnpm build-storybook` | Build static Storybook     |
-| `pnpm check`           | TypeScript type checking   |
-| `pnpm format`          | Format code with Prettier  |
-| `pnpm lint`            | Check code formatting      |
+| `pnpm build-storybook` | Build static Storybook         |
+| `pnpm check`           | TypeScript type checking       |
+| `pnpm format`          | Format code with Prettier      |
+| `pnpm lint`            | Check code formatting          |
 
 ---
 
