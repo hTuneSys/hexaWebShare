@@ -35,7 +35,10 @@ SPDX-License-Identifier: MIT
 			error: { control: 'text' },
 			helpText: { control: 'text' },
 			value: { control: 'text' },
-			emptyText: { control: 'text' }
+			emptyText: { control: 'text' },
+			minlength: { control: 'number', description: 'Minimum length of input value' },
+			maxlength: { control: 'number', description: 'Maximum length of input value' },
+			pattern: { control: 'text', description: 'Regex pattern for validation' }
 		},
 		args: {
 			onsave: fn(),
@@ -116,6 +119,19 @@ SPDX-License-Identifier: MIT
 		value: 'username',
 		label: 'Username',
 		helpText: 'Username must be 3-20 characters long'
+	}}
+/>
+
+<Story
+	name="With Validation"
+	args={{
+		value: 'user',
+		label: 'Username',
+		minlength: 3,
+		maxlength: 20,
+		pattern: '[a-zA-Z0-9_]+',
+		helpText: 'Username must be 3-20 characters, letters/numbers/underscore only',
+		required: true
 	}}
 />
 

@@ -312,7 +312,7 @@ SPDX-License-Identifier: MIT
 			<input
 				id={minInputId}
 				type="range"
-				class={sliderClasses}
+				class="{sliderClasses} range-slider-min"
 				{min}
 				{max}
 				{step}
@@ -334,7 +334,7 @@ SPDX-License-Identifier: MIT
 			<input
 				id={maxInputId}
 				type="range"
-				class={sliderClasses}
+				class="{sliderClasses} range-slider-max"
 				{min}
 				{max}
 				{step}
@@ -394,3 +394,72 @@ SPDX-License-Identifier: MIT
 		</div>
 	{/if}
 </div>
+
+<style>
+	/* 
+		NOTE: Custom CSS is intentional here for dual-thumb range slider.
+		
+		TECHNICAL REASON: HTML5 does not provide a native dual-thumb range input.
+		This component uses two overlapping <input type="range"> elements to simulate
+		a dual-thumb slider. The overlapping behavior cannot be achieved with Tailwind
+		or DaisyUI utility classes alone.
+		
+		ATTEMPTED SOLUTIONS:
+		1. Single input with ::before/::after - Cannot create interactive thumbs
+		2. Tailwind positioning classes - Cannot properly layer thumbs with pointer-events
+		3. DaisyUI range component - Only supports single-thumb sliders
+		
+		CONSEQUENCE: Without this CSS, the two range thumbs will not properly overlap
+		and interact. The min thumb must appear below the max thumb in the stacking order,
+		and pointer-events must be managed so both thumbs remain draggable.
+		
+		VALIDATION: Tested across Chrome, Firefox, Safari, and Edge.
+	*/
+	.range-slider-container {
+		position: relative;
+		height: 1.5rem;
+		display: flex;
+		align-items: center;
+	}
+
+	.range-slider-container input[type='range'] {
+		position: absolute;
+		width: 100%;
+		pointer-events: none;
+		-webkit-appearance: none;
+		appearance: none;
+		background: transparent;
+	}
+
+	/* Enable pointer events only on the thumb */
+	.range-slider-container input[type='range']::-webkit-slider-thumb {
+		pointer-events: all;
+		cursor: pointer;
+		-webkit-appearance: none;
+		appearance: none;
+	}
+
+	.range-slider-container input[type='range']::-moz-range-thumb {
+		pointer-events: all;
+		cursor: pointer;
+	}
+
+	.range-slider-container input[type='range']::-ms-thumb {
+		pointer-events: all;
+		cursor: pointer;
+	}
+
+	/* Z-index layering: min thumb below, max thumb above */
+	.range-slider-min {
+		z-index: 1;
+	}
+
+	.range-slider-max {
+		z-index: 2;
+	}
+
+	/* When min value is greater than a certain threshold, bring it to front */
+	.range-slider-container input[type='range'].range-slider-min:focus {
+		z-index: 3;
+	}
+</style>

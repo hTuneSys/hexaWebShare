@@ -8,6 +8,7 @@ SPDX-License-Identifier: MIT
 	import Alert from '../../core/feedback/Alert.svelte';
 	import Avatar from '../../core/media/Avatar.svelte';
 	import StatusBadge from '../../core/data-display/StatusBadge.svelte';
+	import Text from '../../core/typography/Text.svelte';
 
 	/**
 	 * User information for audit trail entries
@@ -96,6 +97,113 @@ SPDX-License-Identifier: MIT
 		 */
 		ariaLabel?: string;
 		/**
+		 * Aria-label for loading state items
+		 * @default 'Loading audit trail entry'
+		 */
+		loadingAriaLabel?: string;
+		/**
+		 * Error state title text
+		 * @default 'Error loading audit trail'
+		 */
+		errorTitle?: string;
+		/**
+		 * Aria-label for error message
+		 * @default 'Error message'
+		 */
+		errorAriaLabel?: string;
+		/**
+		 * Empty state title text
+		 * @default 'No audit trail entries'
+		 */
+		emptyTitle?: string;
+		/**
+		 * Aria-label for empty state
+		 * @default 'Empty audit trail list'
+		 */
+		emptyAriaLabel?: string;
+		/**
+		 * Aria-label prefix for timestamp
+		 * @default 'Timestamp: '
+		 */
+		timestampAriaLabelPrefix?: string;
+		/**
+		 * Aria-label prefix for action badge
+		 * @default 'Action: '
+		 */
+		actionAriaLabelPrefix?: string;
+		/**
+		 * Aria-label for entity name
+		 * @default 'Entity'
+		 */
+		entityAriaLabel?: string;
+		/**
+		 * Aria-label for entity ID
+		 * @default 'Entity ID'
+		 */
+		entityIdAriaLabel?: string;
+		/**
+		 * Aria-label for IP address
+		 * @default 'IP Address'
+		 */
+		ipAddressAriaLabel?: string;
+		/**
+		 * Label for "created" action
+		 * @default 'Created'
+		 */
+		actionCreatedLabel?: string;
+		/**
+		 * Label for "updated" action
+		 * @default 'Updated'
+		 */
+		actionUpdatedLabel?: string;
+		/**
+		 * Label for "deleted" action
+		 * @default 'Deleted'
+		 */
+		actionDeletedLabel?: string;
+		/**
+		 * Label for "viewed" action
+		 * @default 'Viewed'
+		 */
+		actionViewedLabel?: string;
+		/**
+		 * Label for "exported" action
+		 * @default 'Exported'
+		 */
+		actionExportedLabel?: string;
+		/**
+		 * Label for "imported" action
+		 * @default 'Imported'
+		 */
+		actionImportedLabel?: string;
+		/**
+		 * Label for "logged_in" action
+		 * @default 'Logged In'
+		 */
+		actionLoggedInLabel?: string;
+		/**
+		 * Label for "logged_out" action
+		 * @default 'Logged Out'
+		 */
+		actionLoggedOutLabel?: string;
+		/**
+		 * Label for "permission_changed" action
+		 * @default 'Permission Changed'
+		 */
+		actionPermissionChangedLabel?: string;
+		/**
+		 * Label for "other" action
+		 * @default 'Other'
+		 */
+		actionOtherLabel?: string;
+		/**
+		 * Function to format item aria-label
+		 * @param item - Audit trail item
+		 * @returns Formatted aria-label string
+		 * @default Generates label with action, entity, user, and timestamp
+		 */
+		formatItemAriaLabel?: (item: AuditTrailItem) => string;
+		/**
 		 * Additional CSS classes
 		 */
 		class?: string;
@@ -111,6 +219,27 @@ SPDX-License-Identifier: MIT
 		emptyMessage = 'No audit trail entries found',
 		onItemClick,
 		ariaLabel,
+		loadingAriaLabel = 'Loading audit trail entry',
+		errorTitle = 'Error loading audit trail',
+		errorAriaLabel = 'Error message',
+		emptyTitle = 'No audit trail entries',
+		emptyAriaLabel = 'Empty audit trail list',
+		timestampAriaLabelPrefix = 'Timestamp: ',
+		actionAriaLabelPrefix = 'Action: ',
+		entityAriaLabel = 'Entity',
+		entityIdAriaLabel = 'Entity ID',
+		ipAddressAriaLabel = 'IP Address',
+		actionCreatedLabel = 'Created',
+		actionUpdatedLabel = 'Updated',
+		actionDeletedLabel = 'Deleted',
+		actionViewedLabel = 'Viewed',
+		actionExportedLabel = 'Exported',
+		actionImportedLabel = 'Imported',
+		actionLoggedInLabel = 'Logged In',
+		actionLoggedOutLabel = 'Logged Out',
+		actionPermissionChangedLabel = 'Permission Changed',
+		actionOtherLabel = 'Other',
+		formatItemAriaLabel,
 		class: className = '',
 		...props
 	}: Props = $props();
@@ -133,19 +262,19 @@ SPDX-License-Identifier: MIT
 		}).format(date);
 	}
 
-	// Format action text
+	// Format action text using props
 	function formatAction(action: AuditTrailItem['action']): string {
 		const actionMap: Record<AuditTrailItem['action'], string> = {
-			created: 'Created',
-			updated: 'Updated',
-			deleted: 'Deleted',
-			viewed: 'Viewed',
-			exported: 'Exported',
-			imported: 'Imported',
-			logged_in: 'Logged In',
-			logged_out: 'Logged Out',
-			permission_changed: 'Permission Changed',
-			other: 'Other'
+			created: actionCreatedLabel,
+			updated: actionUpdatedLabel,
+			deleted: actionDeletedLabel,
+			viewed: actionViewedLabel,
+			exported: actionExportedLabel,
+			imported: actionImportedLabel,
+			logged_in: actionLoggedInLabel,
+			logged_out: actionLoggedOutLabel,
+			permission_changed: actionPermissionChangedLabel,
+			other: actionOtherLabel
 		};
 		return actionMap[action] || action;
 	}
@@ -156,6 +285,14 @@ SPDX-License-Identifier: MIT
 		if (size === 'md') return 'sm';
 		return 'sm'; // lg -> sm (md would be too large)
 	}
+
+	// Default formatter for item aria-label
+	const defaultFormatItemAriaLabel = (item: AuditTrailItem): string => {
+		return `Audit trail entry: ${formatAction(item.action)} ${item.entity} by ${item.user.name} on ${formatTimestamp(item.timestamp)}`;
+	};
+
+	// Use custom formatter if provided, otherwise use default
+	const getItemAriaLabel = formatItemAriaLabel || defaultFormatItemAriaLabel;
 
 	// Map action to StatusBadge variant
 	function getActionVariant(
@@ -356,7 +493,7 @@ SPDX-License-Identifier: MIT
 	{#if loading}
 		<!-- Loading skeleton -->
 		{#each Array(3) as _, index}
-			<div role="listitem" class={itemClasses} aria-label="Loading audit trail entry">
+			<div role="listitem" class={itemClasses} aria-label={loadingAriaLabel}>
 				<div class="flex items-start justify-between gap-4">
 					<div class="flex min-w-0 flex-1 items-center gap-3">
 						<Avatar size={getAvatarSize()} shape="circle" loading={true} ariaHidden={true} />
@@ -383,9 +520,9 @@ SPDX-License-Identifier: MIT
 			<Alert
 				variant="error"
 				{size}
-				title="Error loading audit trail"
+				title={errorTitle}
 				description={error}
-				ariaLabel="Error message"
+				ariaLabel={errorAriaLabel}
 				role="alert"
 			/>
 		</div>
@@ -393,11 +530,11 @@ SPDX-License-Identifier: MIT
 		<!-- Empty state -->
 		<div class="flex items-center justify-center py-12">
 			<EmptyState
-				title="No audit trail entries"
+				title={emptyTitle}
 				description={emptyMessage}
 				variant="neutral"
 				{size}
-				ariaLabel="Empty audit trail list"
+				ariaLabel={emptyAriaLabel}
 			/>
 		</div>
 	{:else}
@@ -419,7 +556,7 @@ SPDX-License-Identifier: MIT
 							? 0
 							: -1
 					: -1}
-				aria-label={`Audit trail entry: ${formatAction(item.action)} ${item.entity} by ${item.user.name} on ${formatTimestamp(item.timestamp)}`}
+				aria-label={getItemAriaLabel(item)}
 			>
 				<div class="flex items-start justify-between gap-4">
 					<div class="flex min-w-0 flex-1 items-center gap-3">
@@ -444,7 +581,7 @@ SPDX-License-Identifier: MIT
 						datetime={typeof item.timestamp === 'string'
 							? item.timestamp
 							: item.timestamp.toISOString()}
-						aria-label={`Timestamp: ${formatTimestamp(item.timestamp)}`}
+						aria-label={`${timestampAriaLabelPrefix}${formatTimestamp(item.timestamp)}`}
 					>
 						{formatTimestamp(item.timestamp)}
 					</time>
@@ -459,16 +596,16 @@ SPDX-License-Identifier: MIT
 							label={formatAction(item.action)}
 							variant={getActionVariant(item.action)}
 							size={getBadgeSize()}
-							ariaLabel={`Action: ${formatAction(item.action)}`}
+							ariaLabel={`${actionAriaLabelPrefix}${formatAction(item.action)}`}
 						/>
 						<span
 							class={[actionClasses, 'text-base-content/60'].filter(Boolean).join(' ')}
-							aria-label="Entity"
+							aria-label={entityAriaLabel}
 						>
 							{item.entity}
 						</span>
 						{#if item.entityId}
-							<span class="text-base-content/60" aria-label="Entity ID">(#{item.entityId})</span>
+							<Text text={`(#${item.entityId})`} variant="muted" ariaLabel={entityIdAriaLabel} />
 						{/if}
 					</div>
 					{#if item.details}
@@ -477,7 +614,7 @@ SPDX-License-Identifier: MIT
 						</div>
 					{/if}
 					{#if item.ipAddress}
-						<div class="text-base-content/50 mt-1 text-xs" aria-label="IP Address">
+						<div class="text-base-content/50 mt-1 text-xs" aria-label={ipAddressAriaLabel}>
 							IP: {item.ipAddress}
 						</div>
 					{/if}

@@ -33,19 +33,19 @@ SPDX-License-Identifier: MIT
 				description: 'Size of the date range picker'
 			},
 			startDate: {
-				control: 'date',
+				control: 'text',
 				description: 'Start date value (ISO date string: YYYY-MM-DD)'
 			},
 			endDate: {
-				control: 'date',
+				control: 'text',
 				description: 'End date value (ISO date string: YYYY-MM-DD)'
 			},
 			min: {
-				control: 'date',
+				control: 'text',
 				description: 'Minimum selectable date (ISO date string: YYYY-MM-DD)'
 			},
 			max: {
-				control: 'date',
+				control: 'text',
 				description: 'Maximum selectable date (ISO date string: YYYY-MM-DD)'
 			},
 			label: {

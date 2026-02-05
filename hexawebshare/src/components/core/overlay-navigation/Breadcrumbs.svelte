@@ -122,7 +122,7 @@ SPDX-License-Identifier: MIT
 	// Computed container classes
 	let containerClasses = $derived(
 		[
-			'breadcrumbs',
+			'hb-breadcrumbs',
 			size === 'xs' && 'text-xs',
 			size === 'sm' && 'text-sm',
 			size === 'md' && 'text-base',
@@ -140,17 +140,9 @@ SPDX-License-Identifier: MIT
 		const isCurrent = item.current !== undefined ? item.current : isLast;
 
 		return [
-			'breadcrumb-item',
-			!isDisabled && variant === 'primary' && 'text-primary',
-			!isDisabled && variant === 'secondary' && 'text-secondary',
-			!isDisabled && variant === 'accent' && 'text-accent',
-			!isDisabled && variant === 'neutral' && 'text-base-content',
-			!isDisabled && variant === 'info' && 'text-info',
-			!isDisabled && variant === 'success' && 'text-success',
-			!isDisabled && variant === 'warning' && 'text-warning',
-			!isDisabled && variant === 'error' && 'text-error',
-			isDisabled && 'opacity-50 cursor-not-allowed',
-			isCurrent && !isDisabled && 'font-semibold'
+			'inline-flex items-center gap-1',
+			isCurrent && 'font-semibold',
+			isDisabled && 'cursor-not-allowed pointer-events-none opacity-50'
 		]
 			.filter(Boolean)
 			.join(' ');
@@ -201,7 +193,7 @@ SPDX-License-Identifier: MIT
 	aria-labelledby={ariaLabelledby}
 	{...props}
 >
-	<ul class="breadcrumbs" role="list">
+	<ul class="m-0 flex list-none flex-wrap items-center gap-2 p-0 sm:gap-1" role="list">
 		{#each items as item, index (item.id ?? index)}
 			{@const isLast = isLastItem(index)}
 			{@const itemClasses = getItemClasses(item, index, isLast)}
@@ -210,7 +202,7 @@ SPDX-License-Identifier: MIT
 				{#if item.href && !item.disabled && !disabled && !loading && !isLast}
 					<Link
 						href={item.href}
-						class="breadcrumb-link"
+						class="inline-flex items-center gap-1 no-underline transition-opacity hover:opacity-80 focus:rounded focus:outline-2 focus:outline-offset-2"
 						{size}
 						ariaLabel={item.label}
 						aria-disabled={item.disabled || disabled || false}
@@ -227,19 +219,19 @@ SPDX-License-Identifier: MIT
 						{#if item.icon}
 							<Text
 								ariaHidden={true}
-								class="breadcrumb-icon"
+								class="inline-flex items-center justify-center"
 								text={item.icon}
 								size={textSize}
 								{loading}
 							/>
 						{/if}
-						<Text text={item.label} class="breadcrumb-label" size={textSize} {loading} />
+						<Text text={item.label} class="inline-block" size={textSize} {loading} />
 					</Link>
 				{:else if item.onclick && !item.disabled && !disabled && !loading && !isLast}
 					<Button
 						variant="ghost"
 						{size}
-						class="breadcrumb-button"
+						class="inline-flex items-center gap-1 transition-opacity hover:opacity-80 focus:rounded focus:outline-2 focus:outline-offset-2"
 						ariaLabel={item.label}
 						aria-disabled={item.disabled || disabled || false}
 						tabindex={item.disabled || disabled || loading ? -1 : 0}
@@ -250,186 +242,39 @@ SPDX-License-Identifier: MIT
 						{#if item.icon}
 							<Text
 								ariaHidden={true}
-								class="breadcrumb-icon"
+								class="inline-flex items-center justify-center"
 								text={item.icon}
 								size={textSize}
 								{loading}
 							/>
 						{/if}
-						<Text text={item.label} class="breadcrumb-label" size={textSize} {loading} />
+						<Text text={item.label} class="inline-block" size={textSize} {loading} />
 					</Button>
 				{:else}
 					<Text
-						class="breadcrumb-text"
+						class="inline-flex items-center gap-1"
 						size={textSize}
 						{loading}
-						{...isLast ? { 'aria-current': 'page' } : {}}
+						{...isLast ? { 'aria-current': 'page', weight: 'semibold' } : {}}
 					>
 						{#if item.icon}
 							<Text
 								ariaHidden={true}
-								class="breadcrumb-icon"
+								class="inline-flex items-center justify-center"
 								text={item.icon}
 								size={textSize}
 								{loading}
 							/>
 						{/if}
-						<Text text={item.label} class="breadcrumb-label" size={textSize} {loading} />
+						<Text text={item.label} class="inline-block" size={textSize} {loading} />
 					</Text>
 				{/if}
 			</li>
 			{#if !isLast}
-				<li class="breadcrumb-separator" aria-hidden="true">
-					<Text text={separator} class="separator-text" size={textSize} {loading} />
+				<li class="text-base-content/50 mx-0.5 inline-flex items-center sm:mx-0" aria-hidden="true">
+					<Text text={separator} class="select-none" size={textSize} {loading} />
 				</li>
 			{/if}
 		{/each}
 	</ul>
 </nav>
-
-<style>
-	.breadcrumbs {
-		display: flex;
-		flex-wrap: wrap;
-		align-items: center;
-		gap: 0.5rem;
-		list-style: none;
-		padding: 0;
-		margin: 0;
-	}
-
-	.breadcrumb-item {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.25rem;
-	}
-
-	.breadcrumb-link {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.25rem;
-		text-decoration: none;
-		color: inherit;
-		transition: opacity 0.2s ease;
-	}
-
-	.breadcrumb-link:hover {
-		opacity: 0.8;
-	}
-
-	.breadcrumb-link:focus {
-		outline: 2px solid currentColor;
-		outline-offset: 2px;
-		border-radius: 0.25rem;
-	}
-
-	.breadcrumb-button {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.25rem;
-		background: none;
-		border: none;
-		padding: 0;
-		margin: 0;
-		color: inherit;
-		font: inherit;
-		cursor: pointer;
-		text-decoration: none;
-		transition: opacity 0.2s ease;
-	}
-
-	.breadcrumb-button:hover {
-		opacity: 0.8;
-	}
-
-	.breadcrumb-button:focus {
-		outline: 2px solid currentColor;
-		outline-offset: 2px;
-		border-radius: 0.25rem;
-	}
-
-	.breadcrumb-button:disabled,
-	.breadcrumb-button[aria-disabled='true'] {
-		cursor: not-allowed;
-		opacity: 0.5;
-	}
-
-	.breadcrumb-text {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.25rem;
-	}
-
-	.breadcrumb-icon {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.breadcrumb-label {
-		display: inline-block;
-	}
-
-	.breadcrumb-separator {
-		display: inline-flex;
-		align-items: center;
-		color: hsl(var(--bc) / 0.5);
-		margin: 0 0.25rem;
-	}
-
-	.separator-text {
-		user-select: none;
-	}
-
-	.breadcrumb-item[aria-current='page'] {
-		font-weight: 600;
-	}
-
-	.breadcrumb-item[aria-disabled='true'] {
-		cursor: not-allowed;
-		pointer-events: none;
-	}
-
-	/* Loading state shimmer animation */
-	@keyframes shimmer {
-		0% {
-			background-position: -1000px 0;
-		}
-		100% {
-			background-position: 1000px 0;
-		}
-	}
-
-	/* Enhanced loading animation for breadcrumb items */
-	.breadcrumb-label[aria-busy='true'],
-	.breadcrumb-icon[aria-busy='true'],
-	.breadcrumb-text[aria-busy='true'],
-	.separator-text[aria-busy='true'] {
-		position: relative;
-		overflow: hidden;
-	}
-
-	.breadcrumb-label[aria-busy='true']::after,
-	.breadcrumb-icon[aria-busy='true']::after,
-	.breadcrumb-text[aria-busy='true']::after,
-	.separator-text[aria-busy='true']::after {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: -100%;
-		width: 100%;
-		height: 100%;
-		background: linear-gradient(90deg, transparent 0%, hsl(var(--b3) / 0.4) 50%, transparent 100%);
-		animation: shimmer 1.5s infinite;
-	}
-
-	@media (max-width: 640px) {
-		.breadcrumbs {
-			font-size: 0.875rem;
-		}
-
-		.breadcrumb-separator {
-			margin: 0 0.125rem;
-		}
-	}
-</style>

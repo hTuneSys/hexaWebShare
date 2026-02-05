@@ -9,6 +9,7 @@ SPDX-License-Identifier: MIT
 	import Heading from '../typography/Heading.svelte';
 	import Icon from '../media/Icon.svelte';
 	import Text from '../typography/Text.svelte';
+	import X from 'lucide-svelte/icons/x';
 
 	interface Props {
 		open?: boolean;
@@ -18,6 +19,16 @@ SPDX-License-Identifier: MIT
 		closeOnBackdrop?: boolean;
 		onclose?: () => void;
 		class?: string;
+		/**
+		 * Aria-label for close button
+		 * @default 'Close modal'
+		 */
+		closeButtonAriaLabel?: string;
+		/**
+		 * Aria-label for backdrop click area
+		 * @default 'Close modal by clicking backdrop'
+		 */
+		backdropCloseAriaLabel?: string;
 	}
 
 	const {
@@ -28,6 +39,8 @@ SPDX-License-Identifier: MIT
 		closeOnBackdrop = true,
 		onclose,
 		class: className = '',
+		closeButtonAriaLabel = 'Close modal',
+		backdropCloseAriaLabel = 'Close modal by clicking backdrop',
 		...props
 	}: Props = $props();
 
@@ -92,20 +105,15 @@ SPDX-License-Identifier: MIT
 					</Heading>
 				{/if}
 				{#if onclose}
-					<IconButton variant="ghost" size="sm" circle ariaLabel="Close modal" onclick={onclose}>
+					<IconButton
+						variant="ghost"
+						size="sm"
+						circle
+						ariaLabel={closeButtonAriaLabel}
+						onclick={onclose}
+					>
 						<Icon name="close" size="sm" ariaHidden>
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								stroke-width="2"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-							>
-								<line x1="18" y1="6" x2="6" y2="18" />
-								<line x1="6" y1="6" x2="18" y2="18" />
-							</svg>
+							<X />
 						</Icon>
 					</IconButton>
 				{/if}
@@ -125,7 +133,7 @@ SPDX-License-Identifier: MIT
 		<!-- Backdrop button for closing modal when clicking outside -->
 		<IconButton
 			class="modal-backdrop btn-ghost! h-auto! min-h-0! rounded-none! p-0!"
-			ariaLabel="Close modal by clicking backdrop"
+			ariaLabel={backdropCloseAriaLabel}
 			onclick={onclose}
 		>
 			<Text ariaHidden class="sr-only">close</Text>

@@ -24,23 +24,12 @@ SPDX-License-Identifier: MIT
 			},
 			responsive: { control: 'boolean' },
 			ariaLabel: { control: 'text' }
-		},
-		args: {
-			onclick: fn()
 		}
 	});
 </script>
 
 <!-- Essential Variants (5-10 stories required) -->
-<Story
-	name="Default Horizontal"
-	args={{
-		orientation: 'horizontal',
-		gap: 'sm',
-		ariaLabel: 'Action buttons group',
-		responsive: false
-	}}
->
+<Story name="Default Horizontal">
 	{#snippet children()}
 		<ButtonGroup
 			orientation="horizontal"
@@ -146,5 +135,19 @@ SPDX-License-Identifier: MIT
 	{/snippet}
 </Story>
 
-<!-- Playground -->
-<Story name="Playground" />
+<!-- Playground (REQUIRED - interactive controls for all props) -->
+<Story name="Playground">
+	{#snippet children()}
+		<ButtonGroup
+			orientation="horizontal"
+			gap="sm"
+			responsive={false}
+			ariaLabel="Button group playground"
+		>
+			<Button label="First" variant="primary" />
+			<Button label="Second" variant="secondary" />
+			<Button label="Third" variant="accent" />
+			<Button label="Fourth" variant="success" />
+		</ButtonGroup>
+	{/snippet}
+</Story>

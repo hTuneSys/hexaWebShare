@@ -14,6 +14,12 @@ SPDX-License-Identifier: MIT
 	import List from '../../core/data-display/List.svelte';
 	import ListItem from '../../core/data-display/ListItem.svelte';
 	import Heading from '../../core/typography/Heading.svelte';
+	import Text from '../../core/typography/Text.svelte';
+	import Icon from '../../core/media/Icon.svelte';
+	import EllipsisVertical from 'lucide-svelte/icons/ellipsis-vertical';
+	import Check from 'lucide-svelte/icons/check';
+	import X from 'lucide-svelte/icons/x';
+	import Bell from 'lucide-svelte/icons/bell';
 
 	/**
 	 * Notification item interface
@@ -83,6 +89,116 @@ SPDX-License-Identifier: MIT
 		 */
 		onclearall?: () => void;
 		/**
+		 * Custom timestamp formatter function
+		 * @default Built-in relative time formatter
+		 */
+		formatTimestamp?: (timestamp: Date | string | undefined) => string;
+		/**
+		 * Label for "Mark all as read" action
+		 * @default 'Mark all as read'
+		 */
+		markAllReadLabel?: string;
+		/**
+		 * Label for "Clear all" action
+		 * @default 'Clear all'
+		 */
+		clearAllLabel?: string;
+		/**
+		 * Empty state title text
+		 * @default 'No notifications'
+		 */
+		emptyStateTitle?: string;
+		/**
+		 * Empty state description text
+		 * @default 'You're all caught up!'
+		 */
+		emptyStateDescription?: string;
+		/**
+		 * Aria-label for loading state
+		 * @default 'Loading notifications'
+		 */
+		loadingAriaLabel?: string;
+		/**
+		 * Aria-label for empty state
+		 * @default 'No notifications available'
+		 */
+		emptyAriaLabel?: string;
+		/**
+		 * Aria-label for notification options menu
+		 * @default 'Notification options menu'
+		 */
+		optionsMenuAriaLabel?: string;
+		/**
+		 * Aria-label for unread count badge
+		 * @default ' unread'
+		 */
+		unreadAriaLabelSuffix?: string;
+		/**
+		 * Aria-label for mark as read button
+		 * @default 'Mark notification as read'
+		 */
+		markAsReadAriaLabel?: string;
+		/**
+		 * Aria-label for delete notification button
+		 * @default 'Delete notification'
+		 */
+		deleteNotificationAriaLabel?: string;
+		/**
+		 * Aria-label for notification actions group
+		 * @default 'Notification actions'
+		 */
+		notificationActionsAriaLabel?: string;
+		/**
+		 * Label for information variant in screen readers
+		 * @default 'Information'
+		 */
+		variantInfoLabel?: string;
+		/**
+		 * Label for success variant in screen readers
+		 * @default 'Success'
+		 */
+		variantSuccessLabel?: string;
+		/**
+		 * Label for warning variant in screen readers
+		 * @default 'Warning'
+		 */
+		variantWarningLabel?: string;
+		/**
+		 * Label for error variant in screen readers
+		 * @default 'Error'
+		 */
+		variantErrorLabel?: string;
+		/**
+		 * Default label for notification variant in screen readers
+		 * @default 'Notification'
+		 */
+		variantDefaultLabel?: string;
+		/**
+		 * Suffix appended to unread notifications in aria-label
+		 * @default '. Unread'
+		 */
+		unreadSuffix?: string;
+		/**
+		 * Text for "just now" timestamp
+		 * @default 'Just now'
+		 */
+		timestampJustNow?: string;
+		/**
+		 * Format string for minutes ago (use {0} for number)
+		 * @default '{0}m ago'
+		 */
+		timestampMinutesAgo?: string;
+		/**
+		 * Format string for hours ago (use {0} for number)
+		 * @default '{0}h ago'
+		 */
+		timestampHoursAgo?: string;
+		/**
+		 * Format string for days ago (use {0} for number)
+		 * @default '{0}d ago'
+		 */
+		timestampDaysAgo?: string;
+		/**
 		 * Additional CSS classes
 		 */
 		class?: string;
@@ -99,6 +215,28 @@ SPDX-License-Identifier: MIT
 		ondelete,
 		onmarkallread,
 		onclearall,
+		formatTimestamp: customFormatTimestamp,
+		markAllReadLabel = 'Mark all as read',
+		clearAllLabel = 'Clear all',
+		emptyStateTitle = 'No notifications',
+		emptyStateDescription = "You're all caught up!",
+		loadingAriaLabel = 'Loading notifications',
+		emptyAriaLabel = 'No notifications available',
+		optionsMenuAriaLabel = 'Notification options menu',
+		unreadAriaLabelSuffix = ' unread',
+		markAsReadAriaLabel = 'Mark notification as read',
+		deleteNotificationAriaLabel = 'Delete notification',
+		notificationActionsAriaLabel = 'Notification actions',
+		variantInfoLabel = 'Information',
+		variantSuccessLabel = 'Success',
+		variantWarningLabel = 'Warning',
+		variantErrorLabel = 'Error',
+		variantDefaultLabel = 'Notification',
+		unreadSuffix = '. Unread',
+		timestampJustNow = 'Just now',
+		timestampMinutesAgo = '{0}m ago',
+		timestampHoursAgo = '{0}h ago',
+		timestampDaysAgo = '{0}d ago',
 		class: className = ''
 	}: Props = $props();
 
@@ -111,7 +249,7 @@ SPDX-License-Identifier: MIT
 	// Computed aria label
 	let computedAriaLabel = $derived(
 		ariaLabel ||
-			`${title}${unreadCount > 0 ? `, ${unreadCount} unread` : ', no unread notifications'}`
+			`${title}${unreadCount > 0 ? `, ${unreadCount}${unreadAriaLabelSuffix}` : `, no${unreadAriaLabelSuffix}`}`
 	);
 
 	// Get variant indicator classes
@@ -136,20 +274,20 @@ SPDX-License-Identifier: MIT
 	function getVariantLabel(variant: NotificationItem['variant']): string {
 		switch (variant) {
 			case 'info':
-				return 'Information';
+				return variantInfoLabel;
 			case 'success':
-				return 'Success';
+				return variantSuccessLabel;
 			case 'warning':
-				return 'Warning';
+				return variantWarningLabel;
 			case 'error':
-				return 'Error';
+				return variantErrorLabel;
 			default:
-				return 'Notification';
+				return variantDefaultLabel;
 		}
 	}
 
-	// Format timestamp
-	function formatTimestamp(timestamp: Date | string | undefined): string {
+	// Default timestamp formatter with externalized strings
+	function defaultFormatTimestamp(timestamp: Date | string | undefined): string {
 		if (!timestamp) return '';
 		const date = typeof timestamp === 'string' ? new Date(timestamp) : timestamp;
 		const now = new Date();
@@ -158,12 +296,15 @@ SPDX-License-Identifier: MIT
 		const hours = Math.floor(diff / 3600000);
 		const days = Math.floor(diff / 86400000);
 
-		if (minutes < 1) return 'Just now';
-		if (minutes < 60) return `${minutes}m ago`;
-		if (hours < 24) return `${hours}h ago`;
-		if (days < 7) return `${days}d ago`;
+		if (minutes < 1) return timestampJustNow;
+		if (minutes < 60) return timestampMinutesAgo.replace('{0}', minutes.toString());
+		if (hours < 24) return timestampHoursAgo.replace('{0}', hours.toString());
+		if (days < 7) return timestampDaysAgo.replace('{0}', days.toString());
 		return date.toLocaleDateString();
 	}
+
+	// Use custom formatter if provided, otherwise use default
+	const formatTimestamp = customFormatTimestamp || defaultFormatTimestamp;
 
 	// Handle mark as read
 	function handleRead(id: string) {
@@ -199,14 +340,14 @@ SPDX-License-Identifier: MIT
 			? [
 					{
 						id: 'mark-all-read',
-						label: 'Mark all as read',
+						label: markAllReadLabel,
 						onClick: handleMarkAllRead
 					}
 				]
 			: []),
 		{
 			id: 'clear-all',
-			label: 'Clear all',
+			label: clearAllLabel,
 			onClick: handleClearAll,
 			divider: unreadCount > 0
 		}
@@ -258,7 +399,7 @@ SPDX-License-Identifier: MIT
 								label={unreadCount.toString()}
 								variant="primary"
 								size="sm"
-								ariaLabel="{unreadCount} unread"
+								ariaLabel="{unreadCount}{unreadAriaLabelSuffix}"
 							/>
 						{/if}
 					{/snippet}
@@ -271,32 +412,20 @@ SPDX-License-Identifier: MIT
 						position="bottom"
 						align="end"
 						{disabled}
-						ariaLabel="Notification options menu"
+						ariaLabel={optionsMenuAriaLabel}
 					>
 						{#snippet trigger()}
 							<IconButton
 								variant="ghost"
 								size="sm"
 								square={true}
-								ariaLabel="Notification options menu"
+								ariaLabel={optionsMenuAriaLabel}
 								{disabled}
 							>
 								{#snippet children()}
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										class="h-5 w-5"
-										fill="none"
-										viewBox="0 0 24 24"
-										stroke="currentColor"
-										aria-hidden="true"
-									>
-										<path
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											stroke-width="2"
-											d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
-										/>
-									</svg>
+									<Icon size="sm" ariaHidden={true}>
+										<EllipsisVertical />
+									</Icon>
 								{/snippet}
 							</IconButton>
 						{/snippet}
@@ -306,33 +435,21 @@ SPDX-License-Identifier: MIT
 
 			<!-- Notification List -->
 			{#if loading}
-				<div class="flex justify-center py-12" role="status" aria-label="Loading notifications">
-					<Spinner type="spinner" size="md" variant="primary" ariaLabel="Loading notifications" />
+				<div class="flex justify-center py-12" role="status" aria-label={loadingAriaLabel}>
+					<Spinner type="spinner" size="md" variant="primary" ariaLabel={loadingAriaLabel} />
 				</div>
 			{:else if notifications.length === 0}
 				<EmptyState
-					title="No notifications"
-					description="You're all caught up!"
+					title={emptyStateTitle}
+					description={emptyStateDescription}
 					variant="neutral"
 					size="md"
-					ariaLabel="No notifications available"
+					ariaLabel={emptyAriaLabel}
 				>
 					{#snippet icon()}
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							class="text-base-content/20 h-8 w-8"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke="currentColor"
-							aria-hidden="true"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="1.5"
-								d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-							/>
-						</svg>
+						<Icon size="lg" ariaHidden={true} class="text-base-content/20">
+							<Bell />
+						</Icon>
 					{/snippet}
 				</EmptyState>
 			{:else}
@@ -351,7 +468,7 @@ SPDX-License-Identifier: MIT
 					>
 						{#snippet children()}
 							{#each notifications as notification (notification.id)}
-								{@const itemAriaLabel = `${getVariantLabel(notification.variant)}: ${notification.title}${notification.message ? `. ${notification.message}` : ''}${notification.timestamp ? `. ${formatTimestamp(notification.timestamp)}` : ''}${!notification.read ? '. Unread' : ''}`}
+								{@const itemAriaLabel = `${getVariantLabel(notification.variant)}: ${notification.title}${notification.message ? `. ${notification.message}` : ''}${notification.timestamp ? `. ${formatTimestamp(notification.timestamp)}` : ''}${!notification.read ? unreadSuffix : ''}`}
 								<ListItem
 									label={notification.title}
 									description={notification.message}
@@ -373,9 +490,11 @@ SPDX-License-Identifier: MIT
 									{#snippet children()}
 										<div class="min-w-0 flex-1">
 											<div class="flex items-start justify-between gap-2">
-												<span class="text-sm" class:font-semibold={!notification.read}>
-													{notification.title}
-												</span>
+												<Text
+													text={notification.title}
+													size="sm"
+													weight={!notification.read ? 'semibold' : 'normal'}
+												/>
 												{#if notification.timestamp}
 													<time
 														class="text-base-content/50 shrink-0 text-xs"
@@ -388,64 +507,48 @@ SPDX-License-Identifier: MIT
 												{/if}
 											</div>
 											{#if notification.message}
-												<span class="text-base-content/70 mt-0.5 block text-xs"
-													>{notification.message}</span
-												>
+												<Text
+													text={notification.message}
+													variant="muted"
+													size="xs"
+													display="block"
+													class="mt-0.5"
+												/>
 											{/if}
 										</div>
 									{/snippet}
 									{#snippet trailing()}
-										<div class="flex shrink-0 gap-1" role="group" aria-label="Notification actions">
+										<div
+											class="flex shrink-0 gap-1"
+											role="group"
+											aria-label={notificationActionsAriaLabel}
+										>
 											{#if !notification.read}
 												<IconButton
 													variant="ghost"
 													size="xs"
-													ariaLabel="Mark notification as read"
+													ariaLabel={markAsReadAriaLabel}
 													onclick={() => handleRead(notification.id)}
 													{disabled}
 												>
 													{#snippet children()}
-														<svg
-															xmlns="http://www.w3.org/2000/svg"
-															class="h-4 w-4"
-															fill="none"
-															viewBox="0 0 24 24"
-															stroke="currentColor"
-															aria-hidden="true"
-														>
-															<path
-																stroke-linecap="round"
-																stroke-linejoin="round"
-																stroke-width="2"
-																d="M5 13l4 4L19 7"
-															/>
-														</svg>
+														<Icon size="xs" ariaHidden={true}>
+															<Check />
+														</Icon>
 													{/snippet}
 												</IconButton>
 											{/if}
 											<IconButton
 												variant="ghost"
 												size="xs"
-												ariaLabel="Delete notification"
+												ariaLabel={deleteNotificationAriaLabel}
 												onclick={() => handleDelete(notification.id)}
 												{disabled}
 											>
 												{#snippet children()}
-													<svg
-														xmlns="http://www.w3.org/2000/svg"
-														class="h-4 w-4"
-														fill="none"
-														viewBox="0 0 24 24"
-														stroke="currentColor"
-														aria-hidden="true"
-													>
-														<path
-															stroke-linecap="round"
-															stroke-linejoin="round"
-															stroke-width="2"
-															d="M6 18L18 6M6 6l12 12"
-														/>
-													</svg>
+													<Icon size="xs" ariaHidden={true}>
+														<X />
+													</Icon>
 												{/snippet}
 											</IconButton>
 										</div>

@@ -37,25 +37,18 @@ SPDX-License-Identifier: MIT
 			outline: { control: 'boolean' },
 			glass: { control: 'boolean' },
 			disabled: { control: 'boolean' },
-			loading: { control: 'boolean' },
-			defaultIconPoints: {
-				control: 'text',
-				description: 'Default icon polygon points (used when no children provided)'
-			},
-			defaultIconWidth: {
-				control: { type: 'text' },
-				description: 'Default icon width'
-			},
-			defaultIconHeight: {
-				control: { type: 'text' },
-				description: 'Default icon height'
-			}
+			loading: { control: 'boolean' }
 		},
 		args: {
 			onclick: fn(),
 			ariaLabel: 'Icon button'
 		}
 	});
+</script>
+
+<script>
+	import Icon from '../media/Icon.svelte';
+	import Check from 'lucide-svelte/icons/check';
 </script>
 
 <!-- Essential Variants (5-10 stories required) -->
@@ -68,16 +61,13 @@ SPDX-License-Identifier: MIT
 <Story name="Outline Style" args={{ outline: true, ariaLabel: 'Outline button' }} />
 <Story name="Disabled" args={{ disabled: true, ariaLabel: 'Disabled button' }} />
 <Story name="Loading" args={{ loading: true, ariaLabel: 'Loading button' }} />
-<Story
-	name="With Icon"
-	args={{
-		defaultIconPoints: '20 6 9 17 4 12',
-		defaultIconWidth: '20',
-		defaultIconHeight: '20',
-		variant: 'success',
-		ariaLabel: 'Confirm button'
-	}}
-/>
+<Story name="With Icon" args={{ variant: 'success', ariaLabel: 'Confirm button' }}>
+	<IconButton variant="success" circle ariaLabel="Confirm button">
+		<Icon name="check" size="sm" ariaHidden>
+			<Check />
+		</Icon>
+	</IconButton>
+</Story>
 
 <!-- Interactive Playground -->
 <Story

@@ -142,6 +142,16 @@ SPDX-License-Identifier: MIT
 <div class={containerClasses} aria-label={ariaLabel} aria-live={ariaLive} role="list" {...props}>
 	{#each items as item, index}
 		{#if interactive && !item.disabled}
+			<!-- 
+				NOTE: Raw HTML <button> is intentional here instead of Button component.
+				TECHNICAL REASON: Interactive chart legend items require unstyled buttons that 
+				can toggle chart data visibility. These buttons need flexible layout with custom 
+				spacing for color indicators, labels, and optional value badges.
+				The button must have no visual button styling to appear as a clean legend item.
+				CONSEQUENCE: Using Button component would add .btn classes that conflict with 
+				the inline legend item layout and styling.
+				VALIDATION: Standard chart library legend interaction patterns (Chart.js, D3, etc.)
+			-->
 			<button
 				type="button"
 				class={getItemSpecificClasses(item)}

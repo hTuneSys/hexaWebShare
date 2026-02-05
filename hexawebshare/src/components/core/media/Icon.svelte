@@ -3,6 +3,54 @@ SPDX-FileCopyrightText: 2025 hexaTune LLC
 SPDX-License-Identifier: MIT
 -->
 
+<!--
+@component Icon
+
+A flexible icon component that wraps SVG icons (including Lucide icons) with consistent sizing,
+theming, and accessibility features.
+
+**Features:**
+- Supports any SVG icon via children snippet
+- Integrates seamlessly with Lucide icons (peer dependency)
+- Consistent sizing with xs/sm/md/lg/xl sizes
+- Theme-aware color variants
+- Optional spinning animation
+- Full accessibility support (ARIA labels)
+- Disabled state support
+
+**Lucide Integration:**
+This component is designed to work perfectly with Lucide icons. Simply import any Lucide icon
+and pass it as a child:
+
+```svelte
+<script>
+  import { Icon } from 'hexawebshare';
+  import { X, Check, ChevronDown, Search } from 'lucide-svelte';
+</script>
+
+<Icon size="md" variant="primary">
+  <X />
+</Icon>
+
+<Icon size="lg" variant="success">
+  <Check />
+</Icon>
+```
+
+**Custom SVG Icons:**
+You can also use custom SVG icons:
+
+```svelte
+<Icon size="md" variant="neutral">
+  {#snippet children()}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+      <path d="M12 2L2 7l10 5 10-5-10-5z" />
+    </svg>
+  {/snippet}
+</Icon>
+```
+-->
+
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 
@@ -139,17 +187,5 @@ SPDX-License-Identifier: MIT
 >
 	{#if children}
 		{@render children()}
-	{:else}
-		<!-- Default placeholder icon (star) when no children provided -->
-		<svg
-			xmlns="http://www.w3.org/2000/svg"
-			viewBox="0 0 24 24"
-			fill="currentColor"
-			class="block h-full w-full"
-		>
-			<path
-				d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
-			/>
-		</svg>
 	{/if}
 </span>

@@ -10,6 +10,8 @@ SPDX-License-Identifier: MIT
 	import IconButton from '../buttons/IconButton.svelte';
 	import Heading from '../typography/Heading.svelte';
 	import MutedText from '../typography/MutedText.svelte';
+	import Icon from '../media/Icon.svelte';
+	import X from 'lucide-svelte/icons/x';
 
 	type SlotContent = Snippet | { default?: Snippet };
 	type AlertVariant =
@@ -168,7 +170,7 @@ SPDX-License-Identifier: MIT
 		accent: '!',
 		neutral: '-',
 		info: 'i',
-		success: 'v',
+		success: '✓',
 		warning: '!',
 		error: '!'
 	};
@@ -238,6 +240,19 @@ SPDX-License-Identifier: MIT
 	const handleAction = () => {
 		onaction?.();
 	};
+
+	// Helper: Map Alert size to child component sizes
+	const getIconSize = () => {
+		return size === 'lg' ? 'sm' : 'xs';
+	};
+
+	const getButtonSize = () => {
+		return size === 'lg' ? 'md' : 'sm';
+	};
+
+	const getSpinnerSize = () => {
+		return size === 'lg' ? 'md' : 'sm';
+	};
 </script>
 
 {#if visible}
@@ -283,7 +298,7 @@ SPDX-License-Identifier: MIT
 		{#if loading}
 			<Spinner
 				type="spinner"
-				size="sm"
+				size={getSpinnerSize()}
 				variant={variant === 'neutral' ? 'primary' : variant}
 				ariaLabel={loadingLabel}
 			/>
@@ -292,7 +307,7 @@ SPDX-License-Identifier: MIT
 		{#if actionLabel}
 			<Button
 				variant="ghost"
-				size="sm"
+				size={getButtonSize()}
 				class="btn-outline"
 				onclick={handleAction}
 				ariaLabel={actionAriaLabel ?? actionLabel}
@@ -304,28 +319,16 @@ SPDX-License-Identifier: MIT
 		{#if closable}
 			<IconButton
 				variant="ghost"
-				size="sm"
+				size={getButtonSize()}
 				square
 				onclick={handleClose}
 				ariaLabel={dismissLabel}
 				title={dismissLabel}
 				disabled={disabled || loading}
 			>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					width="16"
-					height="16"
-					viewBox="0 0 24 24"
-					fill="none"
-					stroke="currentColor"
-					stroke-width="2"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					aria-hidden="true"
-				>
-					<line x1="18" y1="6" x2="6" y2="18" />
-					<line x1="6" y1="6" x2="18" y2="18" />
-				</svg>
+				<Icon size={getIconSize()} ariaHidden={true}>
+					<X />
+				</Icon>
 			</IconButton>
 		{/if}
 	</div>

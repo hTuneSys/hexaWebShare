@@ -1,6 +1,27 @@
 {
-	"name": "hexawebshare",
-	"version": "0.0.1",
+	"name": "@htunesys/hexawebshare",
+	"version": "0.1.0",
+	"description": "A comprehensive Svelte 5 component library with DaisyUI and Tailwind CSS",
+	"license": "MIT",
+	"author": "hexaTune LLC",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/hTuneSys/hexaWebShare.git",
+		"directory": "hexawebshare"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"keywords": [
+		"svelte",
+		"svelte5",
+		"components",
+		"ui-library",
+		"tailwindcss",
+		"daisyui",
+		"typescript",
+		"component-library"
+	],
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
@@ -17,7 +38,10 @@
 	"files": [
 		"dist",
 		"!dist/**/*.test.*",
-		"!dist/**/*.spec.*"
+		"!dist/**/*.spec.*",
+		"!dist/**/*.stories.*",
+		"README.md",
+		"LICENSE"
 	],
 	"sideEffects": [
 		"**/*.css"
@@ -32,7 +56,10 @@
 		}
 	},
 	"peerDependencies": {
-		"svelte": ">=5.0.0"
+		"daisyui": "^5.0.0",
+		"lucide-svelte": "^0.563.0",
+		"svelte": ">=5.0.0",
+		"tailwindcss": "^4.0.0"
 	},
 	"engines": {
 		"node": ">=18.0.0"
@@ -55,12 +82,15 @@
 		"@vitest/browser-playwright": "^4.0.14",
 		"@vitest/coverage-v8": "^4.0.14",
 		"autoprefixer": "^10.4.22",
+		"daisyui": "5.5.5",
+		"lucide-svelte": "^0.563.0",
 		"playwright": "^1.57.0",
 		"postcss": "^8.5.6",
 		"prettier": "3.6.2",
 		"prettier-plugin-svelte": "^3.4.0",
 		"prettier-plugin-tailwindcss": "^0.7.1",
 		"publint": "^0.3.15",
+		"simple-icons": "^16.7.0",
 		"storybook": "^10.1.10",
 		"svelte": "^5.43.8",
 		"svelte-check": "^4.3.4",
@@ -68,11 +98,5 @@
 		"typescript": "^5.9.3",
 		"vite": "^7.2.2",
 		"vitest": "^4.0.14"
-	},
-	"keywords": [
-		"svelte"
-	],
-	"dependencies": {
-		"daisyui": "5.5.5"
 	}
 }

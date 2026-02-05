@@ -86,6 +86,10 @@ SPDX-License-Identifier: MIT
 					'error',
 					'ghost'
 				]
+			},
+			badgeSize: {
+				control: { type: 'select' },
+				options: ['xs', 'sm', 'md', 'lg']
 			}
 		},
 		args: {
@@ -296,6 +300,7 @@ SPDX-License-Identifier: MIT
 		submitVariant: 'primary',
 		cancelVariant: 'ghost',
 		badgeVariant: 'primary',
+		badgeSize: 'lg',
 		roles: [
 			{ value: 'admin', label: 'Administrator' },
 			{ value: 'editor', label: 'Editor' },

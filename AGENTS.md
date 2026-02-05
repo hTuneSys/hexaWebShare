@@ -203,15 +203,21 @@ added new feature                # Wrong tense (use imperative)
 
 hexaWebShare follows a **compositional architecture** with two component tiers:
 
-1. **Primitive Components** (Level 1) - Independent base components
-   - Located in: `core/buttons/`, `core/forms/`, `core/typography/`, `core/media/`
-   - Examples: Button, Input, Text, Icon, Badge
-   - These components have **no dependencies** on other library components
-   - They only use raw HTML and DaisyUI classes
+1. **Base Components** (Level 1) - Foundational UI elements
+   - Located in: `core/buttons/`, `core/forms/`, `core/typography/`, `core/media/`, `core/feedback/`, `core/data-display/`
+   - Examples: Button, Input, Text, Icon, Badge, Label, Spinner, StatusDot
+   - **CRITICAL RULE:** Base components CAN and SHOULD import other base components when needed
+   - **NEVER duplicate code** - If a library component exists, USE IT
+   - Only use raw HTML when no suitable library component exists
+   - Examples of valid imports:
+     - Input → Label, Text, Spinner (for labels, error messages, loading states)
+     - Select → Label, Text, Spinner (same reasoning)
+     - Chip → IconButton (for close button functionality)
+     - Link → Icon (for external link indicators)
 
-2. **Composite Components** (Level 2+) - Built from primitives
-   - Located in: `core/layout/`, `core/overlay-navigation/`, `core/data-display/`
-   - Examples: Menu, Modal, Sidebar, Table, Pagination
+2. **Composite Components** (Level 2+) - Complex UI patterns built from base components
+   - Located in: `core/layout/`, `core/overlay-navigation/`, `admin/*`
+   - Examples: Menu, Modal, Sidebar, Table, Pagination, DataTable, AdminLayout
    - These **MUST** use library components internally
    - **NEVER** reimplement buttons, inputs, text, etc. with raw HTML
 
@@ -282,6 +288,73 @@ If you add a `loading` state to the `Button` component, and all composite compon
 - Maintenance becomes a nightmare
 - Bugs multiply across the codebase
 
+#### Base Component Composition Examples
+
+**✅ CORRECT - Base components using other base components:**
+
+```svelte
+<!-- Input.svelte - Uses Label, Text, Spinner from library -->
+<script lang="ts">
+  import Label from '$lib/components/core/data-display/Label.svelte';
+  import Text from '$lib/components/core/typography/Text.svelte';
+  import Spinner from '$lib/components/core/feedback/Spinner.svelte';
+  
+  interface Props {
+    label?: string;
+    error?: string;
+    loading?: boolean;
+  }
+  
+  const { label, error, loading }: Props = $props();
+</script>
+
+<div class="form-control">
+  {#if label}
+    <Label>{label}</Label>
+  {/if}
+  <input type="text" class="input input-bordered" />
+  {#if error}
+    <Text variant="error" size="sm">{error}</Text>
+  {/if}
+  {#if loading}
+    <Spinner size="sm" />
+  {/if}
+</div>
+```
+
+**❌ WRONG - Duplicating existing components:**
+
+```svelte
+<!-- Input.svelte - DON'T DO THIS! -->
+<script lang="ts">
+  interface Props {
+    label?: string;
+    error?: string;
+  }
+  
+  const { label, error }: Props = $props();
+</script>
+
+<div class="form-control">
+  {#if label}
+    <!-- Label component exists! Use it instead of raw HTML -->
+    <label class="label">
+      <span class="label-text">{label}</span>
+    </label>
+  {/if}
+  <input type="text" class="input input-bordered" />
+  {#if error}
+    <!-- Text component exists! Use it instead of raw HTML -->
+    <span class="text-sm text-error">{error}</span>
+  {/if}
+</div>
+```
+
+**WHY THIS IS CRITICAL:**
+- When Label/Text/Spinner get new features (accessibility, theming, variants), ALL components using them benefit automatically
+- Code duplication leads to inconsistencies and maintenance nightmares
+- Following DRY (Don't Repeat Yourself) principle is mandatory
+
 #### Component Usage Guidelines
 
 | When Building | Must Use These Components |
@@ -296,9 +369,9 @@ If you add a `loading` state to the `Button` component, and all composite compon
 #### Exceptions
 
 **Only use raw HTML when:**
-1. Building primitive (Level 1) components
-2. Creating wrapper/structural elements (containers, grids)
-3. The exact component doesn't exist yet (then create it as a primitive first)
+1. Building base (Level 1) components themselves (e.g., Button.svelte uses `<button>`, Text.svelte uses `<span>` or `<p>`)
+2. Creating wrapper/structural elements (containers, grids) with no semantic/interactive behavior
+3. The exact component doesn't exist yet (then consider creating it as a base component first)
 4. Using form utilities (hidden inputs, fieldsets) for non-visual functionality
 
 #### Raw HTML Documentation Requirement
@@ -337,10 +410,10 @@ If you add a `loading` state to the `Button` component, and all composite compon
   <Button>Action</Button>
 </div>
 
-<!-- ✅ GOOD: Primitive component -->
+<!-- ✅ GOOD: Base component -->
 <!-- 
   NOTE: Raw HTML button is intentional here.
-  Button is a Level 1 primitive component - the base for all button variants.
+  This is a Level 1 base component - the foundation for all button variants.
   This component itself provides the abstraction that other components use.
 -->
 <button type="button" class={buttonClasses}>
@@ -358,7 +431,7 @@ If you add a `loading` state to the `Button` component, and all composite compon
 **Valid reasons for raw HTML:**
 - ✅ Form utilities (hidden inputs, fieldset, legend)
 - ✅ Structural/layout containers with no semantic meaning
-- ✅ Primitive (Level 1) components themselves
+- ✅ Base (Level 1) components themselves
 - ✅ No suitable library component exists (then consider creating one)
 - ✅ Performance-critical rendering (with benchmarks)
 - ✅ Third-party library integration requirements
@@ -470,12 +543,12 @@ When raw HTML is genuinely required, use this format:
 #### Before Implementation Checklist
 
 - [ ] Is this a composite component? (uses other UI elements)
-- [ ] Have I checked if primitives exist for buttons, inputs, text, icons?
+- [ ] Have I checked if base components exist for buttons, inputs, text, icons?
 - [ ] Am I importing and using library components instead of raw HTML?
 - [ ] If using raw HTML, have I followed the 4-step decision tree?
 - [ ] If using raw HTML, have I documented with the proper template?
 - [ ] Can I extend/modify the library component instead of bypassing it?
-- [ ] Will changes to primitive components propagate correctly?
+- [ ] Will changes to base components propagate correctly?
 
 ### Svelte 5 Component Pattern
 

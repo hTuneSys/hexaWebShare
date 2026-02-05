@@ -8,6 +8,8 @@ SPDX-License-Identifier: MIT
 	import Heading from '../typography/Heading.svelte';
 	import Text from '../typography/Text.svelte';
 	import Spinner from '../feedback/Spinner.svelte';
+	import Icon from '../media/Icon.svelte';
+	import ChevronDown from 'lucide-svelte/icons/chevron-down';
 
 	/**
 	 * Props interface for the CardSection component
@@ -62,6 +64,16 @@ SPDX-License-Identifier: MIT
 		 */
 		ariaLabel?: string;
 		/**
+		 * Aria-label for loading content container
+		 * @default 'Loading content'
+		 */
+		loadingContentAriaLabel?: string;
+		/**
+		 * Aria-label for loading spinner
+		 * @default 'Loading section content'
+		 */
+		loadingSpinnerAriaLabel?: string;
+		/**
 		 * Icon snippet to display before the title
 		 */
 		icon?: Snippet;
@@ -90,6 +102,8 @@ SPDX-License-Identifier: MIT
 		loading = false,
 		divider = false,
 		ariaLabel,
+		loadingContentAriaLabel = 'Loading content',
+		loadingSpinnerAriaLabel = 'Loading section content',
 		icon,
 		headerActions,
 		children,
@@ -176,6 +190,14 @@ SPDX-License-Identifier: MIT
 <section class="{sectionClasses} {paddingClasses}" aria-label={ariaLabel || title} {...props}>
 	{#if title || description || icon || headerActions || collapsible}
 		{#if collapsible}
+			<!-- 
+				NOTE: Raw HTML <button> is intentional here instead of Button component.
+				TECHNICAL REASON: Collapsible accordion pattern requires a full-width, transparent, 
+				text-left button that acts as a clickable header with aria-expanded state.
+				The button must have no visual button styling (no borders, backgrounds, or padding from .btn).
+				CONSEQUENCE: Using Button component would add .btn classes that conflict with the header layout.
+				VALIDATION: WAI-ARIA accordion pattern and collapsible section best practices.
+			-->
 			<button
 				type="button"
 				class="{headerClasses} w-full border-0 bg-transparent text-left"
@@ -205,20 +227,9 @@ SPDX-License-Identifier: MIT
 				</div>
 
 				<div class="flex flex-shrink-0 items-center gap-2">
-					<svg
-						class={chevronClasses}
-						fill="none"
-						stroke="currentColor"
-						viewBox="0 0 24 24"
-						aria-hidden="true"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M19 9l-7 7-7-7"
-						/>
-					</svg>
+					<Icon size="sm" ariaHidden={true} class={chevronClasses}>
+						<ChevronDown />
+					</Icon>
 				</div>
 			</button>
 		{:else}
@@ -257,8 +268,8 @@ SPDX-License-Identifier: MIT
 
 	<div class={contentClasses}>
 		{#if loading}
-			<div class="flex items-center justify-center py-8" aria-label="Loading content">
-				<Spinner size="md" variant="neutral" ariaLabel="Loading section content" />
+			<div class="flex items-center justify-center py-8" aria-label={loadingContentAriaLabel}>
+				<Spinner size="md" variant="neutral" ariaLabel={loadingSpinnerAriaLabel} />
 			</div>
 		{:else if children}
 			{@render children()}

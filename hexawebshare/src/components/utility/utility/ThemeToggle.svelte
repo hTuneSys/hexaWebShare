@@ -8,6 +8,10 @@ SPDX-License-Identifier: MIT
 	import Icon from '../../core/media/Icon.svelte';
 	import Text from '../../core/typography/Text.svelte';
 	import type { Snippet } from 'svelte';
+	import Sun from 'lucide-svelte/icons/sun';
+	import Moon from 'lucide-svelte/icons/moon';
+	import Monitor from 'lucide-svelte/icons/monitor';
+	import Plus from 'lucide-svelte/icons/plus';
 
 	/**
 	 * Theme item definition for the expandable menu or dropdown
@@ -321,58 +325,13 @@ SPDX-License-Identifier: MIT
 {#snippet ThemeIcon(name: string)}
 	{#if name === 'light'}
 		<!-- Sun icon -->
-		<svg
-			xmlns="http://www.w3.org/2000/svg"
-			viewBox="0 0 24 24"
-			fill="none"
-			stroke="currentColor"
-			stroke-width="2"
-			stroke-linecap="round"
-			stroke-linejoin="round"
-			class="h-5 w-5"
-		>
-			<circle cx="12" cy="12" r="4" />
-			<path d="M12 2v2" />
-			<path d="M12 20v2" />
-			<path d="m4.93 4.93 1.41 1.41" />
-			<path d="m17.66 17.66 1.41 1.41" />
-			<path d="M2 12h2" />
-			<path d="M20 12h2" />
-			<path d="m6.34 17.66-1.41 1.41" />
-			<path d="m19.07 4.93-1.41 1.41" />
-		</svg>
+		<Sun size={20} />
 	{:else if name === 'dark'}
 		<!-- Moon icon -->
-		<svg
-			xmlns="http://www.w3.org/2000/svg"
-			viewBox="0 0 24 24"
-			fill="none"
-			stroke="currentColor"
-			stroke-width="2"
-			stroke-linecap="round"
-			stroke-linejoin="round"
-			class="h-5 w-5"
-		>
-			<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
-		</svg>
+		<Moon size={20} />
 	{:else if name === 'system' || name === 'device' || name === 'auto'}
-		<!-- Enhanced System/Monitor icon -->
-		<svg
-			xmlns="http://www.w3.org/2000/svg"
-			viewBox="0 0 24 24"
-			fill="none"
-			stroke="currentColor"
-			stroke-width="2"
-			stroke-linecap="round"
-			stroke-linejoin="round"
-			class="h-5 w-5"
-		>
-			<rect width="20" height="14" x="2" y="3" rx="2" />
-			<path d="M12 17v4" />
-			<path d="M8 21h8" />
-			<path d="M12 7v6" />
-			<path d="M9 10h6" />
-		</svg>
+		<!-- Monitor icon -->
+		<Monitor size={20} />
 	{:else}
 		<!-- Simple text fallback if no icon found -->
 		<Text text={name.substring(0, 2)} size="xs" class="font-bold uppercase" />
@@ -433,19 +392,11 @@ SPDX-License-Identifier: MIT
 					{@render triggerIcon()}
 				{:else}
 					<Icon size={size === 'xs' ? 'xs' : size === 'sm' ? 'sm' : size === 'lg' ? 'lg' : 'md'}>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							class="transition-transform duration-300"
-							class:rotate-45={isOpen}
-						>
-							<line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" />
-						</svg>
+						<Plus
+							size={20}
+							class="transition-transform duration-300 {isOpen ? 'rotate-45' : ''}"
+							aria-hidden="true"
+						/>
 					</Icon>
 				{/if}
 			</IconButton>

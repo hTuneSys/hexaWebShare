@@ -9,6 +9,9 @@ node_modules
 /build
 /dist
 
+# Generated TypeScript definitions
+**/*.svelte.d.ts
+
 # OS
 .DS_Store
 Thumbs.db

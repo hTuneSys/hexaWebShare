@@ -1,8 +1,3 @@
-<!--
-SPDX-FileCopyrightText: 2025 hexaTune LLC
-SPDX-License-Identifier: MIT
--->
-
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 	import Spinner from '../feedback/Spinner.svelte';
@@ -41,21 +36,6 @@ SPDX-License-Identifier: MIT
 		 * Inline CSS style attribute
 		 */
 		style?: string;
-		/**
-		 * Default icon polygon points (used when no children provided)
-		 * @default '12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'
-		 */
-		defaultIconPoints?: string;
-		/**
-		 * Default icon width
-		 * @default '20'
-		 */
-		defaultIconWidth?: string | number;
-		/**
-		 * Default icon height
-		 * @default '20'
-		 */
-		defaultIconHeight?: string | number;
 	}
 
 	const {
@@ -72,15 +52,13 @@ SPDX-License-Identifier: MIT
 		'aria-expanded': ariaExpanded,
 		children,
 		class: className = '',
-		defaultIconPoints = '12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2',
-		defaultIconWidth = '20',
-		defaultIconHeight = '20',
+		onclick,
+		onkeydown,
 		...props
 	}: Props = $props();
 
 	let buttonClasses = $derived(
 		[
-			className,
 			'btn',
 			variant === 'primary' && 'btn-primary',
 			variant === 'secondary' && 'btn-secondary',
@@ -107,32 +85,71 @@ SPDX-License-Identifier: MIT
 	);
 </script>
 
+<!--
+SPDX-FileCopyrightText: 2025 hexaTune LLC
+SPDX-License-Identifier: MIT
+-->
+
+<!--
+@component IconButton
+
+A button component optimized for displaying icon-only buttons with consistent styling and behavior.
+
+**Features:**
+- All DaisyUI button variants (primary, secondary, accent, etc.)
+- Multiple sizes (xs, sm, md, lg)
+- Circle and square shapes
+- Outline and glass styles
+- Loading state with spinner
+- Disabled state
+- Full accessibility support
+
+**Lucide Integration:**
+Works seamlessly with Lucide icons via the Icon component or directly.
+
+USAGE EXAMPLES:
+
+Using Icon component wrapper (recommended):
+  import IconButton from 'hexawebshare';
+  import Icon from 'hexawebshare';
+  import X from 'lucide-svelte/icons/x';
+  
+  IconButton with variant="ghost", circle, and ariaLabel="Close"
+    Icon with size="sm"
+      X icon component
+
+Direct Lucide icon (also works):
+  import Menu from 'lucide-svelte/icons/menu';
+  
+  IconButton with variant="primary", square, ariaLabel="Open menu"
+    Menu icon component
+
+Custom SVG Icons (when Lucide doesn't have what you need):
+  IconButton with variant="secondary", circle, ariaLabel="Custom action"
+    svg element with viewBox="0 0 24 24", fill="currentColor", class="h-5 w-5"
+      path element with custom d attribute
+  
+  NOTE: Raw SVG is acceptable here only for truly custom icons
+  not available in Lucide. For standard icons, always use Lucide.
+
+Loading State:
+  IconButton with loading prop and ariaLabel="Loading"
+    Search icon component
+-->
+
 <button
 	type="button"
 	class={buttonClasses}
 	{disabled}
 	aria-label={ariaLabel}
 	aria-expanded={ariaExpanded}
+	{onclick}
+	{onkeydown}
 	{...props}
 >
 	{#if loading}
 		<Spinner type="spinner" {size} />
 	{:else if children}
 		{@render children()}
-	{:else}
-		<!-- Default icon when no children provided -->
-		<svg
-			xmlns="http://www.w3.org/2000/svg"
-			width={defaultIconWidth}
-			height={defaultIconHeight}
-			viewBox="0 0 24 24"
-			fill="none"
-			stroke="currentColor"
-			stroke-width="2"
-			stroke-linecap="round"
-			stroke-linejoin="round"
-		>
-			<polygon points={defaultIconPoints} />
-		</svg>
 	{/if}
 </button>

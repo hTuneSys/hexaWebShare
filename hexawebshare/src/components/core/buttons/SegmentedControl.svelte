@@ -16,6 +16,17 @@ SPDX-License-Identifier: MIT
 		options: SegmentOption[];
 		value?: string | number;
 		size?: 'xs' | 'sm' | 'md' | 'lg';
+		variant?:
+			| 'primary'
+			| 'secondary'
+			| 'accent'
+			| 'neutral'
+			| 'info'
+			| 'success'
+			| 'warning'
+			| 'error'
+			| 'ghost'
+			| 'link';
 		disabled?: boolean;
 		name?: string;
 		onchange?: (value: string | number) => void;
@@ -26,6 +37,7 @@ SPDX-License-Identifier: MIT
 		options = [],
 		value = $bindable(),
 		size = 'md',
+		variant = 'primary',
 		disabled = false,
 		name,
 		onchange,
@@ -67,7 +79,7 @@ SPDX-License-Identifier: MIT
 		<Button
 			label={option.label}
 			{size}
-			variant={value === option.value ? 'primary' : undefined}
+			variant={value === option.value ? variant : undefined}
 			disabled={disabled || option.disabled}
 			onclick={() => handleClick(option.value)}
 			class="join-item {value === option.value ? 'btn-active' : ''}"

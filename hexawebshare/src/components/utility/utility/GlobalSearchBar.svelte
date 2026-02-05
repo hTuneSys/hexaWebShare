@@ -9,6 +9,9 @@ SPDX-License-Identifier: MIT
 	import IconButton from '../../core/buttons/IconButton.svelte';
 	import Label from '../../core/data-display/Label.svelte';
 	import Text from '../../core/typography/Text.svelte';
+	import Icon from '../../core/media/Icon.svelte';
+	import Search from 'lucide-svelte/icons/search';
+	import X from 'lucide-svelte/icons/x';
 
 	/**
 	 * Props interface for the GlobalSearchBar component
@@ -508,20 +511,9 @@ SPDX-License-Identifier: MIT
 			class="text-base-content/50 pointer-events-none absolute top-1/2 -translate-y-1/2 {iconLeftClass}"
 			aria-hidden="true"
 		>
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				fill="none"
-				viewBox="0 0 24 24"
-				stroke-width="2"
-				stroke="currentColor"
-				class={iconSizeClass}
-			>
-				<path
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-				/>
-			</svg>
+			<Icon size="sm" ariaHidden={true}>
+				<Search class={iconSizeClass} />
+			</Icon>
 		</div>
 
 		<!-- Input -->
@@ -561,23 +553,15 @@ SPDX-License-Identifier: MIT
 			{:else if showClearButton && value}
 				<IconButton
 					variant="ghost"
-					circle
-					{size}
+					size="xs"
 					onclick={handleClear}
 					{disabled}
 					ariaLabel={clearAriaLabel}
 					class="h-auto min-h-0 p-0.5"
 				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke-width="2"
-						stroke="currentColor"
-						class={iconSizeClass}
-					>
-						<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-					</svg>
+					<Icon size="xs" ariaHidden={true}>
+						<X class={iconSizeClass} />
+					</Icon>
 				</IconButton>
 			{/if}
 		</div>

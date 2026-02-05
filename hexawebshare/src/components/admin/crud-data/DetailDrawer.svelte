@@ -10,6 +10,9 @@ SPDX-License-Identifier: MIT
 	import Heading from '../../core/typography/Heading.svelte';
 	import Text from '../../core/typography/Text.svelte';
 	import Badge from '../../core/media/Badge.svelte';
+	import IconButton from '../../core/buttons/IconButton.svelte';
+	import Icon from '../../core/media/Icon.svelte';
+	import X from 'lucide-svelte/icons/x';
 
 	/**
 	 * Key-Value pair structure for detail data
@@ -199,27 +202,17 @@ SPDX-License-Identifier: MIT
 					<Heading level="h2" size="lg" text={title} />
 				{/if}
 				{#if showCloseButton}
-					<button
-						type="button"
-						class="btn btn-circle btn-ghost btn-sm"
+					<IconButton
+						variant="ghost"
+						circle
+						size="sm"
 						onclick={handleClose}
-						aria-label="Close drawer"
+						ariaLabel="Close drawer"
 					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							class="h-6 w-6"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke="currentColor"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M6 18L18 6M6 6l12 12"
-							/>
-						</svg>
-					</button>
+						<Icon size="sm" ariaHidden={true}>
+							<X />
+						</Icon>
+					</IconButton>
 				{/if}
 			</div>
 			<Divider class="mb-4" />

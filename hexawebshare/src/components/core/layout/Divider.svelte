@@ -88,6 +88,7 @@ SPDX-License-Identifier: MIT
 		[
 			'divider',
 			'my-0',
+			orientation === 'horizontal' && 'divider-horizontal',
 			orientation === 'vertical' && 'divider-vertical',
 			labelPosition === 'start' && 'divider-start',
 			labelPosition === 'end' && 'divider-end',

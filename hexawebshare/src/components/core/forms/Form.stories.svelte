@@ -6,6 +6,7 @@ SPDX-License-Identifier: MIT
 <script module>
 	import { defineMeta } from '@storybook/addon-svelte-csf';
 	import Form from './Form.svelte';
+	import Button from '../buttons/Button.svelte';
 	import { fn } from 'storybook/test';
 
 	const { Story } = defineMeta({
@@ -88,7 +89,7 @@ SPDX-License-Identifier: MIT
 					class="input input-bordered"
 				/>
 			</div>
-			<button type="submit" class="btn btn-primary">Submit</button>
+			<Button type="submit" variant="primary" label="Submit" />
 		</div>
 	{/snippet}
 </Story>
@@ -98,7 +99,7 @@ SPDX-License-Identifier: MIT
 	{#snippet children()}
 		<div class="flex gap-2">
 			<input type="text" name="q" placeholder="Search..." class="input input-bordered flex-1" />
-			<button type="submit" class="btn btn-primary">Search</button>
+			<Button type="submit" variant="primary" label="Search" />
 		</div>
 	{/snippet}
 </Story>
@@ -109,7 +110,7 @@ SPDX-License-Identifier: MIT
 		<p class="text-base-content/70 mb-4 text-sm">
 			Forms with method="dialog" are used inside modal dialogs to close them on submit.
 		</p>
-		<button type="submit" class="btn btn-primary">Close Dialog</button>
+		<Button type="submit" variant="primary" label="Close Dialog" />
 	{/snippet}
 </Story>
 
@@ -123,7 +124,7 @@ SPDX-License-Identifier: MIT
 				</label>
 				<input id="file" type="file" class="file-input file-input-bordered w-full" />
 			</div>
-			<button type="submit" class="btn btn-primary">Upload</button>
+			<Button type="submit" variant="primary" label="Upload" />
 		</div>
 	{/snippet}
 </Story>
@@ -144,7 +145,7 @@ SPDX-License-Identifier: MIT
 					required
 				/>
 			</div>
-			<button type="submit" class="btn btn-primary">Submit</button>
+			<Button type="submit" variant="primary" label="Submit" />
 		</div>
 	{/snippet}
 </Story>
@@ -193,8 +194,8 @@ SPDX-License-Identifier: MIT
 				></textarea>
 			</div>
 			<div class="flex gap-2">
-				<button type="submit" class="btn btn-primary">Submit</button>
-				<button type="reset" class="btn btn-ghost">Reset</button>
+				<Button type="submit" variant="primary" label="Submit" />
+				<Button type="reset" variant="ghost" label="Reset" />
 			</div>
 		</div>
 	{/snippet}

@@ -131,6 +131,40 @@ SPDX-License-Identifier: MIT
 			.filter(Boolean)
 			.join(' ')
 	);
+
+	// Map loader size to text size
+	type TextSize = 'xs' | 'sm' | 'base' | 'lg' | 'xl';
+	const sizeToTextSizeMap: Record<LoaderSize, TextSize> = {
+		xs: 'xs',
+		sm: 'sm',
+		md: 'base',
+		lg: 'lg'
+	};
+
+	const descriptionSizeMap: Record<LoaderSize, TextSize> = {
+		xs: 'xs',
+		sm: 'xs',
+		md: 'sm',
+		lg: 'base'
+	};
+
+	let labelTextSize = $derived(sizeToTextSizeMap[size]);
+	let descriptionTextSize = $derived(descriptionSizeMap[size]);
+
+	let textColorClasses = $derived(
+		[
+			resolvedVariant === 'primary' && 'text-primary',
+			resolvedVariant === 'secondary' && 'text-secondary',
+			resolvedVariant === 'accent' && 'text-accent',
+			resolvedVariant === 'neutral' && 'text-neutral',
+			resolvedVariant === 'info' && 'text-info',
+			resolvedVariant === 'success' && 'text-success',
+			resolvedVariant === 'warning' && 'text-warning',
+			resolvedVariant === 'error' && 'text-error'
+		]
+			.filter(Boolean)
+			.join(' ')
+	);
 </script>
 
 <div
@@ -153,9 +187,18 @@ SPDX-License-Identifier: MIT
 		This container groups label and description text (no semantic meaning).
 	-->
 	<div class="space-y-1">
-		<Text text={labelText} weight="semibold" class="leading-tight" />
+		<Text
+			text={labelText}
+			size={labelTextSize}
+			weight="semibold"
+			class={`leading-tight ${textColorClasses}`}
+		/>
 		{#if description}
-			<Text text={description} size="sm" class="text-base-content/80" />
+			<Text
+				text={description}
+				size={descriptionTextSize}
+				class={`${textColorClasses} opacity-80`}
+			/>
 		{/if}
 	</div>
 </div>

@@ -196,7 +196,7 @@ A standalone list item component with rich features for building custom lists.
 			active && variant === 'primary' && 'bg-primary text-primary-content',
 			active && variant === 'secondary' && 'bg-secondary text-secondary-content',
 			active && variant === 'accent' && 'bg-accent text-accent-content',
-			active && variant === 'neutral' && 'bg-neutral text-neutral-content',
+			active && variant === 'neutral' && 'bg-base-300 text-base-content',
 			active && variant === 'info' && 'bg-info text-info-content',
 			active && variant === 'success' && 'bg-success text-success-content',
 			active && variant === 'warning' && 'bg-warning text-warning-content',
@@ -216,23 +216,13 @@ A standalone list item component with rich features for building custom lists.
 
 	// Text styling for labels
 	let labelExtraClasses = $derived(
-		[
-			'truncate',
-			loading && 'skeleton w-32 h-4',
-			disabled && 'text-base-content/50',
-			active && 'font-semibold'
-		]
+		['truncate', disabled && 'text-base-content/50', active && 'font-semibold']
 			.filter(Boolean)
 			.join(' ')
 	);
 
 	let descriptionExtraClasses = $derived(
-		[
-			'truncate',
-			active ? 'opacity-80' : 'opacity-70',
-			loading && 'skeleton w-48 h-3 mt-1',
-			disabled && 'text-base-content/40'
-		]
+		['truncate', active ? 'opacity-80' : 'opacity-70', disabled && 'text-base-content/40']
 			.filter(Boolean)
 			.join(' ')
 	);
@@ -310,6 +300,12 @@ A standalone list item component with rich features for building custom lists.
 		<span class="min-w-0 flex-1">
 			{#if children}
 				{@render children()}
+			{:else if loading}
+				<!-- Loading skeleton for label and description -->
+				<div class="skeleton h-4 w-32"></div>
+				{#if description}
+					<div class="skeleton mt-1 h-3 w-48"></div>
+				{/if}
 			{:else}
 				<Text text={label} weight="medium" class={labelExtraClasses} />
 				{#if description}
@@ -356,6 +352,12 @@ A standalone list item component with rich features for building custom lists.
 		<span class="flex min-w-0 flex-1 flex-col">
 			{#if children}
 				{@render children()}
+			{:else if loading}
+				<!-- Loading skeleton for label and description -->
+				<div class="skeleton h-4 w-32"></div>
+				{#if description}
+					<div class="skeleton mt-1 h-3 w-48"></div>
+				{/if}
 			{:else}
 				<Text text={label} weight="medium" class={labelExtraClasses} />
 				{#if description}

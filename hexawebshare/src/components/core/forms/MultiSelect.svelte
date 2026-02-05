@@ -9,6 +9,10 @@ SPDX-License-Identifier: MIT
 	import IconButton from '../buttons/IconButton.svelte';
 	import Text from '../typography/Text.svelte';
 	import Checkbox from './Checkbox.svelte';
+	import Icon from '../media/Icon.svelte';
+	import X from 'lucide-svelte/icons/x';
+	import ChevronDown from 'lucide-svelte/icons/chevron-down';
+	import Check from 'lucide-svelte/icons/check';
 
 	/**
 	 * Option type for multiselect options
@@ -583,7 +587,7 @@ SPDX-License-Identifier: MIT
 			<!-- Selected tags -->
 			{#each selectedOptions as option (option.value)}
 				<span class={tagClasses}>
-					<Text text={option.label} />
+					<Text text={option.label} class="max-w-32 truncate text-inherit" />
 					{#if !disabled && !loading}
 						<IconButton
 							variant="ghost"
@@ -594,7 +598,9 @@ SPDX-License-Identifier: MIT
 							ariaLabel="Remove {option.label}"
 							{disabled}
 						>
-							<Text text="×" variant="muted" />
+							<Icon size="xs" ariaHidden={true}>
+								<X />
+							</Icon>
 						</IconButton>
 					{/if}
 				</span>
@@ -636,33 +642,19 @@ SPDX-License-Identifier: MIT
 							ariaLabel={clearAllLabel}
 							onclick={() => clearAll(new MouseEvent('click'))}
 						>
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								class="h-4 w-4"
-								viewBox="0 0 20 20"
-								fill="currentColor"
-							>
-								<path
-									fill-rule="evenodd"
-									d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-									clip-rule="evenodd"
-								/>
-							</svg>
+							<Icon size="xs" ariaHidden={true}>
+								<X size={16} />
+							</Icon>
 						</IconButton>
 					{/if}
 					<!-- Dropdown arrow -->
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						class="h-4 w-4 transition-transform {isOpen ? 'rotate-180' : ''}"
-						viewBox="0 0 20 20"
-						fill="currentColor"
+					<Icon
+						size="xs"
+						class="transition-transform {isOpen ? 'rotate-180' : ''}"
+						ariaHidden={true}
 					>
-						<path
-							fill-rule="evenodd"
-							d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-							clip-rule="evenodd"
-						/>
-					</svg>
+						<ChevronDown size={16} />
+					</Icon>
 				{/if}
 			</div>
 		</div>
@@ -708,20 +700,11 @@ SPDX-License-Identifier: MIT
 								onclick={(e) => e.stopPropagation()}
 								onchange={() => !isDisabled && toggleOption(option.value)}
 							/>
-							<Text text={option.label} class="flex-1" />
+							<Text text={option.label} class="min-w-0 flex-1 truncate" />
 							{#if isSelected}
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									class="text-primary h-4 w-4"
-									viewBox="0 0 20 20"
-									fill="currentColor"
-								>
-									<path
-										fill-rule="evenodd"
-										d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-										clip-rule="evenodd"
-									/>
-								</svg>
+								<Icon size="xs" variant="primary" ariaHidden={true}>
+									<Check size={16} />
+								</Icon>
 							{/if}
 						</li>
 					{/each}

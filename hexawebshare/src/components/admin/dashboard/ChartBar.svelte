@@ -69,6 +69,36 @@ SPDX-License-Identifier: MIT
 		 */
 		ariaLabelledBy?: string;
 		/**
+		 * Aria-label for loading state spinner
+		 * @default 'Loading chart data'
+		 */
+		loadingAriaLabel?: string;
+		/**
+		 * Aria-label prefix for bar values
+		 * @default 'Value: '
+		 */
+		valueAriaLabelPrefix?: string;
+		/**
+		 * Aria-label prefix for bar labels
+		 * @default 'Label: '
+		 */
+		labelAriaLabelPrefix?: string;
+		/**
+		 * Empty state title when no data available
+		 * @default 'No data available'
+		 */
+		emptyStateTitle?: string;
+		/**
+		 * Empty state description when no data available
+		 * @default 'There is no data to display in this chart.'
+		 */
+		emptyStateDescription?: string;
+		/**
+		 * Aria-label for empty state
+		 * @default 'No data available in chart'
+		 */
+		emptyStateAriaLabel?: string;
+		/**
 		 * Additional CSS classes
 		 */
 		class?: string;
@@ -87,6 +117,12 @@ SPDX-License-Identifier: MIT
 		disabled = false,
 		ariaLabel,
 		ariaLabelledBy,
+		loadingAriaLabel = 'Loading chart data',
+		valueAriaLabelPrefix = 'Value: ',
+		labelAriaLabelPrefix = 'Label: ',
+		emptyStateTitle = 'No data available',
+		emptyStateDescription = 'There is no data to display in this chart.',
+		emptyStateAriaLabel = 'No data available in chart',
 		class: className = '',
 		...props
 	}: Props = $props();
@@ -203,7 +239,7 @@ SPDX-License-Identifier: MIT
 	</div>
 	{#if loading}
 		<div class="flex items-center justify-center" style="height: {height};">
-			<Spinner size="lg" {variant} ariaLabel="Loading chart data" />
+			<Spinner size="lg" {variant} ariaLabel={loadingAriaLabel} />
 		</div>
 	{:else if data && data.length > 0}
 		<div
@@ -240,7 +276,7 @@ SPDX-License-Identifier: MIT
 									text={String(item.value)}
 									size="xs"
 									class="absolute -top-6 left-1/2 -translate-x-1/2 transform whitespace-nowrap"
-									ariaLabel="Value: {item.value}"
+									ariaLabel="{valueAriaLabelPrefix}{item.value}"
 								/>
 							{/if}
 						</div>
@@ -252,7 +288,7 @@ SPDX-License-Identifier: MIT
 								align="center"
 								truncate
 								class="mt-2 w-full"
-								ariaLabel="Label: {item.label}"
+								ariaLabel="{labelAriaLabelPrefix}{item.label}"
 							/>
 						{/if}
 					{:else}
@@ -265,7 +301,7 @@ SPDX-License-Identifier: MIT
 								align="right"
 								truncate
 								class="mr-2 min-w-[80px]"
-								ariaLabel="Label: {item.label}"
+								ariaLabel="{labelAriaLabelPrefix}{item.label}"
 							/>
 						{/if}
 						<div
@@ -282,7 +318,7 @@ SPDX-License-Identifier: MIT
 									text={String(item.value)}
 									size="xs"
 									class="absolute top-1/2 left-full ml-2 -translate-y-1/2 transform whitespace-nowrap"
-									ariaLabel="Value: {item.value}"
+									ariaLabel="{valueAriaLabelPrefix}{item.value}"
 								/>
 							{/if}
 						</div>
@@ -293,10 +329,10 @@ SPDX-License-Identifier: MIT
 	{:else}
 		<div class="flex items-center justify-center" style="height: {height};">
 			<EmptyState
-				title="No data available"
-				description="There is no data to display in this chart."
+				title={emptyStateTitle}
+				description={emptyStateDescription}
 				size="sm"
-				ariaLabel="No data available in chart"
+				ariaLabel={emptyStateAriaLabel}
 			/>
 		</div>
 	{/if}

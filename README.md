@@ -84,11 +84,26 @@ Cross-cutting utilities:
 ### Requirements
 
 - **Svelte >= 5.0.0** (uses runes: `$props`, `$derived`, `$effect`, `{@render}`)
+- **lucide-svelte >= 0.563.0** (peer dependency for icon components)
 - **Client-side only** - This library is designed for client-side rendering. SSR/hydration is not currently supported.
 
 #### Why Svelte 5?
 
 This library uses Svelte 5's new runes syntax throughout all components. Projects using Svelte 4 will encounter build errors.
+
+#### Icon Library
+
+Components use [Lucide](https://lucide.dev) icons via the `lucide-svelte` package. This is a peer dependency that must be installed separately:
+
+```bash
+pnpm add lucide-svelte
+# or
+npm install lucide-svelte
+# or
+yarn add lucide-svelte
+```
+
+All icon components in hexaWebShare use the library's `Icon` component wrapper with Lucide icons as children, ensuring consistent sizing, theming, and accessibility.
 
 #### SSR/Hydration Notice
 

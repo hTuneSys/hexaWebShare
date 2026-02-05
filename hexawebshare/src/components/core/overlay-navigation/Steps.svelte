@@ -144,6 +144,11 @@ SPDX-License-Identifier: MIT
 			.join(' ')
 	);
 
+	// Responsive step content size
+	let stepContentSizeClass = $derived(
+		size === 'xs' || size === 'sm' ? 'text-xl sm:text-lg' : 'text-2xl sm:text-xl'
+	);
+
 	const getStepState = (item: StepItem, index: number): 'completed' | 'current' | 'pending' => {
 		if (item.completed) return 'completed';
 		if (item.current) return 'current';
@@ -176,7 +181,8 @@ SPDX-License-Identifier: MIT
 			!isDisabled && state === 'current' && variant === 'success' && 'step-success',
 			!isDisabled && state === 'current' && variant === 'warning' && 'step-warning',
 			!isDisabled && state === 'current' && variant === 'error' && 'step-error',
-			isDisabled && 'opacity-50 cursor-not-allowed'
+			isDisabled && 'cursor-not-allowed pointer-events-none',
+			stepContentSizeClass
 		]
 			.filter(Boolean)
 			.join(' ');
@@ -221,12 +227,12 @@ SPDX-License-Identifier: MIT
 		{@const stepClasses = getStepClasses(item, index)}
 		{@const ariaAttrs = getStepAriaAttributes(item, index)}
 		<li class={stepClasses} data-content={item.icon ? item.icon : undefined} {...ariaAttrs}>
-			<div class="step-content">
+			<div class="mt-2 flex w-full flex-col items-center gap-1">
 				{#if clickable && !item.disabled && !disabled && !loading}
 					<Button
 						variant="ghost"
 						label={item.label}
-						class="step-button"
+						class="h-auto min-h-0 w-full p-1"
 						onclick={() => handleStepClick(item, index)}
 						onkeydown={(e: KeyboardEvent) => handleKeyDown(e, item, index)}
 						ariaLabel={item.description ? `${item.label}: ${item.description}` : item.label}
@@ -234,59 +240,12 @@ SPDX-License-Identifier: MIT
 						disabled={item.disabled || disabled}
 					/>
 				{:else}
-					<Text weight="medium" class="step-label">{item.label}</Text>
+					<Text weight="medium" class="text-center">{item.label}</Text>
 				{/if}
 				{#if item.description}
-					<Text size="sm" class="step-description">{item.description}</Text>
+					<Text size="sm" class="text-center opacity-70">{item.description}</Text>
 				{/if}
 			</div>
 		</li>
 	{/each}
 </ul>
-
-<style>
-	.step-content {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 0.25rem;
-		margin-top: 0.5rem;
-		width: 100%;
-	}
-
-	.step-label {
-		text-align: center;
-	}
-
-	.step-description {
-		text-align: center;
-		opacity: 0.7;
-	}
-
-	:global(.step-button) {
-		padding: 0.25rem 0.5rem !important;
-		min-height: auto !important;
-		height: auto !important;
-		width: 100%;
-	}
-
-	.step[aria-disabled='true'] {
-		cursor: not-allowed;
-		pointer-events: none;
-	}
-
-	.step[data-content]::after {
-		font-size: 1.25rem;
-		line-height: 1;
-	}
-
-	@media (max-width: 640px) {
-		.steps {
-			font-size: 0.875rem;
-		}
-
-		.step[data-content]::after {
-			font-size: 1rem;
-		}
-	}
-</style>

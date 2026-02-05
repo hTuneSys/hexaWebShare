@@ -7,6 +7,8 @@ SPDX-License-Identifier: MIT
 	import type { Snippet } from 'svelte';
 	import Heading from '../typography/Heading.svelte';
 	import Text from '../typography/Text.svelte';
+	import Icon from '../media/Icon.svelte';
+	import Archive from 'lucide-svelte/icons/archive';
 
 	/**
 	 * Props interface for the EmptyState component
@@ -56,6 +58,11 @@ SPDX-License-Identifier: MIT
 		 */
 		loading?: boolean;
 		/**
+		 * Loading message text displayed during loading state
+		 * @default 'Loading...'
+		 */
+		loadingText?: string;
+		/**
 		 * Whether the component is disabled
 		 * @default false
 		 */
@@ -94,6 +101,7 @@ SPDX-License-Identifier: MIT
 		variant = 'neutral',
 		size = 'md',
 		loading = false,
+		loadingText = 'Loading...',
 		disabled = false,
 		bordered = false,
 		filled = false,
@@ -193,6 +201,7 @@ SPDX-License-Identifier: MIT
 		[
 			'font-semibold',
 			'text-base-content',
+			'max-w-md',
 			// Size-based typography
 			size === 'sm' && 'text-base',
 			size === 'md' && 'text-lg',
@@ -257,7 +266,7 @@ SPDX-License-Identifier: MIT
 		<div class="flex flex-col items-center justify-center gap-4">
 			<span class="loading loading-spinner {spinnerSizeClass} text-primary" aria-hidden="true"
 			></span>
-			<Text size="sm" variant="muted" text="Loading..." />
+			<Text size="sm" variant="muted" text={loadingText} />
 		</div>
 	{:else}
 		<!-- Icon -->
@@ -268,20 +277,9 @@ SPDX-License-Identifier: MIT
 		{:else}
 			<!-- Default empty state icon -->
 			<div class={iconContainerClasses} aria-hidden="true">
-				<svg
-					class={defaultIconClasses}
-					fill="none"
-					stroke="currentColor"
-					viewBox="0 0 24 24"
-					xmlns="http://www.w3.org/2000/svg"
-				>
-					<path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="1.5"
-						d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-					></path>
-				</svg>
+				<Icon size="lg" {variant} class={defaultIconClasses} ariaHidden={true}>
+					<Archive strokeWidth={1.5} />
+				</Icon>
 			</div>
 		{/if}
 

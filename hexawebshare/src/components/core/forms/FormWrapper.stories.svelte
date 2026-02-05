@@ -148,4 +148,14 @@ SPDX-License-Identifier: MIT
 		hasError: false,
 		loading: false
 	}}
-/>
+>
+	{#snippet children()}
+		<div class="w-full max-w-xs">
+			<input
+				type="text"
+				placeholder="Interactive playground input"
+				class="input input-bordered w-full"
+			/>
+		</div>
+	{/snippet}
+</Story>

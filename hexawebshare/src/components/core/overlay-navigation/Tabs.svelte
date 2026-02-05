@@ -278,7 +278,7 @@ SPDX-License-Identifier: MIT
 				type="radio"
 				id={tabId}
 				name={radioGroupName}
-				class={getTabClasses(tab, isActive)}
+				class="hidden"
 				role="tab"
 				aria-label={tab.label}
 				checked={isActive}
@@ -286,6 +286,9 @@ SPDX-License-Identifier: MIT
 				onchange={() => setActiveValue(tab.value)}
 				onkeydown={(e) => handleKeyDown(e, index)}
 			/>
+			<label for={tabId} class={getTabClasses(tab, isActive)} role="presentation">
+				{tab.label}
+			</label>
 
 			{#if tab.content && variant === 'lifted'}
 				<!-- Tab content for lifted variant (goes after each tab) -->

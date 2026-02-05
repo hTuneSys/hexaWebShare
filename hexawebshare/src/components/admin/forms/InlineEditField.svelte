@@ -8,6 +8,9 @@ SPDX-License-Identifier: MIT
 	import IconButton from '../../core/buttons/IconButton.svelte';
 	import FormWrapper from '../../core/forms/FormWrapper.svelte';
 	import Spinner from '../../core/feedback/Spinner.svelte';
+	import Icon from '../../core/media/Icon.svelte';
+	import Check from 'lucide-svelte/icons/check';
+	import X from 'lucide-svelte/icons/x';
 
 	/**
 	 * Props interface for the InlineEditField component
@@ -340,19 +343,9 @@ SPDX-License-Identifier: MIT
 							ariaLabel="Save changes"
 							onclick={saveChanges}
 						>
-							{@const checkIconSize =
-								size === 'xs' ? '12' : size === 'sm' ? '16' : size === 'md' ? '16' : '20'}
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								width={checkIconSize}
-								height={checkIconSize}
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke="currentColor"
-								stroke-width="2"
-							>
-								<path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-							</svg>
+							<Icon {size} ariaHidden={true}>
+								<Check />
+							</Icon>
 						</IconButton>
 						<IconButton
 							variant="ghost"
@@ -361,19 +354,9 @@ SPDX-License-Identifier: MIT
 							ariaLabel="Cancel editing"
 							onclick={cancelEditing}
 						>
-							{@const closeIconSize =
-								size === 'xs' ? '12' : size === 'sm' ? '16' : size === 'md' ? '16' : '20'}
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								width={closeIconSize}
-								height={closeIconSize}
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke="currentColor"
-								stroke-width="2"
-							>
-								<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-							</svg>
+							<Icon {size} ariaHidden={true}>
+								<X />
+							</Icon>
 						</IconButton>
 					</div>
 				{/if}

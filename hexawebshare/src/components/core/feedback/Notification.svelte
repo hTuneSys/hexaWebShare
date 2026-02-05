@@ -10,6 +10,8 @@ SPDX-License-Identifier: MIT
 	import Heading from '../typography/Heading.svelte';
 	import MutedText from '../typography/MutedText.svelte';
 	import StatusDot from '../data-display/StatusDot.svelte';
+	import Icon from '../media/Icon.svelte';
+	import X from 'lucide-svelte/icons/x';
 
 	type Children = Snippet | { default?: Snippet };
 
@@ -175,6 +177,16 @@ SPDX-License-Identifier: MIT
 	const handleAction = () => {
 		onaction?.();
 	};
+
+	// Map notification variant to spinner variant for proper contrast
+	const spinnerVariantMap = $derived.by(() => {
+		// Dark/colored backgrounds need neutral spinner for visibility
+		if (variant === 'primary' || variant === 'secondary' || variant === 'accent') {
+			return 'neutral';
+		}
+		// Light semantic backgrounds (info, success, warning, error) can use same color
+		return variant;
+	});
 </script>
 
 {#if visible}
@@ -186,7 +198,7 @@ SPDX-License-Identifier: MIT
 		{...props}
 	>
 		{#if withIcon}
-			<StatusDot {variant} size="sm" ariaHidden class="mt-1.5 sm:mt-0" />
+			<StatusDot {variant} size="sm" ariaHidden={true} class="mt-1.5 sm:mt-0" />
 		{/if}
 
 		<div class="flex min-w-0 flex-1 flex-col gap-1">
@@ -205,8 +217,9 @@ SPDX-License-Identifier: MIT
 			<Spinner
 				type="spinner"
 				size="sm"
-				variant={variant === 'neutral' ? 'primary' : variant}
+				variant={spinnerVariantMap}
 				ariaLabel="Loading notification"
+				class="shrink-0 opacity-70"
 			/>
 		{/if}
 
@@ -230,7 +243,9 @@ SPDX-License-Identifier: MIT
 				ariaLabel={dismissLabel}
 				disabled={disabled || loading}
 			>
-				×
+				<Icon size="xs" ariaHidden={true}>
+					<X />
+				</Icon>
 			</IconButton>
 		{/if}
 	</div>

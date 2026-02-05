@@ -9,6 +9,8 @@ SPDX-License-Identifier: MIT
 	import Text from '../../core/typography/Text.svelte';
 	import Divider from '../../core/layout/Divider.svelte';
 	import Spinner from '../../core/feedback/Spinner.svelte';
+	import Icon from '../../core/media/Icon.svelte';
+	import ChevronDown from 'lucide-svelte/icons/chevron-down';
 
 	/**
 	 * Props interface for the FormSection component
@@ -63,6 +65,11 @@ SPDX-License-Identifier: MIT
 		 */
 		ariaLabel?: string;
 		/**
+		 * Accessible label for loading state
+		 * @default 'Loading form section'
+		 */
+		loadingLabel?: string;
+		/**
 		 * Header actions snippet (buttons, links, etc.)
 		 */
 		headerActions?: Snippet;
@@ -87,6 +94,7 @@ SPDX-License-Identifier: MIT
 		loading = false,
 		divider = false,
 		ariaLabel,
+		loadingLabel = 'Loading form section',
 		headerActions,
 		children,
 		class: className = '',
@@ -171,6 +179,14 @@ SPDX-License-Identifier: MIT
 <section class="{sectionClasses} {paddingClasses}" aria-label={ariaLabel || title} {...props}>
 	{#if title || description || headerActions || collapsible}
 		{#if collapsible}
+			<!-- 
+				NOTE: Raw HTML <button> is intentional here instead of Button component.
+				TECHNICAL REASON: Collapsible form section pattern requires a full-width, transparent,
+				text-left button that acts as a clickable header with aria-expanded state.
+				The button must have no visual button styling (no borders, backgrounds, or padding from .btn).
+				CONSEQUENCE: Using Button component would add .btn classes that conflict with the header layout.
+				VALIDATION: WAI-ARIA accordion pattern and collapsible section best practices.
+			-->
 			<button
 				type="button"
 				class="{headerClasses} w-full border-0 bg-transparent text-left"
@@ -200,20 +216,9 @@ SPDX-License-Identifier: MIT
 							{@render headerActions()}
 						</div>
 					{/if}
-					<svg
-						class={chevronClasses}
-						fill="none"
-						stroke="currentColor"
-						viewBox="0 0 24 24"
-						aria-hidden="true"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M19 9l-7 7-7-7"
-						/>
-					</svg>
+					<Icon size="sm" class={chevronClasses} ariaHidden={true}>
+						<ChevronDown />
+					</Icon>
 				</div>
 			</button>
 		{:else}
@@ -246,11 +251,7 @@ SPDX-License-Identifier: MIT
 
 	<div class={contentClasses}>
 		{#if loading}
-			<div
-				class="flex items-center justify-center py-8"
-				role="status"
-				aria-label="Loading form section"
-			>
+			<div class="flex items-center justify-center py-8" role="status" aria-label={loadingLabel}>
 				<Spinner size="md" />
 			</div>
 		{:else if children}

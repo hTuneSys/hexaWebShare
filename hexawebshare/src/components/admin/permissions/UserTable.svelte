@@ -11,6 +11,10 @@ SPDX-License-Identifier: MIT
 	import EmptyState from '../../core/data-display/EmptyState.svelte';
 	import Spinner from '../../core/feedback/Spinner.svelte';
 	import StatusBadge from '../../core/data-display/StatusBadge.svelte';
+	import Text from '../../core/typography/Text.svelte';
+	import Icon from '../../core/media/Icon.svelte';
+	import Pencil from 'lucide-svelte/icons/pencil';
+	import Trash2 from 'lucide-svelte/icons/trash-2';
 
 	/**
 	 * User data structure for UserTable component
@@ -135,6 +139,108 @@ SPDX-License-Identifier: MIT
 		 */
 		onretry?: () => void;
 		/**
+		 * Table column header text for Name column
+		 * @default 'Name'
+		 */
+		headerName?: string;
+		/**
+		 * Table column header text for Email column
+		 * @default 'Email'
+		 */
+		headerEmail?: string;
+		/**
+		 * Table column header text for Role column
+		 * @default 'Role'
+		 */
+		headerRole?: string;
+		/**
+		 * Table column header text for Status column
+		 * @default 'Status'
+		 */
+		headerStatus?: string;
+		/**
+		 * Table column header text for Actions column
+		 * @default 'Actions'
+		 */
+		headerActions?: string;
+		/**
+		 * Loading message text displayed in spinner
+		 * @default 'Loading users table'
+		 */
+		loadingAriaLabel?: string;
+		/**
+		 * Loading display text shown during load
+		 * @default 'Loading users...'
+		 */
+		loadingText?: string;
+		/**
+		 * Retry button label text
+		 * @default 'Retry'
+		 */
+		retryLabel?: string;
+		/**
+		 * Retry button aria-label text
+		 * @default 'Retry loading users'
+		 */
+		retryAriaLabel?: string;
+		/**
+		 * Error state aria-label
+		 * @default 'Error loading users'
+		 */
+		errorAriaLabel?: string;
+		/**
+		 * Empty state aria-label
+		 * @default 'Empty users table'
+		 */
+		emptyAriaLabel?: string;
+		/**
+		 * Aria-label for last login text
+		 * @default 'Last login'
+		 */
+		lastLoginAriaLabel?: string;
+		/**
+		 * Aria-label for email address
+		 * @default 'Email address'
+		 */
+		emailAriaLabel?: string;
+		/**
+		 * Aria-label prefix for user role
+		 * @default 'User role: '
+		 */
+		userRoleAriaLabelPrefix?: string;
+		/**
+		 * Aria-label prefix for user status
+		 * @default 'User status: '
+		 */
+		userStatusAriaLabelPrefix?: string;
+		/**
+		 * Aria-label for user actions group
+		 * @default 'User actions'
+		 */
+		userActionsAriaLabel?: string;
+		/**
+		 * Aria-label prefix for edit action
+		 * @default 'Edit user '
+		 */
+		editUserAriaLabelPrefix?: string;
+		/**
+		 * Aria-label prefix for delete action
+		 * @default 'Delete user '
+		 */
+		deleteUserAriaLabelPrefix?: string;
+		/**
+		 * Aria-label suffix for avatar
+		 * @default ' avatar'
+		 */
+		avatarAriaLabelSuffix?: string;
+		/**
+		 * Function to format clickable row aria-label with user info
+		 * @param user - User object
+		 * @returns Formatted aria-label string
+		 * @default (user) => `User ${user.name}, ${user.role}, ${user.status}. Press Enter or Space to select.`
+		 */
+		formatRowAriaLabel?: (user: User) => string;
+		/**
 		 * Additional CSS classes
 		 */
 		class?: string;
@@ -158,6 +264,27 @@ SPDX-License-Identifier: MIT
 		ariaLabel = 'Users table',
 		emptyMessage = 'No users found',
 		onretry,
+		headerName = 'Name',
+		headerEmail = 'Email',
+		headerRole = 'Role',
+		headerStatus = 'Status',
+		headerActions = 'Actions',
+		loadingAriaLabel = 'Loading users table',
+		loadingText = 'Loading users...',
+		retryLabel = 'Retry',
+		retryAriaLabel = 'Retry loading users',
+		errorAriaLabel = 'Error loading users',
+		emptyAriaLabel = 'Empty users table',
+		lastLoginAriaLabel = 'Last login',
+		emailAriaLabel = 'Email address',
+		userRoleAriaLabelPrefix = 'User role: ',
+		userStatusAriaLabelPrefix = 'User status: ',
+		userActionsAriaLabel = 'User actions',
+		editUserAriaLabelPrefix = 'Edit user ',
+		deleteUserAriaLabelPrefix = 'Delete user ',
+		avatarAriaLabelSuffix = ' avatar',
+		formatRowAriaLabel = (user: User) =>
+			`User ${user.name}, ${user.role}, ${user.status}. Press Enter or Space to select.`,
 		class: className = '',
 		...props
 	}: Props = $props();
@@ -302,12 +429,12 @@ SPDX-License-Identifier: MIT
 	>
 		<thead>
 			<tr>
-				<th scope="col" class="min-w-[200px]">Name</th>
-				<th scope="col" class="hidden md:table-cell">Email</th>
-				<th scope="col" class="hidden sm:table-cell">Role</th>
-				<th scope="col">Status</th>
+				<th scope="col" class="min-w-[200px]">{headerName}</th>
+				<th scope="col" class="hidden md:table-cell">{headerEmail}</th>
+				<th scope="col" class="hidden sm:table-cell">{headerRole}</th>
+				<th scope="col">{headerStatus}</th>
 				{#if showActions}
-					<th scope="col" class="w-[100px] text-right">Actions</th>
+					<th scope="col" class="w-[100px] text-right">{headerActions}</th>
 				{/if}
 			</tr>
 		</thead>
@@ -317,11 +444,11 @@ SPDX-License-Identifier: MIT
 				<tr>
 					<td colspan={showActions ? 5 : 4} class="py-12 text-center">
 						<div class="flex flex-col items-center justify-center gap-3">
-							<Spinner type="spinner" size="md" variant="primary" ariaLabel="Loading users table" />
-							<span class="text-base-content/60 text-sm">
-								<span class="sr-only">Loading users table</span>
-								<span aria-hidden="true">Loading users...</span>
-							</span>
+							<Spinner type="spinner" size="md" variant="primary" ariaLabel={loadingAriaLabel} />
+							<div>
+								<Text text={loadingAriaLabel} class="sr-only" />
+								<Text text={loadingText} variant="muted" size="sm" ariaHidden={true} />
+							</div>
 						</div>
 					</td>
 				</tr>
@@ -333,12 +460,12 @@ SPDX-License-Identifier: MIT
 								variant="error"
 								size="md"
 								description={error}
-								actionLabel={onretry ? 'Retry' : undefined}
-								actionAriaLabel={onretry ? 'Retry loading users' : undefined}
+								actionLabel={onretry ? retryLabel : undefined}
+								actionAriaLabel={onretry ? retryAriaLabel : undefined}
 								onaction={onretry}
 								fullWidth={false}
 								withIcon={true}
-								ariaLabel="Error loading users"
+								ariaLabel={errorAriaLabel}
 							/>
 						</div>
 					</td>
@@ -351,7 +478,7 @@ SPDX-License-Identifier: MIT
 							variant="neutral"
 							size="md"
 							fullWidth={false}
-							ariaLabel="Empty users table"
+							ariaLabel={emptyAriaLabel}
 						/>
 					</td>
 				</tr>
@@ -363,9 +490,7 @@ SPDX-License-Identifier: MIT
 						onkeydown={(e) => handleRowKeyDown(e, user, index)}
 						aria-rowindex={index + 2}
 						tabindex={onuserclick && !disabled && !loading ? 0 : undefined}
-						aria-label={onuserclick
-							? `User ${user.name}, ${user.role}, ${user.status}. Press Enter or Space to select.`
-							: undefined}
+						aria-label={onuserclick ? formatRowAriaLabel(user) : undefined}
 					>
 						<td class="max-w-[300px] min-w-[200px]">
 							<div class="flex items-center gap-3">
@@ -374,35 +499,37 @@ SPDX-License-Identifier: MIT
 									alt={user.name}
 									size="sm"
 									placeholder={getUserInitials(user.name)}
-									ariaLabel={`${user.name} avatar`}
+									ariaLabel={`${user.name}${avatarAriaLabelSuffix}`}
 									ariaHidden={true}
 								/>
 								<div class="flex min-w-0 flex-1 flex-col">
-									<span class="truncate font-medium">{user.name}</span>
+									<Text text={user.name} weight="medium" truncate={true} />
 									{#if user.lastLogin}
-										<span
-											class="text-base-content/60 hidden truncate text-xs md:block"
-											aria-label="Last login"
-										>
-											Last login: {typeof user.lastLogin === 'string'
-												? user.lastLogin
-												: user.lastLogin.toLocaleDateString()}
-										</span>
+										<Text
+											text={`${lastLoginAriaLabel}: ${typeof user.lastLogin === 'string' ? user.lastLogin : user.lastLogin.toLocaleDateString()}`}
+											variant="muted"
+											size="xs"
+											truncate={true}
+											class="hidden md:block"
+											ariaLabel={lastLoginAriaLabel}
+										/>
 									{/if}
 									<!-- Mobile: Show email on small screens -->
-									<span
-										class="text-base-content/60 truncate text-xs md:hidden"
-										aria-label="Email address"
-									>
-										{user.email}
-									</span>
+									<Text
+										text={user.email}
+										variant="muted"
+										size="xs"
+										truncate={true}
+										class="md:hidden"
+										ariaLabel={emailAriaLabel}
+									/>
 								</div>
 							</div>
 						</td>
 						<td class="hidden md:table-cell">
 							<span
 								class="text-base-content block max-w-[200px] truncate"
-								aria-label="Email address"
+								aria-label={emailAriaLabel}
 							>
 								{user.email}
 							</span>
@@ -412,7 +539,7 @@ SPDX-License-Identifier: MIT
 								label={user.role}
 								variant={getRoleVariant(user.role)}
 								size="sm"
-								ariaLabel={`User role: ${user.role}`}
+								ariaLabel={`${userRoleAriaLabelPrefix}${user.role}`}
 							/>
 						</td>
 						<td>
@@ -420,7 +547,7 @@ SPDX-License-Identifier: MIT
 								label={user.status.charAt(0).toUpperCase() + user.status.slice(1)}
 								variant={getStatusVariant(user.status)}
 								size="sm"
-								ariaLabel={`User status: ${user.status}`}
+								ariaLabel={`${userStatusAriaLabelPrefix}${user.status}`}
 							/>
 						</td>
 						{#if showActions}
@@ -428,32 +555,20 @@ SPDX-License-Identifier: MIT
 								<div
 									class="flex items-center justify-end gap-1 sm:gap-2"
 									role="group"
-									aria-label="User actions"
+									aria-label={userActionsAriaLabel}
 								>
 									{#if onedit}
 										<IconButton
 											variant="ghost"
 											size="xs"
 											circle={true}
-											ariaLabel={`Edit user ${user.name}`}
+											ariaLabel={`${editUserAriaLabelPrefix}${user.name}`}
 											onclick={() => handleEditClick(user, index)}
 											disabled={disabled || loading}
 										>
-											<svg
-												xmlns="http://www.w3.org/2000/svg"
-												width="16"
-												height="16"
-												viewBox="0 0 24 24"
-												fill="none"
-												stroke="currentColor"
-												stroke-width="2"
-												stroke-linecap="round"
-												stroke-linejoin="round"
-												aria-hidden="true"
-											>
-												<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-												<path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-											</svg>
+											<Icon size="xs" ariaHidden={true}>
+												<Pencil />
+											</Icon>
 										</IconButton>
 									{/if}
 									{#if ondelete}
@@ -461,28 +576,14 @@ SPDX-License-Identifier: MIT
 											variant="ghost"
 											size="xs"
 											circle={true}
-											ariaLabel={`Delete user ${user.name}`}
+											ariaLabel={`${deleteUserAriaLabelPrefix}${user.name}`}
 											onclick={() => handleDeleteClick(user, index)}
 											disabled={disabled || loading}
 											class="text-error hover:bg-error/10"
 										>
-											<svg
-												xmlns="http://www.w3.org/2000/svg"
-												width="16"
-												height="16"
-												viewBox="0 0 24 24"
-												fill="none"
-												stroke="currentColor"
-												stroke-width="2"
-												stroke-linecap="round"
-												stroke-linejoin="round"
-												aria-hidden="true"
-											>
-												<polyline points="3 6 5 6 21 6"></polyline>
-												<path
-													d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
-												></path>
-											</svg>
+											<Icon size="xs" ariaHidden={true}>
+												<Trash2 />
+											</Icon>
 										</IconButton>
 									{/if}
 								</div>

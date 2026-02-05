@@ -11,6 +11,8 @@ SPDX-License-Identifier: MIT
 	import Badge from '../media/Badge.svelte';
 	import Heading from '../typography/Heading.svelte';
 	import Text from '../typography/Text.svelte';
+	import Icon from '../media/Icon.svelte';
+	import ChevronsLeft from 'lucide-svelte/icons/chevrons-left';
 
 	/**
 	 * Sidebar item interface for menu items
@@ -126,6 +128,11 @@ SPDX-License-Identifier: MIT
 		 */
 		onCollapse?: (collapsed: boolean) => void;
 		/**
+		 * Aria-label for loading state spinner
+		 * @default 'Loading'
+		 */
+		loadingAriaLabel?: string;
+		/**
 		 * Custom header content
 		 */
 		header?: Snippet;
@@ -197,6 +204,7 @@ SPDX-License-Identifier: MIT
 		ariaLabel,
 		onItemClick,
 		onCollapse,
+		loadingAriaLabel = 'Loading',
 		header,
 		footer,
 		children,
@@ -382,20 +390,13 @@ SPDX-License-Identifier: MIT
 					onclick={toggleCollapse}
 				>
 					{#snippet children()}
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							class="h-5 w-5 transition-transform {collapsed ? 'rotate-180' : ''}"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke="currentColor"
+						<Icon
+							size="sm"
+							ariaHidden={true}
+							class="transition-transform {collapsed ? 'rotate-180' : ''}"
 						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M11 19l-7-7 7-7m8 14l-7-7 7-7"
-							/>
-						</svg>
+							<ChevronsLeft />
+						</Icon>
 					{/snippet}
 				</IconButton>
 			{/if}
@@ -406,7 +407,8 @@ SPDX-License-Identifier: MIT
 	<div class="flex flex-1 flex-col overflow-hidden">
 		{#if loading}
 			<div class="flex flex-1 items-center justify-center p-4">
-				<span class="loading loading-spinner loading-lg text-primary" aria-label="Loading"></span>
+				<span class="loading loading-spinner loading-lg text-primary" aria-label={loadingAriaLabel}
+				></span>
 			</div>
 		{:else if children}
 			<!-- Custom Children Content -->

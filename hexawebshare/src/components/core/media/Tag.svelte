@@ -7,6 +7,8 @@ SPDX-License-Identifier: MIT
 	import type { Snippet } from 'svelte';
 	import IconButton from '../buttons/IconButton.svelte';
 	import Spinner from '../feedback/Spinner.svelte';
+	import Icon from './Icon.svelte';
+	import X from 'lucide-svelte/icons/x';
 
 	/**
 	 * Props interface for the Tag component
@@ -119,7 +121,7 @@ SPDX-License-Identifier: MIT
 		removable = false,
 		onRemove,
 		removeLabel = 'Remove tag',
-		removeIcon = '✕',
+		removeIcon = '',
 		clickable = false,
 		onclick,
 		icon,
@@ -242,7 +244,13 @@ SPDX-License-Identifier: MIT
 					ariaLabel={removeLabel}
 					{disabled}
 				>
-					{removeIcon}
+					{#if removeIcon}
+						{removeIcon}
+					{:else}
+						<Icon size="xs" ariaHidden={true}>
+							<X />
+						</Icon>
+					{/if}
 				</IconButton>
 			{/if}
 		</button>
@@ -275,7 +283,13 @@ SPDX-License-Identifier: MIT
 					ariaLabel={removeLabel}
 					{disabled}
 				>
-					{removeIcon}
+					{#if removeIcon}
+						{removeIcon}
+					{:else}
+						<Icon size="xs" ariaHidden={true}>
+							<X />
+						</Icon>
+					{/if}
 				</IconButton>
 			{/if}
 		</span>

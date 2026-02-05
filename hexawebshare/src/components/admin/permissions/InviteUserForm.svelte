@@ -14,6 +14,8 @@ SPDX-License-Identifier: MIT
 	import CardSection from '../../core/layout/CardSection.svelte';
 	import Heading from '../../core/typography/Heading.svelte';
 	import Badge from '../../core/media/Badge.svelte';
+	import Icon from '../../core/media/Icon.svelte';
+	import X from 'lucide-svelte/icons/x';
 
 	/**
 	 * Role option type
@@ -199,6 +201,11 @@ SPDX-License-Identifier: MIT
 			| 'error'
 			| 'ghost';
 		/**
+		 * Size for permission badges
+		 * @default 'lg'
+		 */
+		badgeSize?: 'xs' | 'sm' | 'md' | 'lg';
+		/**
 		 * Submit event handler - called when form is submitted
 		 */
 		onFormSubmit?: (data: InviteUserFormData) => void | Promise<void>;
@@ -206,6 +213,36 @@ SPDX-License-Identifier: MIT
 		 * Cancel event handler
 		 */
 		onCancel?: (event?: MouseEvent) => void;
+		/**
+		 * Aria-label for email input field
+		 * @default 'Email address for user invitation'
+		 */
+		emailAriaLabel?: string;
+		/**
+		 * Aria-label for role select field
+		 * @default 'User role selection'
+		 */
+		roleAriaLabel?: string;
+		/**
+		 * Aria-label for permissions select field
+		 * @default 'User permissions selection'
+		 */
+		permissionsAriaLabel?: string;
+		/**
+		 * Aria-label format for remove permission button
+		 * @default 'Remove {permission} permission'
+		 */
+		removePermissionAriaLabelFormat?: string;
+		/**
+		 * Aria-label for cancel button
+		 * @default 'Cancel user invitation'
+		 */
+		cancelAriaLabel?: string;
+		/**
+		 * Aria-label for submit button
+		 * @default 'Submit user invitation'
+		 */
+		submitAriaLabel?: string;
 		/**
 		 * Additional CSS classes
 		 */
@@ -239,8 +276,15 @@ SPDX-License-Identifier: MIT
 		submitVariant = 'primary',
 		cancelVariant = 'ghost',
 		badgeVariant = 'primary',
+		badgeSize = 'lg',
 		onFormSubmit,
 		onCancel,
+		emailAriaLabel = 'Email address for user invitation',
+		roleAriaLabel = 'User role selection',
+		permissionsAriaLabel = 'User permissions selection',
+		removePermissionAriaLabelFormat = 'Remove {permission} permission',
+		cancelAriaLabel = 'Cancel user invitation',
+		submitAriaLabel = 'Submit user invitation',
 		class: className = '',
 		...props
 	}: Props = $props();
@@ -329,7 +373,7 @@ SPDX-License-Identifier: MIT
 			{/if}
 
 			{#if formError}
-				<Alert variant="error" description={formError} class="mb-4" />
+				<Alert variant="error" description={formError} withIcon={false} class="mb-4" />
 			{/if}
 
 			<div class="space-y-4">
@@ -349,7 +393,7 @@ SPDX-License-Identifier: MIT
 							email = e.target.value;
 						}
 					}}
-					ariaLabel="Email address for user invitation"
+					ariaLabel={emailAriaLabel}
 				/>
 
 				<!-- Role Field -->
@@ -368,7 +412,7 @@ SPDX-License-Identifier: MIT
 							role = e.target.value;
 						}
 					}}
-					ariaLabel="User role selection"
+					ariaLabel={roleAriaLabel}
 				/>
 
 				<!-- Permissions Field -->
@@ -398,7 +442,7 @@ SPDX-License-Identifier: MIT
 								permissionsSelectValue = '';
 							}
 						}}
-						ariaLabel="User permissions selection"
+						ariaLabel={permissionsAriaLabel}
 					/>
 				</FormWrapper>
 				{#if selectedPermissions.length > 0}
@@ -407,16 +451,22 @@ SPDX-License-Identifier: MIT
 							{@const permission = normalizedPermissions.find((p) => p.value === permissionValue)}
 							{#if permission}
 								<div class="flex items-center gap-2">
-									<Badge label={permission.label} variant={badgeVariant} size="lg" />
+									<Badge label={permission.label} variant={badgeVariant} size={badgeSize} />
 									{#if !disabled && !loading}
 										<IconButton
 											variant="ghost"
 											size="xs"
 											circle={true}
 											onclick={() => removePermission(permissionValue)}
-											ariaLabel="Remove {permission.label} permission"
-											defaultIconPoints="6 6 12 12 18 6 12 12 18 18 12 12 6 18 12 12"
-										/>
+											ariaLabel={removePermissionAriaLabelFormat.replace(
+												'{permission}',
+												permission.label
+											)}
+										>
+											<Icon name="close" size="xs" ariaHidden>
+												<X />
+											</Icon>
+										</IconButton>
 									{/if}
 								</div>
 							{/if}
@@ -434,7 +484,7 @@ SPDX-License-Identifier: MIT
 						label={cancelLabel}
 						disabled={disabled || loading}
 						onclick={handleCancel}
-						ariaLabel="Cancel user invitation"
+						ariaLabel={cancelAriaLabel}
 					/>
 				{/if}
 				<Button
@@ -444,7 +494,7 @@ SPDX-License-Identifier: MIT
 					disabled={disabled || loading}
 					{loading}
 					onclick={submitForm}
-					ariaLabel="Submit user invitation"
+					ariaLabel={submitAriaLabel}
 				/>
 			</div>
 		</CardSection>

@@ -183,4 +183,15 @@ SPDX-License-Identifier: MIT
 />
 
 <!-- Interactive Playground (REQUIRED - must be last) -->
-<Story name="Playground" args={{}} />
+<Story
+	name="Playground"
+	args={{
+		items: sampleItems,
+		orientation: 'horizontal',
+		variant: 'primary',
+		size: 'md',
+		clickable: false,
+		disabled: false,
+		loading: false
+	}}
+/>

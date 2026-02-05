@@ -19,6 +19,12 @@ SPDX-License-Identifier: MIT
 
 	/**
 	 * Props interface for the RadioGroup component
+	 *
+	 * NOTE: RadioGroup is designed for single-selection scenarios only.
+	 * By HTML specification, radio buttons with the same 'name' attribute
+	 * allow only ONE option to be selected at a time. This is NOT a bug.
+	 *
+	 * For multiple selections, use the Checkbox component instead.
 	 */
 	interface Props {
 		/**

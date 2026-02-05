@@ -5,6 +5,7 @@ SPDX-License-Identifier: MIT
 
 <script lang="ts">
 	import { tick } from 'svelte';
+	import Text from '../../core/typography/Text.svelte';
 
 	/**
 	 * Props interface for the TwoFactorInput component
@@ -70,6 +71,11 @@ SPDX-License-Identifier: MIT
 		 */
 		name?: string;
 		/**
+		 * Aria-label for loading state spinner
+		 * @default 'Loading'
+		 */
+		loadingAriaLabel?: string;
+		/**
 		 * Additional CSS classes for the container
 		 */
 		class?: string;
@@ -98,6 +104,7 @@ SPDX-License-Identifier: MIT
 		helpText,
 		ariaLabel,
 		name,
+		loadingAriaLabel = 'Loading',
 		class: className = '',
 		oncomplete,
 		onchange
@@ -284,8 +291,14 @@ SPDX-License-Identifier: MIT
 
 <div class={containerClasses}>
 	{#if label}
+		<!-- 
+			NOTE: Raw HTML label is intentional here.
+			TECHNICAL REASON: Form semantics require native <label> element for proper
+			click-to-focus behavior and accessibility. The label wraps form controls and
+			provides the semantic relationship between the label text and input fields.
+		-->
 		<label class={labelClasses} for={undefined}>
-			<span class="label-text">{label}</span>
+			<Text text={label} class="label-text" />
 		</label>
 	{/if}
 
@@ -318,21 +331,28 @@ SPDX-License-Identifier: MIT
 
 		{#if loading}
 			<div class="bg-base-100/50 absolute inset-0 flex items-center justify-center rounded-lg">
-				<span class="loading loading-spinner {loadingSizeClass} text-primary" aria-label="Loading"
+				<!-- 
+				NOTE: Raw HTML span with loading spinner classes is intentional here.
+				TECHNICAL REASON: DaisyUI's .loading class requires specific HTML structure
+				and pseudo-elements that cannot be replicated with the Text component.
+			-->
+				<span
+					class="loading loading-spinner {loadingSizeClass} text-primary"
+					aria-label={loadingAriaLabel}
 				></span>
 			</div>
 		{/if}
 	</div>
 
 	{#if error}
-		<div class={labelClasses}>
-			<span class="label-text-alt text-error" role="alert">{error}</span>
+		<div class={labelClasses} role="alert">
+			<Text text={error} class="label-text-alt text-error" />
 		</div>
 	{/if}
 
 	{#if helpText && !error}
 		<div class={labelClasses}>
-			<span class="label-text-alt text-base-content/70">{helpText}</span>
+			<Text text={helpText} class="label-text-alt" variant="muted" />
 		</div>
 	{/if}
 

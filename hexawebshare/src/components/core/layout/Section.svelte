@@ -9,6 +9,8 @@ SPDX-License-Identifier: MIT
 	import Spinner from '../feedback/Spinner.svelte';
 	import Text from '../typography/Text.svelte';
 	import Heading from '../typography/Heading.svelte';
+	import Icon from '../media/Icon.svelte';
+	import ChevronDown from 'lucide-svelte/icons/chevron-down';
 
 	/**
 	 * Props interface for the Section component
@@ -234,20 +236,9 @@ SPDX-License-Identifier: MIT
 				</div>
 
 				<div class="flex flex-shrink-0 items-center gap-2">
-					<svg
-						class={chevronClasses}
-						fill="none"
-						stroke="currentColor"
-						viewBox="0 0 24 24"
-						aria-hidden="true"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M19 9l-7 7-7-7"
-						/>
-					</svg>
+					<Icon size="sm" ariaHidden={true} class={chevronClasses}>
+						<ChevronDown />
+					</Icon>
 				</div>
 			</Button>
 		{:else}

@@ -7,6 +7,8 @@ SPDX-License-Identifier: MIT
 	import type { Snippet } from 'svelte';
 	import IconButton from '../buttons/IconButton.svelte';
 	import Heading from '../typography/Heading.svelte';
+	import Icon from '../media/Icon.svelte';
+	import X from 'lucide-svelte/icons/x';
 
 	interface Props {
 		/**
@@ -159,6 +161,9 @@ SPDX-License-Identifier: MIT
 			side === 'right' && 'w-80',
 			side === 'top' && 'h-80 w-full',
 			side === 'bottom' && 'h-80 w-full',
+			// Elevation and position
+			'z-20',
+			'relative',
 			// Padding
 			'p-4',
 			contentClass
@@ -241,6 +246,13 @@ SPDX-License-Identifier: MIT
 			-->
 			<label for={toggleId} class="drawer-overlay" aria-hidden="true"></label>
 			<!-- 
+				NOTE: Raw HTML <button> is intentional here instead of Button component.
+				TECHNICAL REASON: This is an invisible backdrop overlay for accessibility.
+				It provides keyboard navigation and click-to-close functionality without any visual styling.
+				The button must be completely transparent and cover the entire backdrop area.
+				CONSEQUENCE: Using Button component would add unwanted visual styles (.btn classes).
+				VALIDATION: This pattern follows standard modal/drawer backdrop implementation.
+				
 				Interactive backdrop overlay for accessibility.
 				This button provides proper keyboard navigation and screen reader support.
 			-->
@@ -274,23 +286,12 @@ SPDX-License-Identifier: MIT
 							variant="ghost"
 							circle
 							size="sm"
-							onclick={handleClose}
 							ariaLabel={closeAriaLabel}
+							onclick={handleClose}
 						>
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								class="h-6 w-6"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke="currentColor"
-							>
-								<path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									stroke-width="2"
-									d="M6 18L18 6M6 6l12 12"
-								/>
-							</svg>
+							<Icon size="sm" ariaHidden={true}>
+								<X />
+							</Icon>
 						</IconButton>
 					{/if}
 				</div>

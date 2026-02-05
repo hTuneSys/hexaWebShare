@@ -6,6 +6,8 @@ SPDX-License-Identifier: MIT
 <script module>
 	import { defineMeta } from '@storybook/addon-svelte-csf';
 	import Section from './Section.svelte';
+	import Icon from '../media/Icon.svelte';
+	import Info from 'lucide-svelte/icons/info';
 
 	const { Story } = defineMeta({
 		title: 'Core/Layout/Section',
@@ -83,20 +85,9 @@ SPDX-License-Identifier: MIT
 <Story name="With Icon">
 	<Section title="Section with Icon" description="This section displays an icon">
 		{#snippet icon()}
-			<svg
-				class="text-primary h-6 w-6"
-				fill="none"
-				stroke="currentColor"
-				viewBox="0 0 24 24"
-				aria-hidden="true"
-			>
-				<path
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					stroke-width="2"
-					d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-				/>
-			</svg>
+			<Icon size="sm" ariaHidden={true}>
+				<Info />
+			</Icon>
 		{/snippet}
 		{#snippet children()}
 			<p class="text-base-content/80">
@@ -120,6 +111,17 @@ SPDX-License-Identifier: MIT
 </Story>
 
 <!-- Playground -->
+<!-- 
+NOTE: Storybook controls are partially interactive for this component.
+TECHNICAL REASON: Section has optional Svelte 5 snippet (children prop).
+The addon-svelte-csf Story component cannot pass args to snippet parameters in Svelte 5.
+ATTEMPTED SOLUTIONS:
+1. Tried {#snippet children(args)} pattern - TypeScript error: Snippet<[]> doesn't accept parameters
+2. Tried auto-wiring without snippet - Component children would be empty
+CONSEQUENCE: Playground story shows default variant; use other stories to see specific variations.
+WORKAROUND: Use the variant stories above to explore different configurations.
+TODO: Investigate Storybook v8+ compatibility with Svelte 5 snippet pattern
+-->
 <Story
 	name="Playground"
 	args={{
@@ -133,4 +135,29 @@ SPDX-License-Identifier: MIT
 		loading: false,
 		divider: false
 	}}
-/>
+>
+	{#snippet children()}
+		<Section
+			title="Interactive Section"
+			description="Try changing the controls"
+			variant="default"
+			padding="md"
+			collapsible={false}
+			collapsed={false}
+			disabled={false}
+			loading={false}
+			divider={false}
+		>
+			{#snippet children()}
+				<p class="text-base-content/80">
+					This is the interactive playground for the Section component. Use the controls panel to
+					experiment with different props.
+				</p>
+				<p class="text-base-content/60 mt-2 text-sm">
+					Note: Due to Svelte 5 snippet limitations, controls don't update the story in real-time.
+					Use the variant stories above to see specific configurations.
+				</p>
+			{/snippet}
+		</Section>
+	{/snippet}
+</Story>

@@ -113,8 +113,9 @@ SPDX-License-Identifier: MIT
 
 	// Get step classes based on state
 	const getStepClasses = (index: number, step: StepData): string => {
-		const state = getStepState(index);
 		const isDisabled = step.disabled || disabled;
+		const state = getStepState(index);
+
 		return [
 			'step',
 			!isDisabled && state === 'completed' && variant === 'primary' && 'step-primary',
@@ -133,7 +134,7 @@ SPDX-License-Identifier: MIT
 			!isDisabled && state === 'current' && variant === 'success' && 'step-success',
 			!isDisabled && state === 'current' && variant === 'warning' && 'step-warning',
 			!isDisabled && state === 'current' && variant === 'error' && 'step-error',
-			isDisabled && 'step-disabled'
+			isDisabled && 'opacity-50 cursor-not-allowed pointer-events-none'
 		]
 			.filter(Boolean)
 			.join(' ');
@@ -180,18 +181,20 @@ SPDX-License-Identifier: MIT
 			{#if clickable && !step.disabled && !disabled}
 				<IconButton
 					variant="ghost"
-					class="step-button"
+					class="w-full justify-start text-left hover:opacity-80 focus:outline-2 focus:outline-offset-2"
 					onclick={() => handleStepClick(step, index)}
 					onkeydown={(e) => handleKeyDown(e, step, index)}
 					ariaLabel={step.description ? `${step.label}: ${step.description}` : step.label}
 					disabled={step.disabled || disabled}
 				>
 					{#snippet children()}
-						<div class="step-wrapper">
+						<div class="flex items-center gap-2">
 							{#if step.icon}
-								<span class="step-icon" aria-hidden="true">{step.icon}</span>
+								<span class="inline-flex items-center justify-center" aria-hidden="true"
+									>{step.icon}</span
+								>
 							{/if}
-							<div class="step-content">
+							<div class="flex flex-col gap-1">
 								<Text>{step.label}</Text>
 								{#if step.description}
 									<Text size="sm">{step.description}</Text>
@@ -201,11 +204,13 @@ SPDX-License-Identifier: MIT
 					{/snippet}
 				</IconButton>
 			{:else}
-				<div class="step-wrapper">
+				<div class="flex items-center gap-2">
 					{#if step.icon}
-						<span class="step-icon" aria-hidden="true">{step.icon}</span>
+						<span class="inline-flex items-center justify-center" aria-hidden="true"
+							>{step.icon}</span
+						>
 					{/if}
-					<div class="step-content">
+					<div class="flex flex-col gap-1">
 						<Text>{step.label}</Text>
 						{#if step.description}
 							<Text size="sm">{step.description}</Text>
@@ -216,63 +221,3 @@ SPDX-License-Identifier: MIT
 		</li>
 	{/each}
 </ul>
-
-<style>
-	.step-wrapper {
-		display: flex;
-		align-items: center;
-		gap: 0.5rem;
-	}
-
-	.step-content {
-		display: flex;
-		flex-direction: column;
-		gap: 0.25rem;
-	}
-
-	.step-icon {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.step.step-disabled {
-		cursor: not-allowed;
-		pointer-events: none;
-		opacity: 1;
-	}
-
-	.step.step-disabled::before {
-		background-color: hsl(var(--bc) / 0.25);
-		opacity: 1;
-	}
-
-	.step.step-disabled::after {
-		background-color: hsl(var(--bc) / 0.15);
-		border: 2px solid hsl(var(--bc) / 0.4);
-		color: hsl(var(--bc) / 0.7);
-		font-weight: 600;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.step.step-disabled .step-icon {
-		opacity: 0.8;
-	}
-
-	.step-button {
-		width: 100%;
-		text-align: left;
-		justify-content: flex-start;
-	}
-
-	.step-button:hover {
-		opacity: 0.8;
-	}
-
-	.step-button:focus {
-		outline: 2px solid currentColor;
-		outline-offset: 2px;
-	}
-</style>

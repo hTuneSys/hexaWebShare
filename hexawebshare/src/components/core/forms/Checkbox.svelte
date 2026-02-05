@@ -28,7 +28,7 @@ SPDX-License-Identifier: MIT
 	const {
 		variant,
 		size = 'md',
-		checked = false,
+		checked: checkedProp = false,
 		disabled = false,
 		indeterminate = false,
 		label,
@@ -40,10 +40,23 @@ SPDX-License-Identifier: MIT
 		ariaDescribedby,
 		tabindex,
 		class: className = '',
+		onchange,
 		...props
 	}: Props = $props();
 
 	let checkboxElement = $state<HTMLInputElement | null>(null);
+	let checked = $state(checkedProp);
+
+	// Sync checked state with prop changes
+	$effect(() => {
+		checked = checkedProp;
+	});
+
+	// Handle change event
+	const handleChange = (event: Event) => {
+		checked = (event.target as HTMLInputElement).checked;
+		onchange?.(event);
+	};
 
 	let checkboxClasses = $derived(
 		[
@@ -65,6 +78,17 @@ SPDX-License-Identifier: MIT
 			.join(' ')
 	);
 
+	// Map checkbox size to text size
+	type TextSize = 'xs' | 'sm' | 'base' | 'lg';
+	const sizeToTextSizeMap: Record<'xs' | 'sm' | 'md' | 'lg', TextSize> = {
+		xs: 'xs',
+		sm: 'sm',
+		md: 'base',
+		lg: 'lg'
+	};
+
+	let labelTextSize = $derived(sizeToTextSizeMap[size]);
+
 	// Set indeterminate state when prop changes
 	$effect(() => {
 		if (checkboxElement) {
@@ -85,7 +109,7 @@ SPDX-License-Identifier: MIT
 			bind:this={checkboxElement}
 			type="checkbox"
 			class={checkboxClasses}
-			{checked}
+			bind:checked
 			{disabled}
 			{name}
 			{value}
@@ -93,16 +117,17 @@ SPDX-License-Identifier: MIT
 			{tabindex}
 			aria-label={ariaLabel}
 			aria-describedby={ariaDescribedby}
+			onchange={handleChange}
 			{...props}
 		/>
-		<Text text={label} size="sm" class="label-text" />
+		<Text text={label} size={labelTextSize} class="label-text" />
 	</label>
 {:else}
 	<input
 		bind:this={checkboxElement}
 		type="checkbox"
 		class={checkboxClasses}
-		{checked}
+		bind:checked
 		{disabled}
 		{name}
 		{value}
@@ -110,6 +135,7 @@ SPDX-License-Identifier: MIT
 		{tabindex}
 		aria-label={ariaLabel || ariaLabelFallback}
 		aria-describedby={ariaDescribedby}
+		onchange={handleChange}
 		{...props}
 	/>
 {/if}

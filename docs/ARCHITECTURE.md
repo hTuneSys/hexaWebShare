@@ -34,6 +34,7 @@ hexaWebShare is a comprehensive Svelte 5 component library built with modern web
 - **SvelteKit**: Framework for building the library and showcase
 - **TypeScript**: Type-safe component development
 - **Vite**: Fast build tool and development server
+- **Lucide Icons**: Icon library via `lucide-svelte` (peer dependency)
 
 ### Styling & UI
 
@@ -119,6 +120,7 @@ Cross-cutting utility components:
 4. **Reactive by Default**: Leverage Svelte 5's reactivity system
 5. **Accessible**: ARIA attributes and keyboard navigation built-in
 6. **Theme Aware**: Support for light/dark themes via DaisyUI
+7. **Icon System**: Consistent icon usage via Lucide icons with Icon component wrapper
 
 ---
 
@@ -138,6 +140,31 @@ daisyui: {
   utils: true,
 }
 ```
+
+### Icon System
+
+Icons are provided via [Lucide](https://lucide.dev) through the `lucide-svelte` package:
+
+- **Peer Dependency**: `lucide-svelte` must be installed separately by consumers
+- **Wrapper Component**: All icons use the library's `Icon` component for consistent sizing and theming
+- **Usage Pattern**: Import Lucide icons and pass as children to `Icon` component
+
+```svelte
+<script>
+  import { Icon } from 'hexawebshare';
+  import { X, Check, ChevronDown } from 'lucide-svelte';
+</script>
+
+<Icon size="md" variant="primary">
+  <X />
+</Icon>
+```
+
+**Benefits:**
+- Zero bundle size impact (peer dependency with perfect tree-shaking)
+- Consistent icon sizing and theming across all components
+- Access to 1000+ high-quality icons
+- Automatic theme color inheritance
 
 ### Component Styling Pattern
 

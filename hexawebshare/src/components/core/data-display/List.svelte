@@ -214,6 +214,11 @@ SPDX-License-Identifier: MIT
 	const handleBlur = () => {
 		focusedIndex = -1;
 	};
+
+	// Helper: Map List size to description Text size
+	const getDescriptionSize = (): 'xs' | 'sm' => {
+		return size === 'lg' ? 'sm' : 'xs';
+	};
 </script>
 
 {#if ordered}
@@ -253,7 +258,7 @@ SPDX-License-Identifier: MIT
 								<span class="flex flex-col">
 									<Text text={item.label} />
 									{#if item.description}
-										<Text text={item.description} size="xs" variant="muted" />
+										<Text text={item.description} size={getDescriptionSize()} variant="muted" />
 									{/if}
 								</span>
 							</span>
@@ -284,7 +289,7 @@ SPDX-License-Identifier: MIT
 								<span class="flex flex-col">
 									<Text text={item.label} />
 									{#if item.description}
-										<Text text={item.description} size="xs" variant="muted" />
+										<Text text={item.description} size={getDescriptionSize()} variant="muted" />
 									{/if}
 								</span>
 							</span>
@@ -334,7 +339,7 @@ SPDX-License-Identifier: MIT
 								<span class="flex flex-col">
 									<Text text={item.label} />
 									{#if item.description}
-										<Text text={item.description} size="xs" variant="muted" />
+										<Text text={item.description} size={getDescriptionSize()} variant="muted" />
 									{/if}
 								</span>
 							</span>
@@ -365,7 +370,7 @@ SPDX-License-Identifier: MIT
 								<span class="flex flex-col">
 									<Text text={item.label} />
 									{#if item.description}
-										<Text text={item.description} size="xs" variant="muted" />
+										<Text text={item.description} size={getDescriptionSize()} variant="muted" />
 									{/if}
 								</span>
 							</span>

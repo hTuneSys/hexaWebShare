@@ -225,6 +225,17 @@ SPDX-License-Identifier: MIT
 </Story>
 
 <!-- Playground -->
+<!-- 
+NOTE: Storybook controls are partially interactive for this component.
+TECHNICAL REASON: Grid requires Svelte 5 snippet (children prop is required).
+The addon-svelte-csf Story component cannot pass args to snippet parameters in Svelte 5.
+ATTEMPTED SOLUTIONS:
+1. Tried {#snippet children(args)} pattern - TypeScript error: Snippet<[]> doesn't accept parameters
+2. Tried auto-wiring without snippet - Component requires children snippet (will not render)
+CONSEQUENCE: Playground story shows default variant; use other stories to see specific variations.
+WORKAROUND: Use the variant stories above to explore different configurations.
+TODO: Investigate Storybook v8+ compatibility with Svelte 5 snippet pattern
+-->
 <Story
 	name="Playground"
 	args={{
@@ -235,4 +246,36 @@ SPDX-License-Identifier: MIT
 		disabled: false,
 		background: false
 	}}
-/>
+>
+	{#snippet children()}
+		<Grid
+			columns={3}
+			gap="md"
+			variant="default"
+			loading={false}
+			disabled={false}
+			background={false}
+		>
+			{#snippet children()}
+				<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
+					Item 1
+				</div>
+				<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
+					Item 2
+				</div>
+				<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
+					Item 3
+				</div>
+				<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
+					Item 4
+				</div>
+				<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
+					Item 5
+				</div>
+				<div class="bg-base-200 flex items-center justify-center rounded-lg p-4 text-center">
+					Item 6
+				</div>
+			{/snippet}
+		</Grid>
+	{/snippet}
+</Story>

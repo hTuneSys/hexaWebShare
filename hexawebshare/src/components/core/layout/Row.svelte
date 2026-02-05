@@ -37,15 +37,43 @@ SPDX-License-Identifier: MIT
 		wrap?: boolean;
 
 		/**
+		 * Whether to use inline-flex instead of flex
+		 * @default false
+		 */
+		inline?: boolean;
+
+		/**
 		 * ARIA label for accessibility
 		 */
 		ariaLabel?: string;
 
 		/**
+		 * Whether the row should be sticky to the top
+		 * @default false
+		 */
+		sticky?: boolean;
+		/**
+		 * Whether the row should have a bottom border
+		 * @default false
+		 */
+		border?: boolean;
+		/**
+		 * Hide the row below a certain breakpoint
+		 */
+		hideBelow?: 'sm' | 'md' | 'lg' | 'xl';
+		/**
+		 * Hide the row above a certain breakpoint
+		 */
+		hideAbove?: 'sm' | 'md' | 'lg' | 'xl';
+		/**
 		 * Additional CSS classes
 		 * @default ''
 		 */
 		class?: string;
+		/**
+		 * Inline styles for dynamic dimensions (e.g. min-height, width)
+		 */
+		style?: string;
 	}
 
 	let {
@@ -54,8 +82,14 @@ SPDX-License-Identifier: MIT
 		align = 'center',
 		justify = 'start',
 		wrap = false,
+		inline = false,
+		sticky = false,
+		border = false,
+		hideBelow,
+		hideAbove,
 		ariaLabel,
 		class: className = '',
+		style,
 		...props
 	}: Props = $props();
 
@@ -112,12 +146,36 @@ SPDX-License-Identifier: MIT
 
 	// Static class mapping for Wrap
 	let wrapClass = $derived(wrap ? 'flex-wrap' : 'flex-nowrap');
+
+	// Static class mapping for Inline
+	let displayClass = $derived(inline ? 'inline-flex' : 'flex');
+
+	// Visibility and Layout classes
+	let visibilityClasses = $derived(
+		[
+			hideBelow === 'sm' && 'hidden sm:flex',
+			hideBelow === 'md' && 'hidden md:flex',
+			hideBelow === 'lg' && 'hidden lg:flex',
+			hideBelow === 'xl' && 'hidden xl:flex',
+			hideAbove === 'sm' && 'sm:hidden',
+			hideAbove === 'md' && 'md:hidden',
+			hideAbove === 'lg' && 'lg:hidden',
+			hideAbove === 'xl' && 'xl:hidden'
+		]
+			.filter(Boolean)
+			.join(' ')
+	);
+
+	let layoutClasses = $derived(
+		[sticky && 'sticky top-0 z-30', border && 'border-b border-base-200'].filter(Boolean).join(' ')
+	);
 </script>
 
 <div
-	class="flex {gapClass} {alignClass} {justifyClass} {wrapClass} {className}"
+	class="{displayClass} {gapClass} {alignClass} {justifyClass} {wrapClass} {visibilityClasses} {layoutClasses} {className}"
 	role="group"
 	aria-label={ariaLabel}
+	{style}
 	{...props}
 >
 	{@render children?.()}

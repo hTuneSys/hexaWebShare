@@ -20,6 +20,21 @@ SPDX-License-Identifier: MIT
 				control: { type: 'select' },
 				options: ['xs', 'sm', 'md', 'lg']
 			},
+			variant: {
+				control: { type: 'select' },
+				options: [
+					'primary',
+					'secondary',
+					'accent',
+					'neutral',
+					'info',
+					'success',
+					'warning',
+					'error',
+					'ghost',
+					'link'
+				]
+			},
 			disabled: { control: 'boolean' },
 			name: { control: 'text' }
 		},
@@ -117,6 +132,45 @@ SPDX-License-Identifier: MIT
 />
 
 <Story
+	name="Secondary Variant"
+	args={{
+		options: [
+			{ label: 'Option 1', value: 1 },
+			{ label: 'Option 2', value: 2 },
+			{ label: 'Option 3', value: 3 }
+		],
+		value: 2,
+		variant: 'secondary'
+	}}
+/>
+
+<Story
+	name="Success Variant"
+	args={{
+		options: [
+			{ label: 'Active', value: 'active' },
+			{ label: 'Pending', value: 'pending' },
+			{ label: 'Inactive', value: 'inactive' }
+		],
+		value: 'active',
+		variant: 'success'
+	}}
+/>
+
+<Story
+	name="Info Variant"
+	args={{
+		options: [
+			{ label: 'Details', value: 'details' },
+			{ label: 'Settings', value: 'settings' },
+			{ label: 'About', value: 'about' }
+		],
+		value: 'details',
+		variant: 'info'
+	}}
+/>
+
+<Story
 	name="Playground"
 	args={{
 		options: [
@@ -126,6 +180,7 @@ SPDX-License-Identifier: MIT
 		],
 		value: 'second',
 		size: 'md',
+		variant: 'primary',
 		disabled: false
 	}}
 />

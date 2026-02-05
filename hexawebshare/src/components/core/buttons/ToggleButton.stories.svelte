@@ -69,18 +69,6 @@ SPDX-License-Identifier: MIT
 			ariaLabel: {
 				control: 'text',
 				description: 'ARIA label for accessibility'
-			},
-			defaultIconPoints: {
-				control: 'text',
-				description: 'Default icon polygon points (used when no children and no label provided)'
-			},
-			defaultIconWidth: {
-				control: { type: 'text' },
-				description: 'Default icon width'
-			},
-			defaultIconHeight: {
-				control: { type: 'text' },
-				description: 'Default icon height'
 			}
 		},
 		parameters: {
@@ -99,6 +87,8 @@ SPDX-License-Identifier: MIT
 
 <script lang="ts">
 	import ButtonGroup from './ButtonGroup.svelte';
+	import Icon from '../media/Icon.svelte';
+	import Star from 'lucide-svelte/icons/star';
 </script>
 
 <!-- Default -->
@@ -123,30 +113,23 @@ SPDX-License-Identifier: MIT
 <Story name="Button Group">
 	{#snippet children()}
 		<ButtonGroup orientation="horizontal" gap="sm">
-			{#snippet children()}
-				<ToggleButton label="Option 1" variant="primary" pressed={false} onclick={fn()} />
-				<ToggleButton label="Option 2" variant="primary" pressed={false} onclick={fn()} />
-				<ToggleButton label="Option 3" variant="primary" pressed={false} onclick={fn()} />
-			{/snippet}
+			<ToggleButton label="Option 1" variant="primary" pressed={false} onclick={fn()} />
+			<ToggleButton label="Option 2" variant="primary" pressed={false} onclick={fn()} />
+			<ToggleButton label="Option 3" variant="primary" pressed={false} onclick={fn()} />
 		</ButtonGroup>
 	{/snippet}
 </Story>
 
 <!-- With Icon -->
-<Story
-	name="With Icon"
-	args={{
-		defaultIconPoints:
-			'12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2',
-		defaultIconWidth: '20',
-		defaultIconHeight: '20',
-		variant: 'primary',
-		size: 'md',
-		pressed: false,
-		ariaLabel: 'Favorite',
-		onclick: fn()
-	}}
-/>
+<Story name="With Icon">
+	{#snippet children()}
+		<ToggleButton variant="primary" size="md" pressed={false} ariaLabel="Favorite" onclick={fn()}>
+			<Icon name="star" size="md" ariaHidden>
+				<Star />
+			</Icon>
+		</ToggleButton>
+	{/snippet}
+</Story>
 
 <!-- Interactive Playground -->
 <Story
