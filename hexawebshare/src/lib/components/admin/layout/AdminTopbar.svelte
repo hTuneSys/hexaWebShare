@@ -4,19 +4,17 @@ SPDX-License-Identifier: MIT
 -->
 
 <script lang="ts">
-	import {
-		IconButton,
-		SearchInput,
-		Avatar,
-		Dropdown,
-		Icon,
-		Badge,
-		Menu,
-		Row,
-		Col,
-		Button
-	} from '../../../lib/index.js';
-	import type { MenuItem } from '../../../lib/index.js';
+	import IconButton from '../../core/buttons/IconButton.svelte';
+	import SearchInput from '../../core/forms/SearchInput.svelte';
+	import Avatar from '../../core/media/Avatar.svelte';
+	import Dropdown from '../../core/overlay-navigation/Dropdown.svelte';
+	import Icon from '../../core/media/Icon.svelte';
+	import Badge from '../../core/media/Badge.svelte';
+	import Menu from '../../core/overlay-navigation/Menu.svelte';
+	import type { MenuItem } from '../../core/overlay-navigation/Menu.svelte';
+	import Row from '../../core/layout/Row.svelte';
+	import Col from '../../core/layout/Col.svelte';
+	import Button from '../../core/buttons/Button.svelte';
 	import MenuIcon from 'lucide-svelte/icons/menu';
 	import Search from 'lucide-svelte/icons/search';
 	import Bell from 'lucide-svelte/icons/bell';
@@ -131,7 +129,7 @@ SPDX-License-Identifier: MIT
 			<SearchInput
 				class="flex-grow"
 				{placeholder}
-				onsearch={(q) => {
+				onsearch={(q: string) => {
 					onSearch?.(q);
 					if (q) isMobileSearchOpen = false;
 				}}
