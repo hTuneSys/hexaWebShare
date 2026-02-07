@@ -127,7 +127,7 @@ jobs:
           echo "See [CHANGELOG.md](https://github.com/hTuneSys/hexaWebShare/blob/main/CHANGELOG.md) for full details." >> release_notes.md
       
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ steps.version.outputs.tag }}
           name: Release ${{ steps.version.outputs.tag }}
