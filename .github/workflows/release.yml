@@ -40,7 +40,7 @@ jobs:
       
       # 3. Setup pnpm
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v5
       
       # 4. Setup Node.js with NPM authentication
       - name: Setup Node.js
